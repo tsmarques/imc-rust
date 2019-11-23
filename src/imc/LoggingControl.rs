@@ -6,7 +6,7 @@ use crate::imc::Header::Header;
 
 const c_msg_id :u16 = 102;
 
-enum ControlOperationEnum
+pub enum ControlOperationEnum
 {
     // Request Start of Logging.
     COP_REQUEST_START = 0,
@@ -38,7 +38,7 @@ impl ControlOperationEnum
 }
 
 
-struct LoggingControl
+pub(crate) struct LoggingControl
 {
     pub header: Header,
     pub op: ControlOperationEnum,
@@ -47,19 +47,10 @@ struct LoggingControl
 
 impl LoggingControl
 {
-    fn new() -> LoggingControl
+    pub(crate) fn new() -> LoggingControl
     {
         let mut msg = LoggingControl {
-            header :Header{
-                sync: DUNE_IMC_CONST_SYNC,
-                mgid: c_msg_id,
-                size: 0,
-                timestamp: 0.0,
-                src: 0xffff,
-                src_ent: IMC_CONST_UNK_EID,
-                dst: 0xffff,
-                dst_ent: IMC_CONST_UNK_EID
-            },
+            header : Header::new(c_msg_id),
             op: ControlOperationEnum::COP_REQUEST_START,
             name: ""
         };
