@@ -7,7 +7,7 @@ use crc16::*;
 macro_rules! serialize_string {
     ($bfr:expr, $string_var:expr) =>
     {
-        $bfr.put_u32_le($string_var.len() as u32);
+        $bfr.put_u16_le($string_var.len() as u16);
         $bfr.put_slice($string_var.as_bytes());
     };
 }
