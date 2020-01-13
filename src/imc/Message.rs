@@ -3,6 +3,7 @@
 use crate::imc;
 use bytes::BufMut;
 use crc16::*;
+use crate::imc::Header::Header;
 
 macro_rules! serialize_string {
     ($bfr:expr, $string_var:expr) =>
@@ -20,8 +21,47 @@ pub fn serialize_footer(bfr :&mut bytes::BytesMut)
     bfr.put_u16_le(state.get());
 }
 
+pub struct IMCMessage
+{
+    pub header :Header,
+    pub msg :Box<dyn Message>
+}
+
 pub trait Message
 {
+    fn get_header(&mut self) -> &mut Header;
+
+
+    fn set_size(&mut self, size :u16)
+    {
+        self.get_header().size = size
+    }
+
+    fn set_timestamp_secs(&mut self, ts :f64)
+    {
+        self.get_header().timestamp = ts
+    }
+
+    fn set_source(&mut self, src :u16)
+    {
+        self.get_header().src = src;
+    }
+
+    fn set_source_ent(&mut self, src_ent :u8)
+    {
+        self.get_header().src_ent = src_ent;
+    }
+
+    fn set_destination(&mut self, dst :u16)
+    {
+        self.get_header().dst = dst;
+    }
+
+    fn set_destination_ent(&mut self, dst_ent :u8)
+    {
+        self.get_header().dst_ent = dst_ent;
+    }
+
     // Get this messages's static ID
     fn static_id(&self) -> u16;
 

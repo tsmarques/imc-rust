@@ -61,6 +61,10 @@ impl LoggingControl
 
 impl Message for LoggingControl
 {
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
+    }
+
     fn static_id(&self) -> u16
     {
         c_msg_id
