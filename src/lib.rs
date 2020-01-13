@@ -15,6 +15,12 @@ mod tests {
     use crate::imc::Message::Message;
     use bytes::{BufMut, BytesMut};
 
+    fn log_write(bfr :&mut bytes::BytesMut, file :&mut File, msg :&mut dyn Message)
+    {
+        msg.set_timestamp_secs(utils::get_timestamp_secs());
+        msg.serialize(bfr);
+    }
+
     #[test]
     fn all_messages() {
         let temp_directory: PathBuf = env::temp_dir();
@@ -27,8 +33,6 @@ mod tests {
         log_control.name = "rust-test";
         log_control.op = ControlOperationEnum::COP_REQUEST_START;
 
-        log_control.serialize(&mut bfr);
-//        writeln!(&mut file, bfr).unwrap();
         file.write_all(bfr.as_ref()).unwrap();
     }
 }
