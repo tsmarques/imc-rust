@@ -55,6 +55,8 @@ impl LoggingControl
             name: ""
         };
 
+        msg.set_size(msg.payload_serialization_size() as u16);
+
         msg
     }
 }
