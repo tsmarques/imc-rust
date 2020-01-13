@@ -17,3 +17,13 @@ pub const IMC_MAX_LOG_NAME_SIZE :u16 = 16;
 
 // Unknown entity identifier.
 pub const IMC_CONST_UNK_EID :u8 = 255;
+
+pub mod utils
+{
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    pub(crate) fn get_timestamp_secs() -> f64
+    {
+        SystemTime::now().duration_since(UNIX_EPOCH).expect("failed to get timestamp").as_secs_f64()
+    }
+}
