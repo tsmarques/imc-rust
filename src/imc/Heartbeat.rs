@@ -6,7 +6,7 @@ use bytes::BufMut;
 
 const c_msg_id :u16 = 150;
 
-struct Heartbeat
+pub struct Heartbeat
 {
     header: Header,
 }
