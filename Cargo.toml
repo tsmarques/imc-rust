@@ -9,3 +9,9 @@ edition = "2018"
 [dependencies]
 bytes = "0.4.12"
 crc16 = "*"
+xml-rs = "0.8"
+clap = "2.33.0"
+
+[[bin]]
+name = "imc-generator"
+path = "src/xml/imc-generator.rs"
