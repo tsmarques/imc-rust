@@ -42,6 +42,7 @@ fn parse_field_attributes(field :&mut FieldData, attr :&Vec<OwnedAttribute>) {
             "prefix" => field.field_enum_prefix = value,
             "max" => field.field_max = value,
             "min" => field.field_min = value,
+            "enum-def" => {}, // TODO handle global enumerator
             _ => { panic!("unhandled field attribute : {}", attr.name) }
         }
     }
@@ -68,7 +69,7 @@ fn parse_fields(parser : &mut EventReader<BufReader<File>>) -> Vec<FieldData> {
                 match name.local_name.as_str() {
                     "field" => i+=1,
                     "message" => { break },
-                    "description" => {},
+                    "description" | "value" => {},
                     _ => panic!("parse_fields: unknown termination \"{}\"", name.local_name),
                 },
             Ok(_) => {},
@@ -92,6 +93,7 @@ fn parse_message_attributes(message :&mut MessageBuilder::Data, attributes :&Vec
             "source" => message.source = value,
             "flags" => message.flags = value,
             "category" => message.category = value,
+            "used-by" => {},
             _ => { panic!("unhandled field attribute : {}", attr.name) }
         }
     }
@@ -99,70 +101,101 @@ fn parse_message_attributes(message :&mut MessageBuilder::Data, attributes :&Vec
 
 // FIXME: requires that after a <message ..> a <description> comes
 // before any <field ..> tag, otherwise it will parse incorrectly
-fn parse_message(parser : &mut EventReader<BufReader<File>>) -> MessageBuilder::Data {
-    let mut mb :MessageBuilder::Data = MessageBuilder::Data::new();
+fn parse_messages(parser : &mut EventReader<BufReader<File>>) -> Vec<MessageBuilder::Data> {
+    let mut messages :Vec<MessageBuilder::Data> = vec![];
+    let mut i = 0;
+
     let mut e = parser.next();
     loop {
         match e {
             Err(e) => panic!("parse_message: error: {}", e),
             Ok(XmlEvent::StartElement {name, attributes, ..}) => {
                 match name.local_name.as_str() {
-                    "message" => parse_message_attributes(&mut mb, &attributes) ,
+                    "message" => {
+                        messages.push(MessageBuilder::Data::new());
+                        parse_message_attributes(&mut messages[i], &attributes)
+                    } ,
                     "description" => { },
                     _ => {panic!("parse_message: unexpected tag: {}", name.local_name)},
                 }
             },
-            Ok(XmlEvent::Characters(content)) => mb.desc = content.trim().to_string(),
+            Ok(XmlEvent::Characters(content)) => messages[i].desc = content.trim().to_string(),
             Ok(XmlEvent::Whitespace(_)) => {},
             Ok(XmlEvent::EndElement { name }) =>
             // parse fields after description
                 if name.local_name == "description" {
-                    mb.fields = parse_fields(parser);
-                    break;
+                    messages[i].fields = parse_fields(parser);
+                    i+=1;
                 },
+            Ok(XmlEvent::EndDocument) => break,
             Ok(_) => panic!("parse_message: unhandled event"),
         }
 
         e = parser.next();
     }
 
-    mb
+    messages
 }
 
-fn parse(xml_path : &str) {
+fn ignore_tag(xml_tag :&str, parser : &mut EventReader<BufReader<File>>) {
+    loop {
+        match parser.next() {
+            Ok(XmlEvent::EndElement { name }) => {
+                if name.local_name == xml_tag {
+                    break;
+                }
+            }
+            _ => {},
+        }
+    }
+}
+
+fn parse(xml_path : &str) -> Vec<MessageBuilder::Data> {
     let file = File::open(xml_path).unwrap();
     let file = BufReader::new(file);
 
     let mut parser = EventReader::new(file);
     let mut depth = 0;
 
-//    footer, header, flags, message-group, bitfields, enumerations, units, serialization, types,
+    // footer, header, flags, message-group, bitfields, enumerations, units, serialization, types,
     // description
 
-//    loop {
-//        match parser.next() {
-//            Ok(XmlEvent::StartDocument) => {
-//
-//            }
-//        }
-//    }
-//    for e in parser {
-//        match e {
-//            Ok(XmlEvent::StartElement { name, .. }) => {
-//                println!("{}+{}", indent(depth), name);
-//                depth += 1;
-//            }
-//            Ok(XmlEvent::EndElement { name }) => {
-//                depth -= 1;
-//                println!("{}-{}", indent(depth), name);
-//            }
-//            Err(e) => {
-//                println!("Error: {}", e);
-//                break;
-//            }
-//            _ => {}
-//        }
-//    }
+    let mut messages :Vec<MessageBuilder::Data> = vec![];
+    loop {
+        let e = parser.next();
+        match e {
+            Ok(XmlEvent::StartDocument {..}) => {},
+            Ok(XmlEvent::StartElement {name, attributes, ..}) => {
+                match name.local_name.as_str() {
+                    "type" |
+                    "description" | "types" | "serialization" |
+                    "units" | "enumerations" | "bitfields" |
+                    "message-groups" | "flags" | "header"
+                    => { ignore_tag(name.local_name.as_str(), &mut parser) }, // ignore, for now, this headers
+                    "messages" => {
+                        let ret = attributes.iter().find(|x| x.name.local_name == "version");
+                        match ret {
+                            None => panic!("parse: missing \"version\" field in \"message\" : {}", name.local_name),
+                            Some(v) => println!("Generating IMC version {}", v),
+                        }
+                    },
+                    "footer" => {
+                        ignore_tag("footer", &mut parser);
+                        messages = parse_messages(&mut parser);
+                        break;
+                    }
+                    _ => panic!("parse: unhandled tag {}", name.local_name),
+                }
+            },
+            Ok(XmlEvent::EndElement {name}) => {  },
+            Ok(XmlEvent::EndDocument) => break,
+            Ok(XmlEvent::Whitespace(..)) |
+            Ok(XmlEvent::Characters(..)) => {},
+            _ => panic!("parse: unhandled event"),
+        }
+    }
+
+    messages
 }
 
 fn main() {
@@ -177,48 +210,56 @@ fn main() {
     .get_matches();
 
     let ret = matches.value_of("imc");
+    let messages :Vec<MessageBuilder::Data>;
     match ret {
-        Some(v) => parse(v),
+        Some(v) => messages = parse(v),
         None => panic!("missing path to IMC definition. Use --imc option")
     }
 }
 
 #[test]
-fn test_message() {
-    let file = File::open("/home/tsm/ws/imc-rust/src/xml/tests/test-imc-message.xml").unwrap();
-    let file = BufReader::new(file);
+fn full_format() {
+    let messages = parse("/home/tsm/ws/omst/imc/IMC.xml");
 
-    let mut parser = EventReader::new(file);
-// discard start document event
-    parser.next();
-    let message = parse_message(&mut parser);
-
-    assert_eq!(message.id, "7");
-    assert_eq!(message.name, "CPU Usage");
-    assert_eq!(message.abbrev, "CpuUsage");
-    assert_eq!(message.source, "vehicle");
-    assert_eq!(message.flags, "periodic");
-    assert_eq!(message.category, "Core");
-
-    assert_eq!(message.fields.len(), 1);
-
-    assert_eq!(message.fields[0].field_name, "Usage percentage");
-    assert_eq!(message.fields[0].field_abbrev, "value");
-    assert_eq!(message.fields[0].field_type, "uint8_t");
-    assert_eq!(message.fields[0].field_max, "100");
-    assert_eq!(message.fields[0].field_unit, "%");
-
-    let estate = parse_message(&mut parser);
-
-    assert_eq!(estate.id, "350");
-    assert_eq!(estate.name, "Estimated State");
-    assert_eq!(estate.abbrev, "EstimatedState");
-    assert_eq!(estate.source, "vehicle");
-    assert_eq!(estate.flags, "periodic");
-    assert_eq!(estate.category, "Navigation");
-
-    assert_eq!(estate.fields.len(), 20);
+    assert_eq!(messages.len(), 3);
 }
+
+//#[test]
+//fn test_message() {
+//    let file = File::open("/home/tsm/ws/imc-rust/src/xml/tests/test-imc-message.xml").unwrap();
+//    let file = BufReader::new(file);
+//
+//    let mut parser = EventReader::new(file);
+//// discard start document event
+//    parser.next();
+//    let message = parse_messages(&mut parser);
+//
+//    assert_eq!(message.id, "7");
+//    assert_eq!(message.name, "CPU Usage");
+//    assert_eq!(message.abbrev, "CpuUsage");
+//    assert_eq!(message.source, "vehicle");
+//    assert_eq!(message.flags, "periodic");
+//    assert_eq!(message.category, "Core");
+//
+//    assert_eq!(message.fields.len(), 1);
+//
+//    assert_eq!(message.fields[0].field_name, "Usage percentage");
+//    assert_eq!(message.fields[0].field_abbrev, "value");
+//    assert_eq!(message.fields[0].field_type, "uint8_t");
+//    assert_eq!(message.fields[0].field_max, "100");
+//    assert_eq!(message.fields[0].field_unit, "%");
+//
+//    let estate = parse_messages(&mut parser);
+//
+//    assert_eq!(estate.id, "350");
+//    assert_eq!(estate.name, "Estimated State");
+//    assert_eq!(estate.abbrev, "EstimatedState");
+//    assert_eq!(estate.source, "vehicle");
+//    assert_eq!(estate.flags, "periodic");
+//    assert_eq!(estate.category, "Navigation");
+//
+//    assert_eq!(estate.fields.len(), 20);
+//}
 
 //#[test]
 //fn test_field() {
