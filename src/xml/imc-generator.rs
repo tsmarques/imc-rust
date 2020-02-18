@@ -155,29 +155,6 @@ fn parse_messages(parser : &mut EventReader<BufReader<File>>) -> Vec<MessageBuil
     messages
 }
 
-//fn collect_tag(xml_tag :&str, parser : &mut EventReader<BufReader<File>>) -> Vec<XmlEvent> {
-//    let mut tag_content :Vec<XmlEvent>= vec![];
-//    loop {
-//        let e = parser.next();
-//        match e {
-//            Ok(XmlEvent::StartElement { name, ..}) => {
-//                if name.local_name.as_str() == xml_tag {
-//                    tag_content.push(e.unwrap());
-//                }
-//            },
-//            Ok(XmlEvent::EndElement { name }) => {
-//                if name.local_name == xml_tag {
-//                    break;
-//                }
-//            }
-//            Ok(c) => tag_content.push(c),
-//            Err(err) => panic!("collect_tag: error {}", err),
-//        }
-//    }
-//
-//    tag_content
-//}
-
 fn ignore_tag(xml_tag :&str, parser : &mut EventReader<BufReader<File>>) {
     loop {
         match parser.next() {

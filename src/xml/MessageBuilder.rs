@@ -37,8 +37,6 @@ pub struct EnumData {
 }
 
 fn parse_type(ftype :&str, msg_type :Option<String>) -> (String, String) {
-    let mut rust_type :String;
-
     match ftype {
         "uint8_t" => ("u8".to_string(), "0".to_string()),
         "uint16_t" => ("u16".to_string(), "0".to_string()),
