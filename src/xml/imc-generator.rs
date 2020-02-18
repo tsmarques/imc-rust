@@ -43,13 +43,18 @@ fn parse_field_attributes(field :&mut FieldData, attr :&Vec<OwnedAttribute>) {
             "max" => field.field_max = value,
             "min" => field.field_min = value,
             "enum-def" => {}, // TODO handle global enumerator
+            "value" => field.field_default_value = value,
+            "bitfield-def" => {},
             _ => { panic!("unhandled field attribute : {}", attr.name) }
         }
     }
 }
 
-fn parse_fields(parser : &mut EventReader<BufReader<File>>) -> Vec<FieldData> {
+fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<FieldData>) {
     let mut fields = vec![];
+    // flag if next <description> is from <message ...>
+    let mut is_message_description = true;
+    let mut message_descr :String = String::from("");
 
     let mut i = 0;
     loop {
@@ -57,6 +62,7 @@ fn parse_fields(parser : &mut EventReader<BufReader<File>>) -> Vec<FieldData> {
             Ok(XmlEvent::StartElement { name, attributes, .. }) =>
                 match name.local_name.as_str() {
                     "field" => {
+                        is_message_description = false;
                         fields.push(FieldData::new());
                         parse_field_attributes(&mut fields[i], &attributes)
                     },
@@ -64,7 +70,17 @@ fn parse_fields(parser : &mut EventReader<BufReader<File>>) -> Vec<FieldData> {
                     "value" => parse_field_enum(&mut fields[i], &attributes),
                     _ => panic!("parse field : unknown name {}", name.local_name)
                 },
-            Ok(XmlEvent::Characters(content)) => fields[i].field_desc = content.trim().to_string(),
+            Ok(XmlEvent::Characters(content)) => {
+                let description = content.trim().to_string();
+                if !is_message_description {
+                    fields[i].field_desc = description;
+                    is_message_description = true;
+                }
+                else {
+                    message_descr = description;
+                    is_message_description = false;
+                }
+            },
             Ok(XmlEvent::EndElement { name }) =>
                 match name.local_name.as_str() {
                     "field" => i+=1,
@@ -80,7 +96,7 @@ fn parse_fields(parser : &mut EventReader<BufReader<File>>) -> Vec<FieldData> {
         }
     }
 
-    fields
+    (message_descr, fields)
 }
 
 fn parse_message_attributes(message :&mut MessageBuilder::Data, attributes :&Vec<OwnedAttribute>) {
@@ -113,20 +129,18 @@ fn parse_messages(parser : &mut EventReader<BufReader<File>>) -> Vec<MessageBuil
                 match name.local_name.as_str() {
                     "message" => {
                         messages.push(MessageBuilder::Data::new());
-                        parse_message_attributes(&mut messages[i], &attributes)
+                        parse_message_attributes(&mut messages[i], &attributes);
+
+                        let ret = parse_message(parser);
+                        messages[i].fields = ret.1;
+                        messages[i].desc = ret.0;
+                        i+=1;
                     } ,
-                    "description" => { },
                     _ => {panic!("parse_message: unexpected tag: {}", name.local_name)},
                 }
             },
-            Ok(XmlEvent::Characters(content)) => messages[i].desc = content.trim().to_string(),
             Ok(XmlEvent::Whitespace(_)) => {},
-            Ok(XmlEvent::EndElement { name }) =>
-            // parse fields after description
-                if name.local_name == "description" {
-                    messages[i].fields = parse_fields(parser);
-                    i+=1;
-                },
+            Ok(XmlEvent::EndElement { .. }) => {},
             Ok(XmlEvent::EndDocument) => break,
             Ok(_) => panic!("parse_message: unhandled event"),
         }
@@ -136,6 +150,29 @@ fn parse_messages(parser : &mut EventReader<BufReader<File>>) -> Vec<MessageBuil
 
     messages
 }
+
+//fn collect_tag(xml_tag :&str, parser : &mut EventReader<BufReader<File>>) -> Vec<XmlEvent> {
+//    let mut tag_content :Vec<XmlEvent>= vec![];
+//    loop {
+//        let e = parser.next();
+//        match e {
+//            Ok(XmlEvent::StartElement { name, ..}) => {
+//                if name.local_name.as_str() == xml_tag {
+//                    tag_content.push(e.unwrap());
+//                }
+//            },
+//            Ok(XmlEvent::EndElement { name }) => {
+//                if name.local_name == xml_tag {
+//                    break;
+//                }
+//            }
+//            Ok(c) => tag_content.push(c),
+//            Err(err) => panic!("collect_tag: error {}", err),
+//        }
+//    }
+//
+//    tag_content
+//}
 
 fn ignore_tag(xml_tag :&str, parser : &mut EventReader<BufReader<File>>) {
     loop {
@@ -221,7 +258,7 @@ fn main() {
 fn full_format() {
     let messages = parse("/home/tsm/ws/omst/imc/IMC.xml");
 
-    assert_eq!(messages.len(), 3);
+    assert_eq!(messages.len(), 208);
 }
 
 //#[test]
