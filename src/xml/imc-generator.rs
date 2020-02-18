@@ -15,7 +15,7 @@ fn parse_field_enum(field :&mut FieldData, attr :&Vec<OwnedAttribute>) {
     let mut field_enum :EnumData = EnumData {
         id: "".to_string(),
         name: "".to_string(),
-        abbrev: "".to_string()
+        abbrev: "".to_string(),
     };
 
     for a in attr {
@@ -120,8 +120,7 @@ fn parse_message_attributes(message :&mut MessageBuilder::Data, attributes :&Vec
     }
 }
 
-// FIXME: requires that after a <message ..> a <description> comes
-// before any <field ..> tag, otherwise it will parse incorrectly
+
 fn parse_messages(parser : &mut EventReader<BufReader<File>>) -> Vec<MessageBuilder::Data> {
     let mut messages :Vec<MessageBuilder::Data> = vec![];
     let mut i = 0;
@@ -261,9 +260,95 @@ fn main() {
 
 #[test]
 fn full_format() {
-    let messages = parse("/home/tsm/ws/omst/imc/IMC.xml");
+    let messages = parse("/home/tsm/ws/imc-rust/src/xml/tests/test-imc-full.xml");
 
-    assert_eq!(messages.len(), 208);
+    assert_eq!(messages.len(), 3);
+    let mut i = 0;
+    let mut n_fields = 0;
+
+    assert_eq!(messages[i].name, "Entity State");
+    assert_eq!(messages[i].abbrev, "EntityState");
+    assert_eq!(messages[i].source, "vehicle");
+    assert_eq!(messages[i].category, "Core");
+    assert_eq!(messages[i].desc, "State reported by an entity in the vehicle. The source entity is
+            identified in the message header.");
+
+    assert_eq!(messages[i].fields[0].field_name, "State");
+    assert_eq!(messages[i].fields[0].field_abbrev, "state");
+    assert_eq!(messages[i].fields[0].field_desc, "State of entity.");
+    assert_eq!(messages[i].fields[0].field_type, "uint8_t");
+    assert_eq!(messages[i].fields[0].field_unit, "Enumerated");
+    assert_eq!(messages[i].fields[0].field_enum_prefix, "ESTA");
+    assert_eq!(messages[i].fields[0].field_enum.len(), 5);
+    assert_eq!(messages[i].fields[0].field_enum[0].id, "0");
+    assert_eq!(messages[i].fields[0].field_enum[0].name, "Bootstrapping");
+    assert_eq!(messages[i].fields[0].field_enum[0].abbrev, "BOOT");
+    assert_eq!(messages[i].fields[0].field_enum[1].id, "1");
+    assert_eq!(messages[i].fields[0].field_enum[1].name, "Normal Operation");
+    assert_eq!(messages[i].fields[0].field_enum[1].abbrev, "NORMAL");
+    assert_eq!(messages[i].fields[0].field_enum[2].id, "2");
+    assert_eq!(messages[i].fields[0].field_enum[2].name, "Fault");
+    assert_eq!(messages[i].fields[0].field_enum[2].abbrev, "FAULT");
+    assert_eq!(messages[i].fields[0].field_enum[3].id, "3");
+    assert_eq!(messages[i].fields[0].field_enum[3].name, "Error");
+    assert_eq!(messages[i].fields[0].field_enum[3].abbrev, "ERROR");
+    assert_eq!(messages[i].fields[0].field_enum[4].id, "4");
+    assert_eq!(messages[i].fields[0].field_enum[4].name, "Failure");
+    assert_eq!(messages[i].fields[0].field_enum[4].abbrev, "FAILURE");
+    n_fields += 1;
+
+    assert_eq!(messages[i].fields[1].field_name, "Flags");
+    assert_eq!(messages[i].fields[1].field_abbrev, "flags");
+    assert_eq!(messages[i].fields[1].field_desc, "Complementary entity state flags.");
+    assert_eq!(messages[i].fields[1].field_type, "uint8_t");
+    assert_eq!(messages[i].fields[1].field_unit, "Bitfield");
+    assert_eq!(messages[i].fields[1].field_enum_prefix, "EFLA");
+    assert_eq!(messages[i].fields[1].field_enum.len(), 1);
+    assert_eq!(messages[i].fields[1].field_enum[0].id, "0x01");
+    assert_eq!(messages[i].fields[1].field_enum[0].name, "Human Intervention Required");
+    assert_eq!(messages[i].fields[1].field_enum[0].abbrev, "HUMAN_INTERVENTION");
+    n_fields += 1;
+
+    assert_eq!(messages[i].fields[2].field_name, "Complementary description");
+    assert_eq!(messages[i].fields[2].field_abbrev, "description");
+    assert_eq!(messages[i].fields[2].field_desc, "Complementary human-readable description of entity state.");
+    assert_eq!(messages[i].fields[2].field_type, "plaintext");
+    assert!(messages[i].fields[2].field_unit.is_empty());
+    assert!(messages[i].fields[2].field_enum_prefix.is_empty());
+    assert_eq!(messages[i].fields[2].field_enum.len(), 0);
+    n_fields += 1;
+
+    // make sure we tested all fields
+    assert_eq!(messages[i].fields.len(), 3);
+    assert_eq!(messages[i].fields.len(), n_fields);
+
+    i += 1;
+    n_fields = 0;
+    assert_eq!(messages[i].name, "Transport Bindings");
+    assert_eq!(messages[i].abbrev, "TransportBindings");
+    assert_eq!(messages[i].source, "vehicle");
+    assert_eq!(messages[i].category, "Core");
+    assert_eq!(messages[i].desc, "Message generated when tasks bind to messages.");
+    assert_eq!(messages[i].fields[0].field_name, "Consumer name");
+    assert_eq!(messages[i].fields[0].field_abbrev, "consumer");
+    assert_eq!(messages[i].fields[0].field_desc, "The name of the consumer (e.g. task name).");
+    assert_eq!(messages[i].fields[0].field_type, "plaintext");
+    assert!(messages[i].fields[0].field_unit.is_empty());
+    assert!(messages[i].fields[0].field_enum_prefix.is_empty());
+    assert_eq!(messages[i].fields[0].field_enum.len(), 0);
+    n_fields += 1;
+
+    assert_eq!(messages[i].fields[1].field_name, "Message Identifier");
+    assert_eq!(messages[i].fields[1].field_abbrev, "message_id");
+    assert_eq!(messages[i].fields[1].field_desc, "The id of the message to be listened to.");
+    assert_eq!(messages[i].fields[1].field_type, "uint16_t");
+    assert!(messages[i].fields[1].field_unit.is_empty());
+    assert!(messages[i].fields[1].field_enum_prefix.is_empty());
+    assert_eq!(messages[i].fields[1].field_enum.len(), 0);
+    n_fields += 1;
+
+    assert_eq!(messages[i].fields.len(), 2);
+    assert_eq!(messages[i].fields.len(), n_fields);
 }
 
 //#[test]

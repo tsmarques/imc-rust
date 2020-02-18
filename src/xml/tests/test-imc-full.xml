@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Copyright (C) 2007-2016 Laboratório de Sistemas e Tecnologia Subaquática   +
++ Departamento de Engenharia Electrotécnica e de Computadores                +
++ Rua Dr. Roberto Frias, 4200-465 Porto, Portugal                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-->
+<messages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="IMC.xsd"
+          name="IMC"
+          long-name="Inter Module Communication"
+          version="5.4.24">
+
+    <description>
+        This document describes the communications protocol associated
+        with the LSTS software framework. Concepts such as *message*,
+        *field* and *packet* are explained in detail in the subsequent
+        chapters.
+
+        Inter module communication is achieved by the exchange of messages
+        that can be recognized and interpreted by all participating
+        modules. A message is a self-contained collection of data fields
+        conveying relevant information about a given subject. The mean by
+        which the messages are exchanged is not described in this
+        document, but the reader can assume that at least the UDP Internet
+        protocol is available at all ends of the communications channel.
+
+        The Neptus Command and Control Unit (CCU), currently being used at
+        LSTS, supports mission planning and control, using the described
+        messaging API. This software entity can be used to define a plan
+        before execution and monitor the plan's execution by presenting an
+        operating console. For further details on this software contact
+        the LSTS.
+
+        A CCU exercises authority over a vehicle (real or
+        simulated). Usually this term is applied to software in the class
+        of LSTS Neptus, but can also be applied to software modules
+        extending the vehicle core control software.
+
+        The LSTS reserves itself the right to use message identification
+        numbers up to 999. Thus if a third party needs to extend this API
+        it must use identification numbers starting at 1000. The
+        identification number 65535 has a special meaning and must not be
+        used to extend the IMC protocol.
+    </description>
+
+    <types>
+        <description>
+            Messages and packets can be viewed as a finite collection of
+            fields. The list of valid field types is presented below.
+        </description>
+        <type name="int8_t" size="1">
+            <description>
+                8 bit signed integer.
+            </description>
+        </type>
+        <type name="uint8_t" size="1">
+            <description>
+                8 bit unsigned integer.
+            </description>
+        </type>
+        <type name="int16_t" size="2">
+            <description>
+                16 bit signed integer.
+            </description>
+        </type>
+        <type name="uint16_t" size="2">
+            <description>
+                16 bit unsigned integer.
+            </description>
+        </type>
+        <type name="int32_t" size="4">
+            <description>
+                32 bit signed integer.
+            </description>
+        </type>
+        <type name="uint32_t" size="4">
+            <description>
+                32 bit unsigned integer.
+            </description>
+        </type>
+        <type name="int64_t" size="8">
+            <description>
+                A 64 bit signed integer
+            </description>
+        </type>
+        <type name="fp32_t" size="4">
+            <description>
+                32 bit single precision floating point number in IEEE 754 format.
+            </description>
+        </type>
+        <type name="fp64_t" size="8">
+            <description>
+                64 bit double precision floating point number in IEEE 754 format.
+            </description>
+        </type>
+        <type name="rawdata">
+            <description>
+                Variable length byte stream.
+            </description>
+        </type>
+        <type name="plaintext">
+            <description>
+                Variable length ASCII character stream.
+            </description>
+        </type>
+        <type name="message">
+            <description>
+                An inline message. Useful for encapsulating other messages.
+            </description>
+        </type>
+        <type name="message-list">
+            <description>
+                A list of messages.
+            </description>
+        </type>
+    </types>
+
+    <serialization>
+        <description>
+            To ensure accurate transportation some field types may require
+            special treatment on transmission and reception. The operation
+            of preparing a field type for transmission is called
+            serialization, the inverse action is called deserialization. No
+            special serialization is required for types that are not
+            described in the table below, their values should be used as is.
+        </description>
+        <type name="rawdata">
+            <description>
+                A sequence of type *rawdata* is serialized by prepending a
+                value of type *uint16_t*, representing the length of the
+                sequence, to the stream of bytes. On deserialization the
+                prepended value is used to retrieve the correct size of data
+                bytes. The *rawdata* type length is limited only by the
+                communication protocol in use.
+            </description>
+        </type>
+        <type name="plaintext">
+            <description>
+                A sequence of type *plaintext* is serialized by prepending a
+                value of type *uint16_t*, representing the length of the
+                sequence, to the stream of ASCII characters. On
+                deserialization the prepended value is used to retrieve the
+                correct ASCII character sequence size. The *plaintext* type
+                length is limited only by the communication protocol in use.
+            </description>
+        </type>
+        <type name="message">
+            <description>
+                A field of type *message* is serialized by prepending a value
+                of type *uint16_t*, representing the identification number of
+                the message, to the serialized message payload. The special
+                identification number 65535 must be used when no message is
+                present. On deserialization the prepended value is used to
+                retrieve the correct message identification number. The
+                *message* type length is limited only by the communication
+                protocol in use.
+            </description>
+        </type>
+        <type name="message-list">
+            <description>
+                A field of type *message-list* is serialized by prepending a
+                value of type *uint16_t*, representing the number of messages
+                in the list, to the serialized message payload. On
+                deserialization the prepended value is used to retrieve the
+                correct number of messages
+            </description>
+        </type>
+    </serialization>
+
+    <units>
+        <description>
+            The following table lists the units used in the subsequent
+            chapters.
+        </description>
+        <unit abbrev="A" name="Ampere"/>
+        <unit abbrev="bit" name="Bit"/>
+        <unit abbrev="bps" name="Bits per second"/>
+        <unit abbrev="byte" name="Byte"/>
+        <unit abbrev="g" name="Gravity acceleration"/>
+        <unit abbrev="dm" name="Decimeter"/>
+        <unit abbrev="dB" name="Decibel"/>
+        <unit abbrev="dB/m" name="Decibel per meter"/>
+        <unit abbrev="dBHz" name="Decibel hertz"/>
+        <unit abbrev="°" name="Degree"/>
+        <unit abbrev="°C" name="Degree Celsius"/>
+        <unit abbrev="G" name="Gauss"/>
+        <unit abbrev="hPa" name="Hectopascal"/>
+        <unit abbrev="Hz" name="Hertz"/>
+        <unit abbrev="kg/m/m/m" name="Kilogram per cubic metre"/>
+        <unit abbrev="MiB" name="Mebibyte"/>
+        <unit abbrev="m" name="Meter"/>
+        <unit abbrev="m/s" name="Meter per second"/>
+        <unit abbrev="m/s/s" name="Meter per square second"/>
+        <unit abbrev="ms" name="Millisecond"/>
+        <unit abbrev="µs" name="Microsecond"/>
+        <unit abbrev="S/m" name="Siemens per meter"/>
+        <unit abbrev="Nm" name="Newton meter"/>
+        <unit abbrev="NTU" name="Nephelometric Turbidity Unit"/>
+        <unit abbrev="N" name="Newton"/>
+        <unit abbrev="Pa" name="Pascal"/>
+        <unit abbrev="%" name="Percent"/>
+        <unit abbrev="PPM" name="Parts per million"/>
+        <unit abbrev="PPB" name="Parts per billion"/>
+        <unit abbrev="1/m" name="Inverse Meter"/>
+        <unit abbrev="px" name="Pixel"/>
+        <unit abbrev="µg/L" name="Microgram per liter"/>
+        <unit abbrev="µM" name="Micromolar"/>
+        <unit abbrev="PSU" name="Pratical Salinity Unit"/>
+        <unit abbrev="rad" name="Radian"/>
+        <unit abbrev="rad/s" name="Radian per second"/>
+        <unit abbrev="rpm" name="Revolutions per minute"/>
+        <unit abbrev="rpm/s" name="Revolutions per minute per second"/>
+        <unit abbrev="s" name="Second"/>
+        <unit abbrev="V" name="Volt"/>
+        <unit abbrev="Enumerated" name="Enumeration of integer values"/>
+        <unit abbrev="List" name="Comma separated list of values"/>
+        <unit abbrev="Bitfield" name="Bit field"/>
+        <unit abbrev="TupleList" name="List of key/value tuples">
+            <description>
+                This unit is a list of label/value tuples and is only valid in
+                plaintext fields. The label and value portions of a tuple are
+                separated using the equal sign (=) and tuples are separated
+                using the semicolon character (;). These delimiting characters
+                must not be used elsewhere. Leading and trailing semicolons
+                must be removed.
+                Examples: "label1=12;label2=3" or "label1=12" or "label1=test_2".
+            </description>
+        </unit>
+    </units>
+
+    <enumerations>
+        <def name="Speed Units" abbrev="SpeedUnits" prefix="SUNITS">
+            <value id="0" name="Meters per second" abbrev="METERS_PS"/>
+            <value id="1" name="RPM" abbrev="RPM"/>
+            <value id="2" name="Percentage" abbrev="PERCENTAGE"/>
+        </def>
+
+        <def name="System Type" abbrev="SystemType" prefix="SYSTEMTYPE">
+            <value id="0" name="CCU" abbrev="CCU"/>
+            <value id="1" name="Human-portable Sensor" abbrev="HUMANSENSOR"/>
+            <value id="2" name="UUV" abbrev="UUV"/>
+            <value id="3" name="USV" abbrev="USV"/>
+            <value id="4" name="UAV" abbrev="UAV"/>
+            <value id="5" name="UGV" abbrev="UGV"/>
+            <value id="6" name="Static sensor" abbrev="STATICSENSOR"/>
+            <value id="7" name="Mobile sensor" abbrev="MOBILESENSOR"/>
+            <value id="8" name="Wireless Sensor Network" abbrev="WSN"/>
+        </def>
+
+        <def name="Z Units" abbrev="ZUnits" prefix="Z" >
+            <value id="0" name="None" abbrev="NONE"/>
+            <value id="1" name="Depth" abbrev="DEPTH"/>
+            <value id="2" name="Altitude" abbrev="ALTITUDE"/>
+            <value id="3" name="Height" abbrev="HEIGHT"/>
+        </def>
+
+        <def name="RSSI Units" abbrev="RSSIUnits" prefix="RSSIUNITS">
+            <value id="0" name="Decibel" abbrev="dB"/>
+            <value id="1" name="Percentage" abbrev="PERCENTAGE"/>
+        </def>
+    </enumerations>
+
+    <bitfields>
+        <def prefix="CL" name="Control Loops Mask" abbrev="CLoopsMask">
+            <value id="0x00000000" abbrev="NONE" name="None"/>
+            <value id="0x00000001" abbrev="PATH" name="Path Control"/>
+            <value id="0x00000002" abbrev="TELEOPERATION" name="Teleoperation Control"/>
+            <value id="0x00000004" abbrev="ALTITUDE" name="Altitude Control"/>
+            <value id="0x00000008" abbrev="DEPTH" name="Depth Control"/>
+            <value id="0x00000010" abbrev="ROLL" name="Roll Control"/>
+            <value id="0x00000020" abbrev="PITCH" name="Pitch Control"/>
+            <value id="0x00000040" abbrev="YAW" name="Yaw Control"/>
+            <value id="0x00000080" abbrev="SPEED" name="Speed Control"/>
+            <value id="0x00000100" abbrev="YAW_RATE" name="Yaw Rate Control"/>
+            <value id="0x00000400" abbrev="TORQUE" name="Torque Control"/>
+            <value id="0x00000800" abbrev="FORCE" name="Force Control"/>
+            <value id="0x80000000" abbrev="NO_OVERRIDE" name="Non-overridable control"/>
+            <value id="0xFFFFFFFF" abbrev="ALL" name="All"/>
+        </def>
+
+        <def prefix="OPL" name="Operational Limits Mask" abbrev="OpLimitsMask">
+            <value id="0x01" name="Maximum Depth" abbrev="MAX_DEPTH"/>
+            <value id="0x02" name="Minimum Altitude" abbrev="MIN_ALT"/>
+            <value id="0x04" name="Maximum Altitude" abbrev="MAX_ALT"/>
+            <value id="0x08" name="Minimum Speed" abbrev="MIN_SPEED"/>
+            <value id="0x10" name="Maximum Speed" abbrev="MAX_SPEED"/>
+            <value id="0x20" name="Maximum Vertical Rate" abbrev="MAX_VRATE"/>
+            <value id="0x40" name="Operation Area" abbrev="AREA"/>
+        </def>
+    </bitfields>
+
+    <message-groups>
+        <message-group name="Maneuver" abbrev="Maneuver">
+            <message-type abbrev="Alignment"/>
+            <message-type abbrev="CustomManeuver"/>
+            <message-type abbrev="CompassCalibration"/>
+            <message-type abbrev="Dislodge"/>
+            <message-type abbrev="Elevator"/>
+            <message-type abbrev="FollowCommand"/>
+            <message-type abbrev="FollowPath"/>
+            <message-type abbrev="FollowReference"/>
+            <message-type abbrev="FollowTrajectory"/>
+            <message-type abbrev="Goto"/>
+            <message-type abbrev="IdleManeuver"/>
+            <message-type abbrev="Launch"/>
+            <message-type abbrev="Loiter"/>
+            <message-type abbrev="Magnetometer"/>
+            <message-type abbrev="PopUp"/>
+            <message-type abbrev="Teleoperation"/>
+            <message-type abbrev="Rows"/>
+            <message-type abbrev="StationKeeping"/>
+            <message-type abbrev="YoYo"/>
+        </message-group>
+
+        <message-group name="Control Command" abbrev="ControlCommand">
+            <message-type abbrev="DesiredZ"/>
+            <message-type abbrev="DesiredHeading"/>
+            <message-type abbrev="DesiredRoll"/>
+            <message-type abbrev="DesiredPitch"/>
+            <message-type abbrev="DesiredSpeed"/>
+            <message-type abbrev="DesiredPath"/>
+        </message-group>
+    </message-groups>
+
+    <flags>
+        <flag abbrev="periodic" name="Periodic"/>
+        <flag abbrev="deprecated" name="Deprecated"/>
+    </flags>
+
+    <header>
+        <description>
+            The packet header contains handling information in the form of
+            supplemental fields, it is always placed at the beginning of a
+            packet.
+        </description>
+        <field name="Synchronization Number" abbrev="sync" type="uint16_t" value="0xFE54" fixed="true">
+            <description>
+                The synchronization number marks the beginning of a packet.
+
+                It denotes the packet API version and can be used to deduce
+                the byte order of the sending host.
+
+                It encodes value 0xFE[major][minor] where [major] equals the
+                major version number of the protocol and [minor] equals the
+                minor version of the protocol.
+
+                The packet recipient is responsible for the correct
+                interpretation of the synchronization number and byte order
+                conversions.
+            </description>
+        </field>
+        <field name="Message Identification Number" abbrev="mgid" type="uint16_t">
+            <description>
+                The identification number of the message contained in the
+                packet. This field is used for correct message interpretation
+                and deserialization.
+            </description>
+        </field>
+        <field name="Message size" abbrev="size" type="uint16_t" unit="byte">
+            <description>
+                The size of the message data in the packet.
+            </description>
+        </field>
+        <field name="Time stamp" abbrev="timestamp" type="fp64_t" unit="s">
+            <description>
+                The time when the packet was sent, as seen by the packet
+                dispatcher. The number of seconds is represented in Universal
+                Coordinated Time (UCT) in seconds since Jan 1, 1970 using IEEE
+                double precision floating point numbers.
+            </description>
+        </field>
+        <field name="Source Address" abbrev="src" type="uint16_t">
+            <description>
+                The Source IMC system ID.
+            </description>
+        </field>
+        <field name="Source Entity" abbrev="src_ent" type="uint8_t">
+            <description>
+                The entity generating this message at the source address.
+            </description>
+        </field>
+        <field name="Destination Address" abbrev="dst" type="uint16_t">
+            <description>
+                The Destination IMC system ID.
+            </description>
+        </field>
+        <field name="Destination Entity" abbrev="dst_ent" type="uint8_t">
+            <description>
+                The entity that should process this message at the destination
+                address.
+            </description>
+        </field>
+    </header>
+
+    <footer>
+        <description>
+            The packet footer contains validation information in the form of
+            supplemental fields, it is always placed at the end of a packet.
+        </description>
+        <field name="Check Sum (CRC-16-IBM)" abbrev="crc16" type="uint16_t">
+            <description>
+                The check sum field is computed using the CRC-16-IBM with
+                polynomial 0x8005 (x^16 + x^15 + x^2 + 1). The data
+                contributing for the CRC includes all preceding header and
+                message bytes.
+            </description>
+        </field>
+    </footer>
+
+    <!-- Core -->
+    <message id="1" name="Entity State" abbrev="EntityState" source="vehicle" category="Core">
+        <description>
+            State reported by an entity in the vehicle. The source entity is
+            identified in the message header.
+        </description>
+        <field name="State" abbrev="state" type="uint8_t" unit="Enumerated" prefix="ESTA">
+            <description>
+                State of entity.
+            </description>
+            <value id="0" name="Bootstrapping" abbrev="BOOT"/>
+            <value id="1" name="Normal Operation" abbrev="NORMAL"/>
+            <value id="2" name="Fault" abbrev="FAULT"/>
+            <value id="3" name="Error" abbrev="ERROR"/>
+            <value id="4" name="Failure" abbrev="FAILURE"/>
+        </field>
+        <field name="Flags" abbrev="flags" type="uint8_t" unit="Bitfield" prefix="EFLA">
+            <description>
+                Complementary entity state flags.
+            </description>
+            <value id="0x01" abbrev="HUMAN_INTERVENTION" name="Human Intervention Required"/>
+        </field>
+        <field name="Complementary description" type="plaintext" abbrev="description">
+            <description>
+                Complementary human-readable description of entity state.
+            </description>
+        </field>
+    </message>
+    <message id="8" name="Transport Bindings" abbrev="TransportBindings" source="vehicle" category="Core">
+        <description>
+            Message generated when tasks bind to messages.
+        </description>
+        <field name="Consumer name" abbrev="consumer" type="plaintext">
+            <description>
+                The name of the consumer (e.g. task name).
+            </description>
+        </field>
+        <field name="Message Identifier" abbrev="message_id" type="uint16_t">
+            <description>
+                The id of the message to be listened to.
+            </description>
+        </field>
+    </message>
+    <message id="9" name="Restart System" abbrev="RestartSystem" source="ccu" category="Core">
+        <description>
+            Request the destination system to restart itself.
+        </description>
+    </message>
+</messages>
