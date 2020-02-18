@@ -67,7 +67,12 @@ fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Fie
                         parse_field_attributes(&mut fields[i], &attributes)
                     },
                     "description" => {},
-                    "value" => parse_field_enum(&mut fields[i], &attributes),
+                    "value" => {
+                        match fields[i].field_unit.as_str() {
+                            "Enumerated" | "Bitfield" => parse_field_enum(&mut fields[i], &attributes),
+                            _ => panic!("parse_field_enum: was expecting enum"),
+                        }
+                    }
                     _ => panic!("parse field : unknown name {}", name.local_name)
                 },
             Ok(XmlEvent::Characters(content)) => {
