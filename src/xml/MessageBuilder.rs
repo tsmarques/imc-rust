@@ -1,4 +1,4 @@
-pub struct Data {
+pub struct MessageData {
     pub desc:String,
     pub id :String,
     pub enums:String,
@@ -99,9 +99,9 @@ impl FieldData {
     }
 }
 
-impl Data {
-    pub fn new() -> Data {
-        Data {
+impl MessageData {
+    pub fn new() -> MessageData {
+        MessageData {
             desc: "".to_string(),
             id: "".to_string(),
             enums: "".to_string(),

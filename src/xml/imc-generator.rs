@@ -104,7 +104,7 @@ fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Fie
     (message_descr, fields)
 }
 
-fn parse_message_attributes(message :&mut MessageBuilder::Data, attributes :&Vec<OwnedAttribute>) {
+fn parse_message_attributes(message :&mut MessageBuilder::MessageData, attributes :&Vec<OwnedAttribute>) {
     for attr in attributes {
         let value = attr.value.trim().to_string();
         match attr.name.local_name.as_str() {
@@ -121,18 +121,17 @@ fn parse_message_attributes(message :&mut MessageBuilder::Data, attributes :&Vec
 }
 
 
-fn parse_messages(parser : &mut EventReader<BufReader<File>>) -> Vec<MessageBuilder::Data> {
-    let mut messages :Vec<MessageBuilder::Data> = vec![];
+fn parse_messages(parser : &mut EventReader<BufReader<File>>) -> Vec<MessageBuilder::MessageData> {
+    let mut messages :Vec<MessageBuilder::MessageData> = vec![];
     let mut i = 0;
 
-    let mut e = parser.next();
     loop {
-        match e {
-            Err(e) => panic!("parse_message: error: {}", e),
+        match parser.next() {
+            Err(err) => panic!("parse_message: error: {}", err),
             Ok(XmlEvent::StartElement {name, attributes, ..}) => {
                 match name.local_name.as_str() {
                     "message" => {
-                        messages.push(MessageBuilder::Data::new());
+                        messages.push(MessageBuilder::MessageData::new());
                         parse_message_attributes(&mut messages[i], &attributes);
 
                         let ret = parse_message(parser);
@@ -148,8 +147,6 @@ fn parse_messages(parser : &mut EventReader<BufReader<File>>) -> Vec<MessageBuil
             Ok(XmlEvent::EndDocument) => break,
             Ok(_) => panic!("parse_message: unhandled event"),
         }
-
-        e = parser.next();
     }
 
     messages
@@ -168,7 +165,7 @@ fn ignore_tag(xml_tag :&str, parser : &mut EventReader<BufReader<File>>) {
     }
 }
 
-fn parse(xml_path : &str) -> Vec<MessageBuilder::Data> {
+fn parse(xml_path : &str) -> Vec<MessageBuilder::MessageData> {
     let file = File::open(xml_path).unwrap();
     let file = BufReader::new(file);
 
@@ -178,7 +175,7 @@ fn parse(xml_path : &str) -> Vec<MessageBuilder::Data> {
     // footer, header, flags, message-group, bitfields, enumerations, units, serialization, types,
     // description
 
-    let mut messages :Vec<MessageBuilder::Data> = vec![];
+    let mut messages :Vec<MessageBuilder::MessageData> = vec![];
     loop {
         let e = parser.next();
         match e {
@@ -228,7 +225,7 @@ fn main() {
     .get_matches();
 
     let ret = matches.value_of("imc");
-    let messages :Vec<MessageBuilder::Data>;
+    let messages :Vec<MessageBuilder::MessageData>;
     match ret {
         Some(v) => messages = parse(v),
         None => panic!("missing path to IMC definition. Use --imc option")
