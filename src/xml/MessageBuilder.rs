@@ -36,6 +36,7 @@ pub struct EnumData {
     pub abbrev :String,
 }
 
+
 fn parse_type(ftype :&str, msg_type :Option<String>) -> (String, String) {
     match ftype {
         "uint8_t" => ("u8".to_string(), "0".to_string()),
