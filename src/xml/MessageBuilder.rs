@@ -27,7 +27,8 @@ pub struct FieldData {
     pub field_enum_prefix :String,
     pub field_ser_size :usize,
     pub field_max: String,
-    pub field_min: String
+    pub field_min: String,
+    pub is_fixed: bool
 }
 
 pub struct EnumData {
@@ -77,7 +78,8 @@ impl FieldData {
             field_enum_prefix: "".to_string(),
             field_max: "".to_string(),
             field_min: "".to_string(),
-            field_ser_size: 0
+            field_ser_size: 0,
+            is_fixed: false
         }
     }
 

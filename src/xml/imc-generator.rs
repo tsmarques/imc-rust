@@ -11,6 +11,14 @@ use xml::reader::{XmlEvent, Error};
 use crate::MessageBuilder::{FieldData, EnumData, MessageData};
 use xml::attribute::OwnedAttribute;
 
+struct Context {
+    pub header :MessageData,
+    pub global_enums :Vec<FieldData>,
+    pub global_bitfields :Vec<FieldData>,
+    pub units :Vec<(String, String)>,
+    pub messages :Vec<MessageData>
+}
+
 fn parse_global_enum(out :&mut Vec<FieldData>, parser : &mut EventReader<BufReader<File>>) {
     let mut i = 0;
     loop {
@@ -81,6 +89,7 @@ fn parse_field_attributes(field :&mut FieldData, attr :&Vec<OwnedAttribute>) {
             "enum-def" => {}, // TODO handle global enumerator
             "value" => field.field_default_value = value,
             "bitfield-def" => {}, // TODO handle global bitfield
+            "fixed" => field.is_fixed = (value == "true"),
             _ => { panic!("unhandled field attribute : {}", attr.name) }
         }
     }
@@ -185,7 +194,33 @@ fn parse_messages(ctx : &mut Context, parser : &mut EventReader<BufReader<File>>
     }
 }
 
-fn ignore_tag(xml_tag :&str, parser : &mut EventReader<BufReader<File>>) {
+fn parse_header(ctx : &mut Context, parser : &mut EventReader<BufReader<File>>) {
+    let mut i = 0;
+    loop {
+        match parser.next() {
+            Err(err) => panic!("parse_header: error: {}", err),
+            Ok(XmlEvent::StartElement { name, attributes, .. }) => {
+                match name.local_name.as_str() {
+                    "description" => ignore_tag("description", parser),
+                    "field" => {
+                        ctx.header.fields.push(FieldData::new());
+                        parse_field_attributes(&mut ctx.header.fields[i], &attributes)
+                    },
+                    _ => {}
+                }
+            },
+            Ok(XmlEvent::EndElement { name }) =>
+                match name.local_name.as_str() {
+                    "field" => i += 1,
+                    "header" => { break },
+                    _ => panic!("header: unkown {}", name.local_name)
+                }
+            _ => {}
+        }
+    }
+}
+
+fn ignore_tag(xml_tag: &str, parser: &mut EventReader<BufReader<File>>) {
     loop {
         match parser.next() {
             Ok(XmlEvent::EndElement { name }) => {
@@ -198,7 +233,7 @@ fn ignore_tag(xml_tag :&str, parser : &mut EventReader<BufReader<File>>) {
     }
 }
 
-fn parse(xml_path : &str) -> Context {
+fn parse(xml_path: &str) -> Context {
     let file = File::open(xml_path).unwrap();
     let file = BufReader::new(file);
 
@@ -208,24 +243,27 @@ fn parse(xml_path : &str) -> Context {
     // footer, header, flags, message-group, bitfields, enumerations, units, serialization, types,
     // description
 
-    let mut ctx :Context = Context {
+    let mut ctx: Context = Context {
+        header: MessageData::new(),
         global_enums: vec![],
         global_bitfields: vec![],
         units: vec![],
         messages: vec![]
     };
+
     loop {
         let e = parser.next();
         match e {
-            Ok(XmlEvent::StartDocument {..}) => {},
-            Ok(XmlEvent::StartElement {name, attributes, ..}) => {
+            Ok(XmlEvent::StartDocument { .. }) => {},
+            Ok(XmlEvent::StartElement { name, attributes, .. }) => {
                 match name.local_name.as_str() {
                     "type" |
                     "description" | "types" | "serialization" |
-                    "units" | "message-groups" | "flags" | "header"
+                    "units" | "message-groups" | "flags"
                     => { ignore_tag(name.local_name.as_str(), &mut parser) }, // ignore, for now, this headers
                     "enumerations" => parse_global_enum(&mut ctx.global_enums, &mut parser),
                     "bitfields" => parse_global_enum(&mut ctx.global_bitfields, &mut parser),
+                    "header" => parse_header(&mut ctx, &mut parser),
                     "messages" => {
                         let ret = attributes.iter().find(|x| x.name.local_name == "version");
                         match ret {
@@ -241,7 +279,7 @@ fn parse(xml_path : &str) -> Context {
                     _ => panic!("parse: unhandled tag {}", name.local_name),
                 }
             },
-            Ok(XmlEvent::EndElement {name}) => {  },
+            Ok(XmlEvent::EndElement { name }) => {},
             Ok(XmlEvent::EndDocument) => break,
             Ok(XmlEvent::Whitespace(..)) |
             Ok(XmlEvent::Characters(..)) => {},
@@ -250,13 +288,6 @@ fn parse(xml_path : &str) -> Context {
     }
 
     ctx
-}
-
-struct Context {
-    pub global_enums :Vec<FieldData>,
-    pub global_bitfields :Vec<FieldData>,
-    pub units :Vec<(String, String)>,
-    pub messages :Vec<MessageData>
 }
 
 fn main() {
@@ -271,7 +302,7 @@ fn main() {
     .get_matches();
 
     let ret = matches.value_of("imc");
-    let ctx :Context;
+    let ctx: Context;
     match ret {
         Some(v) => ctx = parse(v),
         None => panic!("missing path to IMC definition. Use --imc option")
@@ -285,6 +316,7 @@ fn full_format() {
     assert_eq!(ctx.messages.len(), 3);
     assert_global_enums(&ctx);
     assert_global_bitfields(&ctx);
+    assert_header(&ctx);
 
     let mut i = 0;
     let mut n_fields = 0;
@@ -302,6 +334,7 @@ fn full_format() {
     assert_eq!(ctx.messages[i].fields[0].field_type, "uint8_t");
     assert_eq!(ctx.messages[i].fields[0].field_unit, "Enumerated");
     assert_eq!(ctx.messages[i].fields[0].field_enum_prefix, "ESTA");
+    assert_eq!(ctx.messages[i].fields[0].is_fixed, false);
     assert_eq!(ctx.messages[i].fields[0].field_enum.len(), 5);
     assert_eq!(ctx.messages[i].fields[0].field_enum[0].id, "0");
     assert_eq!(ctx.messages[i].fields[0].field_enum[0].name, "Bootstrapping");
@@ -326,6 +359,7 @@ fn full_format() {
     assert_eq!(ctx.messages[i].fields[1].field_type, "uint8_t");
     assert_eq!(ctx.messages[i].fields[1].field_unit, "Bitfield");
     assert_eq!(ctx.messages[i].fields[1].field_enum_prefix, "EFLA");
+    assert_eq!(ctx.messages[i].fields[1].is_fixed, false);
     assert_eq!(ctx.messages[i].fields[1].field_enum.len(), 1);
     assert_eq!(ctx.messages[i].fields[1].field_enum[0].id, "0x01");
     assert_eq!(ctx.messages[i].fields[1].field_enum[0].name, "Human Intervention Required");
@@ -336,6 +370,7 @@ fn full_format() {
     assert_eq!(ctx.messages[i].fields[2].field_abbrev, "description");
     assert_eq!(ctx.messages[i].fields[2].field_desc, "Complementary human-readable description of entity state.");
     assert_eq!(ctx.messages[i].fields[2].field_type, "plaintext");
+    assert_eq!(ctx.messages[i].fields[2].is_fixed, false);
     assert!(ctx.messages[i].fields[2].field_unit.is_empty());
     assert!(ctx.messages[i].fields[2].field_enum_prefix.is_empty());
     assert_eq!(ctx.messages[i].fields[2].field_enum.len(), 0);
@@ -356,6 +391,7 @@ fn full_format() {
     assert_eq!(ctx.messages[i].fields[0].field_abbrev, "consumer");
     assert_eq!(ctx.messages[i].fields[0].field_desc, "The name of the consumer (e.g. task name).");
     assert_eq!(ctx.messages[i].fields[0].field_type, "plaintext");
+    assert_eq!(ctx.messages[i].fields[0].is_fixed, false);
     assert!(ctx.messages[i].fields[0].field_unit.is_empty());
     assert!(ctx.messages[i].fields[0].field_enum_prefix.is_empty());
     assert_eq!(ctx.messages[i].fields[0].field_enum.len(), 0);
@@ -365,6 +401,7 @@ fn full_format() {
     assert_eq!(ctx.messages[i].fields[1].field_abbrev, "message_id");
     assert_eq!(ctx.messages[i].fields[1].field_desc, "The id of the message to be listened to.");
     assert_eq!(ctx.messages[i].fields[1].field_type, "uint16_t");
+    assert_eq!(ctx.messages[i].fields[1].is_fixed, false);
     assert!(ctx.messages[i].fields[1].field_unit.is_empty());
     assert!(ctx.messages[i].fields[1].field_enum_prefix.is_empty());
     assert_eq!(ctx.messages[i].fields[1].field_enum.len(), 0);
@@ -374,7 +411,7 @@ fn full_format() {
     assert_eq!(ctx.messages[i].fields.len(), n_fields);
 }
 
-fn assert_global_enums(ctx :&Context) {
+fn assert_global_enums(ctx: &Context) {
     assert_eq!(ctx.global_enums.len(), 4);
 
     assert_eq!(ctx.global_enums[0].field_name, "Speed Units");
@@ -452,7 +489,53 @@ fn assert_global_enums(ctx :&Context) {
     assert_eq!(ctx.global_enums[3].field_enum[1].abbrev, "PERCENTAGE");
 }
 
-fn assert_global_bitfields(ctx :&Context) {
+fn assert_header(ctx: &Context) {
+    assert_eq!(ctx.header.fields.len(), 8);
+    assert_eq!(ctx.header.fields[0].field_name, "Synchronization Number");
+    assert_eq!(ctx.header.fields[0].field_abbrev, "sync");
+    assert_eq!(ctx.header.fields[0].field_type, "uint16_t");
+    assert_eq!(ctx.header.fields[0].field_default_value, "0xFE54");
+    assert!(ctx.header.fields[0].is_fixed);
+
+    assert_eq!(ctx.header.fields[1].field_name, "Message Identification Number");
+    assert_eq!(ctx.header.fields[1].field_abbrev, "mgid");
+    assert_eq!(ctx.header.fields[1].field_type, "uint16_t");
+    assert_eq!(ctx.header.fields[1].is_fixed, false);
+
+    assert_eq!(ctx.header.fields[2].field_name, "Message size");
+    assert_eq!(ctx.header.fields[2].field_abbrev, "size");
+    assert_eq!(ctx.header.fields[2].field_type, "uint16_t");
+    assert_eq!(ctx.header.fields[2].field_unit, "byte");
+    assert_eq!(ctx.header.fields[2].is_fixed, false);
+
+    assert_eq!(ctx.header.fields[3].field_name, "Time stamp");
+    assert_eq!(ctx.header.fields[3].field_abbrev, "timestamp");
+    assert_eq!(ctx.header.fields[3].field_type, "fp64_t");
+    assert_eq!(ctx.header.fields[3].field_unit, "s");
+    assert_eq!(ctx.header.fields[3].is_fixed, false);
+
+    assert_eq!(ctx.header.fields[4].field_name, "Source Address");
+    assert_eq!(ctx.header.fields[4].field_abbrev, "src");
+    assert_eq!(ctx.header.fields[4].field_type, "uint16_t");
+    assert_eq!(ctx.header.fields[4].is_fixed, false);
+
+    assert_eq!(ctx.header.fields[5].field_name, "Source Entity");
+    assert_eq!(ctx.header.fields[5].field_abbrev, "src_ent");
+    assert_eq!(ctx.header.fields[5].field_type, "uint8_t");
+    assert_eq!(ctx.header.fields[5].is_fixed, false);
+
+    assert_eq!(ctx.header.fields[6].field_name, "Destination Address");
+    assert_eq!(ctx.header.fields[6].field_abbrev, "dst");
+    assert_eq!(ctx.header.fields[6].field_type, "uint16_t");
+    assert_eq!(ctx.header.fields[6].is_fixed, false);
+
+    assert_eq!(ctx.header.fields[7].field_name, "Destination Entity");
+    assert_eq!(ctx.header.fields[7].field_abbrev, "dst_ent");
+    assert_eq!(ctx.header.fields[7].field_type, "uint8_t");
+    assert_eq!(ctx.header.fields[7].is_fixed, false);
+}
+
+fn assert_global_bitfields(ctx: &Context) {
     assert_eq!(ctx.global_bitfields.len(), 2);
 
     assert_eq!(ctx.global_bitfields[0].field_enum.len(), 14);
