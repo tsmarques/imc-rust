@@ -15,7 +15,6 @@ struct Context {
     pub footer : Tokens::Message,
     pub global_enums :Vec<Tokens::Field>,
     pub global_bitfields :Vec<Tokens::Field>,
-    pub units :Vec<(String, String)>,
     pub messages :Vec<Tokens::Message>
 }
 
@@ -238,17 +237,12 @@ fn parse(xml_path: &str) -> Context {
     let file = BufReader::new(file);
 
     let mut parser = EventReader::new(file);
-    let mut depth = 0;
-
-    // footer, header, flags, message-group, bitfields, enumerations, units, serialization, types,
-    // description
 
     let mut ctx: Context = Context {
         header: Tokens::Message::new(),
         footer: Tokens::Message::new(),
         global_enums: vec![],
         global_bitfields: vec![],
-        units: vec![],
         messages: vec![]
     };
 
