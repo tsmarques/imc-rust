@@ -1,4 +1,4 @@
-pub struct MessageData {
+pub struct Message {
     pub desc:String,
     pub id :String,
     pub enums:String,
@@ -7,7 +7,7 @@ pub struct MessageData {
     pub source :String,
     pub flags :String,
     pub category :String,
-    pub fields :Vec<FieldData>,
+    pub fields :Vec<Field>,
     pub fields_init :String,
     pub clear :String,
     pub fixed_serialization_size :String,
@@ -15,7 +15,7 @@ pub struct MessageData {
     pub field_serialization :String,
 }
 
-pub struct FieldData {
+pub struct Field {
     pub field_desc :String,
     pub field_name :String,
     pub field_abbrev :String,
@@ -23,7 +23,7 @@ pub struct FieldData {
     pub field_unit :String,
     pub field_default_value :String,
     pub field_msg_type :String,
-    pub field_enum :Vec<EnumData>,
+    pub field_enum :Vec<Enum>,
     pub field_enum_prefix :String,
     pub field_ser_size :usize,
     pub field_max: String,
@@ -31,7 +31,7 @@ pub struct FieldData {
     pub is_fixed: bool
 }
 
-pub struct EnumData {
+pub struct Enum {
     pub id :String,
     pub name :String,
     pub abbrev :String,
@@ -64,9 +64,9 @@ fn parse_type(ftype :&str, msg_type :Option<String>) -> (String, String) {
     }
 }
 
-impl FieldData {
-    pub(crate) fn new() -> FieldData {
-        FieldData {
+impl Field {
+    pub(crate) fn new() -> Field {
+        Field {
             field_desc: String::from(""),
             field_name: String::from(""),
             field_abbrev: String::from(""),
@@ -102,9 +102,9 @@ impl FieldData {
     }
 }
 
-impl MessageData {
-    pub fn new() -> MessageData {
-        MessageData {
+impl Message {
+    pub fn new() -> Message {
+        Message {
             desc: "".to_string(),
             id: "".to_string(),
             enums: "".to_string(),

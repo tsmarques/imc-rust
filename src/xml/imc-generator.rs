@@ -1,4 +1,4 @@
-mod MessageBuilder;
+mod Tokens;
 
 extern crate xml;
 extern crate clap;
@@ -8,26 +8,25 @@ use std::fs::File;
 use std::io::BufReader;
 use xml::EventReader;
 use xml::reader::{XmlEvent, Error};
-use crate::MessageBuilder::{FieldData, EnumData, MessageData};
 use xml::attribute::OwnedAttribute;
 
 struct Context {
-    pub header :MessageData,
-    pub footer :MessageData,
-    pub global_enums :Vec<FieldData>,
-    pub global_bitfields :Vec<FieldData>,
+    pub header : Tokens::Message,
+    pub footer : Tokens::Message,
+    pub global_enums :Vec<Tokens::Field>,
+    pub global_bitfields :Vec<Tokens::Field>,
     pub units :Vec<(String, String)>,
-    pub messages :Vec<MessageData>
+    pub messages :Vec<Tokens::Message>
 }
 
-fn parse_global_enum(out :&mut Vec<FieldData>, parser : &mut EventReader<BufReader<File>>) {
+fn parse_global_enum(out :&mut Vec<Tokens::Field>, parser : &mut EventReader<BufReader<File>>) {
     let mut i = 0;
     loop {
         match parser.next() {
             Ok(XmlEvent::StartElement { name, attributes, ..}) => {
                 match name.local_name.as_str() {
                     "def" => {
-                        out.push(FieldData::new());
+                        out.push(Tokens::Field::new());
                         for attr in attributes {
                             let attr_name = attr.name.local_name.as_str();
                             let attr_value = attr.value.trim().to_string();
@@ -56,8 +55,8 @@ fn parse_global_enum(out :&mut Vec<FieldData>, parser : &mut EventReader<BufRead
     }
 }
 
-fn parse_field_enum(field :&mut FieldData, attr :&Vec<OwnedAttribute>) {
-    let mut field_enum :EnumData = EnumData {
+fn parse_field_enum(field :&mut Tokens::Field, attr :&Vec<OwnedAttribute>) {
+    let mut field_enum : Tokens::Enum = Tokens::Enum {
         id: "".to_string(),
         name: "".to_string(),
         abbrev: "".to_string(),
@@ -75,7 +74,7 @@ fn parse_field_enum(field :&mut FieldData, attr :&Vec<OwnedAttribute>) {
     field.field_enum.push(field_enum);
 }
 
-fn parse_field_attributes(field :&mut FieldData, attr :&Vec<OwnedAttribute>) {
+fn parse_field_attributes(field :&mut Tokens::Field, attr :&Vec<OwnedAttribute>) {
     for attr in attr {
         let value = attr.value.trim().to_string();
         match attr.name.local_name.as_str() {
@@ -96,7 +95,7 @@ fn parse_field_attributes(field :&mut FieldData, attr :&Vec<OwnedAttribute>) {
     }
 }
 
-fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<FieldData>) {
+fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Tokens::Field>) {
     let mut fields = vec![];
     // flag if next <description> is from <message ...>
     let mut is_message_description = true;
@@ -109,7 +108,7 @@ fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Fie
                 match name.local_name.as_str() {
                     "field" => {
                         is_message_description = false;
-                        fields.push(FieldData::new());
+                        fields.push(Tokens::Field::new());
                         parse_field_attributes(&mut fields[i], &attributes)
                     },
                     "description" => {},
@@ -150,7 +149,7 @@ fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Fie
     (message_descr, fields)
 }
 
-fn parse_message_attributes(message :&mut MessageBuilder::MessageData, attributes :&Vec<OwnedAttribute>) {
+fn parse_message_attributes(message :&mut Tokens::Message, attributes :&Vec<OwnedAttribute>) {
     for attr in attributes {
         let value = attr.value.trim().to_string();
         match attr.name.local_name.as_str() {
@@ -176,7 +175,7 @@ fn parse_messages(ctx : &mut Context, parser : &mut EventReader<BufReader<File>>
             Ok(XmlEvent::StartElement {name, attributes, ..}) => {
                 match name.local_name.as_str() {
                     "message" => {
-                        ctx.messages.push(MessageBuilder::MessageData::new());
+                        ctx.messages.push(Tokens::Message::new());
                         parse_message_attributes(&mut ctx.messages[i], &attributes);
 
                         let ret = parse_message(parser);
@@ -195,7 +194,7 @@ fn parse_messages(ctx : &mut Context, parser : &mut EventReader<BufReader<File>>
     }
 }
 
-fn parse_special(out :&mut Vec<FieldData>, parser : &mut EventReader<BufReader<File>>) {
+fn parse_special(out :&mut Vec<Tokens::Field>, parser : &mut EventReader<BufReader<File>>) {
     let mut i = 0;
     loop {
         match parser.next() {
@@ -204,7 +203,7 @@ fn parse_special(out :&mut Vec<FieldData>, parser : &mut EventReader<BufReader<F
                 match name.local_name.as_str() {
                     "description" => ignore_tag("description", parser),
                     "field" => {
-                        out.push(FieldData::new());
+                        out.push(Tokens::Field::new());
                         parse_field_attributes(&mut out[i], &attributes)
                     },
                     _ => {}
@@ -245,8 +244,8 @@ fn parse(xml_path: &str) -> Context {
     // description
 
     let mut ctx: Context = Context {
-        header: MessageData::new(),
-        footer: MessageData::new(),
+        header: Tokens::Message::new(),
+        footer: Tokens::Message::new(),
         global_enums: vec![],
         global_bitfields: vec![],
         units: vec![],
