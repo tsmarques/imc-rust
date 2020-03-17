@@ -13,6 +13,7 @@ use xml::attribute::OwnedAttribute;
 
 struct Context {
     pub header :MessageData,
+    pub footer :MessageData,
     pub global_enums :Vec<FieldData>,
     pub global_bitfields :Vec<FieldData>,
     pub units :Vec<(String, String)>,
@@ -194,17 +195,17 @@ fn parse_messages(ctx : &mut Context, parser : &mut EventReader<BufReader<File>>
     }
 }
 
-fn parse_header(ctx : &mut Context, parser : &mut EventReader<BufReader<File>>) {
+fn parse_special(out :&mut Vec<FieldData>, parser : &mut EventReader<BufReader<File>>) {
     let mut i = 0;
     loop {
         match parser.next() {
-            Err(err) => panic!("parse_header: error: {}", err),
+            Err(err) => panic!("parse_special: error: {}", err),
             Ok(XmlEvent::StartElement { name, attributes, .. }) => {
                 match name.local_name.as_str() {
                     "description" => ignore_tag("description", parser),
                     "field" => {
-                        ctx.header.fields.push(FieldData::new());
-                        parse_field_attributes(&mut ctx.header.fields[i], &attributes)
+                        out.push(FieldData::new());
+                        parse_field_attributes(&mut out[i], &attributes)
                     },
                     _ => {}
                 }
@@ -212,8 +213,8 @@ fn parse_header(ctx : &mut Context, parser : &mut EventReader<BufReader<File>>) 
             Ok(XmlEvent::EndElement { name }) =>
                 match name.local_name.as_str() {
                     "field" => i += 1,
-                    "header" => { break },
-                    _ => panic!("header: unkown {}", name.local_name)
+                    "header" | "footer" => { break },
+                    _ => panic!("parse_special: unknown {}", name.local_name)
                 }
             _ => {}
         }
@@ -245,6 +246,7 @@ fn parse(xml_path: &str) -> Context {
 
     let mut ctx: Context = Context {
         header: MessageData::new(),
+        footer: MessageData::new(),
         global_enums: vec![],
         global_bitfields: vec![],
         units: vec![],
@@ -263,7 +265,7 @@ fn parse(xml_path: &str) -> Context {
                     => { ignore_tag(name.local_name.as_str(), &mut parser) }, // ignore, for now, this headers
                     "enumerations" => parse_global_enum(&mut ctx.global_enums, &mut parser),
                     "bitfields" => parse_global_enum(&mut ctx.global_bitfields, &mut parser),
-                    "header" => parse_header(&mut ctx, &mut parser),
+                    "header" => parse_special(&mut ctx.header.fields, &mut parser),
                     "messages" => {
                         let ret = attributes.iter().find(|x| x.name.local_name == "version");
                         match ret {
@@ -272,7 +274,7 @@ fn parse(xml_path: &str) -> Context {
                         }
                     },
                     "footer" => {
-                        ignore_tag("footer", &mut parser);
+                        parse_special(&mut ctx.footer.fields, &mut parser);
                         parse_messages(&mut ctx, &mut parser);
                         break;
                     }
@@ -317,6 +319,7 @@ fn full_format() {
     assert_global_enums(&ctx);
     assert_global_bitfields(&ctx);
     assert_header(&ctx);
+    assert_footer(&ctx);
 
     let mut i = 0;
     let mut n_fields = 0;
@@ -533,6 +536,14 @@ fn assert_header(ctx: &Context) {
     assert_eq!(ctx.header.fields[7].field_abbrev, "dst_ent");
     assert_eq!(ctx.header.fields[7].field_type, "uint8_t");
     assert_eq!(ctx.header.fields[7].is_fixed, false);
+}
+
+fn assert_footer(ctx: &Context) {
+    assert_eq!(ctx.footer.fields.len(), 1);
+    assert_eq!(ctx.footer.fields[0].field_name, "Check Sum (CRC-16-IBM)");
+    assert_eq!(ctx.footer.fields[0].field_abbrev, "crc16");
+    assert_eq!(ctx.footer.fields[0].field_type, "uint16_t");
+    assert_eq!(ctx.footer.fields[0].is_fixed, false);
 }
 
 fn assert_global_bitfields(ctx: &Context) {
