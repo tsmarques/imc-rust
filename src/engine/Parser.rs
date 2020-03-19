@@ -6,6 +6,7 @@ use xml::attribute::OwnedAttribute;
 use crate::engine::Tokens;
 
 pub(crate) struct Context {
+    pub version :String,
     pub header : Tokens::Message,
     pub footer : Tokens::Message,
     pub global_enums :Vec<Tokens::Field>,
@@ -234,6 +235,7 @@ pub(crate) fn parse(xml_path: &str) -> Context {
     let mut parser = EventReader::new(file);
 
     let mut ctx: Context = Context {
+        version: "".to_string(),
         header: Tokens::Message::new(),
         footer: Tokens::Message::new(),
         global_enums: vec![],
@@ -258,7 +260,7 @@ pub(crate) fn parse(xml_path: &str) -> Context {
                         let ret = attributes.iter().find(|x| x.name.local_name == "version");
                         match ret {
                             None => panic!("parse: missing \"version\" field in \"message\" : {}", name.local_name),
-                            Some(v) => println!("Generating IMC version {}", v),
+                            Some(v) => ctx.version = v.value.clone(),
                         }
                     },
                     "footer" => {

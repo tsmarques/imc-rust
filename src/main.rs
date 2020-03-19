@@ -26,8 +26,11 @@ fn main() {
         None => panic!("missing path to IMC definition. Use --imc option")
     }
 
+    println!("\n.. This was a triumph");
+    println!(".. version: {}", ctx.version);
     println!(".. sync number: {}", ctx.header.fields.get(0).unwrap().field_default_value);
-    println!(".. parsed {} messages", ctx.messages.len());
-    println!(".. parsed {} global enumerators", ctx.global_enums.len());
-    println!(".. parsed {} global bitfields", ctx.global_bitfields.len());
+    println!(".. parsed");
+    println!("   .. {} messages", ctx.messages.len());
+    println!("   .. {} global enumerators", ctx.global_enums.len());
+    println!("   .. {} global bitfields", ctx.global_bitfields.len());
 }
