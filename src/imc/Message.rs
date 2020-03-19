@@ -21,12 +21,6 @@ pub fn serialize_footer(bfr :&mut bytes::BytesMut)
     bfr.put_u16_le(state.get());
 }
 
-pub struct IMCMessage
-{
-    pub header :Header,
-    pub msg :Box<dyn Message>
-}
-
 pub trait Message
 {
     fn get_header(&mut self) -> &mut Header;

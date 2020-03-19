@@ -1,8 +1,7 @@
-mod Tokens;
-mod Parser;
-
 extern crate xml;
 extern crate clap;
+
+mod engine;
 
 use clap::{Arg, App};
 
@@ -18,9 +17,12 @@ fn main() {
     .get_matches();
 
     let ret = matches.value_of("imc");
-    let ctx: Parser::Context;
+    let ctx: engine::Parser::Context;
     match ret {
-        Some(v) => ctx = Parser::parse(v),
+        Some(v) => {
+            println!(".. parsing {}", v);
+            ctx = engine::Parser::parse(v);
+        }
         None => panic!("missing path to IMC definition. Use --imc option")
     }
 

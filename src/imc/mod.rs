@@ -3,6 +3,9 @@ pub mod Message;
 pub mod Heartbeat;
 pub mod LoggingControl;
 
+// IMC version
+pub const DUNE_IMC_VERSION :&'static str = "5.4.24";
+
 // IMC Synchronization number
 pub const DUNE_IMC_CONST_SYNC :u16 = 0xFE54;
 
