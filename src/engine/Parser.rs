@@ -76,13 +76,13 @@ fn parse_field_attributes(field :&mut Tokens::Field, attr :&Vec<OwnedAttribute>)
             "name" => field.field_name = value,
             "abbrev" => field.field_abbrev = value,
             "type" => field.field_type = value,
-            "message-type" => field.field_msg_type = value,
+            "message-type" => field.field_msg_type = Option::from(value),
             "unit" => field.field_unit = value,
             "prefix" => field.field_enum_prefix = value,
-            "max" => field.field_max = value,
-            "min" => field.field_min = value,
+            "max" => field.field_max = Option::from(value),
+            "min" => field.field_min = Option::from(value),
             "enum-def" => {}, // TODO handle global enumerator
-            "value" => field.field_default_value = value,
+            "value" => field.field_default_value = Option::from(value),
             "bitfield-def" => {}, // TODO handle global bitfield
             "fixed" => field.is_fixed = (value == "true"),
             _ => { panic!("unhandled field attribute : {}", attr.name) }
@@ -282,6 +282,7 @@ pub(crate) fn parse(xml_path: &str) -> Context {
     ctx
 }
 
+// @todo test message type and message list
 #[test]
 fn full_format() {
     let ctx = parse("/home/tsm/ws/imc-rust/src/engine/tests/test-imc-full.xml");
@@ -468,7 +469,7 @@ fn assert_header(ctx: &Context) {
     assert_eq!(ctx.header.fields[0].field_name, "Synchronization Number");
     assert_eq!(ctx.header.fields[0].field_abbrev, "sync");
     assert_eq!(ctx.header.fields[0].field_type, "uint16_t");
-    assert_eq!(ctx.header.fields[0].field_default_value, "0xFE54");
+    assert_eq!(ctx.header.fields[0].field_default_value.as_ref().unwrap(), "0xFE54");
     assert!(ctx.header.fields[0].is_fixed);
 
     assert_eq!(ctx.header.fields[1].field_name, "Message Identification Number");

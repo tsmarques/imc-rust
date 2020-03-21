@@ -1,0 +1,65 @@
+use crate::imc::Message::*;
+use crate::imc::{IMC_CONST_UNK_EID, DUNE_IMC_CONST_SYNC};
+
+use bytes::BufMut;
+use crate::imc::Header::Header;
+
+const c_msg_id :u16 = {{imc_message_id}};
+
+{{imc_message_enums}}
+
+
+pub struct {{imc_message_abbrev}}
+{
+    pub header: Header,
+    {{imc_message_fields}}
+}
+
+impl {{imc_message_abbrev}}
+{
+    pub fn new() -> {{imc_message_abbrev}}
+    {
+        let mut msg = {{imc_message_abbrev}} {
+            header : Header::new(c_msg_id),
+            {{imc_message_fields_init}}
+        };
+
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+}
+
+impl Message for {{imc_message_abbrev}}
+{
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
+    }
+
+    fn static_id(&self) -> u16
+    {
+        c_msg_id
+    }
+
+    fn clear(&mut self)
+    {
+        {{imc_message_clear}}
+    }
+
+    fn fixed_serialization_size(&self) -> usize
+    {
+        {{imc_message_fixed_serialization_size}}
+    }
+
+    fn dynamic_serialization_size(&self) -> usize
+    {
+        {{imc_message_dynamic_serialization_size}}
+    }
+
+    fn serialize(&self, bfr :&mut bytes::BytesMut)
+    {
+        self.header.serialize(bfr);
+        {{imc_message_serialize}}
+        serialize_footer(bfr);
+    }
+}

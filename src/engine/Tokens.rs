@@ -21,13 +21,13 @@ pub struct Field {
     pub field_abbrev :String,
     pub field_type :String,
     pub field_unit :String,
-    pub field_default_value :String,
-    pub field_msg_type :String,
+    pub field_default_value :Option<String>,
+    pub field_msg_type :Option<String>,
     pub field_enum :Vec<Enum>,
     pub field_enum_prefix :String,
     pub field_ser_size :usize,
-    pub field_max: String,
-    pub field_min: String,
+    pub field_max: Option<String>,
+    pub field_min: Option<String>,
     pub is_fixed: bool
 }
 
@@ -35,33 +35,6 @@ pub struct Enum {
     pub id :String,
     pub name :String,
     pub abbrev :String,
-}
-
-
-fn parse_type(ftype :&str, msg_type :Option<String>) -> (String, String) {
-    match ftype {
-        "uint8_t" => ("u8".to_string(), "0".to_string()),
-        "uint16_t" => ("u16".to_string(), "0".to_string()),
-        "uint32_t" => ("u32".to_string(), "0".to_string()),
-        "uint64_t" => ("u64".to_string(), "0".to_string()),
-        "int8_t" => ("i8".to_string(), "0".to_string()),
-        "int16_t" => ("i16".to_string(), "0".to_string()),
-        "int32_t" => ("i32".to_string(), "0".to_string()),
-        "int64_t" => ("i64".to_string(), "0".to_string()),
-        "fp32_t" => ("f32".to_string(), "0.0".to_string()),
-        "fp64_t" => ("f64".to_string(), "0.0".to_string()),
-        "rawdata" => ("Vec<u8>".to_string(), "vec![]".to_string()),
-        "plaintext" => ("&'static str".to_string(), "".to_string()),
-        "message" => {
-            if msg_type.is_none() {panic!("unknown message-type")}
-            ("Message".to_string(), msg_type.unwrap())
-        }
-        "message-list" => {
-            if msg_type.is_none() {panic!("unkown message-type")}
-            (format!("Vec<{}>", msg_type.unwrap()), "vec![]".to_string())
-        },
-        _ => panic!("unknown type {}", ftype)
-    }
 }
 
 impl Field {
@@ -72,33 +45,15 @@ impl Field {
             field_abbrev: String::from(""),
             field_type: String::from(""),
             field_unit: String::from(""),
-            field_default_value: String::from(""),
-            field_msg_type: String::from(""),
+            field_default_value: Option::None,
+            field_msg_type: Option::None,
             field_enum: vec![],
-            field_enum_prefix: "".to_string(),
-            field_max: "".to_string(),
-            field_min: "".to_string(),
+            field_enum_prefix: String::from(""),
+            field_max: Option::None,
+            field_min: Option::None,
             field_ser_size: 0,
             is_fixed: false
         }
-    }
-
-    fn as_str(&self) -> String {
-        let mut msg_type_opt :Option<String> = None;
-        if !self.field_msg_type.is_empty() {
-            msg_type_opt = Option::from(self.field_msg_type.to_string());
-        }
-
-
-        let type_info = parse_type(&self.field_type, msg_type_opt);
-
-        format!("// {}\npub {} :{}",
-                self.field_desc,
-                self.field_abbrev,
-                type_info.0,
-        )
-
-        // TODO field initialization
     }
 }
 

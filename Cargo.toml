@@ -11,6 +11,7 @@ bytes = "0.4.12"
 crc16 = "*"
 xml-rs = "0.8"
 clap = "2.33.0"
+rustache = "^0.1"
 
 [[bin]]
 name = "imc-rust"

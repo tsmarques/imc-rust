@@ -1,0 +1,24 @@
+use bytes::{BytesMut, BufMut, LittleEndian};
+use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+pub struct Header
+{
+    {{header_fields}}
+}
+
+impl Header
+{
+    pub(crate) fn new(msg_id :u16) -> Header
+    {
+        let mut header = Header {
+            {{header_fields_init}}
+        };
+
+        header
+    }
+
+    pub fn serialize(&self, bfr :&mut bytes::BytesMut)
+    {
+        {{header_serialize}}
+    }
+}
