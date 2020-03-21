@@ -29,8 +29,10 @@ fn get_template_file(args :&RendererArguments, template_type :RenderType) -> Pat
     tmp
 }
 
-fn get_output_file(imc_path :&PathBuf, type_name :&str) -> PathBuf {
-    let mut out_filepath = imc_path.clone();
+fn get_output_file(imc_path :&Path, type_name :&str) -> PathBuf {
+    // let mut out_filepath = imc_path.clone();
+    let mut out_filepath = PathBuf::new();
+    out_filepath.push(imc_path);
     let path = ["../imc/", type_name, ".rs"].join("");
     out_filepath.push(path);
 
@@ -102,14 +104,14 @@ fn render_fields_serialization_string(fields :&Vec<Field>) -> String {
 
 pub fn render_header(args :&RendererArguments, header :Message) {
     let template_filepath = get_template_file(args, RenderType::Header);
-    let mut data = rustache::HashBuilder::new();
     let mut out = Cursor::new(Vec::new());
 
     let fields_str = render_fields_string(&header.fields);
     let fields_init_str = render_fields_initialization_string(&header.fields);
     let fields_serialization_str = render_fields_serialization_string(&header.fields);
 
-    data = data.insert("header_fields", fields_str)
+    let mut data = rustache::HashBuilder::new()
+    .insert("header_fields", fields_str)
     .insert("header_fields_init", fields_init_str)
     .insert("header_serialize", fields_serialization_str);
 
@@ -123,13 +125,11 @@ pub fn render_header(args :&RendererArguments, header :Message) {
         Err(error) => panic!("failed to read header template file")
     }
 
-    println!("{}", String::from_utf8(out.into_inner()).unwrap());
-    // println!("{}", get_output_file(&args.imc_output_dir, "HeaderTest"));
-    // let path = get_output_file("HeaderTest.rs");
-    // match File::create(path) {
-    //     Ok(mut file) => {
-    //         file.write(content.as_ref()).unwrap();
-    //     }
-    //     Err(err) => panic!("can't open out file")
-    // }
+    let rendered_data = String::from_utf8(out.into_inner()).unwrap();
+
+    let out_filepath = get_output_file(args.imc_output_dir, "Header");
+    match File::create(out_filepath) {
+        Ok(mut file) => { file.write(rendered_data.as_ref()).unwrap();  }
+        Err(err)     => panic!("can't open out file")
+    }
 }

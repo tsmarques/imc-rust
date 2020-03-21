@@ -3,22 +3,22 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 pub struct Header
 {
-    // Syncronization number
-    pub sync: u16,
-    // Message Id
-    pub mgid: u16,
-    // Message size
-    pub size: u16,
-    // Time stamp
-    pub timestamp: f64,
-    // Source address
-    pub src: u16,
-    // Source entity
-    pub src_ent: u8,
-    // Destination Address
-    pub dst: u16,
-    // Destination Entity
-    pub dst_ent: u8,
+    // 
+    pub sync :u16,
+    // 
+    pub mgid :u16,
+    // 
+    pub size :u16,
+    // 
+    pub timestamp :f64,
+    // 
+    pub src :u16,
+    // 
+    pub src_ent :u8,
+    // 
+    pub dst :u16,
+    // 
+    pub dst_ent :u8,
 }
 
 impl Header
@@ -26,14 +26,14 @@ impl Header
     pub(crate) fn new(msg_id :u16) -> Header
     {
         let mut header = Header {
-            sync: DUNE_IMC_CONST_SYNC,
-            mgid: msg_id,
+            sync: 0xFE54,
+            mgid: 0,
             size: 0,
             timestamp: 0.0,
-            src: 0xffff,
-            src_ent: IMC_CONST_UNK_EID,
-            dst: 0xffff,
-            dst_ent: IMC_CONST_UNK_EID
+            src: 0,
+            src_ent: 0,
+            dst: 0,
+            dst_ent: 0,
         };
 
         header
