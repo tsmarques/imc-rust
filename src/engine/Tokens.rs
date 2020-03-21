@@ -16,19 +16,32 @@ pub struct Message {
 }
 
 pub struct Field {
-    pub field_desc :String,
-    pub field_name :String,
-    pub field_abbrev :String,
-    pub field_type :String,
-    pub field_unit :String,
-    pub field_default_value :Option<String>,
-    pub field_msg_type :Option<String>,
-    pub field_enum :Vec<Enum>,
-    pub field_enum_prefix :String,
-    pub field_ser_size :usize,
-    pub field_max: Option<String>,
-    pub field_min: Option<String>,
-    pub is_fixed: bool
+    // Field's description
+    pub desc:String,
+    // Field's name
+    pub name:String,
+    // Field's abbreviation
+    pub abbrev:String,
+    // Field's type
+    pub ftype:String,
+    // Field's unit
+    pub unit:String,
+    // Field's default value (optional)
+    pub default_value:Option<String>,
+    // Field's IMC message type (optional)
+    pub msg_type:Option<String>,
+    // Enumerators values
+    pub enums:Vec<Enum>,
+    // Enumerators' prefix
+    pub enum_prefix:String,
+    // Field's Serialization size
+    pub ser_size:usize,
+    // Field maximum value (optional)
+    pub max_value: Option<String>,
+    // Field minimum value (optional)
+    pub min_value: Option<String>,
+    // Read only field
+    pub read_only: bool
 }
 
 pub struct Enum {
@@ -40,19 +53,19 @@ pub struct Enum {
 impl Field {
     pub(crate) fn new() -> Field {
         Field {
-            field_desc: String::from(""),
-            field_name: String::from(""),
-            field_abbrev: String::from(""),
-            field_type: String::from(""),
-            field_unit: String::from(""),
-            field_default_value: Option::None,
-            field_msg_type: Option::None,
-            field_enum: vec![],
-            field_enum_prefix: String::from(""),
-            field_max: Option::None,
-            field_min: Option::None,
-            field_ser_size: 0,
-            is_fixed: false
+            desc: String::from(""),
+            name: String::from(""),
+            abbrev: String::from(""),
+            ftype: String::from(""),
+            unit: String::from(""),
+            default_value: Option::None,
+            msg_type: Option::None,
+            enums: vec![],
+            enum_prefix: String::from(""),
+            max_value: Option::None,
+            min_value: Option::None,
+            ser_size: 0,
+            read_only: false
         }
     }
 }

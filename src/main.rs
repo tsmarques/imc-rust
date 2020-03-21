@@ -56,7 +56,7 @@ fn main() {
 
     println!("\n.. This was a triumph");
     println!(".. version: {}", ctx.version);
-    println!(".. sync number: {}", ctx.header.fields.get(0).unwrap().field_default_value.as_ref().unwrap());
+    println!(".. sync number: {}", ctx.header.fields.get(0).unwrap().default_value.as_ref().unwrap());
     println!(".. parsed");
     println!("   .. {} messages", ctx.messages.len());
     println!("   .. {} global enumerators", ctx.global_enums.len());

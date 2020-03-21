@@ -44,11 +44,11 @@ fn render_fields_string(fields :&Vec<Field>) -> String {
     for field in fields {
         let ftype = Types::convert(&field);
 
-        let descr_str = format!("// {}\n", field.field_desc);
+        let descr_str = format!("// {}\n", field.desc);
         fields_str.push_str(format!("{:>width$}", descr_str, width = padding + descr_str.len()).as_str());
         padding = 4;
 
-        let type_str = format!("pub {} :{},\n", field.field_abbrev, ftype);
+        let type_str = format!("pub {} :{},\n", field.abbrev, ftype);
         fields_str.push_str(format!("{:>width$}", type_str, width = padding + type_str.len()).as_str());
     }
 
@@ -67,7 +67,7 @@ fn render_fields_initialization_string(fields :&Vec<Field>) -> String {
     let mut padding = 0;
     for field in fields {
         let init_str = Types::get_init_string(&field);
-        let str = format!("{}: {},\n", field.field_abbrev, init_str);
+        let str = format!("{}: {},\n", field.abbrev, init_str);
         fields_str.push_str(format!("{:>width$}", str, width=padding + str.len()).as_str());
 
         padding = 12;
@@ -86,7 +86,7 @@ fn render_fields_serialization_string(fields :&Vec<Field>) -> String {
     let mut padding = 0;
     for field in fields {
         let ser_fn = Types::Serialization::get_fn_string(&field);
-        let str = format!("bfr.{}(self.{});\n", ser_fn, field.field_abbrev);
+        let str = format!("bfr.{}(self.{});\n", ser_fn, field.abbrev);
         fields_str.push_str(format!("{:>width$}", str, width=padding + str.len()).as_str());
 
         padding = 8;
