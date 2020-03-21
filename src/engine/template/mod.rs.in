@@ -1,6 +1,6 @@
 {{imc_mod_messages}}
 
-pub const DUNE_IMC_VERSION :&'static str = {{imc_version}}
+pub const DUNE_IMC_VERSION :&'static str = "{{imc_version}}";
 
 // IMC Synchronization number
 pub const DUNE_IMC_CONST_SYNC :u16 = {{imc_sync_number}};
@@ -10,9 +10,6 @@ pub const IMC_CONST_HEADER_SIZE :u8 = {{imc_header_size}};
 
 // IMC's footer size
 pub const IMC_CONST_FOOTER_SIZE :u8 = {{imc_footer_size}};
-
-// Max size a log's path/name
-pub const IMC_MAX_LOG_NAME_SIZE :u16 = {{imc_max_log_name}};
 
 // Unknown entity identifier.
 pub const IMC_CONST_UNK_EID :u8 = 255;

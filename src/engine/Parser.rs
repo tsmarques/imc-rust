@@ -5,7 +5,7 @@ use xml::reader::{XmlEvent, Error};
 use xml::attribute::OwnedAttribute;
 use crate::engine::Tokens;
 
-pub(crate) struct Context {
+pub struct Context {
     pub version :String,
     pub header : Tokens::Message,
     pub footer : Tokens::Message,

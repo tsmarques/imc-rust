@@ -4,7 +4,8 @@ use std::env;
 use std::path::{Path, PathBuf};
 use std::fs::File;
 use std::io::{Cursor, Read, Write};
-use crate::engine::{Tokens, Types};
+use crate::engine::{Tokens, Types, Parser};
+use crate::engine;
 
 pub struct RendererArguments<'a> {
     pub templates_dir :&'a Path,
@@ -22,7 +23,7 @@ fn get_template_file(args :&RendererArguments, template_type :RenderType) -> Pat
     match template_type {
         RenderType::Header => tmp.push("Header.rs.in"),
         RenderType::Message => tmp.push("Message.rs.in"),
-        RenderType::Constants => tmp.push("imc.rs.in"),
+        RenderType::Constants => tmp.push("mod.rs.in"),
         _ => panic!("unknown template type...")
     }
 
@@ -39,7 +40,7 @@ fn get_output_file(imc_path :&Path, type_name :&str) -> PathBuf {
     out_filepath
 }
 
-fn render_fields_string(fields :&Vec<Field>) -> String {
+fn render_fields_string(fields :&Vec<Tokens::Field>) -> String {
     let mut fields_str :String= String::from("");
 
     let mut padding = 0;
@@ -64,7 +65,7 @@ fn render_fields_string(fields :&Vec<Field>) -> String {
 
 // @todo initialize fields
 //       perhaps fill default-value while parsing xml?
-fn render_fields_initialization_string(fields :&Vec<Field>) -> String {
+fn render_fields_initialization_string(fields :&Vec<Tokens::Field>) -> String {
     let mut fields_str :String= String::from("");
     let mut padding = 0;
     for field in fields {
@@ -83,7 +84,7 @@ fn render_fields_initialization_string(fields :&Vec<Field>) -> String {
     fields_str
 }
 
-fn render_fields_serialization_string(fields :&Vec<Field>) -> String {
+fn render_fields_serialization_string(fields :&Vec<Tokens::Field>) -> String {
     let mut fields_str :String= String::from("");
     let mut padding = 0;
     for field in fields {
@@ -102,7 +103,7 @@ fn render_fields_serialization_string(fields :&Vec<Field>) -> String {
     fields_str
 }
 
-pub fn render_header(args :&RendererArguments, header :Message) {
+pub fn render_header(args :&RendererArguments, header :&Tokens::Message) {
     let template_filepath = get_template_file(args, RenderType::Header);
     let mut out = Cursor::new(Vec::new());
 
@@ -128,6 +129,36 @@ pub fn render_header(args :&RendererArguments, header :Message) {
     let rendered_data = String::from_utf8(out.into_inner()).unwrap();
 
     let out_filepath = get_output_file(args.imc_output_dir, "Header");
+    match File::create(out_filepath) {
+        Ok(mut file) => { file.write(rendered_data.as_ref()).unwrap();  }
+        Err(err)     => panic!("can't open out file")
+    }
+}
+
+pub fn render_imc_file(args :&RendererArguments, ctx :&Parser::Context) {
+    let template_filepath = get_template_file(args, RenderType::Constants);
+    let mut out = Cursor::new(Vec::new());
+
+
+    let mut data = rustache::HashBuilder::new()
+    .insert("imc_version", ctx.version.clone())
+    .insert("imc_sync_number", ctx.header.fields.get(0).unwrap().default_value.as_ref().unwrap().as_str())
+    .insert("imc_header_size", ctx.header.fixed_serialization_size.to_string())
+    .insert("imc_footer_size", ctx.header.fixed_serialization_size.to_string());
+
+    let mut content;
+    match File::open(template_filepath) {
+        Ok(mut file) => {
+            content = String::new();
+            file.read_to_string(&mut content).unwrap();
+            data.render(content.as_str(), &mut out).unwrap();
+        },
+        Err(error) => panic!("failed to read header template file")
+    }
+
+    let rendered_data = String::from_utf8(out.into_inner()).unwrap();
+
+    let out_filepath = get_output_file(args.imc_output_dir, "mod");
     match File::create(out_filepath) {
         Ok(mut file) => { file.write(rendered_data.as_ref()).unwrap();  }
         Err(err)     => panic!("can't open out file")

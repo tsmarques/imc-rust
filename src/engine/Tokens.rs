@@ -10,9 +10,8 @@ pub struct Message {
     pub fields :Vec<Field>,
     pub fields_init :String,
     pub clear :String,
-    pub fixed_serialization_size :String,
-    pub fixed_size :String,
-    pub field_serialization :String,
+    pub fixed_serialization_size :usize,
+    pub fixed_size :usize,
 }
 
 pub struct Field {
@@ -35,7 +34,7 @@ pub struct Field {
     // Enumerators' prefix
     pub enum_prefix:String,
     // Field's Serialization size
-    pub ser_size:usize,
+    pub ser_size :usize,
     // Field maximum value (optional)
     pub max_value: Option<String>,
     // Field minimum value (optional)
@@ -84,9 +83,8 @@ impl Message {
             fields: vec![],
             fields_init: "".to_string(),
             clear: "".to_string(),
-            fixed_serialization_size: "".to_string(),
-            fixed_size: "".to_string(),
-            field_serialization: "".to_string()
+            fixed_serialization_size: 0,
+            fixed_size: 0,
         }
     }
 }
