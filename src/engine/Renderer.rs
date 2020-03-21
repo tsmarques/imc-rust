@@ -3,7 +3,7 @@ use crate::engine::Tokens::{Message, Field};
 use std::env;
 use std::path::{Path, PathBuf};
 use std::fs::File;
-use std::io::{Cursor, Read, Write};
+use std::io::{Cursor, Read, Write, Error};
 use crate::engine::{Tokens, Types, Parser};
 use crate::engine;
 
@@ -18,7 +18,7 @@ enum RenderType {
     Constants = 2,
 }
 
-fn get_template_file(args :&RendererArguments, template_type :RenderType) -> PathBuf {
+fn read_template_file(args :&RendererArguments, template_type :RenderType) -> Result<String, Error> {
     let mut tmp = PathBuf::from(args.templates_dir);
     match template_type {
         RenderType::Header => tmp.push("Header.rs.in"),
@@ -27,17 +27,28 @@ fn get_template_file(args :&RendererArguments, template_type :RenderType) -> Pat
         _ => panic!("unknown template type...")
     }
 
-    tmp
+    let mut content;
+    match File::open(tmp) {
+        Ok(mut file) => {
+            content = String::new();
+            file.read_to_string(&mut content)?;
+            Result::Ok(content)
+        },
+        Err(error) => Result::Err(error)
+    }
 }
 
-fn get_output_file(imc_path :&Path, type_name :&str) -> PathBuf {
+fn render_file(args :&RendererArguments, filename :&str, data :&String) {
     // let mut out_filepath = imc_path.clone();
     let mut out_filepath = PathBuf::new();
-    out_filepath.push(imc_path);
-    let path = ["../imc/", type_name, ".rs"].join("");
+    out_filepath.push(args.imc_output_dir);
+    let path = ["../imc/", filename, ".rs"].join("");
     out_filepath.push(path);
 
-    out_filepath
+    match File::create(out_filepath) {
+        Ok(mut file) => { file.write(data.as_ref()).unwrap();  }
+        Err(err)     => panic!("can't open out file")
+    }
 }
 
 fn render_fields_string(fields :&Vec<Tokens::Field>) -> String {
@@ -104,9 +115,6 @@ fn render_fields_serialization_string(fields :&Vec<Tokens::Field>) -> String {
 }
 
 pub fn render_header(args :&RendererArguments, header :&Tokens::Message) {
-    let template_filepath = get_template_file(args, RenderType::Header);
-    let mut out = Cursor::new(Vec::new());
-
     let fields_str = render_fields_string(&header.fields);
     let fields_init_str = render_fields_initialization_string(&header.fields);
     let fields_serialization_str = render_fields_serialization_string(&header.fields);
@@ -116,51 +124,29 @@ pub fn render_header(args :&RendererArguments, header :&Tokens::Message) {
     .insert("header_fields_init", fields_init_str)
     .insert("header_serialize", fields_serialization_str);
 
-    let mut content;
-    match File::open(template_filepath) {
-        Ok(mut file) => {
-            content = String::new();
-            file.read_to_string(&mut content).unwrap();
-            data.render(content.as_str(), &mut out).unwrap();
-        },
-        Err(error) => panic!("failed to read header template file")
+    let mut out = Cursor::new(Vec::new());
+    match read_template_file(args, RenderType::Header) {
+        Ok(content) => { data.render(content.as_str(), &mut out).unwrap(); },
+        Err(error) => panic!("failed to read header template file: {}", error)
     }
 
     let rendered_data = String::from_utf8(out.into_inner()).unwrap();
-
-    let out_filepath = get_output_file(args.imc_output_dir, "Header");
-    match File::create(out_filepath) {
-        Ok(mut file) => { file.write(rendered_data.as_ref()).unwrap();  }
-        Err(err)     => panic!("can't open out file")
-    }
+    render_file(&args, "Header", &rendered_data);
 }
 
 pub fn render_imc_file(args :&RendererArguments, ctx :&Parser::Context) {
-    let template_filepath = get_template_file(args, RenderType::Constants);
-    let mut out = Cursor::new(Vec::new());
-
-
     let mut data = rustache::HashBuilder::new()
     .insert("imc_version", ctx.version.clone())
     .insert("imc_sync_number", ctx.header.fields.get(0).unwrap().default_value.as_ref().unwrap().as_str())
     .insert("imc_header_size", ctx.header.fixed_serialization_size.to_string())
     .insert("imc_footer_size", ctx.header.fixed_serialization_size.to_string());
 
-    let mut content;
-    match File::open(template_filepath) {
-        Ok(mut file) => {
-            content = String::new();
-            file.read_to_string(&mut content).unwrap();
-            data.render(content.as_str(), &mut out).unwrap();
-        },
+    let mut out = Cursor::new(Vec::new());
+    match read_template_file(args, RenderType::Constants) {
+        Ok(content) => { data.render(content.as_str(), &mut out).unwrap(); },
         Err(error) => panic!("failed to read header template file")
     }
 
     let rendered_data = String::from_utf8(out.into_inner()).unwrap();
-
-    let out_filepath = get_output_file(args.imc_output_dir, "mod");
-    match File::create(out_filepath) {
-        Ok(mut file) => { file.write(rendered_data.as_ref()).unwrap();  }
-        Err(err)     => panic!("can't open out file")
-    }
+    render_file(&args, "mod", &rendered_data);
 }
