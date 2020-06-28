@@ -56,13 +56,11 @@ fn render_fields_string(fields :&Vec<Tokens::Field>) -> String {
 
     let mut padding = 0;
     for field in fields {
-        let ftype = Types::convert(&field);
-
         let descr_str = format!("// {}\n", field.desc);
         fields_str.push_str(format!("{:>width$}", descr_str, width = padding + descr_str.len()).as_str());
         padding = 4;
 
-        let type_str = format!("pub {} :{},\n", field.abbrev, ftype);
+        let type_str = format!("pub {} :{},\n", field.abbrev, field.ftype);
         fields_str.push_str(format!("{:>width$}", type_str, width = padding + type_str.len()).as_str());
     }
 

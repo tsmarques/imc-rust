@@ -1,3 +1,5 @@
+use crate::engine::Types;
+
 pub struct Message {
     pub desc:String,
     pub id :String,
@@ -22,7 +24,7 @@ pub struct Field {
     // Field's abbreviation
     pub abbrev:String,
     // Field's type
-    pub ftype:String,
+    pub ftype :Types::ImcType,
     // Field's unit
     pub unit:String,
     // Field's default value (optional)
@@ -55,7 +57,7 @@ impl Field {
             desc: String::from(""),
             name: String::from(""),
             abbrev: String::from(""),
-            ftype: String::from(""),
+            ftype: Types::ImcType::Unknown,
             unit: String::from(""),
             default_value: Option::None,
             msg_type: Option::None,
