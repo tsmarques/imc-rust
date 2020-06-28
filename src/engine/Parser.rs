@@ -222,7 +222,9 @@ fn parse_special(out :&mut Vec<Tokens::Field>, desc: &mut String, parser : &mut 
                             *desc = parse_description(parser);
                             is_header_desc = false;
                         }
-                        else { ignore_tag("description", parser); }
+                        else {
+                            out[i].desc = parse_description(parser);
+                        }
                     },
                     "field" => {
                         out.push(Tokens::Field::new());

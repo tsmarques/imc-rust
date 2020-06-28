@@ -1,9 +1,10 @@
 use bytes::{BytesMut, BufMut, LittleEndian};
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
+{{header_desc}}
 pub struct Header
 {
-    {{header_fields}}
+{{header_fields}}
 }
 
 impl Header

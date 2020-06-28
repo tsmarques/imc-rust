@@ -56,11 +56,10 @@ fn render_fields_string(fields :&Vec<Tokens::Field>) -> String {
 
     let mut padding = 0;
     for field in fields {
-        let descr_str = format!("// {}\n", field.desc);
-        fields_str.push_str(format!("{:>width$}", descr_str, width = padding + descr_str.len()).as_str());
         padding = 4;
+        fields_str.push_str(render_description_string(&field.desc, padding).as_str());
 
-        let type_str = format!("pub {} :{},\n", field.abbrev, field.ftype);
+        let type_str = format!("pub {} :{},\n\n", field.abbrev, field.ftype);
         fields_str.push_str(format!("{:>width$}", type_str, width = padding + type_str.len()).as_str());
     }
 
@@ -112,12 +111,26 @@ fn render_fields_serialization_string(fields :&Vec<Tokens::Field>) -> String {
     fields_str
 }
 
+pub fn render_description_string(desc :&String, padding :usize) -> String {
+    let mut desc_rend :String = String::from("");
+    let mut parts = desc.split('\n').collect::<Vec<&str>>();
+
+    for line in parts {
+        let trim_line = line.trim();
+        desc_rend = desc_rend + format!("{:>width$}", "// ", width = padding + 3).as_str();
+        desc_rend = desc_rend + trim_line + "\n";
+    }
+
+    desc_rend
+}
+
 pub fn render_header(args :&RendererArguments, header :&Tokens::Message) {
     let fields_str = render_fields_string(&header.fields);
     let fields_init_str = render_fields_initialization_string(&header.fields);
     let fields_serialization_str = render_fields_serialization_string(&header.fields);
 
     let mut data = rustache::HashBuilder::new()
+    .insert("header_desc", render_description_string(&header.desc, 0))
     .insert("header_fields", fields_str)
     .insert("header_fields_init", fields_init_str)
     .insert("header_serialize", fields_serialization_str);
