@@ -1,58 +1,56 @@
+use crate::engine::Types::ImcType;
+use crate::engine::{Tokens, Types};
 use std::fs::File;
 use std::io::BufReader;
-use xml::EventReader;
-use xml::reader::{XmlEvent, Error};
 use xml::attribute::OwnedAttribute;
-use crate::engine::{Tokens, Types};
-use crate::engine::Types::ImcType;
+use xml::reader::{Error, XmlEvent};
+use xml::EventReader;
 
 pub struct Context {
-    pub version :String,
-    pub header : Tokens::Message,
-    pub footer : Tokens::Message,
-    pub global_enums :Vec<Tokens::Field>,
-    pub global_bitfields :Vec<Tokens::Field>,
-    pub messages :Vec<Tokens::Message>
+    pub version: String,
+    pub header: Tokens::Message,
+    pub footer: Tokens::Message,
+    pub global_enums: Vec<Tokens::Field>,
+    pub global_bitfields: Vec<Tokens::Field>,
+    pub messages: Vec<Tokens::Message>,
 }
 
-fn parse_global_enum(out :&mut Vec<Tokens::Field>, parser : &mut EventReader<BufReader<File>>) {
+fn parse_global_enum(out: &mut Vec<Tokens::Field>, parser: &mut EventReader<BufReader<File>>) {
     let mut i = 0;
     loop {
         match parser.next() {
-            Ok(XmlEvent::StartElement { name, attributes, ..}) => {
-                match name.local_name.as_str() {
-                    "def" => {
-                        out.push(Tokens::Field::new());
-                        for attr in attributes {
-                            let attr_name = attr.name.local_name.as_str();
-                            let attr_value = attr.value.trim().to_string();
-                            match attr_name {
-                                "name" => out[i].name = attr_value,
-                                "abbrev" => out[i].abbrev = attr_value,
-                                "prefix" => out[i].enum_prefix = attr_value,
-                                _ => panic!("unknown field {}", )
-                            }
+            Ok(XmlEvent::StartElement {
+                name, attributes, ..
+            }) => match name.local_name.as_str() {
+                "def" => {
+                    out.push(Tokens::Field::new());
+                    for attr in attributes {
+                        let attr_name = attr.name.local_name.as_str();
+                        let attr_value = attr.value.trim().to_string();
+                        match attr_name {
+                            "name" => out[i].name = attr_value,
+                            "abbrev" => out[i].abbrev = attr_value,
+                            "prefix" => out[i].enum_prefix = attr_value,
+                            _ => panic!("unknown field {}",),
                         }
-                    },
-                    "value" => parse_field_enum(&mut out[i], &attributes),
-                    _ => panic!("global enum: unknown name {}", name)
+                    }
                 }
-            }
-            Ok(XmlEvent::EndElement { name }) => {
-                match name.local_name.as_str() {
-                    "enumerations" | "bitfields" => break,
-                    "def" => i+=1,
-                    "value" => {},
-                    _ => panic!("unkwnon end element {}", name.local_name)
-                }
-            }
-            _ => {},
+                "value" => parse_field_enum(&mut out[i], &attributes),
+                _ => panic!("global enum: unknown name {}", name),
+            },
+            Ok(XmlEvent::EndElement { name }) => match name.local_name.as_str() {
+                "enumerations" | "bitfields" => break,
+                "def" => i += 1,
+                "value" => {}
+                _ => panic!("unkwnon end element {}", name.local_name),
+            },
+            _ => {}
         }
     }
 }
 
-fn parse_field_enum(field :&mut Tokens::Field, attr :&Vec<OwnedAttribute>) {
-    let mut field_enum : Tokens::Enum = Tokens::Enum {
+fn parse_field_enum(field: &mut Tokens::Field, attr: &Vec<OwnedAttribute>) {
+    let mut field_enum: Tokens::Enum = Tokens::Enum {
         id: "".to_string(),
         name: "".to_string(),
         abbrev: "".to_string(),
@@ -63,14 +61,17 @@ fn parse_field_enum(field :&mut Tokens::Field, attr :&Vec<OwnedAttribute>) {
             "id" => field_enum.id = a.value.clone(),
             "name" => field_enum.name = a.value.clone(),
             "abbrev" => field_enum.abbrev = a.value.clone(),
-            _ => panic!("enum : {} : unhandled enum attribute {}", field.name, a.name.local_name)
+            _ => panic!(
+                "enum : {} : unhandled enum attribute {}",
+                field.name, a.name.local_name
+            ),
         }
     }
 
     field.enums.push(field_enum);
 }
 
-fn parse_field_attributes(field :&mut Tokens::Field, attr :&Vec<OwnedAttribute>) {
+fn parse_field_attributes(field: &mut Tokens::Field, attr: &Vec<OwnedAttribute>) {
     for attr in attr {
         let value = attr.value.trim().to_string();
         match attr.name.local_name.as_str() {
@@ -82,76 +83,73 @@ fn parse_field_attributes(field :&mut Tokens::Field, attr :&Vec<OwnedAttribute>)
             "prefix" => field.enum_prefix = value,
             "max" => field.max_value = Option::from(value),
             "min" => field.min_value = Option::from(value),
-            "enum-def" => {}, // TODO handle global enumerator
+            "enum-def" => {} // TODO handle global enumerator
             "value" => field.default_value = Option::from(value),
-            "bitfield-def" => {}, // TODO handle global bitfield
+            "bitfield-def" => {} // TODO handle global bitfield
             "fixed" => field.read_only = (value == "true"),
-            _ => { panic!("unhandled field attribute : {}", attr.name) }
+            _ => panic!("unhandled field attribute : {}", attr.name),
         }
     }
 }
 
-fn parse_description(parser :&mut EventReader<BufReader<File>>) -> String {
-    let mut desc :String = String::from("");
+fn parse_description(parser: &mut EventReader<BufReader<File>>) -> String {
+    let mut desc: String = String::from("");
     loop {
         match parser.next() {
             Ok(XmlEvent::Characters(content)) => {
                 desc = content.trim().to_string();
-            },
+            }
             Ok(XmlEvent::EndElement { name }) => {
                 if name.local_name == "description" {
                     break;
                 }
             }
-            _ => {},
+            _ => {}
         }
     }
 
     desc
 }
 
-fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Tokens::Field>) {
+fn parse_message(parser: &mut EventReader<BufReader<File>>) -> (String, Vec<Tokens::Field>) {
     let mut fields = vec![];
     // flag if next <description> is from <message ...>
     let mut is_message_description = true;
-    let mut message_descr :String = String::from("");
+    let mut message_descr: String = String::from("");
 
     let mut i = 0;
     loop {
         match parser.next() {
-            Ok(XmlEvent::StartElement { name, attributes, .. }) =>
-                match name.local_name.as_str() {
-                    "field" => {
-                        is_message_description = false;
-                        fields.push(Tokens::Field::new());
-                        parse_field_attributes(&mut fields[i], &attributes)
-                    },
-                    "description" => {
-                        if !is_message_description {
-                            fields[i].desc = parse_description(parser);
-                            is_message_description = true;
-                        }
-                        else {
-                            message_descr = parse_description(parser);
-                            is_message_description = false;
-                        }
-                    },
-                    "value" => {
-                        match fields[i].unit.as_str() {
-                            "Enumerated" | "Bitfield" => parse_field_enum(&mut fields[i], &attributes),
-                            _ => panic!("parse_field_enum: was expecting enum"),
-                        }
-                    }
-                    _ => panic!("parse field : unknown name {}", name.local_name)
+            Ok(XmlEvent::StartElement {
+                name, attributes, ..
+            }) => match name.local_name.as_str() {
+                "field" => {
+                    is_message_description = false;
+                    fields.push(Tokens::Field::new());
+                    parse_field_attributes(&mut fields[i], &attributes)
                 }
-            Ok(XmlEvent::EndElement { name }) =>
-                match name.local_name.as_str() {
-                    "field" => i+=1,
-                    "message" => { break },
-                    "value" => {},
-                    _ => panic!("parse_fields: unknown termination \"{}\"", name.local_name),
+                "description" => {
+                    if !is_message_description {
+                        fields[i].desc = parse_description(parser);
+                        is_message_description = true;
+                    } else {
+                        message_descr = parse_description(parser);
+                        is_message_description = false;
+                    }
+                }
+                "value" => match fields[i].unit.as_str() {
+                    "Enumerated" | "Bitfield" => parse_field_enum(&mut fields[i], &attributes),
+                    _ => panic!("parse_field_enum: was expecting enum"),
                 },
-            Ok(_) => {},
+                _ => panic!("parse field : unknown name {}", name.local_name),
+            },
+            Ok(XmlEvent::EndElement { name }) => match name.local_name.as_str() {
+                "field" => i += 1,
+                "message" => break,
+                "value" => {}
+                _ => panic!("parse_fields: unknown termination \"{}\"", name.local_name),
+            },
+            Ok(_) => {}
             Err(e) => {
                 panic!("parse field error: {}", e);
                 break;
@@ -162,7 +160,7 @@ fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Tok
     (message_descr, fields)
 }
 
-fn parse_message_attributes(message :&mut Tokens::Message, attributes :&Vec<OwnedAttribute>) {
+fn parse_message_attributes(message: &mut Tokens::Message, attributes: &Vec<OwnedAttribute>) {
     for attr in attributes {
         let value = attr.value.trim().to_string();
         match attr.name.local_name.as_str() {
@@ -172,71 +170,72 @@ fn parse_message_attributes(message :&mut Tokens::Message, attributes :&Vec<Owne
             "source" => message.source = value,
             "flags" => message.flags = value,
             "category" => message.category = value,
-            "used-by" => {},
-            _ => { panic!("unhandled field attribute : {}", attr.name) }
+            "used-by" => {}
+            _ => panic!("unhandled field attribute : {}", attr.name),
         }
     }
 }
 
-
-fn parse_messages(ctx : &mut Context, parser : &mut EventReader<BufReader<File>>) {
+fn parse_messages(ctx: &mut Context, parser: &mut EventReader<BufReader<File>>) {
     let mut i = 0;
 
     loop {
         match parser.next() {
             Err(err) => panic!("parse_message: error: {}", err),
-            Ok(XmlEvent::StartElement {name, attributes, ..}) => {
-                match name.local_name.as_str() {
-                    "message" => {
-                        ctx.messages.push(Tokens::Message::new());
-                        parse_message_attributes(&mut ctx.messages[i], &attributes);
+            Ok(XmlEvent::StartElement {
+                name, attributes, ..
+            }) => match name.local_name.as_str() {
+                "message" => {
+                    ctx.messages.push(Tokens::Message::new());
+                    parse_message_attributes(&mut ctx.messages[i], &attributes);
 
-                        let ret = parse_message(parser);
-                        ctx.messages[i].fields = ret.1;
-                        ctx.messages[i].desc = ret.0;
-                        i+=1;
-                    } ,
-                    _ => {panic!("parse_message: unexpected tag: {}", name.local_name)},
+                    let ret = parse_message(parser);
+                    ctx.messages[i].fields = ret.1;
+                    ctx.messages[i].desc = ret.0;
+                    i += 1;
                 }
+                _ => panic!("parse_message: unexpected tag: {}", name.local_name),
             },
-            Ok(XmlEvent::Whitespace(_)) => {},
-            Ok(XmlEvent::EndElement { .. }) => {},
+            Ok(XmlEvent::Whitespace(_)) => {}
+            Ok(XmlEvent::EndElement { .. }) => {}
             Ok(XmlEvent::EndDocument) => break,
             Ok(_) => panic!("parse_message: unhandled event"),
         }
     }
 }
 
-fn parse_special(out :&mut Vec<Tokens::Field>, desc: &mut String, parser : &mut EventReader<BufReader<File>>) {
+fn parse_special(
+    out: &mut Vec<Tokens::Field>,
+    desc: &mut String,
+    parser: &mut EventReader<BufReader<File>>,
+) {
     let mut i = 0;
     let mut is_header_desc = true;
     loop {
         match parser.next() {
             Err(err) => panic!("parse_special: error: {}", err),
-            Ok(XmlEvent::StartElement { name, attributes, .. }) => {
-                match name.local_name.as_str() {
-                    "description" => {
-                        if is_header_desc {
-                            *desc = parse_description(parser);
-                            is_header_desc = false;
-                        }
-                        else {
-                            out[i].desc = parse_description(parser);
-                        }
-                    },
-                    "field" => {
-                        out.push(Tokens::Field::new());
-                        parse_field_attributes(&mut out[i], &attributes)
-                    },
-                    _ => {}
+            Ok(XmlEvent::StartElement {
+                name, attributes, ..
+            }) => match name.local_name.as_str() {
+                "description" => {
+                    if is_header_desc {
+                        *desc = parse_description(parser);
+                        is_header_desc = false;
+                    } else {
+                        out[i].desc = parse_description(parser);
+                    }
                 }
+                "field" => {
+                    out.push(Tokens::Field::new());
+                    parse_field_attributes(&mut out[i], &attributes)
+                }
+                _ => {}
             },
-            Ok(XmlEvent::EndElement { name }) =>
-                match name.local_name.as_str() {
-                    "field" => i += 1,
-                    "header" | "footer" => { break },
-                    _ => panic!("parse_special: unknown {}", name.local_name)
-                }
+            Ok(XmlEvent::EndElement { name }) => match name.local_name.as_str() {
+                "field" => i += 1,
+                "header" | "footer" => break,
+                _ => panic!("parse_special: unknown {}", name.local_name),
+            },
             _ => {}
         }
     }
@@ -250,7 +249,7 @@ fn ignore_tag(xml_tag: &str, parser: &mut EventReader<BufReader<File>>) {
                     break;
                 }
             }
-            _ => {},
+            _ => {}
         }
     }
 }
@@ -267,29 +266,36 @@ pub(crate) fn parse(xml_path: &str) -> Context {
         footer: Tokens::Message::new(),
         global_enums: vec![],
         global_bitfields: vec![],
-        messages: vec![]
+        messages: vec![],
     };
 
     loop {
         let e = parser.next();
         match e {
-            Ok(XmlEvent::StartDocument { .. }) => {},
-            Ok(XmlEvent::StartElement { name, attributes, .. }) => {
+            Ok(XmlEvent::StartDocument { .. }) => {}
+            Ok(XmlEvent::StartElement {
+                name, attributes, ..
+            }) => {
                 match name.local_name.as_str() {
-                    "type" |
-                    "description" | "types" | "serialization" |
-                    "units" | "message-groups" | "flags"
-                    => { ignore_tag(name.local_name.as_str(), &mut parser) }, // ignore, for now, this headers
+                    "type" | "description" | "types" | "serialization" | "units"
+                    | "message-groups" | "flags" => {
+                        ignore_tag(name.local_name.as_str(), &mut parser)
+                    } // ignore, for now, this headers
                     "enumerations" => parse_global_enum(&mut ctx.global_enums, &mut parser),
                     "bitfields" => parse_global_enum(&mut ctx.global_bitfields, &mut parser),
-                    "header" => parse_special(&mut ctx.header.fields, &mut ctx.header.desc, &mut parser),
+                    "header" => {
+                        parse_special(&mut ctx.header.fields, &mut ctx.header.desc, &mut parser)
+                    }
                     "messages" => {
                         let ret = attributes.iter().find(|x| x.name.local_name == "version");
                         match ret {
-                            None => panic!("parse: missing \"version\" field in \"message\" : {}", name.local_name),
+                            None => panic!(
+                                "parse: missing \"version\" field in \"message\" : {}",
+                                name.local_name
+                            ),
                             Some(v) => ctx.version = v.value.clone(),
                         }
-                    },
+                    }
                     "footer" => {
                         parse_special(&mut ctx.footer.fields, &mut ctx.footer.desc, &mut parser);
                         parse_messages(&mut ctx, &mut parser);
@@ -297,11 +303,10 @@ pub(crate) fn parse(xml_path: &str) -> Context {
                     }
                     _ => panic!("parse: unhandled tag {}", name.local_name),
                 }
-            },
-            Ok(XmlEvent::EndElement { name }) => {},
+            }
+            Ok(XmlEvent::EndElement { name }) => {}
             Ok(XmlEvent::EndDocument) => break,
-            Ok(XmlEvent::Whitespace(..)) |
-            Ok(XmlEvent::Characters(..)) => {},
+            Ok(XmlEvent::Whitespace(..)) | Ok(XmlEvent::Characters(..)) => {}
             _ => panic!("parse: unhandled event"),
         }
     }
@@ -327,8 +332,11 @@ fn full_format() {
     assert_eq!(ctx.messages[i].abbrev, "EntityState");
     assert_eq!(ctx.messages[i].source, "vehicle");
     assert_eq!(ctx.messages[i].category, "Core");
-    assert_eq!(ctx.messages[i].desc, "State reported by an entity in the vehicle. The source entity is
-            identified in the message header.");
+    assert_eq!(
+        ctx.messages[i].desc,
+        "State reported by an entity in the vehicle. The source entity is
+            identified in the message header."
+    );
 
     assert_eq!(ctx.messages[i].fields[0].name, "State");
     assert_eq!(ctx.messages[i].fields[0].abbrev, "state");
@@ -357,20 +365,32 @@ fn full_format() {
 
     assert_eq!(ctx.messages[i].fields[1].name, "Flags");
     assert_eq!(ctx.messages[i].fields[1].abbrev, "flags");
-    assert_eq!(ctx.messages[i].fields[1].desc, "Complementary entity state flags.");
+    assert_eq!(
+        ctx.messages[i].fields[1].desc,
+        "Complementary entity state flags."
+    );
     assert_eq!(ctx.messages[i].fields[1].ftype, ImcType::U8);
     assert_eq!(ctx.messages[i].fields[1].unit, "Bitfield");
     assert_eq!(ctx.messages[i].fields[1].enum_prefix, "EFLA");
     assert_eq!(ctx.messages[i].fields[1].read_only, false);
     assert_eq!(ctx.messages[i].fields[1].enums.len(), 1);
     assert_eq!(ctx.messages[i].fields[1].enums[0].id, "0x01");
-    assert_eq!(ctx.messages[i].fields[1].enums[0].name, "Human Intervention Required");
-    assert_eq!(ctx.messages[i].fields[1].enums[0].abbrev, "HUMAN_INTERVENTION");
+    assert_eq!(
+        ctx.messages[i].fields[1].enums[0].name,
+        "Human Intervention Required"
+    );
+    assert_eq!(
+        ctx.messages[i].fields[1].enums[0].abbrev,
+        "HUMAN_INTERVENTION"
+    );
     n_fields += 1;
 
     assert_eq!(ctx.messages[i].fields[2].name, "Complementary description");
     assert_eq!(ctx.messages[i].fields[2].abbrev, "description");
-    assert_eq!(ctx.messages[i].fields[2].desc, "Complementary human-readable description of entity state.");
+    assert_eq!(
+        ctx.messages[i].fields[2].desc,
+        "Complementary human-readable description of entity state."
+    );
     assert_eq!(ctx.messages[i].fields[2].ftype, ImcType::PlainText);
     assert_eq!(ctx.messages[i].fields[2].read_only, false);
     assert!(ctx.messages[i].fields[2].unit.is_empty());
@@ -388,10 +408,16 @@ fn full_format() {
     assert_eq!(ctx.messages[i].abbrev, "TransportBindings");
     assert_eq!(ctx.messages[i].source, "vehicle");
     assert_eq!(ctx.messages[i].category, "Core");
-    assert_eq!(ctx.messages[i].desc, "Message generated when tasks bind to messages.");
+    assert_eq!(
+        ctx.messages[i].desc,
+        "Message generated when tasks bind to messages."
+    );
     assert_eq!(ctx.messages[i].fields[0].name, "Consumer name");
     assert_eq!(ctx.messages[i].fields[0].abbrev, "consumer");
-    assert_eq!(ctx.messages[i].fields[0].desc, "The name of the consumer (e.g. task name).");
+    assert_eq!(
+        ctx.messages[i].fields[0].desc,
+        "The name of the consumer (e.g. task name)."
+    );
     assert_eq!(ctx.messages[i].fields[0].ftype, ImcType::PlainText);
     assert_eq!(ctx.messages[i].fields[0].read_only, false);
     assert!(ctx.messages[i].fields[0].unit.is_empty());
@@ -401,7 +427,10 @@ fn full_format() {
 
     assert_eq!(ctx.messages[i].fields[1].name, "Message Identifier");
     assert_eq!(ctx.messages[i].fields[1].abbrev, "message_id");
-    assert_eq!(ctx.messages[i].fields[1].desc, "The id of the message to be listened to.");
+    assert_eq!(
+        ctx.messages[i].fields[1].desc,
+        "The id of the message to be listened to."
+    );
     assert_eq!(ctx.messages[i].fields[1].ftype, ImcType::U16);
     assert_eq!(ctx.messages[i].fields[1].read_only, false);
     assert!(ctx.messages[i].fields[1].unit.is_empty());
@@ -496,7 +525,10 @@ fn assert_header(ctx: &Context) {
     assert_eq!(ctx.header.fields[0].name, "Synchronization Number");
     assert_eq!(ctx.header.fields[0].abbrev, "sync");
     assert_eq!(ctx.header.fields[0].ftype, ImcType::U16);
-    assert_eq!(ctx.header.fields[0].default_value.as_ref().unwrap(), "0xFE54");
+    assert_eq!(
+        ctx.header.fields[0].default_value.as_ref().unwrap(),
+        "0xFE54"
+    );
     assert!(ctx.header.fields[0].read_only);
 
     assert_eq!(ctx.header.fields[1].name, "Message Identification Number");
@@ -563,7 +595,10 @@ fn assert_global_bitfields(ctx: &Context) {
 
     assert_eq!(ctx.global_bitfields[0].enums[2].id, "0x00000002");
     assert_eq!(ctx.global_bitfields[0].enums[2].abbrev, "TELEOPERATION");
-    assert_eq!(ctx.global_bitfields[0].enums[2].name, "Teleoperation Control");
+    assert_eq!(
+        ctx.global_bitfields[0].enums[2].name,
+        "Teleoperation Control"
+    );
 
     assert_eq!(ctx.global_bitfields[0].enums[3].id, "0x00000004");
     assert_eq!(ctx.global_bitfields[0].enums[3].abbrev, "ALTITUDE");
@@ -603,7 +638,10 @@ fn assert_global_bitfields(ctx: &Context) {
 
     assert_eq!(ctx.global_bitfields[0].enums[12].id, "0x80000000");
     assert_eq!(ctx.global_bitfields[0].enums[12].abbrev, "NO_OVERRIDE");
-    assert_eq!(ctx.global_bitfields[0].enums[12].name, "Non-overridable control");
+    assert_eq!(
+        ctx.global_bitfields[0].enums[12].name,
+        "Non-overridable control"
+    );
 
     assert_eq!(ctx.global_bitfields[0].enums[13].id, "0xFFFFFFFF");
     assert_eq!(ctx.global_bitfields[0].enums[13].abbrev, "ALL");
@@ -635,7 +673,10 @@ fn assert_global_bitfields(ctx: &Context) {
     assert_eq!(ctx.global_bitfields[1].enums[4].abbrev, "MAX_SPEED");
 
     assert_eq!(ctx.global_bitfields[1].enums[5].id, "0x20");
-    assert_eq!(ctx.global_bitfields[1].enums[5].name, "Maximum Vertical Rate");
+    assert_eq!(
+        ctx.global_bitfields[1].enums[5].name,
+        "Maximum Vertical Rate"
+    );
     assert_eq!(ctx.global_bitfields[1].enums[5].abbrev, "MAX_VRATE");
 
     assert_eq!(ctx.global_bitfields[1].enums[6].id, "0x40");

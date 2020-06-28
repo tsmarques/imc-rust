@@ -1,42 +1,48 @@
 #![allow(non_snake_case)]
 
-extern crate xml;
 extern crate clap;
+extern crate xml;
 
 mod engine;
 
-use clap::{Arg, App};
-use std::path::{Path, PathBuf};
+use crate::engine::Renderer::RendererArguments;
+use clap::{App, Arg};
+use rustache::Render;
 use std::env;
 use std::fs::File;
 use std::io::{Cursor, Read};
-use rustache::Render;
-use crate::engine::Renderer::RendererArguments;
+use std::path::{Path, PathBuf};
 
 fn main() {
     let matches = App::new("IMC Rust")
-    .version("0.1.0")
-    .author("Tiago Marques <tmarques@oceanscan-mst.com>")
-    .about("Rust IMC bindings generator")
-    .arg(Arg::with_name("imc")
-        .short("i")
-        .long("imc")
-        .takes_value(true)
-        .required(true)
-        .help("Full path to IMC.xml file"))
-    .arg(Arg::with_name("output-dir")
-        .short("o")
-        .long("output-dir")
-        .takes_value(true)
-        .required(true)
-        .help("Full path to output directory"))
-    .arg(Arg::with_name("template-dir")
-        .short("t")
-        .long("template-dir")
-        .takes_value(true)
-        .required(true)
-        .help("Full path to templates directory"))
-    .get_matches();
+        .version("0.1.0")
+        .author("Tiago Marques <tmarques@oceanscan-mst.com>")
+        .about("Rust IMC bindings generator")
+        .arg(
+            Arg::with_name("imc")
+                .short("i")
+                .long("imc")
+                .takes_value(true)
+                .required(true)
+                .help("Full path to IMC.xml file"),
+        )
+        .arg(
+            Arg::with_name("output-dir")
+                .short("o")
+                .long("output-dir")
+                .takes_value(true)
+                .required(true)
+                .help("Full path to output directory"),
+        )
+        .arg(
+            Arg::with_name("template-dir")
+                .short("t")
+                .long("template-dir")
+                .takes_value(true)
+                .required(true)
+                .help("Full path to templates directory"),
+        )
+        .get_matches();
 
     // handle program arguments
     let ret = matches.value_of("imc");
@@ -53,23 +59,31 @@ fn main() {
             println!(".. parsing {}", v);
             ctx = engine::Parser::parse(v);
         }
-        None => panic!("missing path to IMC definition. Use --imc option")
+        None => panic!("missing path to IMC definition. Use --imc option"),
     }
 
     println!("\n.. This was a triumph");
     println!(".. version: {}", ctx.version);
-    println!(".. sync number: {}", ctx.header.fields.get(0).unwrap().default_value.as_ref().unwrap());
+    println!(
+        ".. sync number: {}",
+        ctx.header
+            .fields
+            .get(0)
+            .unwrap()
+            .default_value
+            .as_ref()
+            .unwrap()
+    );
     println!(".. parsed");
     println!("   .. {} messages", ctx.messages.len());
     println!("   .. {} global enumerators", ctx.global_enums.len());
     println!("   .. {} global bitfields", ctx.global_bitfields.len());
 
     // render IMC messages
-    let mut rnd_args :RendererArguments = RendererArguments {
-        templates_dir : templates_path.as_path(),
-        imc_output_dir: out_imc_path.as_path()
+    let mut rnd_args: RendererArguments = RendererArguments {
+        templates_dir: templates_path.as_path(),
+        imc_output_dir: out_imc_path.as_path(),
     };
-
 
     println!(".. templates from {}", rnd_args.templates_dir.display());
     println!(".. rendering header");

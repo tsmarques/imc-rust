@@ -2,8 +2,7 @@ use crate::engine::Tokens::Field;
 use std::fmt;
 use std::fmt::Formatter;
 
-#[derive(PartialEq)]
-#[derive(Debug)]
+#[derive(PartialEq, Debug)]
 pub enum ImcType {
     U8,
     U16,
@@ -21,25 +20,23 @@ pub enum ImcType {
     Bitfield,
     Message,
     MessageList,
-    Unknown
+    Unknown,
 }
 
 impl ImcType {
     fn size(&self) -> Option<i32> {
         match *self {
-            ImcType::U8  | ImcType::I8 => Option::from(1),
+            ImcType::U8 | ImcType::I8 => Option::from(1),
             ImcType::U16 | ImcType::I16 => Option::from(2),
             ImcType::U32 | ImcType::I32 => Option::from(4),
             ImcType::U64 | ImcType::I64 => Option::from(8),
             ImcType::Fp32 => Option::from(4),
             ImcType::Fp64 => Option::from(8),
-            ImcType::Enum |
-            ImcType::Bitfield => Option::from(1),
-            ImcType::Unknown |
-            ImcType::Raw |
-            ImcType::Message |
-            ImcType::MessageList => Option::None,
-            _ => panic!("unknown type")
+            ImcType::Enum | ImcType::Bitfield => Option::from(1),
+            ImcType::Unknown | ImcType::Raw | ImcType::Message | ImcType::MessageList => {
+                Option::None
+            }
+            _ => panic!("unknown type"),
         }
     }
 }
@@ -55,12 +52,11 @@ impl fmt::Display for ImcType {
             ImcType::I64 => write!(f, "i64"),
             ImcType::Fp32 => write!(f, "f32"),
             ImcType::Fp64 => write!(f, "f64"),
-            ImcType::Enum |
-            ImcType::Bitfield => write!(f, "enum"),
+            ImcType::Enum | ImcType::Bitfield => write!(f, "enum"),
             ImcType::Raw => write!(f, "Vec<u8>"),
             ImcType::PlainText => write!(f, "String"),
             ImcType::Message => write!(f, "Message"),
-            _ => unimplemented!()
+            _ => unimplemented!(),
         }
     }
 }
@@ -71,7 +67,7 @@ impl fmt::Display for ImcType {
 //     }
 // }
 
-pub fn convert(ftype :&str) -> ImcType {
+pub fn convert(ftype: &str) -> ImcType {
     match ftype {
         "uint8_t" => ImcType::U8,
         "uint16_t" => ImcType::U16,
@@ -87,11 +83,11 @@ pub fn convert(ftype :&str) -> ImcType {
         "plaintext" => ImcType::PlainText,
         "message" => ImcType::Message,
         "message-list" => ImcType::MessageList,
-        _ => panic!("unknown type {}", ftype)
+        _ => panic!("unknown type {}", ftype),
     }
 }
 
-pub fn get_init_string(field :&Field) -> String {
+pub fn get_init_string(field: &Field) -> String {
     if !field.default_value.is_none() {
         // @fixme wtf...
         return field.default_value.as_ref().unwrap().parse().unwrap();
@@ -100,25 +96,31 @@ pub fn get_init_string(field :&Field) -> String {
     let default_v = field.default_value.clone();
     match default_v {
         Some(value) => value,
-        None => {
-            match field.ftype {
-                ImcType::U8  | ImcType::U16 |
-                ImcType::U32 | ImcType::U64 |
-                ImcType::I8   | ImcType::I16  |
-                ImcType::I32  | ImcType::I64 => "0".to_string(),
-                ImcType::Fp32 | ImcType::Fp64 => "0.0".to_string(),
-                ImcType::Raw => "vec![]".to_string(),
-                ImcType::PlainText => "String::from(\"\")".to_string(),
-                ImcType::Message => {
-                    if field.msg_type.is_none() { panic!("unkown message-type") }
-                    format!("{}::new()", field.msg_type.as_ref().unwrap())
+        None => match field.ftype {
+            ImcType::U8
+            | ImcType::U16
+            | ImcType::U32
+            | ImcType::U64
+            | ImcType::I8
+            | ImcType::I16
+            | ImcType::I32
+            | ImcType::I64 => "0".to_string(),
+            ImcType::Fp32 | ImcType::Fp64 => "0.0".to_string(),
+            ImcType::Raw => "vec![]".to_string(),
+            ImcType::PlainText => "String::from(\"\")".to_string(),
+            ImcType::Message => {
+                if field.msg_type.is_none() {
+                    panic!("unkown message-type")
                 }
-                ImcType::MessageList => {
-                    if field.msg_type.is_none() { panic!("unkown message-type") }
-                    "vec![]".to_string()
-                },
-                _ => panic!("unknown type {}", field.ftype)
+                format!("{}::new()", field.msg_type.as_ref().unwrap())
             }
+            ImcType::MessageList => {
+                if field.msg_type.is_none() {
+                    panic!("unkown message-type")
+                }
+                "vec![]".to_string()
+            }
+            _ => panic!("unknown type {}", field.ftype),
         },
     }
 }
@@ -135,8 +137,7 @@ pub mod Serialization {
         }
 
         match &field.ftype {
-            ImcType::Raw |
-            ImcType::PlainText => String::from("serialize_string!"),
+            ImcType::Raw | ImcType::PlainText => String::from("serialize_string!"),
             ImcType::U8 => format!("put_u8"),
             ImcType::Enum | ImcType::Bitfield => panic!("what to do with bitfield and enum.."),
             v => format!("put_{}_le", v),

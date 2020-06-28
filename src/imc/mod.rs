@@ -1,25 +1,24 @@
-
-
-pub const DUNE_IMC_VERSION :&'static str = "5.4.24";
+pub const DUNE_IMC_VERSION: &'static str = "5.4.24";
 
 // IMC Synchronization number
-pub const DUNE_IMC_CONST_SYNC :u16 = 0xFE54;
+pub const DUNE_IMC_CONST_SYNC: u16 = 0xFE54;
 
 // IMC's header size
-pub const IMC_CONST_HEADER_SIZE :u8 = 0;
+pub const IMC_CONST_HEADER_SIZE: u8 = 0;
 
 // IMC's footer size
-pub const IMC_CONST_FOOTER_SIZE :u8 = 0;
+pub const IMC_CONST_FOOTER_SIZE: u8 = 0;
 
 // Unknown entity identifier.
-pub const IMC_CONST_UNK_EID :u8 = 255;
+pub const IMC_CONST_UNK_EID: u8 = 255;
 
-pub mod utils
-{
+pub mod utils {
     use std::time::{SystemTime, UNIX_EPOCH};
 
-    pub(crate) fn get_timestamp_secs() -> f64
-    {
-        SystemTime::now().duration_since(UNIX_EPOCH).expect("failed to get timestamp").as_secs_f64()
+    pub(crate) fn get_timestamp_secs() -> f64 {
+        SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .expect("failed to get timestamp")
+            .as_secs_f64()
     }
 }
