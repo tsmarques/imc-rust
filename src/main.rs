@@ -72,9 +72,11 @@ fn main() {
 
 
     println!(".. templates from {}", rnd_args.templates_dir.display());
-    println!(".. generating header");
+    println!(".. rendering header");
 
     engine::Renderer::render_header(&rnd_args, &ctx.header);
+
+    println!(".. rendering IMC file");
     engine::Renderer::render_imc_file(&rnd_args, &ctx);
 
     println!(".. finished");
