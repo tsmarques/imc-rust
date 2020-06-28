@@ -42,6 +42,14 @@ fn main() {
                 .required(true)
                 .help("Full path to templates directory"),
         )
+        .arg(
+            Arg::with_name("only-message")
+                .short("m")
+                .long("only-message")
+                .takes_value(true)
+                .required(false)
+                .help("Render only the selected message. Debug only"),
+        )
         .get_matches();
 
     // handle program arguments
@@ -92,6 +100,36 @@ fn main() {
 
     println!(".. rendering IMC file");
     engine::Renderer::render_imc_file(&rnd_args, &ctx);
+
+    let ret = matches.value_of("only-message");
+    if ret.is_none() {
+        println!(".. rendering messages");
+        for msg in ctx.messages {
+            println!("   .. {}", msg.abbrev);
+            engine::Renderer::render_message(&rnd_args, msg);
+        }
+    } else {
+        let msg_abbrev = ret.unwrap();
+        println!(".. DEBUG rendering only {}", msg_abbrev);
+
+        let mut it = ctx.messages.into_iter();
+        let mut found = false;
+        let mut ret = it.next();
+        while ret.is_some() && !found {
+            let m = ret.unwrap();
+
+            if m.abbrev == msg_abbrev {
+                found = true;
+                engine::Renderer::render_message(&rnd_args, m);
+            }
+
+            ret = it.next();
+        }
+
+        if !found {
+            println!("   .. ERROR can't find message");
+        }
+    }
 
     println!(".. finished");
 }

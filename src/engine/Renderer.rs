@@ -187,3 +187,38 @@ pub fn render_imc_file(args: &RendererArguments, ctx: &Parser::Context) {
     let rendered_data = String::from_utf8(out.into_inner()).unwrap();
     render_file(&args, "mod", &rendered_data);
 }
+
+pub fn render_message(args: &RendererArguments, msg: Tokens::Message) {
+    let fields_str = render_fields_string(&msg.fields);
+    let fields_init_str = render_fields_initialization_string(&msg.fields);
+    let fields_serialization_str = render_fields_serialization_string(&msg.fields);
+    let msg_abbrev = msg.abbrev.clone();
+
+    let mut data = rustache::HashBuilder::new()
+        .insert("imc_message_desc", render_description_string(&msg.desc, 0))
+        .insert("imc_message_id", msg.id)
+        .insert("imc_message_enums", msg.enums)
+        .insert("imc_message_abbrev", msg.abbrev)
+        .insert("imc_message_fields", fields_str)
+        .insert("imc_message_fields_init", fields_init_str)
+        .insert(
+            "imc_message_fixed_serialization_size",
+            msg.fixed_serialization_size.to_string(),
+        )
+        .insert(
+            "imc_message_dynamic_serialization_size",
+            "unimplemented!();",
+        )
+        .insert("imc_message_serialize", fields_serialization_str);
+
+    let mut out = Cursor::new(Vec::new());
+    match read_template_file(args, RenderType::Message) {
+        Ok(content) => {
+            data.render(content.as_str(), &mut out).unwrap();
+        }
+        Err(error) => panic!("failed to read msg template file: {}", error),
+    }
+
+    let rendered_data = String::from_utf8(out.into_inner()).unwrap();
+    render_file(&args, msg_abbrev.as_str(), &rendered_data);
+}

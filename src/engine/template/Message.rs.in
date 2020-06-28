@@ -4,6 +4,8 @@ use crate::imc::{IMC_CONST_UNK_EID, DUNE_IMC_CONST_SYNC};
 use bytes::BufMut;
 use crate::imc::Header::Header;
 
+{{imc_message_desc}}
+
 const c_msg_id :u16 = {{imc_message_id}};
 
 {{imc_message_enums}}
