@@ -91,6 +91,25 @@ fn parse_field_attributes(field :&mut Tokens::Field, attr :&Vec<OwnedAttribute>)
     }
 }
 
+fn parse_description(parser :&mut EventReader<BufReader<File>>) -> String {
+    let mut desc :String = String::from("");
+    loop {
+        match parser.next() {
+            Ok(XmlEvent::Characters(content)) => {
+                desc = content.trim().to_string();
+            },
+            Ok(XmlEvent::EndElement { name }) => {
+                if name.local_name == "description" {
+                    break;
+                }
+            }
+            _ => {},
+        }
+    }
+
+    desc
+}
+
 fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Tokens::Field>) {
     let mut fields = vec![];
     // flag if next <description> is from <message ...>
@@ -190,14 +209,21 @@ fn parse_messages(ctx : &mut Context, parser : &mut EventReader<BufReader<File>>
     }
 }
 
-fn parse_special(out :&mut Vec<Tokens::Field>, parser : &mut EventReader<BufReader<File>>) {
+fn parse_special(out :&mut Vec<Tokens::Field>, desc: &mut String, parser : &mut EventReader<BufReader<File>>) {
     let mut i = 0;
+    let mut is_header_desc = true;
     loop {
         match parser.next() {
             Err(err) => panic!("parse_special: error: {}", err),
             Ok(XmlEvent::StartElement { name, attributes, .. }) => {
                 match name.local_name.as_str() {
-                    "description" => ignore_tag("description", parser),
+                    "description" => {
+                        if is_header_desc {
+                            *desc = parse_description(parser);
+                            is_header_desc = false;
+                        }
+                        else { ignore_tag("description", parser); }
+                    },
                     "field" => {
                         out.push(Tokens::Field::new());
                         parse_field_attributes(&mut out[i], &attributes)
@@ -256,7 +282,7 @@ pub(crate) fn parse(xml_path: &str) -> Context {
                     => { ignore_tag(name.local_name.as_str(), &mut parser) }, // ignore, for now, this headers
                     "enumerations" => parse_global_enum(&mut ctx.global_enums, &mut parser),
                     "bitfields" => parse_global_enum(&mut ctx.global_bitfields, &mut parser),
-                    "header" => parse_special(&mut ctx.header.fields, &mut parser),
+                    "header" => parse_special(&mut ctx.header.fields, &mut ctx.header.desc, &mut parser),
                     "messages" => {
                         let ret = attributes.iter().find(|x| x.name.local_name == "version");
                         match ret {
@@ -265,7 +291,7 @@ pub(crate) fn parse(xml_path: &str) -> Context {
                         }
                     },
                     "footer" => {
-                        parse_special(&mut ctx.footer.fields, &mut parser);
+                        parse_special(&mut ctx.footer.fields, &mut ctx.footer.desc, &mut parser);
                         parse_messages(&mut ctx, &mut parser);
                         break;
                     }
