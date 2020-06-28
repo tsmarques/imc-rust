@@ -126,7 +126,16 @@ fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Tok
                         fields.push(Tokens::Field::new());
                         parse_field_attributes(&mut fields[i], &attributes)
                     },
-                    "description" => {},
+                    "description" => {
+                        if !is_message_description {
+                            fields[i].desc = parse_description(parser);
+                            is_message_description = true;
+                        }
+                        else {
+                            message_descr = parse_description(parser);
+                            is_message_description = false;
+                        }
+                    },
                     "value" => {
                         match fields[i].unit.as_str() {
                             "Enumerated" | "Bitfield" => parse_field_enum(&mut fields[i], &attributes),
@@ -134,23 +143,12 @@ fn parse_message(parser : &mut EventReader<BufReader<File>>) -> (String, Vec<Tok
                         }
                     }
                     _ => panic!("parse field : unknown name {}", name.local_name)
-                },
-            Ok(XmlEvent::Characters(content)) => {
-                let description = content.trim().to_string();
-                if !is_message_description {
-                    fields[i].desc = description;
-                    is_message_description = true;
                 }
-                else {
-                    message_descr = description;
-                    is_message_description = false;
-                }
-            },
             Ok(XmlEvent::EndElement { name }) =>
                 match name.local_name.as_str() {
                     "field" => i+=1,
                     "message" => { break },
-                    "description" | "value" => {},
+                    "value" => {},
                     _ => panic!("parse_fields: unknown termination \"{}\"", name.local_name),
                 },
             Ok(_) => {},
