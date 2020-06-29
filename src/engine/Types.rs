@@ -107,7 +107,7 @@ pub fn get_init_string(field: &Field) -> String {
             | ImcType::I64 => "0".to_string(),
             ImcType::Fp32 | ImcType::Fp64 => "0.0".to_string(),
             ImcType::Raw => "vec![]".to_string(),
-            ImcType::PlainText => "String::from(\"\")".to_string(),
+            ImcType::PlainText => "String::new()".to_string(),
             ImcType::Message => {
                 if field.msg_type.is_none() {
                     panic!("unkown message-type")
