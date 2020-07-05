@@ -86,6 +86,9 @@ fn main() {
     println!("   .. {} messages", ctx.messages.len());
     println!("   .. {} global enumerators", ctx.global_enums.len());
     println!("   .. {} global bitfields", ctx.global_bitfields.len());
+    println!("   .. {} message groups", ctx.message_groups.len());
+    println!("      .. {:?}", ctx.message_groups);
+    println!("      .. {:?}", ctx.message_group);
 
     // render IMC messages
     let mut rnd_args: RendererArguments = RendererArguments {
@@ -95,8 +98,10 @@ fn main() {
 
     println!(".. templates from {}", rnd_args.templates_dir.display());
     println!(".. rendering header");
-
     engine::Renderer::render_header(&rnd_args, &ctx.header);
+
+    println!(".. rendering message groups");
+    engine::Renderer::render_message_groups(&rnd_args, &ctx.message_groups);
 
     println!(".. rendering IMC file");
     engine::Renderer::render_imc_file(&rnd_args, &ctx);

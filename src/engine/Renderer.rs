@@ -3,6 +3,7 @@ use crate::engine::Tokens::{Field, Message};
 use crate::engine::Types::ImcType;
 use crate::engine::{Parser, Tokens, Types};
 use rustache::Render;
+use std::collections::HashSet;
 use std::env;
 use std::fs::File;
 use std::io::{Cursor, Error, Read, Write};
@@ -17,6 +18,7 @@ enum RenderType {
     Header = 0,
     Message = 1,
     Constants = 2,
+    MessageGroup = 3,
 }
 
 fn read_template_file(
@@ -28,6 +30,7 @@ fn read_template_file(
         RenderType::Header => tmp.push("Header.rs.mustache"),
         RenderType::Message => tmp.push("Message.rs.mustache"),
         RenderType::Constants => tmp.push("mod.rs.mustache"),
+        RenderType::MessageGroup => tmp.push("MessageGroup.mustache"),
         _ => panic!("unknown template type..."),
     }
 
@@ -176,6 +179,29 @@ pub fn render_enums<'a>(fields: Vec<Tokens::Field>) -> Option<rustache::VecBuild
     } else {
         Option::from(enum_builder)
     }
+}
+
+pub fn render_message_groups(args: &RendererArguments, groups: &HashSet<String>) {
+    let mut groups_vec = rustache::VecBuilder::new();
+    let mut data = rustache::HashBuilder::new();
+
+    for group in groups {
+        groups_vec = groups_vec
+            .push(rustache::HashBuilder::new().insert("imc-group-abbrev", group.as_str()));
+    }
+
+    data = data.insert("imc-message-groups", groups_vec);
+
+    let mut out = Cursor::new(Vec::new());
+    match read_template_file(args, RenderType::MessageGroup) {
+        Ok(content) => {
+            data.render(content.as_str(), &mut out).unwrap();
+        }
+        Err(error) => panic!("failed to read message groups' template file: {}", error),
+    }
+
+    let rendered_data = String::from_utf8(out.into_inner()).unwrap();
+    render_file(&args, "MessageGroup", &rendered_data);
 }
 
 pub fn render_header(args: &RendererArguments, header: &Tokens::Message) {

@@ -44,6 +44,11 @@ impl {{imc_message_abbrev}}
     }
 }
 
+{{#imc-has-message-group}}
+// message-group: imc-group-abbrev
+impl {{imc-group-abbrev}} { }
+{{/imc-has-message-group}}
+
 impl Message for {{imc_message_abbrev}}
 {
     fn get_header(&mut self) -> &mut Header {

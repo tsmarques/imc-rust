@@ -1,5 +1,6 @@
 mod Header;
 mod Message;
+mod MessageGroup;
 
 pub const DUNE_IMC_VERSION: &'static str = "5.4.24";
 
