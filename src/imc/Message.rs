@@ -1,58 +1,48 @@
 #![macro_use]
 
 use crate::imc;
+use crate::imc::Header::Header;
 use bytes::BufMut;
 use crc16::*;
-use crate::imc::Header::Header;
 
 macro_rules! serialize_string {
-    ($bfr:expr, $string_var:expr) =>
-    {
+    ($bfr:expr, $string_var:expr) => {
         $bfr.put_u16_le($string_var.len() as u16);
         $bfr.put_slice($string_var.as_bytes());
     };
 }
 
-pub fn serialize_footer(bfr :&mut bytes::BytesMut)
-{
+pub fn serialize_footer(bfr: &mut bytes::BytesMut) {
     let mut state = State::<ARC>::new();
     state.update(bfr);
 
     bfr.put_u16_le(state.get());
 }
 
-pub trait Message
-{
+pub trait Message {
     fn get_header(&mut self) -> &mut Header;
 
-
-    fn set_size(&mut self, size :u16)
-    {
+    fn set_size(&mut self, size: u16) {
         self.get_header().size = size
     }
 
-    fn set_timestamp_secs(&mut self, ts :f64)
-    {
+    fn set_timestamp_secs(&mut self, ts: f64) {
         self.get_header().timestamp = ts
     }
 
-    fn set_source(&mut self, src :u16)
-    {
+    fn set_source(&mut self, src: u16) {
         self.get_header().src = src;
     }
 
-    fn set_source_ent(&mut self, src_ent :u8)
-    {
+    fn set_source_ent(&mut self, src_ent: u8) {
         self.get_header().src_ent = src_ent;
     }
 
-    fn set_destination(&mut self, dst :u16)
-    {
+    fn set_destination(&mut self, dst: u16) {
         self.get_header().dst = dst;
     }
 
-    fn set_destination_ent(&mut self, dst_ent :u8)
-    {
+    fn set_destination_ent(&mut self, dst_ent: u8) {
         self.get_header().dst_ent = dst_ent;
     }
 
@@ -64,17 +54,15 @@ pub trait Message
 
     fn fixed_serialization_size(&self) -> usize;
     fn dynamic_serialization_size(&self) -> usize;
-    fn serialize(&self, bfr :&mut bytes::BytesMut);
+    fn serialize(&self, bfr: &mut bytes::BytesMut);
 
-    fn payload_serialization_size(&self) -> usize
-    {
+    fn payload_serialization_size(&self) -> usize {
         self.fixed_serialization_size() + self.dynamic_serialization_size()
     }
 
-    fn serialization_size(&self) -> usize
-    {
-        self.payload_serialization_size() +
-            imc::IMC_CONST_HEADER_SIZE as usize +
-            imc::IMC_CONST_FOOTER_SIZE as usize
+    fn serialization_size(&self) -> usize {
+        self.payload_serialization_size()
+            + imc::IMC_CONST_HEADER_SIZE as usize
+            + imc::IMC_CONST_FOOTER_SIZE as usize
     }
 }
