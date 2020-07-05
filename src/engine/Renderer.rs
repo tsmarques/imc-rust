@@ -1,5 +1,6 @@
 use crate::engine;
 use crate::engine::Tokens::{Field, Message};
+use crate::engine::Types::ImcType;
 use crate::engine::{Parser, Tokens, Types};
 use rustache::Render;
 use std::env;
@@ -103,7 +104,9 @@ fn render_fields_serialization_string(fields: &Vec<Tokens::Field>) -> String {
     let mut padding = 0;
     for field in fields {
         let mut str = match &field.ftype {
-            ImcType::Raw | ImcType::PlainText => format!("serialize_string!(bfr, self.{});\n", field.abbrev),
+            ImcType::Raw | ImcType::PlainText => {
+                format!("serialize_string!(bfr, self.{});\n", field.abbrev)
+            }
             ImcType::U8 => format!("bfr.put_u8(self.{});\n", field.abbrev),
             ImcType::Enum | ImcType::Bitfield => panic!("what to do with bitfield and enum.."),
             v => format!("bfr.put_{}_le(self.{});\n", v, field.abbrev),
@@ -153,7 +156,10 @@ pub fn render_enums<'a>(fields: Vec<Tokens::Field>) -> Option<rustache::VecBuild
             enum_values = enum_values.push(
                 rustache::HashBuilder::new()
                     .insert("enum-desc", format!("// {}", value.name.trim()))
-                    .insert("enum-name", format!("{}_{}", field.enum_prefix, value.abbrev.trim()))
+                    .insert(
+                        "enum-name",
+                        format!("{}_{}", field.enum_prefix, value.abbrev.trim()),
+                    )
                     .insert("enum-value", value.id.trim()),
             );
         }
