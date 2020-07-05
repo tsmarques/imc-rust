@@ -24,9 +24,9 @@ fn read_template_file(
 ) -> Result<String, Error> {
     let mut tmp = PathBuf::from(args.templates_dir);
     match template_type {
-        RenderType::Header => tmp.push("Header.rs.in"),
-        RenderType::Message => tmp.push("Message.rs.in"),
-        RenderType::Constants => tmp.push("mod.rs.in"),
+        RenderType::Header => tmp.push("Header.rs.mustache"),
+        RenderType::Message => tmp.push("Message.rs.mustache"),
+        RenderType::Constants => tmp.push("mod.rs.mustache"),
         _ => panic!("unknown template type..."),
     }
 
