@@ -130,6 +130,43 @@ pub fn render_description_string(desc: &String, padding: usize) -> String {
     desc_rend
 }
 
+// @todo
+pub fn render_enums<'a>(fields: Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
+    let mut enum_builder: rustache::VecBuilder = rustache::VecBuilder::new();
+
+    let mut is_empty = true;
+    for field in fields {
+        // field is not enum
+        if field.enums.is_empty() {
+            continue;
+        }
+
+        is_empty = false;
+
+        let mut enum_values: rustache::VecBuilder = rustache::VecBuilder::new();
+        for value in field.enums {
+            enum_values = enum_values.push(
+                rustache::HashBuilder::new()
+                    .insert("enum-desc", format!("// {}", value.name.trim()))
+                    .insert("enum-name", format!("{}_{}", field.enum_prefix, value.abbrev.trim()))
+                    .insert("enum-value", value.id.trim()),
+            );
+        }
+
+        enum_builder = enum_builder.push(
+            rustache::HashBuilder::new()
+                .insert("enum-abbrev", field.abbrev)
+                .insert("enum-values", enum_values),
+        );
+    }
+
+    if is_empty {
+        Option::None
+    } else {
+        Option::from(enum_builder)
+    }
+}
+
 pub fn render_header(args: &RendererArguments, header: &Tokens::Message) {
     let fields_str = render_fields_string(&header.fields);
     let fields_init_str = render_fields_initialization_string(&header.fields);
@@ -197,7 +234,6 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message) {
     let mut data = rustache::HashBuilder::new()
         .insert("imc_message_desc", render_description_string(&msg.desc, 0))
         .insert("imc_message_id", msg.id)
-        .insert("imc_message_enums", msg.enums)
         .insert("imc_message_abbrev", msg.abbrev)
         .insert("imc_message_fields", fields_str)
         .insert("imc_message_fields_init", fields_init_str)
@@ -210,6 +246,11 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message) {
             "unimplemented!();",
         )
         .insert("imc_message_serialize", fields_serialization_str);
+
+    let ret = render_enums(msg.fields);
+    if ret.is_some() {
+        data = data.insert("imc_message_enums", ret.unwrap());
+    }
 
     let mut out = Cursor::new(Vec::new());
     match read_template_file(args, RenderType::Message) {

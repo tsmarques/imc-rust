@@ -8,8 +8,12 @@ use crate::imc::Header::Header;
 
 const c_msg_id :u16 = {{imc_message_id}};
 
-{{imc_message_enums}}
-
+{{#imc_message_enums}}
+    pub enum {{enum-abbrev}} { {{#enum-values}}
+        {{enum-desc}}
+        {{enum-name}} = {{enum-value}}, {{/enum-values}}
+    }
+{{/imc_message_enums}}
 
 pub struct {{imc_message_abbrev}}
 {

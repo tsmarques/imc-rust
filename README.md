@@ -23,7 +23,7 @@
     - [ ] Type
     - [ ] Unit
       - [ ] Native
-      - [ ] Enumerated
+      - [X] Enumerated
     - [ ] Min
     - [ ] Max
 
@@ -33,6 +33,11 @@
 - [X] Header
 - [ ] Messages
   - [ ] (...)
+  - [ ]Field
+    - [ ] (...)
+    - [ ] Unit
+      - [ ] Native
+      - [X] Enumerated
  
 ## Testing
 
