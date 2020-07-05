@@ -111,7 +111,8 @@ fn main() {
         println!(".. rendering messages");
         for msg in ctx.messages {
             println!("   .. {}", msg.abbrev);
-            engine::Renderer::render_message(&rnd_args, msg);
+            let abbrev = msg.abbrev.clone();
+            engine::Renderer::render_message(&rnd_args, msg, ctx.message_group.get(&abbrev));
         }
     } else {
         let msg_abbrev = ret.unwrap();
@@ -125,7 +126,8 @@ fn main() {
 
             if m.abbrev == msg_abbrev {
                 found = true;
-                engine::Renderer::render_message(&rnd_args, m);
+                let abbrev = m.abbrev.clone();
+                engine::Renderer::render_message(&rnd_args, m, ctx.message_group.get(&abbrev));
             }
 
             ret = it.next();

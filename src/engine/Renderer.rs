@@ -262,16 +262,26 @@ pub fn render_imc_file(args: &RendererArguments, ctx: &Parser::Context) {
     render_file(&args, "mod", &rendered_data);
 }
 
-pub fn render_message(args: &RendererArguments, msg: Tokens::Message) {
+pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Option<&String>) {
     let fields_str = render_fields_string(&msg.fields);
     let fields_init_str = render_fields_initialization_string(&msg.fields);
     let fields_serialization_str = render_fields_serialization_string(&msg.fields);
     let msg_abbrev = msg.abbrev.clone();
 
-    let mut data = rustache::HashBuilder::new()
+    let mut data = rustache::HashBuilder::new();
+
+    // message group
+    if group.is_some() {
+        data = data
+            .insert("imc-has-message-group", true)
+            .insert("imc_message_abbrev", msg.abbrev.clone())
+            .insert("imc-group-abbrev", group.unwrap().clone());
+    }
+
+    data = data
         .insert("imc_message_desc", render_description_string(&msg.desc, 0))
         .insert("imc_message_id", msg.id)
-        .insert("imc_message_abbrev", msg.abbrev)
+        .insert("imc_message_abbrev", msg.abbrev.clone())
         .insert("imc_message_fields", fields_str)
         .insert("imc_message_fields_init", fields_init_str)
         .insert(
@@ -284,6 +294,7 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message) {
         )
         .insert("imc_message_serialize", fields_serialization_str);
 
+    // enumerator
     let ret = render_enums(msg.fields);
     if ret.is_some() {
         data = data.insert("imc_message_enums", ret.unwrap());

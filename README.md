@@ -2,7 +2,7 @@
 
 - [X] Global enumerators
 - [X] Global bitfields
-- [ ] Message groups
+- [X] Message groups
 - [ ] Flags
   - [ ] Periodic
   - [ ] Deprecated
@@ -30,6 +30,7 @@
 ## Rendering
 
 - [X] Main IMC file
+- [X] Message Groups
 - [X] Header
 - [ ] Messages
   - [ ] (...)

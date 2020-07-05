@@ -3,6 +3,7 @@ use crate::imc::{IMC_CONST_UNK_EID, DUNE_IMC_CONST_SYNC};
 
 use bytes::BufMut;
 use crate::imc::Header::Header;
+{{#imc-has-message-group}}use crate::imc::MessageGroup::{{imc-group-abbrev}}; {{/imc-has-message-group}}
 
 {{imc_message_desc}}
 
@@ -22,6 +23,11 @@ impl {{enum-abbrev}} {
     }
 }
 {{/imc_message_enums}}
+
+{{#imc-has-message-group}}
+// message-group: {{imc-group-abbrev}}
+impl {{imc-group-abbrev}} for {{imc_message_abbrev}} { }
+{{/imc-has-message-group}}
 
 pub struct {{imc_message_abbrev}}
 {
@@ -43,11 +49,6 @@ impl {{imc_message_abbrev}}
         msg
     }
 }
-
-{{#imc-has-message-group}}
-// message-group: imc-group-abbrev
-impl {{imc-group-abbrev}} { }
-{{/imc-has-message-group}}
 
 impl Message for {{imc_message_abbrev}}
 {
