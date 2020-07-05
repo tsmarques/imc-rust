@@ -124,24 +124,3 @@ pub fn get_init_string(field: &Field) -> String {
         },
     }
 }
-
-pub mod Serialization {
-    use crate::engine::Tokens::Field;
-    use crate::engine::Types;
-    use crate::engine::Types::ImcType;
-
-    pub fn get_fn_string(field: &Field) -> String {
-        if !field.msg_type.is_none() {
-            // @fixme wtf...
-            panic!("don't know how to serialize this yet...")
-        }
-
-        match &field.ftype {
-            ImcType::Raw | ImcType::PlainText => String::from("serialize_string!"),
-            ImcType::U8 => format!("put_u8"),
-            ImcType::Enum | ImcType::Bitfield => panic!("what to do with bitfield and enum.."),
-            v => format!("put_{}_le", v),
-            _ => panic!("unhandled type"),
-        }
-    }
-}

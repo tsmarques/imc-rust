@@ -102,8 +102,13 @@ fn render_fields_serialization_string(fields: &Vec<Tokens::Field>) -> String {
     let mut fields_str: String = String::from("");
     let mut padding = 0;
     for field in fields {
-        let ser_fn = Types::Serialization::get_fn_string(&field);
-        let str = format!("bfr.{}(self.{});\n", ser_fn, field.abbrev);
+        let mut str = match &field.ftype {
+            ImcType::Raw | ImcType::PlainText => format!("serialize_string!(bfr, self.{});\n", field.abbrev),
+            ImcType::U8 => format!("bfr.put_u8(self.{});\n", field.abbrev),
+            ImcType::Enum | ImcType::Bitfield => panic!("what to do with bitfield and enum.."),
+            v => format!("bfr.put_{}_le(self.{});\n", v, field.abbrev),
+            _ => panic!("unhandled type"),
+        };
         fields_str.push_str(format!("{:>width$}", str, width = padding + str.len()).as_str());
 
         padding = 8;
