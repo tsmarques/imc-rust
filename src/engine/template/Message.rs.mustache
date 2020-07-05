@@ -13,6 +13,14 @@ const c_msg_id :u16 = {{imc_message_id}};
         {{enum-desc}}
         {{enum-name}} = {{enum-value}}, {{/enum-values}}
     }
+
+impl {{enum-abbrev}} {
+    pub fn as_u8(&self) -> u8 {
+        match self { {{#enum-values}}
+            {{enum-name}} => {{enum-value}},{{/enum-values}}
+        }
+    }
+}
 {{/imc_message_enums}}
 
 pub struct {{imc_message_abbrev}}
