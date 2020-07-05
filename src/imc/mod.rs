@@ -1,3 +1,6 @@
+mod Header;
+mod Message;
+
 pub const DUNE_IMC_VERSION: &'static str = "5.4.24";
 
 // IMC Synchronization number
