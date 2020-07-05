@@ -1,5 +1,6 @@
 use crate::engine::Types::ImcType;
 use crate::engine::{Tokens, Types};
+use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::BufReader;
 use xml::attribute::OwnedAttribute;
@@ -13,6 +14,94 @@ pub struct Context {
     pub global_enums: Vec<Tokens::Field>,
     pub global_bitfields: Vec<Tokens::Field>,
     pub messages: Vec<Tokens::Message>,
+    // Map a given message to its message-group if any
+    pub message_group: HashMap<String, String>,
+    // Available message groups
+    pub message_groups: HashSet<String>,
+}
+
+// Parse single message group
+fn parse_group(
+    out_map: &mut HashMap<String, String>,
+    group_abbrev: &String,
+    parser: &mut EventReader<BufReader<File>>,
+) {
+    loop {
+        match parser.next() {
+            Ok(XmlEvent::StartElement {
+                name, attributes, ..
+            }) => {
+                if name.local_name != "message-type" {
+                    panic!(
+                        "error: parser: group: was expecting \"message-type\" but got \"{}\"",
+                        name.local_name
+                    );
+                }
+
+                if attributes.len() != 1 {
+                    panic!("error: parser: group: \"message-type\" should have only 1 attribute.. got {} instead",
+                           attributes.len())
+                }
+
+                let attr_name = attributes.get(0).unwrap().name.local_name.clone();
+                if attr_name != "abbrev" {
+                    panic!("error: parser: group: \"message-type\" should have \"abbrev\" field.. got {} instead",
+                           attr_name)
+                }
+
+                // @fixme need clone?
+                out_map.insert(
+                    attributes.get(0).unwrap().value.clone(),
+                    group_abbrev.clone(),
+                );
+            }
+            Ok(XmlEvent::EndElement { name }) => {
+                if name.local_name == "message-type" {
+                    continue;
+                } else if name.local_name == "message-group" {
+                    break;
+                } else {
+                    panic!(
+                        "error: parser: group: was expecting \"</message-type>\".. got \"</{}>\"",
+                        name.local_name
+                    );
+                }
+            }
+            _ => {}
+        }
+    }
+}
+
+// Parse all existing message groups
+fn parse_message_groups(ctx: &mut Context, parser: &mut EventReader<BufReader<File>>) {
+    loop {
+        match parser.next() {
+            Ok(XmlEvent::StartElement {
+                name, attributes, ..
+            }) => {
+                if name.local_name == "message-group" {
+                    if attributes.len() != 2 {
+                        panic!("error: parser: group: \"message-group\" should have 2 attributes.. got {} instead",
+                               attributes.len())
+                    }
+
+                    let group_abbrev = &attributes.get(1).unwrap().value;
+                    ctx.message_groups.insert(group_abbrev.parse().unwrap());
+
+                    parse_group(&mut ctx.message_group, &group_abbrev, parser);
+                }
+            }
+            Ok(XmlEvent::EndElement { name }) => {
+                if name.local_name == "message-groups" {
+                    break;
+                } else {
+                    panic!("error: parser: groups: was expecting \"</message-group>\" or \"</message-groups>\".. got \"</{}>\"",
+                           name.local_name);
+                }
+            }
+            _ => {}
+        }
+    }
 }
 
 fn parse_global_enum(out: &mut Vec<Tokens::Field>, parser: &mut EventReader<BufReader<File>>) {
@@ -267,6 +356,8 @@ pub(crate) fn parse(xml_path: &str) -> Context {
         global_enums: vec![],
         global_bitfields: vec![],
         messages: vec![],
+        message_group: HashMap::new(),
+        message_groups: HashSet::new(),
     };
 
     loop {
@@ -277,10 +368,10 @@ pub(crate) fn parse(xml_path: &str) -> Context {
                 name, attributes, ..
             }) => {
                 match name.local_name.as_str() {
-                    "type" | "description" | "types" | "serialization" | "units"
-                    | "message-groups" | "flags" => {
+                    "type" | "description" | "types" | "serialization" | "units" | "flags" => {
                         ignore_tag(name.local_name.as_str(), &mut parser)
                     } // ignore, for now, this headers
+                    "message-groups" => parse_message_groups(&mut ctx, &mut parser),
                     "enumerations" => parse_global_enum(&mut ctx.global_enums, &mut parser),
                     "bitfields" => parse_global_enum(&mut ctx.global_bitfields, &mut parser),
                     "header" => {
