@@ -45,7 +45,8 @@ impl {{imc_message_abbrev}}
     {
         let mut msg = {{imc_message_abbrev}} {
             header : Header::new(c_msg_id),
-            {{imc_message_fields_init}}
+{{#imc-message-fields-init}}
+           {{imc-message-field-abbrev}}: {{imc-message-field-init}},{{/imc-message-fields-init}}
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);

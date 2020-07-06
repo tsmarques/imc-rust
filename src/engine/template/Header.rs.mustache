@@ -15,7 +15,8 @@ impl Header
     pub(crate) fn new(msg_id :u16) -> Header
     {
         let mut header = Header {
-            {{header_fields_init}}
+{{#header-fields-init}}
+            {{imc-message-field-abbrev}}: {{imc-message-field-init}},{{/header-fields-init}}
         };
 
         header

@@ -95,23 +95,23 @@ fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder
 
 // @todo initialize fields
 //       perhaps fill default-value while parsing xml?
-fn render_fields_initialization_string(fields: &Vec<Tokens::Field>) -> String {
-    let mut fields_str: String = String::from("");
-    let mut padding = 0;
+fn render_fields_initialization<'a>(
+    fields: &Vec<Tokens::Field>,
+) -> Option<rustache::VecBuilder<'a>> {
+    if fields.len() == 0 {
+        return Option::None;
+    }
+
+    let mut data = rustache::VecBuilder::new();
     for field in fields {
-        let init_str = Types::get_init_string(&field);
-        let str = format!("{}: {},\n", field.abbrev, init_str);
-        fields_str.push_str(format!("{:>width$}", str, width = padding + str.len()).as_str());
-
-        padding = 12;
+        data = data.push(
+            rustache::HashBuilder::new()
+                .insert("imc-message-field-abbrev", field.abbrev.clone())
+                .insert("imc-message-field-init", Types::get_init_string(&field)),
+        );
     }
 
-    // remove last \n
-    if !fields_str.is_empty() {
-        fields_str.pop().unwrap();
-    }
-
-    fields_str
+    Option::from(data)
 }
 
 fn render_fields_serialization_string(fields: &Vec<Tokens::Field>) -> String {
@@ -217,13 +217,15 @@ pub fn render_message_groups(args: &RendererArguments, groups: &HashSet<String>)
 }
 
 pub fn render_header(args: &RendererArguments, header: &Tokens::Message) {
-    let fields_init_str = render_fields_initialization_string(&header.fields);
     let fields_serialization_str = render_fields_serialization_string(&header.fields);
 
     let mut data = rustache::HashBuilder::new()
         .insert("header_desc", render_description_string(&header.desc, 0))
         .insert("header-fields", render_fields(&header.fields).unwrap())
-        .insert("header_fields_init", fields_init_str)
+        .insert(
+            "header-fields-init",
+            render_fields_initialization(&header.fields).unwrap(),
+        )
         .insert("header_serialize", fields_serialization_str);
 
     let mut out = Cursor::new(Vec::new());
@@ -274,7 +276,6 @@ pub fn render_imc_file(args: &RendererArguments, ctx: &Parser::Context) {
 }
 
 pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Option<&String>) {
-    let fields_init_str = render_fields_initialization_string(&msg.fields);
     let fields_serialization_str = render_fields_serialization_string(&msg.fields);
     let msg_abbrev = msg.abbrev.clone();
 
@@ -292,7 +293,6 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Opt
         .insert("imc_message_desc", render_description_string(&msg.desc, 0))
         .insert("imc_message_id", msg.id)
         .insert("imc_message_abbrev", msg.abbrev.clone())
-        .insert("imc_message_fields_init", fields_init_str)
         .insert(
             "imc_message_fixed_serialization_size",
             msg.fixed_serialization_size.to_string(),
@@ -304,9 +304,14 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Opt
         .insert("imc_message_serialize", fields_serialization_str);
 
     // fields
-    let ret = render_fields(&msg.fields);
+    let mut ret = render_fields(&msg.fields);
     if ret.is_some() {
-        data = data.insert("imc-message-fields", ret.unwrap())
+        data = data.insert("imc-message-fields", ret.unwrap());
+        // fields' initialization
+        data = data.insert(
+            "imc-message-fields-init",
+            render_fields_initialization(&msg.fields).unwrap(),
+        );
     }
 
     // enumerator
