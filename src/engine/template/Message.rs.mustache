@@ -6,7 +6,7 @@ use crate::imc::Header::Header;
 {{#imc-has-message-group}}use crate::imc::MessageGroup::{{imc-group-abbrev}}; {{/imc-has-message-group}}
 
 {{#imc-message-desc}}
-// {{desc-line}} {{/imc-message-desc}}
+/// {{desc-line}} {{/imc-message-desc}}
 
 const c_msg_id :u16 = {{imc_message_id}};
 
@@ -26,16 +26,16 @@ impl {{enum-abbrev}} {
 {{/imc_message_enums}}
 
 {{#imc-has-message-group}}
-// message-group: {{imc-group-abbrev}}
+/// message-group: {{imc-group-abbrev}}
 impl {{imc-group-abbrev}} for {{imc_message_abbrev}} { }
 {{/imc-has-message-group}}
 
 pub struct {{imc_message_abbrev}}
 {
-    // IMC Header
+    /// IMC Header
     pub header: Header,
 {{#imc-message-fields}} {{#imc-message-field-desc}}
-    // {{desc-line}} {{/imc-message-field-desc}}
+    /// {{desc-line}} {{/imc-message-field-desc}}
     pub {{imc-message-field-abbrev}} :{{imc-message-field-type}},
 {{/imc-message-fields}}
 }
