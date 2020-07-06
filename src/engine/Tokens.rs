@@ -56,7 +56,10 @@ impl Field {
             desc: String::from(""),
             name: String::from(""),
             abbrev: String::from(""),
-            ftype: ImcType { type_enum: ImcTypeEnum::Unknown, message_type: Option::None},
+            ftype: ImcType {
+                type_enum: ImcTypeEnum::Unknown,
+                message_type: Option::None,
+            },
             unit: String::from(""),
             default_value: Option::None,
             enums: vec![],

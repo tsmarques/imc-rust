@@ -482,7 +482,10 @@ fn full_format() {
         ctx.messages[i].fields[2].desc,
         "Complementary human-readable description of entity state."
     );
-    assert_eq!(ctx.messages[i].fields[2].ftype.type_enum, ImcTypeEnum::PlainText);
+    assert_eq!(
+        ctx.messages[i].fields[2].ftype.type_enum,
+        ImcTypeEnum::PlainText
+    );
     assert_eq!(ctx.messages[i].fields[2].read_only, false);
     assert!(ctx.messages[i].fields[2].unit.is_empty());
     assert!(ctx.messages[i].fields[2].enum_prefix.is_empty());
@@ -509,7 +512,10 @@ fn full_format() {
         ctx.messages[i].fields[0].desc,
         "The name of the consumer (e.g. task name)."
     );
-    assert_eq!(ctx.messages[i].fields[0].ftype.type_enum, ImcTypeEnum::PlainText);
+    assert_eq!(
+        ctx.messages[i].fields[0].ftype.type_enum,
+        ImcTypeEnum::PlainText
+    );
     assert_eq!(ctx.messages[i].fields[0].read_only, false);
     assert!(ctx.messages[i].fields[0].unit.is_empty());
     assert!(ctx.messages[i].fields[0].enum_prefix.is_empty());

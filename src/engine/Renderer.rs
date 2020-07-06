@@ -118,7 +118,13 @@ fn render_fields_serialization<'a>(
                 format!("serialize_string!(bfr, self.{})", field.abbrev)
             }
             ImcTypeEnum::U8 => format!("bfr.put_u8(self.{})", field.abbrev),
-            ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => panic!("what to do with bitfield and enum.."),
+            ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => {
+                panic!("what to do with bitfield and enum..")
+            }
+            ImcTypeEnum::Message => format!("{}.serialize(&bfr)", field.abbrev),
+            ImcTypeEnum::MessageList => {
+                format!("for msg in {} {{\nmsg.serialize(&bfr);\n}}", field.abbrev)
+            }
             v => format!("bfr.put_{}_le(self.{})", field.ftype, field.abbrev),
             _ => panic!("unhandled type"),
         };

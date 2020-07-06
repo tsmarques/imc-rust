@@ -86,7 +86,7 @@ impl Message for {{imc_message_abbrev}}
     {
         self.header.serialize(bfr);
 {{#imc-serialization}}
-        {{serialization-fn}};{{/imc-serialization}}
+    {{{serialization-fn}}};{{/imc-serialization}}
 
         serialize_footer(bfr);
     }

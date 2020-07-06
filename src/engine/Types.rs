@@ -33,17 +33,18 @@ impl ImcTypeEnum {
             ImcTypeEnum::Fp32 => Option::from(4),
             ImcTypeEnum::Fp64 => Option::from(8),
             ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => Option::from(1),
-            ImcTypeEnum::Unknown | ImcTypeEnum::Raw | ImcTypeEnum::Message | ImcTypeEnum::MessageList => {
-                Option::None
-            }
+            ImcTypeEnum::Unknown
+            | ImcTypeEnum::Raw
+            | ImcTypeEnum::Message
+            | ImcTypeEnum::MessageList => Option::None,
             _ => panic!("unknown type"),
         }
     }
 }
 
 pub struct ImcType {
-    pub(crate) type_enum :ImcTypeEnum,
-    pub(crate) message_type :Option<String>
+    pub(crate) type_enum: ImcTypeEnum,
+    pub(crate) message_type: Option<String>,
 }
 
 impl fmt::Display for ImcType {
@@ -60,8 +61,24 @@ impl fmt::Display for ImcType {
             ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => write!(f, "enum"),
             ImcTypeEnum::Raw => write!(f, "Vec<u8>"),
             ImcTypeEnum::PlainText => write!(f, "String"),
-            ImcTypeEnum::Message => write!(f, "{}", self.message_type.clone().unwrap()), // @fixme how to avoid clone?
-            ImcTypeEnum::MessageList => write!(f, "Vec<{}>", self.message_type.clone().unwrap()), // @fixme how to avoid clone?
+            ImcTypeEnum::Message => {
+                if self.message_type.is_some() {
+                    // @fixme how to avoid clone?
+                    write!(f, "Option<Box<{}>>", self.message_type.clone().unwrap())
+                } else {
+                    // for some reason type wasn't specified
+                    write!(f, "Option<Box<dyn Message>>")
+                }
+            }
+            ImcTypeEnum::MessageList => {
+                if self.message_type.is_some() {
+                    // @fixme how to avoid clone?
+                    write!(f, r"Vec<Box<{}>>", self.message_type.clone().unwrap())
+                } else {
+                    // for some reason type wasn't specified
+                    write!(f, "{}", "Vec<Box<dyn Message>>")
+                }
+            }
             _ => unimplemented!(),
         }
     }
@@ -116,16 +133,12 @@ pub fn get_init_string(field: &Field) -> String {
             ImcTypeEnum::PlainText => "String::new()".to_string(),
             ImcTypeEnum::Message => {
                 if field.ftype.message_type.is_none() {
-                    panic!("unkown message-type")
+                    format!("Option::None")
+                } else {
+                    format!("{}::new()", field.ftype.message_type.as_ref().unwrap())
                 }
-                format!("{}::new()", field.ftype.message_type.as_ref().unwrap())
             }
-            ImcTypeEnum::MessageList => {
-                if field.ftype.message_type.is_none() {
-                    panic!("unkown message-type")
-                }
-                "vec![]".to_string()
-            }
+            ImcTypeEnum::MessageList => "vec![]".to_string(),
             _ => panic!("unknown type {}", field.ftype),
         },
     }
