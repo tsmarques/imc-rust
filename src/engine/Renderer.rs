@@ -60,25 +60,37 @@ fn render_file(args: &RendererArguments, filename: &str, data: &String) {
     }
 }
 
-fn render_fields_string(fields: &Vec<Tokens::Field>) -> String {
-    let mut fields_str: String = String::from("");
+fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
+    if fields.len() == 0 {
+        return Option::None;
+    }
 
-    let mut padding = 0;
+    let mut data: rustache::VecBuilder = rustache::VecBuilder::new();
+    let mut ret: Option<rustache::VecBuilder>;
     for field in fields {
-        padding = 4;
-        fields_str.push_str(render_description_string(&field.desc, padding).as_str());
+        let mut field_data = rustache::HashBuilder::new();
+        let mut desc_data: rustache::VecBuilder = rustache::VecBuilder::new();
 
-        let type_str = format!("pub {} :{},\n\n", field.abbrev, field.ftype);
-        fields_str
-            .push_str(format!("{:>width$}", type_str, width = padding + type_str.len()).as_str());
+        field_data = field_data
+            .insert("imc-message-field-abbrev", field.abbrev.clone())
+            .insert("imc-message-field-type", format!("{}", field.ftype));
+
+        let mut parts: Vec<&str> = field.desc.split('\n').collect::<Vec<&str>>();
+        for line in parts.iter() {
+            let trim_line = line.trim();
+            desc_data = desc_data.push(rustache::HashBuilder::new().insert("desc-line", trim_line));
+        }
+
+        if parts.len() != 0 {
+            field_data = field_data.insert("imc-message-field-desc", desc_data);
+        }
+
+        data = data.push(field_data);
     }
 
-    // remove last \n
-    if !fields_str.is_empty() {
-        fields_str.pop().unwrap();
-    }
+    ret = Option::from(data);
 
-    fields_str
+    ret
 }
 
 // @todo initialize fields
@@ -205,13 +217,12 @@ pub fn render_message_groups(args: &RendererArguments, groups: &HashSet<String>)
 }
 
 pub fn render_header(args: &RendererArguments, header: &Tokens::Message) {
-    let fields_str = render_fields_string(&header.fields);
     let fields_init_str = render_fields_initialization_string(&header.fields);
     let fields_serialization_str = render_fields_serialization_string(&header.fields);
 
     let mut data = rustache::HashBuilder::new()
         .insert("header_desc", render_description_string(&header.desc, 0))
-        .insert("header_fields", fields_str)
+        .insert("header-fields", render_fields(&header.fields).unwrap())
         .insert("header_fields_init", fields_init_str)
         .insert("header_serialize", fields_serialization_str);
 
@@ -263,7 +274,6 @@ pub fn render_imc_file(args: &RendererArguments, ctx: &Parser::Context) {
 }
 
 pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Option<&String>) {
-    let fields_str = render_fields_string(&msg.fields);
     let fields_init_str = render_fields_initialization_string(&msg.fields);
     let fields_serialization_str = render_fields_serialization_string(&msg.fields);
     let msg_abbrev = msg.abbrev.clone();
@@ -282,7 +292,6 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Opt
         .insert("imc_message_desc", render_description_string(&msg.desc, 0))
         .insert("imc_message_id", msg.id)
         .insert("imc_message_abbrev", msg.abbrev.clone())
-        .insert("imc_message_fields", fields_str)
         .insert("imc_message_fields_init", fields_init_str)
         .insert(
             "imc_message_fixed_serialization_size",
@@ -293,6 +302,12 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Opt
             "unimplemented!();",
         )
         .insert("imc_message_serialize", fields_serialization_str);
+
+    // fields
+    let ret = render_fields(&msg.fields);
+    if ret.is_some() {
+        data = data.insert("imc-message-fields", ret.unwrap())
+    }
 
     // enumerator
     let ret = render_enums(msg.fields);

@@ -31,8 +31,12 @@ impl {{imc-group-abbrev}} for {{imc_message_abbrev}} { }
 
 pub struct {{imc_message_abbrev}}
 {
+    // IMC Header
     pub header: Header,
-    {{imc_message_fields}}
+{{#imc-message-fields}} {{#imc-message-field-desc}}
+    // {{desc-line}} {{/imc-message-field-desc}}
+    pub {{imc-message-field-abbrev}} :{{imc-message-field-type}},
+{{/imc-message-fields}}
 }
 
 impl {{imc_message_abbrev}}

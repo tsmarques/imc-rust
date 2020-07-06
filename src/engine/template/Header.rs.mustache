@@ -4,7 +4,10 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 {{header_desc}}
 pub struct Header
 {
-{{header_fields}}
+{{#header-fields}} {{#imc-message-field-desc}}
+    // {{desc-line}} {{/imc-message-field-desc}}
+    pub {{imc-message-field-abbrev}} :{{imc-message-field-type}},
+{{/header-fields}}
 }
 
 impl Header
