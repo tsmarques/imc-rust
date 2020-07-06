@@ -1,4 +1,5 @@
 use crate::engine::Types;
+use crate::engine::Types::{ImcType, ImcTypeEnum};
 
 pub struct Message {
     pub desc: String,
@@ -29,8 +30,6 @@ pub struct Field {
     pub unit: String,
     // Field's default value (optional)
     pub default_value: Option<String>,
-    // Field's IMC message type (optional)
-    pub msg_type: Option<String>,
     // Enumerators values
     pub enums: Vec<Enum>,
     // Enumerators' prefix
@@ -57,10 +56,9 @@ impl Field {
             desc: String::from(""),
             name: String::from(""),
             abbrev: String::from(""),
-            ftype: Types::ImcType::Unknown,
+            ftype: ImcType { type_enum: ImcTypeEnum::Unknown, message_type: Option::None},
             unit: String::from(""),
             default_value: Option::None,
-            msg_type: Option::None,
             enums: vec![],
             enum_prefix: String::from(""),
             max_value: Option::None,

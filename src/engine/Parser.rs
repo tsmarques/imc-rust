@@ -1,4 +1,4 @@
-use crate::engine::Types::ImcType;
+use crate::engine::Types::ImcTypeEnum;
 use crate::engine::{Tokens, Types};
 use std::collections::{HashMap, HashSet};
 use std::fs::File;
@@ -166,8 +166,8 @@ fn parse_field_attributes(field: &mut Tokens::Field, attr: &Vec<OwnedAttribute>)
         match attr.name.local_name.as_str() {
             "name" => field.name = value,
             "abbrev" => field.abbrev = value,
-            "type" => field.ftype = Types::convert(value.as_str()),
-            "message-type" => field.msg_type = Option::from(value),
+            "type" => field.ftype.type_enum = Types::convert(value.as_str()),
+            "message-type" => field.ftype.message_type = Option::from(value),
             "unit" => field.unit = value,
             "prefix" => field.enum_prefix = value,
             "max" => field.max_value = Option::from(value),
@@ -432,7 +432,7 @@ fn full_format() {
     assert_eq!(ctx.messages[i].fields[0].name, "State");
     assert_eq!(ctx.messages[i].fields[0].abbrev, "state");
     assert_eq!(ctx.messages[i].fields[0].desc, "State of entity.");
-    assert_eq!(ctx.messages[i].fields[0].ftype, ImcType::U8);
+    assert_eq!(ctx.messages[i].fields[0].ftype.type_enum, ImcTypeEnum::U8);
     assert_eq!(ctx.messages[i].fields[0].unit, "Enumerated");
     assert_eq!(ctx.messages[i].fields[0].enum_prefix, "ESTA");
     assert_eq!(ctx.messages[i].fields[0].read_only, false);
@@ -460,7 +460,7 @@ fn full_format() {
         ctx.messages[i].fields[1].desc,
         "Complementary entity state flags."
     );
-    assert_eq!(ctx.messages[i].fields[1].ftype, ImcType::U8);
+    assert_eq!(ctx.messages[i].fields[1].ftype.type_enum, ImcTypeEnum::U8);
     assert_eq!(ctx.messages[i].fields[1].unit, "Bitfield");
     assert_eq!(ctx.messages[i].fields[1].enum_prefix, "EFLA");
     assert_eq!(ctx.messages[i].fields[1].read_only, false);
@@ -482,7 +482,7 @@ fn full_format() {
         ctx.messages[i].fields[2].desc,
         "Complementary human-readable description of entity state."
     );
-    assert_eq!(ctx.messages[i].fields[2].ftype, ImcType::PlainText);
+    assert_eq!(ctx.messages[i].fields[2].ftype.type_enum, ImcTypeEnum::PlainText);
     assert_eq!(ctx.messages[i].fields[2].read_only, false);
     assert!(ctx.messages[i].fields[2].unit.is_empty());
     assert!(ctx.messages[i].fields[2].enum_prefix.is_empty());
@@ -509,7 +509,7 @@ fn full_format() {
         ctx.messages[i].fields[0].desc,
         "The name of the consumer (e.g. task name)."
     );
-    assert_eq!(ctx.messages[i].fields[0].ftype, ImcType::PlainText);
+    assert_eq!(ctx.messages[i].fields[0].ftype.type_enum, ImcTypeEnum::PlainText);
     assert_eq!(ctx.messages[i].fields[0].read_only, false);
     assert!(ctx.messages[i].fields[0].unit.is_empty());
     assert!(ctx.messages[i].fields[0].enum_prefix.is_empty());
@@ -522,7 +522,7 @@ fn full_format() {
         ctx.messages[i].fields[1].desc,
         "The id of the message to be listened to."
     );
-    assert_eq!(ctx.messages[i].fields[1].ftype, ImcType::U16);
+    assert_eq!(ctx.messages[i].fields[1].ftype.type_enum, ImcTypeEnum::U16);
     assert_eq!(ctx.messages[i].fields[1].read_only, false);
     assert!(ctx.messages[i].fields[1].unit.is_empty());
     assert!(ctx.messages[i].fields[1].enum_prefix.is_empty());
@@ -615,7 +615,7 @@ fn assert_header(ctx: &Context) {
     assert_eq!(ctx.header.fields.len(), 8);
     assert_eq!(ctx.header.fields[0].name, "Synchronization Number");
     assert_eq!(ctx.header.fields[0].abbrev, "sync");
-    assert_eq!(ctx.header.fields[0].ftype, ImcType::U16);
+    assert_eq!(ctx.header.fields[0].ftype.type_enum, ImcTypeEnum::U16);
     assert_eq!(
         ctx.header.fields[0].default_value.as_ref().unwrap(),
         "0xFE54"
@@ -624,39 +624,39 @@ fn assert_header(ctx: &Context) {
 
     assert_eq!(ctx.header.fields[1].name, "Message Identification Number");
     assert_eq!(ctx.header.fields[1].abbrev, "mgid");
-    assert_eq!(ctx.header.fields[1].ftype, ImcType::U16);
+    assert_eq!(ctx.header.fields[1].ftype.type_enum, ImcTypeEnum::U16);
     assert_eq!(ctx.header.fields[1].read_only, false);
 
     assert_eq!(ctx.header.fields[2].name, "Message size");
     assert_eq!(ctx.header.fields[2].abbrev, "size");
-    assert_eq!(ctx.header.fields[2].ftype, ImcType::U16);
+    assert_eq!(ctx.header.fields[2].ftype.type_enum, ImcTypeEnum::U16);
     assert_eq!(ctx.header.fields[2].unit, "byte");
     assert_eq!(ctx.header.fields[2].read_only, false);
 
     assert_eq!(ctx.header.fields[3].name, "Time stamp");
     assert_eq!(ctx.header.fields[3].abbrev, "timestamp");
-    assert_eq!(ctx.header.fields[3].ftype, ImcType::Fp64);
+    assert_eq!(ctx.header.fields[3].ftype.type_enum, ImcTypeEnum::Fp64);
     assert_eq!(ctx.header.fields[3].unit, "s");
     assert_eq!(ctx.header.fields[3].read_only, false);
 
     assert_eq!(ctx.header.fields[4].name, "Source Address");
     assert_eq!(ctx.header.fields[4].abbrev, "src");
-    assert_eq!(ctx.header.fields[4].ftype, ImcType::U16);
+    assert_eq!(ctx.header.fields[4].ftype.type_enum, ImcTypeEnum::U16);
     assert_eq!(ctx.header.fields[4].read_only, false);
 
     assert_eq!(ctx.header.fields[5].name, "Source Entity");
     assert_eq!(ctx.header.fields[5].abbrev, "src_ent");
-    assert_eq!(ctx.header.fields[5].ftype, ImcType::U8);
+    assert_eq!(ctx.header.fields[5].ftype.type_enum, ImcTypeEnum::U8);
     assert_eq!(ctx.header.fields[5].read_only, false);
 
     assert_eq!(ctx.header.fields[6].name, "Destination Address");
     assert_eq!(ctx.header.fields[6].abbrev, "dst");
-    assert_eq!(ctx.header.fields[6].ftype, ImcType::U16);
+    assert_eq!(ctx.header.fields[6].ftype.type_enum, ImcTypeEnum::U16);
     assert_eq!(ctx.header.fields[6].read_only, false);
 
     assert_eq!(ctx.header.fields[7].name, "Destination Entity");
     assert_eq!(ctx.header.fields[7].abbrev, "dst_ent");
-    assert_eq!(ctx.header.fields[7].ftype, ImcType::U8);
+    assert_eq!(ctx.header.fields[7].ftype.type_enum, ImcTypeEnum::U8);
     assert_eq!(ctx.header.fields[7].read_only, false);
 }
 
@@ -664,7 +664,7 @@ fn assert_footer(ctx: &Context) {
     assert_eq!(ctx.footer.fields.len(), 1);
     assert_eq!(ctx.footer.fields[0].name, "Check Sum (CRC-16-IBM)");
     assert_eq!(ctx.footer.fields[0].abbrev, "crc16");
-    assert_eq!(ctx.footer.fields[0].ftype, ImcType::U16);
+    assert_eq!(ctx.footer.fields[0].ftype.type_enum, ImcTypeEnum::U16);
     assert_eq!(ctx.footer.fields[0].read_only, false);
 }
 
