@@ -66,7 +66,6 @@ fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder
     }
 
     let mut data: rustache::VecBuilder = rustache::VecBuilder::new();
-    let mut ret: Option<rustache::VecBuilder>;
     for field in fields {
         let mut field_data = rustache::HashBuilder::new();
         field_data = field_data
@@ -81,9 +80,7 @@ fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder
         data = data.push(field_data);
     }
 
-    ret = Option::from(data);
-
-    ret
+    Option::from(data)
 }
 
 // @todo initialize fields
@@ -149,16 +146,16 @@ pub fn render_description<'a>(desc: &String) -> Option<VecBuilder<'a>> {
 
 // @todo
 pub fn render_enums<'a>(fields: Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
-    let mut enum_builder: rustache::VecBuilder = rustache::VecBuilder::new();
+    if fields.is_empty() {
+        return Option::None;
+    }
 
-    let mut is_empty = true;
+    let mut enum_builder: rustache::VecBuilder = rustache::VecBuilder::new();
     for field in fields {
         // field is not enum
         if field.enums.is_empty() {
             continue;
         }
-
-        is_empty = false;
 
         let mut enum_values: rustache::VecBuilder = rustache::VecBuilder::new();
         for value in field.enums {
@@ -180,11 +177,7 @@ pub fn render_enums<'a>(fields: Vec<Tokens::Field>) -> Option<rustache::VecBuild
         );
     }
 
-    if is_empty {
-        Option::None
-    } else {
-        Option::from(enum_builder)
-    }
+    Option::from(enum_builder)
 }
 
 pub fn render_message_groups(args: &RendererArguments, groups: &HashSet<String>) {
