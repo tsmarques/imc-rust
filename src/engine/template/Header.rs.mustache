@@ -23,7 +23,7 @@ impl Header
     }
 
     pub fn serialize(&self, bfr :&mut bytes::BytesMut)
-    {
-        {{header_serialize}}
+    { {{#imc-serialization}}
+        {{serialization-fn}};{{/imc-serialization}}
     }
 }

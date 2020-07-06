@@ -2,7 +2,7 @@ use crate::engine;
 use crate::engine::Tokens::{Field, Message};
 use crate::engine::Types::ImcType;
 use crate::engine::{Parser, Tokens, Types};
-use rustache::Render;
+use rustache::{Render, VecBuilder};
 use std::collections::HashSet;
 use std::env;
 use std::fs::File;
@@ -114,30 +114,29 @@ fn render_fields_initialization<'a>(
     Option::from(data)
 }
 
-fn render_fields_serialization_string(fields: &Vec<Tokens::Field>) -> String {
-    let mut fields_str: String = String::from("");
-    let mut padding = 0;
+fn render_fields_serialization<'a>(
+    fields: &Vec<Tokens::Field>,
+) -> Option<rustache::VecBuilder<'a>> {
+    if fields.is_empty() {
+        return Option::None;
+    }
+
+    let mut data = rustache::VecBuilder::new();
     for field in fields {
-        let mut str = match &field.ftype {
+        let mut ser_str = match &field.ftype {
             ImcType::Raw | ImcType::PlainText => {
-                format!("serialize_string!(bfr, self.{});\n", field.abbrev)
+                format!("serialize_string!(bfr, self.{})", field.abbrev)
             }
-            ImcType::U8 => format!("bfr.put_u8(self.{});\n", field.abbrev),
+            ImcType::U8 => format!("bfr.put_u8(self.{})", field.abbrev),
             ImcType::Enum | ImcType::Bitfield => panic!("what to do with bitfield and enum.."),
-            v => format!("bfr.put_{}_le(self.{});\n", v, field.abbrev),
+            v => format!("bfr.put_{}_le(self.{})", v, field.abbrev),
             _ => panic!("unhandled type"),
         };
-        fields_str.push_str(format!("{:>width$}", str, width = padding + str.len()).as_str());
 
-        padding = 8;
+        data = data.push(rustache::HashBuilder::new().insert("serialization-fn", ser_str));
     }
 
-    // remove last \n
-    if !fields_str.is_empty() {
-        fields_str.pop().unwrap();
-    }
-
-    fields_str
+    Option::from(data)
 }
 
 pub fn render_description_string(desc: &String, padding: usize) -> String {
@@ -217,8 +216,6 @@ pub fn render_message_groups(args: &RendererArguments, groups: &HashSet<String>)
 }
 
 pub fn render_header(args: &RendererArguments, header: &Tokens::Message) {
-    let fields_serialization_str = render_fields_serialization_string(&header.fields);
-
     let mut data = rustache::HashBuilder::new()
         .insert("header_desc", render_description_string(&header.desc, 0))
         .insert("header-fields", render_fields(&header.fields).unwrap())
@@ -226,7 +223,10 @@ pub fn render_header(args: &RendererArguments, header: &Tokens::Message) {
             "header-fields-init",
             render_fields_initialization(&header.fields).unwrap(),
         )
-        .insert("header_serialize", fields_serialization_str);
+        .insert(
+            "imc-serialization",
+            render_fields_serialization(&header.fields).unwrap(),
+        );
 
     let mut out = Cursor::new(Vec::new());
     match read_template_file(args, RenderType::Header) {
@@ -276,7 +276,6 @@ pub fn render_imc_file(args: &RendererArguments, ctx: &Parser::Context) {
 }
 
 pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Option<&String>) {
-    let fields_serialization_str = render_fields_serialization_string(&msg.fields);
     let msg_abbrev = msg.abbrev.clone();
 
     let mut data = rustache::HashBuilder::new();
@@ -300,8 +299,7 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Opt
         .insert(
             "imc_message_dynamic_serialization_size",
             "unimplemented!();",
-        )
-        .insert("imc_message_serialize", fields_serialization_str);
+        );
 
     // fields
     let mut ret = render_fields(&msg.fields);
@@ -312,10 +310,16 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Opt
             "imc-message-fields-init",
             render_fields_initialization(&msg.fields).unwrap(),
         );
+
+        // fields' serialization
+        data = data.insert(
+            "imc-serialization",
+            render_fields_serialization(&msg.fields).unwrap(),
+        );
     }
 
     // enumerator
-    let ret = render_enums(msg.fields);
+    ret = render_enums(msg.fields);
     if ret.is_some() {
         data = data.insert("imc_message_enums", ret.unwrap());
     }
