@@ -69,20 +69,13 @@ fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder
     let mut ret: Option<rustache::VecBuilder>;
     for field in fields {
         let mut field_data = rustache::HashBuilder::new();
-        let mut desc_data: rustache::VecBuilder = rustache::VecBuilder::new();
-
         field_data = field_data
             .insert("imc-message-field-abbrev", field.abbrev.clone())
             .insert("imc-message-field-type", format!("{}", field.ftype));
 
-        let mut parts: Vec<&str> = field.desc.split('\n').collect::<Vec<&str>>();
-        for line in parts.iter() {
-            let trim_line = line.trim();
-            desc_data = desc_data.push(rustache::HashBuilder::new().insert("desc-line", trim_line));
-        }
-
-        if parts.len() != 0 {
-            field_data = field_data.insert("imc-message-field-desc", desc_data);
+        let desc_ret = render_description(&field.desc);
+        if desc_ret.is_some() {
+            field_data = field_data.insert("imc-message-field-desc", desc_ret.unwrap());
         }
 
         data = data.push(field_data);
@@ -139,17 +132,19 @@ fn render_fields_serialization<'a>(
     Option::from(data)
 }
 
-pub fn render_description_string(desc: &String, padding: usize) -> String {
-    let mut desc_rend: String = String::from("");
-    let mut parts = desc.split('\n').collect::<Vec<&str>>();
-
-    for line in parts {
-        let trim_line = line.trim();
-        desc_rend = desc_rend + format!("{:>width$}", "// ", width = padding + 3).as_str();
-        desc_rend = desc_rend + trim_line + "\n";
+pub fn render_description<'a>(desc: &String) -> Option<VecBuilder<'a>> {
+    if desc.is_empty() {
+        return Option::None;
     }
 
-    desc_rend
+    let mut data = rustache::VecBuilder::new();
+    let mut parts: Vec<&str> = desc.split('\n').collect::<Vec<&str>>();
+    for line in parts.iter() {
+        let trim_line = line.trim();
+        data = data.push(rustache::HashBuilder::new().insert("desc-line", trim_line));
+    }
+
+    Option::from(data)
 }
 
 // @todo
@@ -217,7 +212,7 @@ pub fn render_message_groups(args: &RendererArguments, groups: &HashSet<String>)
 
 pub fn render_header(args: &RendererArguments, header: &Tokens::Message) {
     let mut data = rustache::HashBuilder::new()
-        .insert("header_desc", render_description_string(&header.desc, 0))
+        .insert("header_desc", render_description(&header.desc).unwrap())
         .insert("header-fields", render_fields(&header.fields).unwrap())
         .insert(
             "header-fields-init",
@@ -288,8 +283,13 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Opt
             .insert("imc-group-abbrev", group.unwrap().clone());
     }
 
+    // description
+    let desc_ret = render_description(&msg.desc);
+    if desc_ret.is_some() {
+        data = data.insert("imc-message-desc", desc_ret.unwrap());
+    }
+
     data = data
-        .insert("imc_message_desc", render_description_string(&msg.desc, 0))
         .insert("imc_message_id", msg.id)
         .insert("imc_message_abbrev", msg.abbrev.clone())
         .insert(

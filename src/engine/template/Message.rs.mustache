@@ -5,7 +5,8 @@ use bytes::BufMut;
 use crate::imc::Header::Header;
 {{#imc-has-message-group}}use crate::imc::MessageGroup::{{imc-group-abbrev}}; {{/imc-has-message-group}}
 
-{{imc_message_desc}}
+{{#imc-message-desc}}
+// {{desc-line}} {{/imc-message-desc}}
 
 const c_msg_id :u16 = {{imc_message_id}};
 
