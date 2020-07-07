@@ -4,6 +4,7 @@ use crate::imc::{IMC_CONST_UNK_EID, DUNE_IMC_CONST_SYNC};
 use bytes::BufMut;
 use crate::imc::Header::Header;
 {{#imc-has-message-group}}use crate::imc::MessageGroup::{{imc-group-abbrev}}; {{/imc-has-message-group}}
+{{#imc-message-imports}}use crate::imc::{{imc-message-abbrev}}::{{imc-message-abbrev}};{{/imc-message-imports}}
 
 const c_msg_id :u16 = {{imc_message_id}};
 

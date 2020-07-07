@@ -144,6 +144,38 @@ pub fn render_fields_clear<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::
     Option::from(data)
 }
 
+pub fn render_imc_imports<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
+    if fields.len() == 0 {
+        return Option::None;
+    }
+
+    let mut data = rustache::VecBuilder::new();
+    let mut has_imports = false;
+
+    for field in fields {
+        match field.ftype.type_enum {
+            ImcTypeEnum::Message | ImcTypeEnum::MessageList => {
+                match field.ftype.message_type.as_ref() {
+                    None => continue,
+                    Some(v) => {
+                        has_imports = true;
+                        data = data.push(
+                            rustache::HashBuilder::new().insert("imc-message-abbrev", v.clone()),
+                        );
+                    }
+                }
+            }
+            _ => continue,
+        }
+    }
+
+    if has_imports {
+        Option::from(data)
+    } else {
+        Option::None
+    }
+}
+
 pub fn render_description<'a>(desc: &String) -> Option<VecBuilder<'a>> {
     if desc.is_empty() {
         return Option::None;
@@ -337,6 +369,12 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Opt
             "imc-message-clear",
             render_fields_clear(&msg.fields).unwrap(),
         );
+
+        // imports
+        let imports_ret = render_imc_imports(&msg.fields);
+        if imports_ret.is_some() {
+            data = data.insert("imc-message-imports", imports_ret.unwrap());
+        }
     }
 
     // enumerator
