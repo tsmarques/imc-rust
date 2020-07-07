@@ -149,9 +149,10 @@ pub fn get_serialization_string(field: &Field) -> String {
 
 pub fn get_clear_string(field: &Field) -> String {
     match &field.ftype.type_enum {
-        ImcTypeEnum::MessageList => {
-            format!("for msg in self._{}.iter_mut() {{\nmsg.clear();\n}}", field.abbrev)
-        }
+        ImcTypeEnum::MessageList => format!(
+            "for msg in self._{}.iter_mut() {{\nmsg.clear();\n}}",
+            field.abbrev
+        ),
         ImcTypeEnum::Message => format!(
             // yikes
             "if self._{}.is_some() {{\n self._{}.unwrap().clear();\nself._{} = {}\n}}",
