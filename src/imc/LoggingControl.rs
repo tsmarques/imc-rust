@@ -4,14 +4,9 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-// This operation instructs the logging manager to send a
-// message with operation CURRENT_NAME containing the complete
-// name of the current log in the field 'name'. The field
-// 'name' with this operation type has no meaning.
-
 const c_msg_id: u16 = 102;
 
-pub enum op {
+pub enum ControlOperationEnum {
     // Request Start of Logging
     COP_REQUEST_START = 0,
     // Logging Started
@@ -26,7 +21,7 @@ pub enum op {
     COP_CURRENT_NAME = 5,
 }
 
-impl op {
+impl ControlOperationEnum {
     pub fn as_u8(&self) -> u8 {
         match self {
             COP_REQUEST_START => 0,
@@ -39,24 +34,31 @@ impl op {
     }
 }
 
+/// This operation instructs the logging manager to send a
+/// message with operation CURRENT_NAME containing the complete
+/// name of the current log in the field 'name'. The field
+/// 'name' with this operation type has no meaning.
 pub struct LoggingControl {
+    /// IMC Header
     pub header: Header,
-    // The logging manager will send a message with this operation
-    // when asked via the REQUEST_CURRENT_NAME operation. The field
-    // 'name' contains the complete name of the log.
-    pub op: u8,
 
-    // The meaning of this field depends on the operation and is
-    // explained in the operation's description.
-    pub name: String,
+    /// The logging manager will send a message with this operation
+    /// when asked via the REQUEST_CURRENT_NAME operation. The field
+    /// 'name' contains the complete name of the log.
+    pub _op: u8,
+
+    /// The meaning of this field depends on the operation and is
+    /// explained in the operation's description.
+    pub _name: String,
 }
 
 impl LoggingControl {
     pub fn new() -> LoggingControl {
         let mut msg = LoggingControl {
             header: Header::new(c_msg_id),
-            op: 0,
-            name: String::new(),
+
+            _op: Default::default(),
+            _name: Default::default(),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -74,7 +76,13 @@ impl Message for LoggingControl {
         c_msg_id
     }
 
-    fn clear(&mut self) {}
+    fn clear(&mut self) {
+        self.header.clear();
+
+        self._op = Default::default();
+
+        self._name = Default::default();
+    }
 
     fn fixed_serialization_size(&self) -> usize {
         0
@@ -86,8 +94,10 @@ impl Message for LoggingControl {
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {
         self.header.serialize(bfr);
-        bfr.put_u8(self.op);
-        serialize_string!(bfr, self.name);
+
+        bfr.put_u8(self._op);
+        serialize_bytes!(bfr, self._name.as_bytes());
+
         serialize_footer(bfr);
     }
 }

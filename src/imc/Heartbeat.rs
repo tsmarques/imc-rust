@@ -1,23 +1,31 @@
 use crate::imc::Message::*;
-use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::imc::{IMC_CONST_UNK_EID, DUNE_IMC_CONST_SYNC};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+use crate::imc::Header::Header;
 
-// The Heartbeat message is used to inform other modules that the
-// sending entity's system is running normally and communications
-// are alive.
 
-const c_msg_id: u16 = 150;
+const c_msg_id :u16 = 150;
 
+
+
+
+
+
+/// The Heartbeat message is used to inform other modules that the 
+/// sending entity's system is running normally and communications 
+/// are alive. 
 pub struct Heartbeat {
+    /// IMC Header
     pub header: Header,
+
 }
 
 impl Heartbeat {
     pub fn new() -> Heartbeat {
         let mut msg = Heartbeat {
-            header: Header::new(c_msg_id),
+            header : Header::new(c_msg_id),
+
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -35,7 +43,10 @@ impl Message for Heartbeat {
         c_msg_id
     }
 
-    fn clear(&mut self) {}
+    fn clear(&mut self) {
+        self.header.clear();
+        
+    }
 
     fn fixed_serialization_size(&self) -> usize {
         0
@@ -45,8 +56,9 @@ impl Message for Heartbeat {
         unimplemented!();
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
+    fn serialize(&self, bfr :&mut bytes::BytesMut) {
         self.header.serialize(bfr);
+
 
         serialize_footer(bfr);
     }
