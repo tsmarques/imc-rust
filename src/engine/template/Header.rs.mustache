@@ -19,6 +19,12 @@ impl Header {
         header
     }
 
+    pub fn clear(&mut self) {
+{{#imc-message-clear}}
+    self.{{{imc-message-field-clear}}}
+{{/imc-message-clear}}
+    }
+
     pub fn serialize(&self, bfr :&mut bytes::BytesMut) { {{#imc-serialization}}
         {{serialization-fn}};{{/imc-serialization}}
     }

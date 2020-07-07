@@ -113,8 +113,26 @@ fn render_fields_serialization<'a>(
 
     let mut data = rustache::VecBuilder::new();
     for field in fields {
-        data = data.push(rustache::HashBuilder::new().insert("serialization-fn",
-                                                             Types::get_serialization_string(&field)));
+        data = data.push(
+            rustache::HashBuilder::new()
+                .insert("serialization-fn", Types::get_serialization_string(&field)),
+        );
+    }
+
+    Option::from(data)
+}
+
+pub fn render_fields_clear<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
+    if fields.len() == 0 {
+        return Option::None;
+    }
+
+    let mut data = rustache::VecBuilder::new();
+    for field in fields {
+        data = data.push(
+            rustache::HashBuilder::new()
+                .insert("imc-message-field-clear", Types::get_clear_string(field)),
+        );
     }
 
     Option::from(data)
@@ -205,6 +223,10 @@ pub fn render_header(args: &RendererArguments, header: &Tokens::Message) {
         .insert(
             "imc-serialization",
             render_fields_serialization(&header.fields).unwrap(),
+        )
+        .insert(
+            "imc-message-clear",
+            render_fields_clear(&header.fields).unwrap(),
         );
 
     let mut out = Cursor::new(Vec::new());
@@ -299,6 +321,12 @@ pub fn render_message(args: &RendererArguments, msg: Tokens::Message, group: Opt
         data = data.insert(
             "imc-serialization",
             render_fields_serialization(&msg.fields).unwrap(),
+        );
+
+        // clear fields
+        data = data.insert(
+            "imc-message-clear",
+            render_fields_clear(&msg.fields).unwrap(),
         );
     }
 
