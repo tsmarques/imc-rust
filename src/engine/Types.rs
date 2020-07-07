@@ -124,9 +124,10 @@ pub fn get_init_string(field: &Field) -> String {
 
 pub fn get_serialization_string(field: &Field) -> String {
     match &field.ftype.type_enum {
-        ImcTypeEnum::Raw | ImcTypeEnum::PlainText => {
-            format!("serialize_string!(bfr, self._{})", field.abbrev)
+        ImcTypeEnum::PlainText => {
+            format!("serialize_bytes!(bfr, self._{}.as_bytes())", field.abbrev)
         }
+        ImcTypeEnum::Raw => format!("serialize_bytes!(bfr, self._{}.as_slice())", field.abbrev),
         ImcTypeEnum::U8 => format!("bfr.put_u8(self._{})", field.abbrev),
         ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => panic!("what to do with bitfield and enum.."),
         ImcTypeEnum::Message => format!(

@@ -5,10 +5,10 @@ use crate::imc::Header::Header;
 use bytes::BufMut;
 use crc16::*;
 
-macro_rules! serialize_string {
-    ($bfr:expr, $string_var:expr) => {
-        $bfr.put_u16_le($string_var.len() as u16);
-        $bfr.put_slice($string_var.as_bytes());
+macro_rules! serialize_bytes {
+    ($bfr:expr, $bytes_slice:expr) => {
+        $bfr.put_u16_le($bytes_slice.len() as u16);
+        $bfr.put_slice($bytes_slice);
     };
 }
 
