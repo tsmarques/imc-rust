@@ -113,14 +113,9 @@ pub fn convert(ftype: &str) -> ImcTypeEnum {
 }
 
 pub fn get_init_string(field: &Field) -> String {
-    if !field.default_value.is_none() {
-        // @fixme wtf...
-        return field.default_value.as_ref().unwrap().parse().unwrap();
-    }
-
     let default_v = field.default_value.clone();
     match default_v {
-        Some(value) => value,
+        Some(value) => format!("{} as {}", value, field.ftype),
         None => match &field.ftype.type_enum {
             _ => String::from("Default::default()"),
         },
