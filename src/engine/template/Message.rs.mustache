@@ -30,8 +30,7 @@ impl {{imc-group-abbrev}} for {{imc_message_abbrev}} { }
 {{#imc-message-desc}}
 /// {{desc-line}} {{/imc-message-desc}}{{#imc-has-message-group}}
 /// message-group: {{imc-group-abbrev}}{{/imc-has-message-group}}
-pub struct {{imc_message_abbrev}}
-{
+pub struct {{imc_message_abbrev}} {
     /// IMC Header
     pub header: Header,
 {{#imc-message-fields}} {{#imc-message-field-desc}}
@@ -40,10 +39,8 @@ pub struct {{imc_message_abbrev}}
 {{/imc-message-fields}}
 }
 
-impl {{imc_message_abbrev}}
-{
-    pub fn new() -> {{imc_message_abbrev}}
-    {
+impl {{imc_message_abbrev}} {
+    pub fn new() -> {{imc_message_abbrev}} {
         let mut msg = {{imc_message_abbrev}} {
             header : Header::new(c_msg_id),
 {{#imc-message-fields-init}}
@@ -56,34 +53,28 @@ impl {{imc_message_abbrev}}
     }
 }
 
-impl Message for {{imc_message_abbrev}}
-{
+impl Message for {{imc_message_abbrev}} {
     fn get_header(&mut self) -> &mut Header {
         &mut self.header
     }
 
-    fn static_id(&self) -> u16
-    {
+    fn static_id(&self) -> u16 {
         c_msg_id
     }
 
-    fn clear(&mut self)
-    {
+    fn clear(&mut self) {
         {{imc_message_clear}}
     }
 
-    fn fixed_serialization_size(&self) -> usize
-    {
+    fn fixed_serialization_size(&self) -> usize {
         {{imc_message_fixed_serialization_size}}
     }
 
-    fn dynamic_serialization_size(&self) -> usize
-    {
+    fn dynamic_serialization_size(&self) -> usize {
         {{imc_message_dynamic_serialization_size}}
     }
 
-    fn serialize(&self, bfr :&mut bytes::BytesMut)
-    {
+    fn serialize(&self, bfr :&mut bytes::BytesMut) {
         self.header.serialize(bfr);
 {{#imc-serialization}}
     {{{serialization-fn}}};{{/imc-serialization}}
