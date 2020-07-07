@@ -135,11 +135,11 @@ pub fn get_serialization_string(field: &Field) -> String {
         ImcTypeEnum::U8 => format!("bfr.put_u8(self._{})", field.abbrev),
         ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => panic!("what to do with bitfield and enum.."),
         ImcTypeEnum::Message => format!(
-            "if self._{}.is_some() {{\nself._{}.unwrap().serialize(&bfr);\n}}",
+            "if self._{}.is_some() {{\nself._{}.unwrap().serialize(bfr);\n}}",
             field.abbrev, field.abbrev
         ),
         ImcTypeEnum::MessageList => format!(
-            "for msg in self._{} {{\nmsg.serialize(&bfr);\n}}",
+            "for msg in self._{} {{\nmsg.serialize(bfr);\n}}",
             field.abbrev
         ),
         v => format!("bfr.put_{}_le(self._{})", field.ftype, field.abbrev),
