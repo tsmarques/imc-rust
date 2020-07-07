@@ -151,7 +151,7 @@ pub fn get_clear_string(field: &Field) -> String {
         ImcTypeEnum::MessageList => format!("for msg in self.{} {{\nmsg.clear();\n}}", field.abbrev),
         ImcTypeEnum::Message => format!(
             // yikes
-            "if self.{}.is_some() {{\n self.{}.unwrap().serialize(&bfr);\nself.{} = {}\n}}",
+            "if self.{}.is_some() {{\n self.{}.unwrap().clear();\nself.{} = {}\n}}",
             field.abbrev,
             field.abbrev,
             field.abbrev,
