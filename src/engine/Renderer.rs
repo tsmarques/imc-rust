@@ -113,26 +113,8 @@ fn render_fields_serialization<'a>(
 
     let mut data = rustache::VecBuilder::new();
     for field in fields {
-        let mut ser_str = match &field.ftype.type_enum {
-            ImcTypeEnum::Raw | ImcTypeEnum::PlainText => {
-                format!("serialize_string!(bfr, self.{})", field.abbrev)
-            }
-            ImcTypeEnum::U8 => format!("bfr.put_u8(self.{})", field.abbrev),
-            ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => {
-                panic!("what to do with bitfield and enum..")
-            }
-            ImcTypeEnum::Message => format!(
-                "if {}.is_some() {{\n{}.unwrap().serialize(&bfr);\n}}",
-                field.abbrev, field.abbrev
-            ),
-            ImcTypeEnum::MessageList => {
-                format!("for msg in {} {{\nmsg.serialize(&bfr);\n}}", field.abbrev)
-            }
-            v => format!("bfr.put_{}_le(self.{})", field.ftype, field.abbrev),
-            _ => panic!("unhandled type"),
-        };
-
-        data = data.push(rustache::HashBuilder::new().insert("serialization-fn", ser_str));
+        data = data.push(rustache::HashBuilder::new().insert("serialization-fn",
+                                                             Types::get_serialization_string(&field)));
     }
 
     Option::from(data)
