@@ -69,7 +69,10 @@ fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder
     for field in fields {
         let mut field_data = rustache::HashBuilder::new();
         field_data = field_data
-            .insert("imc-message-field-abbrev", field.abbrev.clone())
+            .insert(
+                "imc-message-field-abbrev",
+                format!("_{}", field.abbrev.clone()),
+            )
             .insert("imc-message-field-type", format!("{}", field.ftype));
 
         let desc_ret = render_description(&field.desc);
@@ -96,7 +99,10 @@ fn render_fields_initialization<'a>(
     for field in fields {
         data = data.push(
             rustache::HashBuilder::new()
-                .insert("imc-message-field-abbrev", field.abbrev.clone())
+                .insert(
+                    "imc-message-field-abbrev",
+                    format!("_{}", field.abbrev.clone()),
+                )
                 .insert("imc-message-field-init", Types::get_init_string(&field)),
         );
     }

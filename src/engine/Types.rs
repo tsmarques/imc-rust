@@ -130,33 +130,36 @@ pub fn get_init_string(field: &Field) -> String {
 pub fn get_serialization_string(field: &Field) -> String {
     match &field.ftype.type_enum {
         ImcTypeEnum::Raw | ImcTypeEnum::PlainText => {
-            format!("serialize_string!(bfr, self.{})", field.abbrev)
+            format!("serialize_string!(bfr, self._{})", field.abbrev)
         }
-        ImcTypeEnum::U8 => format!("bfr.put_u8(self.{})", field.abbrev),
+        ImcTypeEnum::U8 => format!("bfr.put_u8(self._{})", field.abbrev),
         ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => panic!("what to do with bitfield and enum.."),
         ImcTypeEnum::Message => format!(
-            "if self.{}.is_some() {{\n{}.unwrap().serialize(&bfr);\n}}",
+            "if self._{}.is_some() {{\nself._{}.unwrap().serialize(&bfr);\n}}",
             field.abbrev, field.abbrev
         ),
-        ImcTypeEnum::MessageList => {
-            format!("for msg in self.{} {{\nmsg.serialize(&bfr);\n}}", field.abbrev)
-        }
-        v => format!("bfr.put_{}_le(self.{})", field.ftype, field.abbrev),
+        ImcTypeEnum::MessageList => format!(
+            "for msg in self._{} {{\nmsg.serialize(&bfr);\n}}",
+            field.abbrev
+        ),
+        v => format!("bfr.put_{}_le(self._{})", field.ftype, field.abbrev),
         _ => panic!("unhandled type"),
     }
 }
 
 pub fn get_clear_string(field: &Field) -> String {
     match &field.ftype.type_enum {
-        ImcTypeEnum::MessageList => format!("for msg in self.{} {{\nmsg.clear();\n}}", field.abbrev),
+        ImcTypeEnum::MessageList => {
+            format!("for msg in self._{} {{\nmsg.clear();\n}}", field.abbrev)
+        }
         ImcTypeEnum::Message => format!(
             // yikes
-            "if self.{}.is_some() {{\n self.{}.unwrap().clear();\nself.{} = {}\n}}",
+            "if self._{}.is_some() {{\n self._{}.unwrap().clear();\nself._{} = {}\n}}",
             field.abbrev,
             field.abbrev,
             field.abbrev,
             get_init_string(field)
         ),
-        primitive_type => format!("self.{} = Default::default();", field.abbrev),
+        primitive_type => format!("self._{} = Default::default();", field.abbrev),
     }
 }
