@@ -121,7 +121,10 @@ fn render_fields_serialization<'a>(
             ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => {
                 panic!("what to do with bitfield and enum..")
             }
-            ImcTypeEnum::Message => format!("{}.serialize(&bfr)", field.abbrev),
+            ImcTypeEnum::Message => format!(
+                "if {}.is_some() {{\n{}.unwrap().serialize(&bfr);\n}}",
+                field.abbrev, field.abbrev
+            ),
             ImcTypeEnum::MessageList => {
                 format!("for msg in {} {{\nmsg.serialize(&bfr);\n}}", field.abbrev)
             }
