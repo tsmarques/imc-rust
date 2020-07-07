@@ -179,9 +179,12 @@ pub fn render_enums<'a>(fields: Vec<Tokens::Field>) -> Option<rustache::VecBuild
             );
         }
 
+        let mut enum_abbrev = field.name.clone();
+        enum_abbrev.retain(|c| c != ' ');
+
         enum_builder = enum_builder.push(
             rustache::HashBuilder::new()
-                .insert("enum-abbrev", field.abbrev)
+                .insert("enum-abbrev", enum_abbrev)
                 .insert("enum-values", enum_values),
         );
     }
