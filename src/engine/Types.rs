@@ -137,6 +137,7 @@ pub fn get_serialization_string(field: &Field) -> String {
             "for msg in self._{}.iter() {{\nmsg.serialize(bfr);\n}}",
             field.abbrev
         ),
+        ImcTypeEnum::I8 => format!("bfr.put_i8(self._{})", field.abbrev),
         v => format!("bfr.put_{}_le(self._{})", field.ftype, field.abbrev),
         _ => panic!("unhandled type"),
     }
