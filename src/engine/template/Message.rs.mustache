@@ -65,7 +65,7 @@ impl Message for {{imc_message_abbrev}} {
     fn clear(&mut self) {
         self.header.clear();
         {{#imc-message-clear}}
-            self.{{{imc-message-field-clear}}}
+             {{{imc-message-field-clear}}}
         {{/imc-message-clear}}
     }
 
