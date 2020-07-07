@@ -121,27 +121,8 @@ pub fn get_init_string(field: &Field) -> String {
     let default_v = field.default_value.clone();
     match default_v {
         Some(value) => value,
-        None => match field.ftype.type_enum {
-            ImcTypeEnum::U8
-            | ImcTypeEnum::U16
-            | ImcTypeEnum::U32
-            | ImcTypeEnum::U64
-            | ImcTypeEnum::I8
-            | ImcTypeEnum::I16
-            | ImcTypeEnum::I32
-            | ImcTypeEnum::I64 => "0".to_string(),
-            ImcTypeEnum::Fp32 | ImcTypeEnum::Fp64 => "0.0".to_string(),
-            ImcTypeEnum::Raw => "vec![]".to_string(),
-            ImcTypeEnum::PlainText => "String::new()".to_string(),
-            ImcTypeEnum::Message => {
-                if field.ftype.message_type.is_none() {
-                    format!("Option::None")
-                } else {
-                    format!("{}::new()", field.ftype.message_type.as_ref().unwrap())
-                }
-            }
-            ImcTypeEnum::MessageList => "vec![]".to_string(),
-            _ => panic!("unknown type {}", field.ftype),
+        None => match &field.ftype.type_enum {
+            _ => String::from("Default::default()"),
         },
     }
 }
