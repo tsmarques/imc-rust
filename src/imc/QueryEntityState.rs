@@ -4,19 +4,18 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 150;
+const c_msg_id: u16 = 2;
 
-/// The Heartbeat message is used to inform other modules that the
-/// sending entity's system is running normally and communications
-/// are alive.
-pub struct Heartbeat {
+/// Request entities to report their state. Entities should respond
+/// by issuing an appropriate EntityState message.
+pub struct QueryEntityState {
     /// IMC Header
     pub header: Header,
 }
 
-impl Heartbeat {
-    pub fn new() -> Heartbeat {
-        let mut msg = Heartbeat {
+impl QueryEntityState {
+    pub fn new() -> QueryEntityState {
+        let mut msg = QueryEntityState {
             header: Header::new(c_msg_id),
         };
 
@@ -26,7 +25,7 @@ impl Heartbeat {
     }
 }
 
-impl Message for Heartbeat {
+impl Message for QueryEntityState {
     fn get_header(&mut self) -> &mut Header {
         &mut self.header
     }

@@ -1,0 +1,105 @@
+use crate::imc::Message::*;
+use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+use crate::imc::Header::Header;
+use bytes::BufMut;
+
+const c_msg_id: u16 = 159;
+
+pub enum StateEnum {
+    // Accepted
+    SMS_ACCEPTED = 0,
+    // Rejected
+    SMS_REJECTED = 1,
+    // Interrupted
+    SMS_INTERRUPTED = 2,
+    // Completed
+    SMS_COMPLETED = 3,
+    // Idle
+    SMS_IDLE = 4,
+    // Transmitting
+    SMS_TRANSMITTING = 5,
+    // Receiving
+    SMS_RECEIVING = 6,
+}
+
+impl StateEnum {
+    pub fn as_u32(&self) -> u32 {
+        match self {
+            SMS_ACCEPTED => 0,
+            SMS_REJECTED => 1,
+            SMS_INTERRUPTED => 2,
+            SMS_COMPLETED => 3,
+            SMS_IDLE => 4,
+            SMS_TRANSMITTING => 5,
+            SMS_RECEIVING => 6,
+        }
+    }
+}
+
+pub struct SmsState {
+    /// IMC Header
+    pub header: Header,
+
+    /// Sequence number.
+    pub _seq: u32,
+
+    /// Current state of an SMS transaction.
+    pub _state: u8,
+
+    pub _error: String,
+}
+
+impl SmsState {
+    pub fn new() -> SmsState {
+        let mut msg = SmsState {
+            header: Header::new(c_msg_id),
+
+            _seq: Default::default(),
+            _state: Default::default(),
+            _error: Default::default(),
+        };
+
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+}
+
+impl Message for SmsState {
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
+    }
+
+    fn static_id(&self) -> u16 {
+        c_msg_id
+    }
+
+    fn clear(&mut self) {
+        self.header.clear();
+
+        self._seq = Default::default();
+
+        self._state = Default::default();
+
+        self._error = Default::default();
+    }
+
+    fn fixed_serialization_size(&self) -> usize {
+        0
+    }
+
+    fn dynamic_serialization_size(&self) -> usize {
+        unimplemented!();
+    }
+
+    fn serialize(&self, bfr: &mut bytes::BytesMut) {
+        self.header.serialize(bfr);
+
+        bfr.put_u32_le(self._seq);
+        bfr.put_u8(self._state);
+        serialize_bytes!(bfr, self._error.as_bytes());
+
+        serialize_footer(bfr);
+    }
+}

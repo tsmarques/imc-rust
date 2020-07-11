@@ -4,19 +4,17 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 150;
+const c_msg_id: u16 = 460;
 
-/// The Heartbeat message is used to inform other modules that the
-/// sending entity's system is running normally and communications
-/// are alive.
-pub struct Heartbeat {
+/// Notification of completion of a Teleoperation maneuver.
+pub struct TeleoperationDone {
     /// IMC Header
     pub header: Header,
 }
 
-impl Heartbeat {
-    pub fn new() -> Heartbeat {
-        let mut msg = Heartbeat {
+impl TeleoperationDone {
+    pub fn new() -> TeleoperationDone {
+        let mut msg = TeleoperationDone {
             header: Header::new(c_msg_id),
         };
 
@@ -26,7 +24,7 @@ impl Heartbeat {
     }
 }
 
-impl Message for Heartbeat {
+impl Message for TeleoperationDone {
     fn get_header(&mut self) -> &mut Header {
         &mut self.header
     }

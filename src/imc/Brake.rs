@@ -4,20 +4,42 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 150;
+const c_msg_id: u16 = 413;
 
-/// The Heartbeat message is used to inform other modules that the
-/// sending entity's system is running normally and communications
-/// are alive.
-pub struct Heartbeat {
-    /// IMC Header
-    pub header: Header,
+pub enum OperationEnum {
+    // Stop Braking
+    OP_STOP = 0,
+    // Start Braking
+    OP_START = 1,
+    // Revert Actuation
+    OP_REVERT = 2,
 }
 
-impl Heartbeat {
-    pub fn new() -> Heartbeat {
-        let mut msg = Heartbeat {
+impl OperationEnum {
+    pub fn as_u32(&self) -> u32 {
+        match self {
+            OP_STOP => 0,
+            OP_START => 1,
+            OP_REVERT => 2,
+        }
+    }
+}
+
+/// Revert Actuation.
+pub struct Brake {
+    /// IMC Header
+    pub header: Header,
+
+    /// Start braking procedures.
+    pub _op: u8,
+}
+
+impl Brake {
+    pub fn new() -> Brake {
+        let mut msg = Brake {
             header: Header::new(c_msg_id),
+
+            _op: Default::default(),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -26,7 +48,7 @@ impl Heartbeat {
     }
 }
 
-impl Message for Heartbeat {
+impl Message for Brake {
     fn get_header(&mut self) -> &mut Header {
         &mut self.header
     }
@@ -37,6 +59,8 @@ impl Message for Heartbeat {
 
     fn clear(&mut self) {
         self.header.clear();
+
+        self._op = Default::default();
     }
 
     fn fixed_serialization_size(&self) -> usize {
@@ -49,6 +73,8 @@ impl Message for Heartbeat {
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {
         self.header.serialize(bfr);
+
+        bfr.put_u8(self._op);
 
         serialize_footer(bfr);
     }

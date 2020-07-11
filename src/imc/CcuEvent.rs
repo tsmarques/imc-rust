@@ -1,0 +1,118 @@
+use crate::imc::Message::*;
+use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+use crate::imc::Header::Header;
+use bytes::BufMut;
+
+const c_msg_id: u16 = 606;
+
+pub enum EventTypeEnum {
+    // Log Book Entry Added
+    EVT_LOG_ENTRY = 1,
+    // Plan Added
+    EVT_PLAN_ADDED = 2,
+    // Plan Removed
+    EVT_PLAN_REMOVED = 3,
+    // Plan Changed
+    EVT_PLAN_CHANGED = 4,
+    // Map feature added
+    EVT_MAP_FEATURE_ADDED = 5,
+    // Map feature removed
+    EVT_MAP_FEATURE_REMOVED = 6,
+    // Map feature changed
+    EVT_MAP_FEATURE_CHANGED = 7,
+    // The sender is now teleoperating the vehicle
+    EVT_TELEOPERATION_STARTED = 8,
+    // The sender stopped teleoperating the vehicle
+    EVT_TELEOPERATION_ENDED = 9,
+}
+
+impl EventTypeEnum {
+    pub fn as_u32(&self) -> u32 {
+        match self {
+            EVT_LOG_ENTRY => 1,
+            EVT_PLAN_ADDED => 2,
+            EVT_PLAN_REMOVED => 3,
+            EVT_PLAN_CHANGED => 4,
+            EVT_MAP_FEATURE_ADDED => 5,
+            EVT_MAP_FEATURE_REMOVED => 6,
+            EVT_MAP_FEATURE_CHANGED => 7,
+            EVT_TELEOPERATION_STARTED => 8,
+            EVT_TELEOPERATION_ENDED => 9,
+        }
+    }
+}
+
+/// This message is used to signal events among running CCUs.
+pub struct CcuEvent {
+    /// IMC Header
+    pub header: Header,
+
+    pub _type: u8,
+
+    pub _id: String,
+
+    pub _arg: Option<Box<dyn Message>>,
+}
+
+impl CcuEvent {
+    pub fn new() -> CcuEvent {
+        let mut msg = CcuEvent {
+            header: Header::new(c_msg_id),
+
+            _type: Default::default(),
+            _id: Default::default(),
+            _arg: Default::default(),
+        };
+
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+}
+
+impl Message for CcuEvent {
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
+    }
+
+    fn static_id(&self) -> u16 {
+        c_msg_id
+    }
+
+    fn clear(&mut self) {
+        self.header.clear();
+
+        self._type = Default::default();
+
+        self._id = Default::default();
+
+        match &mut self._arg {
+            Some(field) => field.clear(),
+
+            None => {}
+        }
+    }
+
+    fn fixed_serialization_size(&self) -> usize {
+        0
+    }
+
+    fn dynamic_serialization_size(&self) -> usize {
+        unimplemented!();
+    }
+
+    fn serialize(&self, bfr: &mut bytes::BytesMut) {
+        self.header.serialize(bfr);
+
+        bfr.put_u8(self._type);
+        serialize_bytes!(bfr, self._id.as_bytes());
+        match &self._arg {
+            Some(field) => field.serialize(bfr),
+
+            None => {}
+        };
+
+        serialize_footer(bfr);
+    }
+}

@@ -4,20 +4,25 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 150;
+const c_msg_id: u16 = 213;
 
-/// The Heartbeat message is used to inform other modules that the
-/// sending entity's system is running normally and communications
-/// are alive.
-pub struct Heartbeat {
+/// This message is sent in reply to an AcousticSystemsQuery message
+/// and lists all known underwater acoustic systems (modems, narrow
+/// band transponders, etc).
+pub struct AcousticSystems {
     /// IMC Header
     pub header: Header,
+
+    /// Comma separated list of known acoustic system names.
+    pub _list: String,
 }
 
-impl Heartbeat {
-    pub fn new() -> Heartbeat {
-        let mut msg = Heartbeat {
+impl AcousticSystems {
+    pub fn new() -> AcousticSystems {
+        let mut msg = AcousticSystems {
             header: Header::new(c_msg_id),
+
+            _list: Default::default(),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -26,7 +31,7 @@ impl Heartbeat {
     }
 }
 
-impl Message for Heartbeat {
+impl Message for AcousticSystems {
     fn get_header(&mut self) -> &mut Header {
         &mut self.header
     }
@@ -37,6 +42,8 @@ impl Message for Heartbeat {
 
     fn clear(&mut self) {
         self.header.clear();
+
+        self._list = Default::default();
     }
 
     fn fixed_serialization_size(&self) -> usize {
@@ -49,6 +56,8 @@ impl Message for Heartbeat {
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {
         self.header.serialize(bfr);
+
+        serialize_bytes!(bfr, self._list.as_bytes());
 
         serialize_footer(bfr);
     }

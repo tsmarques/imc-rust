@@ -1,0 +1,96 @@
+use crate::imc::Message::*;
+use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+use crate::imc::Header::Header;
+use bytes::BufMut;
+
+const c_msg_id: u16 = 361;
+
+pub enum StateEnum {
+    // Not Aligned
+    AS_NOT_ALIGNED = 0,
+    // Aligned
+    AS_ALIGNED = 1,
+    // Not Supported
+    AS_NOT_SUPPORTED = 2,
+    // Aligning
+    AS_ALIGNING = 3,
+    // Wrong Medium
+    AS_WRONG_MEDIUM = 4,
+    // Coarse Alignment
+    AS_COARSE_ALIGNMENT = 5,
+    // Fine Alignment
+    AS_FINE_ALIGNMENT = 6,
+    // System Ready
+    AS_SYSTEM_READY = 7,
+}
+
+impl StateEnum {
+    pub fn as_u32(&self) -> u32 {
+        match self {
+            AS_NOT_ALIGNED => 0,
+            AS_ALIGNED => 1,
+            AS_NOT_SUPPORTED => 2,
+            AS_ALIGNING => 3,
+            AS_WRONG_MEDIUM => 4,
+            AS_COARSE_ALIGNMENT => 5,
+            AS_FINE_ALIGNMENT => 6,
+            AS_SYSTEM_READY => 7,
+        }
+    }
+}
+
+/// This message notifies the vehicle is ready for dead-reckoning missions.
+pub struct AlignmentState {
+    /// IMC Header
+    pub header: Header,
+
+    /// Alignment State.
+    pub _state: u8,
+}
+
+impl AlignmentState {
+    pub fn new() -> AlignmentState {
+        let mut msg = AlignmentState {
+            header: Header::new(c_msg_id),
+
+            _state: Default::default(),
+        };
+
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+}
+
+impl Message for AlignmentState {
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
+    }
+
+    fn static_id(&self) -> u16 {
+        c_msg_id
+    }
+
+    fn clear(&mut self) {
+        self.header.clear();
+
+        self._state = Default::default();
+    }
+
+    fn fixed_serialization_size(&self) -> usize {
+        0
+    }
+
+    fn dynamic_serialization_size(&self) -> usize {
+        unimplemented!();
+    }
+
+    fn serialize(&self, bfr: &mut bytes::BytesMut) {
+        self.header.serialize(bfr);
+
+        bfr.put_u8(self._state);
+
+        serialize_footer(bfr);
+    }
+}

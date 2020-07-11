@@ -4,20 +4,33 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 150;
+use crate::imc::MessageGroup::ControlCommand;
 
-/// The Heartbeat message is used to inform other modules that the
-/// sending entity's system is running normally and communications
-/// are alive.
-pub struct Heartbeat {
+const c_msg_id: u16 = 401;
+
+/// message-group: ControlCommand
+impl ControlCommand for DesiredZ {}
+
+/// Desired Z reference value for the control layer.
+/// message-group: ControlCommand
+pub struct DesiredZ {
     /// IMC Header
     pub header: Header,
+
+    /// The value of the desired z reference in meters.
+    pub _value: f32,
+
+    /// Units of the z reference.
+    pub _z_units: u8,
 }
 
-impl Heartbeat {
-    pub fn new() -> Heartbeat {
-        let mut msg = Heartbeat {
+impl DesiredZ {
+    pub fn new() -> DesiredZ {
+        let mut msg = DesiredZ {
             header: Header::new(c_msg_id),
+
+            _value: Default::default(),
+            _z_units: 0 as u8,
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -26,7 +39,7 @@ impl Heartbeat {
     }
 }
 
-impl Message for Heartbeat {
+impl Message for DesiredZ {
     fn get_header(&mut self) -> &mut Header {
         &mut self.header
     }
@@ -37,6 +50,10 @@ impl Message for Heartbeat {
 
     fn clear(&mut self) {
         self.header.clear();
+
+        self._value = Default::default();
+
+        self._z_units = Default::default();
     }
 
     fn fixed_serialization_size(&self) -> usize {
@@ -49,6 +66,9 @@ impl Message for Heartbeat {
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {
         self.header.serialize(bfr);
+
+        bfr.put_f32_le(self._value);
+        bfr.put_u8(self._z_units);
 
         serialize_footer(bfr);
     }

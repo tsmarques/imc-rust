@@ -4,20 +4,28 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 150;
+const c_msg_id: u16 = 474;
 
-/// The Heartbeat message is used to inform other modules that the
-/// sending entity's system is running normally and communications
-/// are alive.
-pub struct Heartbeat {
+/// This message is used to store the various polygon vertices for
+/// CoverArea maneuvers.
+pub struct PolygonVertex {
     /// IMC Header
     pub header: Header,
+
+    /// WGS-84 Latitude for start point.
+    pub _lat: f64,
+
+    /// WGS-84 Longitude for start point.
+    pub _lon: f64,
 }
 
-impl Heartbeat {
-    pub fn new() -> Heartbeat {
-        let mut msg = Heartbeat {
+impl PolygonVertex {
+    pub fn new() -> PolygonVertex {
+        let mut msg = PolygonVertex {
             header: Header::new(c_msg_id),
+
+            _lat: Default::default(),
+            _lon: Default::default(),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -26,7 +34,7 @@ impl Heartbeat {
     }
 }
 
-impl Message for Heartbeat {
+impl Message for PolygonVertex {
     fn get_header(&mut self) -> &mut Header {
         &mut self.header
     }
@@ -37,6 +45,10 @@ impl Message for Heartbeat {
 
     fn clear(&mut self) {
         self.header.clear();
+
+        self._lat = Default::default();
+
+        self._lon = Default::default();
     }
 
     fn fixed_serialization_size(&self) -> usize {
@@ -49,6 +61,9 @@ impl Message for Heartbeat {
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {
         self.header.serialize(bfr);
+
+        bfr.put_f64_le(self._lat);
+        bfr.put_f64_le(self._lon);
 
         serialize_footer(bfr);
     }

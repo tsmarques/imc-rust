@@ -4,19 +4,17 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 150;
+const c_msg_id: u16 = 9;
 
-/// The Heartbeat message is used to inform other modules that the
-/// sending entity's system is running normally and communications
-/// are alive.
-pub struct Heartbeat {
+/// Request the destination system to restart itself.
+pub struct RestartSystem {
     /// IMC Header
     pub header: Header,
 }
 
-impl Heartbeat {
-    pub fn new() -> Heartbeat {
-        let mut msg = Heartbeat {
+impl RestartSystem {
+    pub fn new() -> RestartSystem {
+        let mut msg = RestartSystem {
             header: Header::new(c_msg_id),
         };
 
@@ -26,7 +24,7 @@ impl Heartbeat {
     }
 }
 
-impl Message for Heartbeat {
+impl Message for RestartSystem {
     fn get_header(&mut self) -> &mut Header {
         &mut self.header
     }

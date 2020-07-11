@@ -1,0 +1,78 @@
+use crate::imc::Message::*;
+use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+use crate::imc::Header::Header;
+use bytes::BufMut;
+
+use crate::imc::TrexAttribute::TrexAttribute;
+
+const c_msg_id: u16 = 657;
+
+pub struct TrexToken {
+    /// IMC Header
+    pub header: Header,
+
+    pub _timeline: String,
+
+    pub _predicate: String,
+
+    pub _attributes: Vec<Box<TrexAttribute>>,
+}
+
+impl TrexToken {
+    pub fn new() -> TrexToken {
+        let mut msg = TrexToken {
+            header: Header::new(c_msg_id),
+
+            _timeline: Default::default(),
+            _predicate: Default::default(),
+            _attributes: Default::default(),
+        };
+
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+}
+
+impl Message for TrexToken {
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
+    }
+
+    fn static_id(&self) -> u16 {
+        c_msg_id
+    }
+
+    fn clear(&mut self) {
+        self.header.clear();
+
+        self._timeline = Default::default();
+
+        self._predicate = Default::default();
+
+        for msg in self._attributes.iter_mut() {
+            msg.clear();
+        }
+    }
+
+    fn fixed_serialization_size(&self) -> usize {
+        0
+    }
+
+    fn dynamic_serialization_size(&self) -> usize {
+        unimplemented!();
+    }
+
+    fn serialize(&self, bfr: &mut bytes::BytesMut) {
+        self.header.serialize(bfr);
+
+        serialize_bytes!(bfr, self._timeline.as_bytes());
+        serialize_bytes!(bfr, self._predicate.as_bytes());
+        for msg in self._attributes.iter() {
+            msg.serialize(bfr);
+        }
+
+        serialize_footer(bfr);
+    }
+}

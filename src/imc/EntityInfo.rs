@@ -1,0 +1,91 @@
+use crate::imc::Message::*;
+use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+use crate::imc::Header::Header;
+use bytes::BufMut;
+
+const c_msg_id: u16 = 3;
+
+/// This message describes an entity.
+pub struct EntityInfo {
+    /// IMC Header
+    pub header: Header,
+
+    /// Entity identifier.
+    pub _id: u8,
+
+    /// Entity label or empty if the entity id is not valid.
+    pub _label: String,
+
+    /// Name of the plugin/component/subsystem associated with this
+    /// entity.
+    pub _component: String,
+
+    /// Amount of time needed to properly activate the entity.
+    pub _act_time: u16,
+
+    /// Amount of time needed to properly deactivate the entity.
+    pub _deact_time: u16,
+}
+
+impl EntityInfo {
+    pub fn new() -> EntityInfo {
+        let mut msg = EntityInfo {
+            header: Header::new(c_msg_id),
+
+            _id: Default::default(),
+            _label: Default::default(),
+            _component: Default::default(),
+            _act_time: Default::default(),
+            _deact_time: Default::default(),
+        };
+
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+}
+
+impl Message for EntityInfo {
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
+    }
+
+    fn static_id(&self) -> u16 {
+        c_msg_id
+    }
+
+    fn clear(&mut self) {
+        self.header.clear();
+
+        self._id = Default::default();
+
+        self._label = Default::default();
+
+        self._component = Default::default();
+
+        self._act_time = Default::default();
+
+        self._deact_time = Default::default();
+    }
+
+    fn fixed_serialization_size(&self) -> usize {
+        0
+    }
+
+    fn dynamic_serialization_size(&self) -> usize {
+        unimplemented!();
+    }
+
+    fn serialize(&self, bfr: &mut bytes::BytesMut) {
+        self.header.serialize(bfr);
+
+        bfr.put_u8(self._id);
+        serialize_bytes!(bfr, self._label.as_bytes());
+        serialize_bytes!(bfr, self._component.as_bytes());
+        bfr.put_u16_le(self._act_time);
+        bfr.put_u16_le(self._deact_time);
+
+        serialize_footer(bfr);
+    }
+}
