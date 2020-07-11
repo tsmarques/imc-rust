@@ -16,7 +16,7 @@ pub enum {{enum-abbrev}}Enum { {{#enum-values}}
 }
 
 impl {{enum-abbrev}}Enum {
-    pub fn as_u8(&self) -> u8 {
+    pub fn as_u32(&self) -> u32 {
         match self { {{#enum-values}}
             {{enum-name}} => {{enum-value}},{{/enum-values}}
         }
