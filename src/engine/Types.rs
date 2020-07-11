@@ -131,8 +131,11 @@ pub fn get_serialization_string(field: &Field) -> String {
         ImcTypeEnum::U8 => format!("bfr.put_u8(self._{})", field.abbrev),
         ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => panic!("what to do with bitfield and enum.."),
         ImcTypeEnum::Message => format!(
-            "if self._{}.is_some() {{\nself._{}.unwrap().serialize(bfr);\n}}",
-            field.abbrev, field.abbrev
+            "match &self._{} {{\n
+                 Some(field) => field.serialize(bfr),\n
+                 None => {{}}\n
+            }}\n",
+            field.abbrev
         ),
         ImcTypeEnum::MessageList => format!(
             "for msg in self._{}.iter() {{\nmsg.serialize(bfr);\n}}",
@@ -152,11 +155,11 @@ pub fn get_clear_string(field: &Field) -> String {
         ),
         ImcTypeEnum::Message => format!(
             // yikes
-            "if self._{}.is_some() {{\n self._{}.unwrap().clear();\nself._{} = {}\n}}",
-            field.abbrev,
-            field.abbrev,
-            field.abbrev,
-            get_init_string(field)
+            "match &mut self._{} {{\n
+                 Some(field) => field.clear(),\n
+                 None => {{}}\n
+            }}\n",
+            field.abbrev
         ),
         primitive_type => format!("self._{} = Default::default();", field.abbrev),
     }
