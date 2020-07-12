@@ -4,9 +4,9 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-use crate::imc::DeviceState::DeviceState;
-
 use crate::imc::BeamConfig::BeamConfig;
+
+use crate::imc::DeviceState::DeviceState;
 
 const c_msg_id: u16 = 262;
 
