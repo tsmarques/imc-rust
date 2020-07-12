@@ -1,3 +1,5 @@
+use crate::imc::Message::Message;
+
 {{#imc-message-groups}}
-pub trait {{imc-group-abbrev}} { }
+pub trait {{imc-group-abbrev}} : Message { }
 {{/imc-message-groups}}

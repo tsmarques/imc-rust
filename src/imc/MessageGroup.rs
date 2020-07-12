@@ -1,3 +1,5 @@
-pub trait ControlCommand {}
+use crate::imc::Message::Message;
 
-pub trait Maneuver {}
+pub trait Maneuver: Message {}
+
+pub trait ControlCommand: Message {}
