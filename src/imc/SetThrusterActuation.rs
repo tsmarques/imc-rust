@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 301;
-
 /// Actuate directly on a thruster.
 pub struct SetThrusterActuation {
     /// IMC Header
@@ -21,7 +19,7 @@ pub struct SetThrusterActuation {
 impl SetThrusterActuation {
     pub fn new() -> SetThrusterActuation {
         let mut msg = SetThrusterActuation {
-            header: Header::new(c_msg_id),
+            header: Header::new(301),
 
             _id: Default::default(),
             _value: Default::default(),
@@ -39,7 +37,7 @@ impl Message for SetThrusterActuation {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        301
     }
 
     fn clear(&mut self) {

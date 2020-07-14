@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::ControlCommand;
 
-const c_msg_id: u16 = 406;
-
 pub enum FlagsEnum {
     // Start Point
     FL_START = 0x01,
@@ -103,7 +101,7 @@ pub struct DesiredPath {
 impl DesiredPath {
     pub fn new() -> DesiredPath {
         let mut msg = DesiredPath {
-            header: Header::new(c_msg_id),
+            header: Header::new(406),
 
             _path_ref: Default::default(),
             _start_lat: Default::default(),
@@ -132,7 +130,7 @@ impl Message for DesiredPath {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        406
     }
 
     fn clear(&mut self) {

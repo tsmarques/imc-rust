@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 890;
-
 /// This message contains information, collected using USBL, about the
 /// bearing and elevation of a target.
 pub struct UsblAngles {
@@ -25,7 +23,7 @@ pub struct UsblAngles {
 impl UsblAngles {
     pub fn new() -> UsblAngles {
         let mut msg = UsblAngles {
-            header: Header::new(c_msg_id),
+            header: Header::new(890),
 
             _target: Default::default(),
             _bearing: Default::default(),
@@ -44,7 +42,7 @@ impl Message for UsblAngles {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        890
     }
 
     fn clear(&mut self) {

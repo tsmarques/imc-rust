@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 474;
-
 /// This message is used to store the various polygon vertices for
 /// CoverArea maneuvers.
 pub struct PolygonVertex {
@@ -22,7 +20,7 @@ pub struct PolygonVertex {
 impl PolygonVertex {
     pub fn new() -> PolygonVertex {
         let mut msg = PolygonVertex {
-            header: Header::new(c_msg_id),
+            header: Header::new(474),
 
             _lat: Default::default(),
             _lon: Default::default(),
@@ -40,7 +38,7 @@ impl Message for PolygonVertex {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        474
     }
 
     fn clear(&mut self) {

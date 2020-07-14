@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 15;
-
 /// Query the activation/deactivation state of an entity. The
 /// recipient shall reply with an EntityActivationState message.
 pub struct QueryEntityActivationState {
@@ -16,7 +14,7 @@ pub struct QueryEntityActivationState {
 impl QueryEntityActivationState {
     pub fn new() -> QueryEntityActivationState {
         let mut msg = QueryEntityActivationState {
-            header: Header::new(c_msg_id),
+            header: Header::new(15),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -31,7 +29,7 @@ impl Message for QueryEntityActivationState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        15
     }
 
     fn clear(&mut self) {

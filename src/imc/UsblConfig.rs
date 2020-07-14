@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::UsblModem::UsblModem;
 
-const c_msg_id: u16 = 902;
-
 pub enum OperationEnum {
     // Set LBL Configuration
     OP_SET_CFG = 0,
@@ -42,7 +40,7 @@ pub struct UsblConfig {
 impl UsblConfig {
     pub fn new() -> UsblConfig {
         let mut msg = UsblConfig {
-            header: Header::new(c_msg_id),
+            header: Header::new(902),
 
             _op: Default::default(),
             _modems: Default::default(),
@@ -60,7 +58,7 @@ impl Message for UsblConfig {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        902
     }
 
     fn clear(&mut self) {

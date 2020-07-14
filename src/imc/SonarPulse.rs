@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 2006;
-
 /// Information regarding a sent/received Sonar pulse.
 pub struct SonarPulse {
     /// IMC Header
@@ -27,7 +25,7 @@ pub struct SonarPulse {
 impl SonarPulse {
     pub fn new() -> SonarPulse {
         let mut msg = SonarPulse {
-            header: Header::new(c_msg_id),
+            header: Header::new(2006),
 
             _frequency: Default::default(),
             _pulse_length: Default::default(),
@@ -47,7 +45,7 @@ impl Message for SonarPulse {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        2006
     }
 
     fn clear(&mut self) {

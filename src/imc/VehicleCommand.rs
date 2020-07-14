@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 501;
-
 pub enum TypeEnum {
     // Request
     VC_REQUEST = 0,
@@ -78,7 +76,7 @@ pub struct VehicleCommand {
 impl VehicleCommand {
     pub fn new() -> VehicleCommand {
         let mut msg = VehicleCommand {
-            header: Header::new(c_msg_id),
+            header: Header::new(501),
 
             _type: Default::default(),
             _request_id: Default::default(),
@@ -100,7 +98,7 @@ impl Message for VehicleCommand {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        501
     }
 
     fn clear(&mut self) {

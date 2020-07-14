@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 256;
-
 /// Vector quantifying the direction and magnitude of the measured
 /// angular velocity that a device is exposed to.
 pub struct AngularVelocity {
@@ -28,7 +26,7 @@ pub struct AngularVelocity {
 impl AngularVelocity {
     pub fn new() -> AngularVelocity {
         let mut msg = AngularVelocity {
-            header: Header::new(c_msg_id),
+            header: Header::new(256),
 
             _time: Default::default(),
             _x: Default::default(),
@@ -48,7 +46,7 @@ impl Message for AngularVelocity {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        256
     }
 
     fn clear(&mut self) {

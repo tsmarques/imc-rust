@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 453;
-
 pub enum LoiterTypeEnum {
     // Default
     LT_DEFAULT = 0,
@@ -114,7 +112,7 @@ pub struct Loiter {
 impl Loiter {
     pub fn new() -> Loiter {
         let mut msg = Loiter {
-            header: Header::new(c_msg_id),
+            header: Header::new(453),
 
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -144,7 +142,7 @@ impl Message for Loiter {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        453
     }
 
     fn clear(&mut self) {

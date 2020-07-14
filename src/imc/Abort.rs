@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 550;
-
 /// Stops any executing actions and put the system in a standby mode.
 pub struct Abort {
     /// IMC Header
@@ -15,7 +13,7 @@ pub struct Abort {
 impl Abort {
     pub fn new() -> Abort {
         let mut msg = Abort {
-            header: Header::new(c_msg_id),
+            header: Header::new(550),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -30,7 +28,7 @@ impl Message for Abort {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        550
     }
 
     fn clear(&mut self) {

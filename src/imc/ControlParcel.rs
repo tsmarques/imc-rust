@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 412;
-
 /// Report of PID control parcels.
 pub struct ControlParcel {
     /// IMC Header
@@ -27,7 +25,7 @@ pub struct ControlParcel {
 impl ControlParcel {
     pub fn new() -> ControlParcel {
         let mut msg = ControlParcel {
-            header: Header::new(c_msg_id),
+            header: Header::new(412),
 
             _p: Default::default(),
             _i: Default::default(),
@@ -47,7 +45,7 @@ impl Message for ControlParcel {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        412
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 891;
-
 /// This message contains information, collected using USBL, about a
 /// target's position.
 pub struct UsblPosition {
@@ -28,7 +26,7 @@ pub struct UsblPosition {
 impl UsblPosition {
     pub fn new() -> UsblPosition {
         let mut msg = UsblPosition {
-            header: Header::new(c_msg_id),
+            header: Header::new(891),
 
             _target: Default::default(),
             _x: Default::default(),
@@ -48,7 +46,7 @@ impl Message for UsblPosition {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        891
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 458;
-
 /// Waypoint coordinate of a Follow Path maneuver.
 pub struct PathPoint {
     /// IMC Header
@@ -27,7 +25,7 @@ pub struct PathPoint {
 impl PathPoint {
     pub fn new() -> PathPoint {
         let mut msg = PathPoint {
-            header: Header::new(c_msg_id),
+            header: Header::new(458),
 
             _x: Default::default(),
             _y: Default::default(),
@@ -46,7 +44,7 @@ impl Message for PathPoint {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        458
     }
 
     fn clear(&mut self) {

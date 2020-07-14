@@ -8,8 +8,6 @@ use crate::imc::DesiredSpeed::DesiredSpeed;
 
 use crate::imc::DesiredZ::DesiredZ;
 
-const c_msg_id: u16 = 479;
-
 pub enum FlagsEnum {
     // Use Location Reference
     FLAG_LOCATION = 0x01,
@@ -61,7 +59,7 @@ pub struct Reference {
 impl Reference {
     pub fn new() -> Reference {
         let mut msg = Reference {
-            header: Header::new(c_msg_id),
+            header: Header::new(479),
 
             _flags: Default::default(),
             _speed: Default::default(),
@@ -83,7 +81,7 @@ impl Message for Reference {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        479
     }
 
     fn clear(&mut self) {

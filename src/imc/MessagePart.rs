@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 877;
-
 pub struct MessagePart {
     /// IMC Header
     pub header: Header,
@@ -22,7 +20,7 @@ pub struct MessagePart {
 impl MessagePart {
     pub fn new() -> MessagePart {
         let mut msg = MessagePart {
-            header: Header::new(c_msg_id),
+            header: Header::new(877),
 
             _uid: Default::default(),
             _frag_number: Default::default(),
@@ -42,7 +40,7 @@ impl Message for MessagePart {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        877
     }
 
     fn clear(&mut self) {

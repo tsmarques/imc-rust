@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 152;
-
 pub enum ServiceTypeEnum {
     // External
     SRV_TYPE_EXTERNAL = 0x01,
@@ -38,7 +36,7 @@ pub struct AnnounceService {
 impl AnnounceService {
     pub fn new() -> AnnounceService {
         let mut msg = AnnounceService {
-            header: Header::new(c_msg_id),
+            header: Header::new(152),
 
             _service: Default::default(),
             _service_type: Default::default(),
@@ -56,7 +54,7 @@ impl Message for AnnounceService {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        152
     }
 
     fn clear(&mut self) {

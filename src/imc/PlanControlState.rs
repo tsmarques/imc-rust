@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 560;
-
 pub enum StateEnum {
     // Blocked
     PCS_BLOCKED = 0,
@@ -84,7 +82,7 @@ pub struct PlanControlState {
 impl PlanControlState {
     pub fn new() -> PlanControlState {
         let mut msg = PlanControlState {
-            header: Header::new(c_msg_id),
+            header: Header::new(560),
 
             _state: Default::default(),
             _plan_id: Default::default(),
@@ -108,7 +106,7 @@ impl Message for PlanControlState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        560
     }
 
     fn clear(&mut self) {

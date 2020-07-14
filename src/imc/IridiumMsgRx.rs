@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 170;
-
 pub struct IridiumMsgRx {
     /// IMC Header
     pub header: Header,
@@ -27,7 +25,7 @@ pub struct IridiumMsgRx {
 impl IridiumMsgRx {
     pub fn new() -> IridiumMsgRx {
         let mut msg = IridiumMsgRx {
-            header: Header::new(c_msg_id),
+            header: Header::new(170),
 
             _origin: Default::default(),
             _htime: Default::default(),
@@ -48,7 +46,7 @@ impl Message for IridiumMsgRx {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        170
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 291;
-
 /// Phycocyanin measurement.
 pub struct Phycocyanin {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Phycocyanin {
 impl Phycocyanin {
     pub fn new() -> Phycocyanin {
         let mut msg = Phycocyanin {
-            header: Header::new(c_msg_id),
+            header: Header::new(291),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Phycocyanin {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        291
     }
 
     fn clear(&mut self) {

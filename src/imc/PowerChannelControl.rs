@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 309;
-
 pub enum OperationEnum {
     // Turn Off
     PCC_OP_TURN_OFF = 0,
@@ -57,7 +55,7 @@ pub struct PowerChannelControl {
 impl PowerChannelControl {
     pub fn new() -> PowerChannelControl {
         let mut msg = PowerChannelControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(309),
 
             _name: Default::default(),
             _op: Default::default(),
@@ -76,7 +74,7 @@ impl Message for PowerChannelControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        309
     }
 
     fn clear(&mut self) {

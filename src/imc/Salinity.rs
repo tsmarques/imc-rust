@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 270;
-
 /// Report of salinity.
 pub struct Salinity {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Salinity {
 impl Salinity {
     pub fn new() -> Salinity {
         let mut msg = Salinity {
-            header: Header::new(c_msg_id),
+            header: Header::new(270),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Salinity {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        270
     }
 
     fn clear(&mut self) {

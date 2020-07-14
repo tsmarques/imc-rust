@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 2;
-
 /// Request entities to report their state. Entities should respond
 /// by issuing an appropriate EntityState message.
 pub struct QueryEntityState {
@@ -16,7 +14,7 @@ pub struct QueryEntityState {
 impl QueryEntityState {
     pub fn new() -> QueryEntityState {
         let mut msg = QueryEntityState {
-            header: Header::new(c_msg_id),
+            header: Header::new(2),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -31,7 +29,7 @@ impl Message for QueryEntityState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        2
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 106;
-
 pub enum OperationEnum {
     // Execute Sync.
     COP_SYNC_EXEC = 0,
@@ -52,7 +50,7 @@ pub struct ClockControl {
 impl ClockControl {
     pub fn new() -> ClockControl {
         let mut msg = ClockControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(106),
 
             _op: Default::default(),
             _clock: Default::default(),
@@ -71,7 +69,7 @@ impl Message for ClockControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        106
     }
 
     fn clear(&mut self) {

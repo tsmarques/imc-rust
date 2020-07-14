@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 562;
-
 pub enum CommandEnum {
     // Generate
     CMD_GENERATE = 0,
@@ -65,7 +63,7 @@ pub struct PlanGeneration {
 impl PlanGeneration {
     pub fn new() -> PlanGeneration {
         let mut msg = PlanGeneration {
-            header: Header::new(c_msg_id),
+            header: Header::new(562),
 
             _cmd: Default::default(),
             _op: Default::default(),
@@ -85,7 +83,7 @@ impl Message for PlanGeneration {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        562
     }
 
     fn clear(&mut self) {

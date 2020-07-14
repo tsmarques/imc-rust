@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 351;
-
 /// The estimated stream velocity, typically for water or air
 /// streams.
 pub struct EstimatedStreamVelocity {
@@ -25,7 +23,7 @@ pub struct EstimatedStreamVelocity {
 impl EstimatedStreamVelocity {
     pub fn new() -> EstimatedStreamVelocity {
         let mut msg = EstimatedStreamVelocity {
-            header: Header::new(c_msg_id),
+            header: Header::new(351),
 
             _x: Default::default(),
             _y: Default::default(),
@@ -44,7 +42,7 @@ impl Message for EstimatedStreamVelocity {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        351
     }
 
     fn clear(&mut self) {

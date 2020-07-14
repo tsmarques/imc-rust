@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 7;
-
 /// Report of software CPU usage.
 pub struct CpuUsage {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct CpuUsage {
 impl CpuUsage {
     pub fn new() -> CpuUsage {
         let mut msg = CpuUsage {
-            header: Header::new(c_msg_id),
+            header: Header::new(7),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for CpuUsage {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        7
     }
 
     fn clear(&mut self) {

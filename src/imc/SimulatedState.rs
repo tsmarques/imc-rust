@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 50;
-
 /// This message presents the simulated state of the vehicle. The simulated
 /// state attempts to provide a realistic state interpretation of operating
 /// various kinds of vehicles.
@@ -71,7 +69,7 @@ pub struct SimulatedState {
 impl SimulatedState {
     pub fn new() -> SimulatedState {
         let mut msg = SimulatedState {
-            header: Header::new(c_msg_id),
+            header: Header::new(50),
 
             _lat: Default::default(),
             _lon: Default::default(),
@@ -105,7 +103,7 @@ impl Message for SimulatedState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        50
     }
 
     fn clear(&mut self) {

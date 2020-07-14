@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 506;
-
 /// Initiate overall calibration of a vehicle.
 pub struct Calibration {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Calibration {
 impl Calibration {
     pub fn new() -> Calibration {
         let mut msg = Calibration {
-            header: Header::new(c_msg_id),
+            header: Header::new(506),
 
             _duration: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Calibration {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        506
     }
 
     fn clear(&mut self) {

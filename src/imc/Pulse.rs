@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 277;
-
 /// Hardware pulse detection.
 pub struct Pulse {
     /// IMC Header
@@ -15,7 +13,7 @@ pub struct Pulse {
 impl Pulse {
     pub fn new() -> Pulse {
         let mut msg = Pulse {
-            header: Header::new(c_msg_id),
+            header: Header::new(277),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -30,7 +28,7 @@ impl Message for Pulse {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        277
     }
 
     fn clear(&mut self) {

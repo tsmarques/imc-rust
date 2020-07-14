@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 200;
-
 /// When the vehicle uses Long Base Line navigation, this message
 /// notifies that a new range was received from one of the acoustics
 /// transponders. The message fields are used to identify the range
@@ -25,7 +23,7 @@ pub struct LblRange {
 impl LblRange {
     pub fn new() -> LblRange {
         let mut msg = LblRange {
-            header: Header::new(c_msg_id),
+            header: Header::new(200),
 
             _id: Default::default(),
             _range: Default::default(),
@@ -43,7 +41,7 @@ impl Message for LblRange {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        200
     }
 
     fn clear(&mut self) {

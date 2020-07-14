@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 503;
-
 pub struct EntityMonitoringState {
     /// IMC Header
     pub header: Header,
@@ -39,7 +37,7 @@ pub struct EntityMonitoringState {
 impl EntityMonitoringState {
     pub fn new() -> EntityMonitoringState {
         let mut msg = EntityMonitoringState {
-            header: Header::new(c_msg_id),
+            header: Header::new(503),
 
             _mcount: Default::default(),
             _mnames: Default::default(),
@@ -63,7 +61,7 @@ impl Message for EntityMonitoringState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        503
     }
 
     fn clear(&mut self) {

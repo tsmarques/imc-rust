@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 470;
-
 pub enum StateEnum {
     // Maneuver in progress
     MCS_EXECUTING = 0,
@@ -47,7 +45,7 @@ pub struct ManeuverControlState {
 impl ManeuverControlState {
     pub fn new() -> ManeuverControlState {
         let mut msg = ManeuverControlState {
-            header: Header::new(c_msg_id),
+            header: Header::new(470),
 
             _state: Default::default(),
             _eta: Default::default(),
@@ -66,7 +64,7 @@ impl Message for ManeuverControlState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        470
     }
 
     fn clear(&mut self) {

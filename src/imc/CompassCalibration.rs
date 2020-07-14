@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 475;
-
 pub enum DirectionEnum {
     // Vehicle Dependent
     LD_VDEP = 0,
@@ -86,7 +84,7 @@ pub struct CompassCalibration {
 impl CompassCalibration {
     pub fn new() -> CompassCalibration {
         let mut msg = CompassCalibration {
-            header: Header::new(c_msg_id),
+            header: Header::new(475),
 
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -115,7 +113,7 @@ impl Message for CompassCalibration {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        475
     }
 
     fn clear(&mut self) {

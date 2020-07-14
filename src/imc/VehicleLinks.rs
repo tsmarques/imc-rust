@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::Announce::Announce;
 
-const c_msg_id: u16 = 650;
-
 /// This message is sent by the TREX task which gives further information to a TREX instance about connected IMC nodes
 pub struct VehicleLinks {
     /// IMC Header
@@ -23,7 +21,7 @@ pub struct VehicleLinks {
 impl VehicleLinks {
     pub fn new() -> VehicleLinks {
         let mut msg = VehicleLinks {
-            header: Header::new(c_msg_id),
+            header: Header::new(650),
 
             _localname: Default::default(),
             _links: Default::default(),
@@ -41,7 +39,7 @@ impl Message for VehicleLinks {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        650
     }
 
     fn clear(&mut self) {

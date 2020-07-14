@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::TrexToken::TrexToken;
 
-const c_msg_id: u16 = 655;
-
 pub enum OperationEnum {
     // Post Token
     OP_POST_TOKEN = 1,
@@ -50,7 +48,7 @@ pub struct TrexOperation {
 impl TrexOperation {
     pub fn new() -> TrexOperation {
         let mut msg = TrexOperation {
-            header: Header::new(c_msg_id),
+            header: Header::new(655),
 
             _op: Default::default(),
             _goal_id: Default::default(),
@@ -69,7 +67,7 @@ impl Message for TrexOperation {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        655
     }
 
     fn clear(&mut self) {

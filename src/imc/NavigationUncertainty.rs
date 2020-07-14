@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 354;
-
 /// Report of navigation uncertainty.
 /// This is usually given by the output of the state
 /// covariance matrix of an Extended Kalman Filter.
@@ -62,7 +60,7 @@ pub struct NavigationUncertainty {
 impl NavigationUncertainty {
     pub fn new() -> NavigationUncertainty {
         let mut msg = NavigationUncertainty {
-            header: Header::new(c_msg_id),
+            header: Header::new(354),
 
             _x: Default::default(),
             _y: Default::default(),
@@ -92,7 +90,7 @@ impl Message for NavigationUncertainty {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        354
     }
 
     fn clear(&mut self) {

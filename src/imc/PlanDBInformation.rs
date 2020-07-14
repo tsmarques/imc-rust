@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 558;
-
 pub struct PlanDBInformation {
     /// IMC Header
     pub header: Header,
@@ -35,7 +33,7 @@ pub struct PlanDBInformation {
 impl PlanDBInformation {
     pub fn new() -> PlanDBInformation {
         let mut msg = PlanDBInformation {
-            header: Header::new(c_msg_id),
+            header: Header::new(558),
 
             _plan_id: Default::default(),
             _plan_size: Default::default(),
@@ -57,7 +55,7 @@ impl Message for PlanDBInformation {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        558
     }
 
     fn clear(&mut self) {

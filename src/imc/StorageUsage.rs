@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 100;
-
 /// Report of storage usage.
 pub struct StorageUsage {
     /// IMC Header
@@ -21,7 +19,7 @@ pub struct StorageUsage {
 impl StorageUsage {
     pub fn new() -> StorageUsage {
         let mut msg = StorageUsage {
-            header: Header::new(c_msg_id),
+            header: Header::new(100),
 
             _available: Default::default(),
             _value: Default::default(),
@@ -39,7 +37,7 @@ impl Message for StorageUsage {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        100
     }
 
     fn clear(&mut self) {

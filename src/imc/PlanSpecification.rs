@@ -4,13 +4,11 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-use crate::imc::PlanManeuver::PlanManeuver;
-
 use crate::imc::PlanTransition::PlanTransition;
 
 use crate::imc::PlanVariable::PlanVariable;
 
-const c_msg_id: u16 = 551;
+use crate::imc::PlanManeuver::PlanManeuver;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in
@@ -58,7 +56,7 @@ pub struct PlanSpecification {
 impl PlanSpecification {
     pub fn new() -> PlanSpecification {
         let mut msg = PlanSpecification {
-            header: Header::new(c_msg_id),
+            header: Header::new(551),
 
             _plan_id: Default::default(),
             _description: Default::default(),
@@ -83,7 +81,7 @@ impl Message for PlanSpecification {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        551
     }
 
     fn clear(&mut self) {

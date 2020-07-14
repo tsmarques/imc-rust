@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 259;
-
 pub enum ValidityEnum {
     // X component is valid
     VAL_VEL_X = 0x01,
@@ -48,7 +46,7 @@ pub struct GroundVelocity {
 impl GroundVelocity {
     pub fn new() -> GroundVelocity {
         let mut msg = GroundVelocity {
-            header: Header::new(c_msg_id),
+            header: Header::new(259),
 
             _validity: Default::default(),
             _x: Default::default(),
@@ -68,7 +66,7 @@ impl Message for GroundVelocity {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        259
     }
 
     fn clear(&mut self) {

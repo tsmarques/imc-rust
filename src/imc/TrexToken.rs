@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::TrexAttribute::TrexAttribute;
 
-const c_msg_id: u16 = 657;
-
 pub struct TrexToken {
     /// IMC Header
     pub header: Header,
@@ -22,7 +20,7 @@ pub struct TrexToken {
 impl TrexToken {
     pub fn new() -> TrexToken {
         let mut msg = TrexToken {
-            header: Header::new(c_msg_id),
+            header: Header::new(657),
 
             _timeline: Default::default(),
             _predicate: Default::default(),
@@ -41,7 +39,7 @@ impl Message for TrexToken {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        657
     }
 
     fn clear(&mut self) {

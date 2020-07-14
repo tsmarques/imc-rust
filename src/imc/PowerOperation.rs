@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 308;
-
 pub enum OperationEnum {
     // Power Down
     POP_PWR_DOWN = 0,
@@ -58,7 +56,7 @@ pub struct PowerOperation {
 impl PowerOperation {
     pub fn new() -> PowerOperation {
         let mut msg = PowerOperation {
-            header: Header::new(c_msg_id),
+            header: Header::new(308),
 
             _op: Default::default(),
             _time_remain: Default::default(),
@@ -77,7 +75,7 @@ impl Message for PowerOperation {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        308
     }
 
     fn clear(&mut self) {

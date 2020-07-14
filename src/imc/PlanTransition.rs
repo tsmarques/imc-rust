@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 553;
-
 /// Describes a plan transition within a plan specification. A
 /// transition states the vehicle conditions that must be met to
 /// signal the transition, the maneuver that should be started as a
@@ -38,7 +36,7 @@ pub struct PlanTransition {
 impl PlanTransition {
     pub fn new() -> PlanTransition {
         let mut msg = PlanTransition {
-            header: Header::new(c_msg_id),
+            header: Header::new(553),
 
             _source_man: Default::default(),
             _dest_man: Default::default(),
@@ -58,7 +56,7 @@ impl Message for PlanTransition {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        553
     }
 
     fn clear(&mut self) {

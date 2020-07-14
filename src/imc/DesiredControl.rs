@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 407;
-
 pub enum FlagsEnum {
     // Value of X is meaningful
     FL_X = 0x01,
@@ -64,7 +62,7 @@ pub struct DesiredControl {
 impl DesiredControl {
     pub fn new() -> DesiredControl {
         let mut msg = DesiredControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(407),
 
             _x: Default::default(),
             _y: Default::default(),
@@ -87,7 +85,7 @@ impl Message for DesiredControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        407
     }
 
     fn clear(&mut self) {

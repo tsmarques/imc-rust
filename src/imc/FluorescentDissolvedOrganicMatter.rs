@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 2004;
-
 /// Fluorescent Dissolved Organic Matter measurement.
 pub struct FluorescentDissolvedOrganicMatter {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct FluorescentDissolvedOrganicMatter {
 impl FluorescentDissolvedOrganicMatter {
     pub fn new() -> FluorescentDissolvedOrganicMatter {
         let mut msg = FluorescentDissolvedOrganicMatter {
-            header: Header::new(c_msg_id),
+            header: Header::new(2004),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for FluorescentDissolvedOrganicMatter {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        2004
     }
 
     fn clear(&mut self) {

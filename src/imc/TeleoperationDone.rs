@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 460;
-
 /// Notification of completion of a Teleoperation maneuver.
 pub struct TeleoperationDone {
     /// IMC Header
@@ -15,7 +13,7 @@ pub struct TeleoperationDone {
 impl TeleoperationDone {
     pub fn new() -> TeleoperationDone {
         let mut msg = TeleoperationDone {
-            header: Header::new(c_msg_id),
+            header: Header::new(460),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -30,7 +28,7 @@ impl Message for TeleoperationDone {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        460
     }
 
     fn clear(&mut self) {

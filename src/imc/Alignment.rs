@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 495;
-
 /// message-group: Maneuver
 impl Maneuver for Alignment {}
 
@@ -44,7 +42,7 @@ pub struct Alignment {
 impl Alignment {
     pub fn new() -> Alignment {
         let mut msg = Alignment {
-            header: Header::new(c_msg_id),
+            header: Header::new(495),
 
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -66,7 +64,7 @@ impl Message for Alignment {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        495
     }
 
     fn clear(&mut self) {

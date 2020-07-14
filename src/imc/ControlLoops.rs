@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 507;
-
 pub enum EnableEnum {
     // Disable
     CL_DISABLE = 0,
@@ -43,7 +41,7 @@ pub struct ControlLoops {
 impl ControlLoops {
     pub fn new() -> ControlLoops {
         let mut msg = ControlLoops {
-            header: Header::new(c_msg_id),
+            header: Header::new(507),
 
             _enable: Default::default(),
             _mask: Default::default(),
@@ -62,7 +60,7 @@ impl Message for ControlLoops {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        507
     }
 
     fn clear(&mut self) {

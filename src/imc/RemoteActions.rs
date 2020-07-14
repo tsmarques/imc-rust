@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 305;
-
 /// This message is used to send a periodic update of values for
 /// each remote action. If the action is not on the list the assumed
 /// value is 0.
@@ -20,7 +18,7 @@ pub struct RemoteActions {
 impl RemoteActions {
     pub fn new() -> RemoteActions {
         let mut msg = RemoteActions {
-            header: Header::new(c_msg_id),
+            header: Header::new(305),
 
             _actions: Default::default(),
         };
@@ -37,7 +35,7 @@ impl Message for RemoteActions {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        305
     }
 
     fn clear(&mut self) {

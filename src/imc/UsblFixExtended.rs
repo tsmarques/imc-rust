@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 900;
-
 /// This message contains the WGS-84 position of a target computed using
 /// USBL.
 pub struct UsblFixExtended {
@@ -35,7 +33,7 @@ pub struct UsblFixExtended {
 impl UsblFixExtended {
     pub fn new() -> UsblFixExtended {
         let mut msg = UsblFixExtended {
-            header: Header::new(c_msg_id),
+            header: Header::new(900),
 
             _target: Default::default(),
             _lat: Default::default(),
@@ -57,7 +55,7 @@ impl Message for UsblFixExtended {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        900
     }
 
     fn clear(&mut self) {

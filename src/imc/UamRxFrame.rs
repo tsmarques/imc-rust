@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 815;
-
 pub enum FlagsEnum {
     // Promiscuous
     URF_PROMISCUOUS = 0x01,
@@ -46,7 +44,7 @@ pub struct UamRxFrame {
 impl UamRxFrame {
     pub fn new() -> UamRxFrame {
         let mut msg = UamRxFrame {
-            header: Header::new(c_msg_id),
+            header: Header::new(815),
 
             _sys_src: Default::default(),
             _sys_dst: Default::default(),
@@ -66,7 +64,7 @@ impl Message for UamRxFrame {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        815
     }
 
     fn clear(&mut self) {

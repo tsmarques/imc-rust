@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 817;
-
 /// Acoustic range measurement.
 pub struct UamRxRange {
     /// IMC Header
@@ -24,7 +22,7 @@ pub struct UamRxRange {
 impl UamRxRange {
     pub fn new() -> UamRxRange {
         let mut msg = UamRxRange {
-            header: Header::new(c_msg_id),
+            header: Header::new(817),
 
             _seq: Default::default(),
             _sys: Default::default(),
@@ -43,7 +41,7 @@ impl Message for UamRxRange {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        817
     }
 
     fn clear(&mut self) {

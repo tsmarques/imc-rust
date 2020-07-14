@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 656;
-
 pub enum AttributetypeEnum {
     // Boolean Domain
     TYPE_BOOL = 1,
@@ -50,7 +48,7 @@ pub struct TrexAttribute {
 impl TrexAttribute {
     pub fn new() -> TrexAttribute {
         let mut msg = TrexAttribute {
-            header: Header::new(c_msg_id),
+            header: Header::new(656),
 
             _name: Default::default(),
             _attr_type: Default::default(),
@@ -70,7 +68,7 @@ impl Message for TrexAttribute {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        656
     }
 
     fn clear(&mut self) {

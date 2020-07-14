@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 469;
-
 /// Command used to indicate maneuver can be executed in the
 /// vehicle.
 pub struct RegisterManeuver {
@@ -19,7 +17,7 @@ pub struct RegisterManeuver {
 impl RegisterManeuver {
     pub fn new() -> RegisterManeuver {
         let mut msg = RegisterManeuver {
-            header: Header::new(c_msg_id),
+            header: Header::new(469),
 
             _mid: Default::default(),
         };
@@ -36,7 +34,7 @@ impl Message for RegisterManeuver {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        469
     }
 
     fn clear(&mut self) {

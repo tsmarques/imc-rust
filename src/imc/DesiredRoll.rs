@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::ControlCommand;
 
-const c_msg_id: u16 = 403;
-
 /// message-group: ControlCommand
 impl ControlCommand for DesiredRoll {}
 
@@ -24,7 +22,7 @@ pub struct DesiredRoll {
 impl DesiredRoll {
     pub fn new() -> DesiredRoll {
         let mut msg = DesiredRoll {
-            header: Header::new(c_msg_id),
+            header: Header::new(403),
 
             _value: Default::default(),
         };
@@ -41,7 +39,7 @@ impl Message for DesiredRoll {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        403
     }
 
     fn clear(&mut self) {

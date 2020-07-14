@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 102;
-
 pub enum ControlOperationEnum {
     // Request Start of Logging
     COP_REQUEST_START = 0,
@@ -55,7 +53,7 @@ pub struct LoggingControl {
 impl LoggingControl {
     pub fn new() -> LoggingControl {
         let mut msg = LoggingControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(102),
 
             _op: Default::default(),
             _name: Default::default(),
@@ -73,7 +71,7 @@ impl Message for LoggingControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        102
     }
 
     fn clear(&mut self) {

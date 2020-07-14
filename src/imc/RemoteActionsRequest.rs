@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 304;
-
 pub enum operationEnum {
     // Report
     OP_REPORT = 0,
@@ -42,7 +40,7 @@ pub struct RemoteActionsRequest {
 impl RemoteActionsRequest {
     pub fn new() -> RemoteActionsRequest {
         let mut msg = RemoteActionsRequest {
-            header: Header::new(c_msg_id),
+            header: Header::new(304),
 
             _op: Default::default(),
             _actions: Default::default(),
@@ -60,7 +58,7 @@ impl Message for RemoteActionsRequest {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        304
     }
 
     fn clear(&mut self) {

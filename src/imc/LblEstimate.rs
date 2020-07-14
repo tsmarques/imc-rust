@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::LblBeacon::LblBeacon;
 
-const c_msg_id: u16 = 360;
-
 /// LBL Beacon position estimate.
 pub struct LblEstimate {
     /// IMC Header
@@ -37,7 +35,7 @@ pub struct LblEstimate {
 impl LblEstimate {
     pub fn new() -> LblEstimate {
         let mut msg = LblEstimate {
-            header: Header::new(c_msg_id),
+            header: Header::new(360),
 
             _beacon: Default::default(),
             _x: Default::default(),
@@ -59,7 +57,7 @@ impl Message for LblEstimate {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        360
     }
 
     fn clear(&mut self) {

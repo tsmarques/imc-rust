@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 4;
-
 /// Request information about an entity identifier. The receiving
 /// system shall reply with an EntityInfo message with the details
 /// of that entity.
@@ -20,7 +18,7 @@ pub struct QueryEntityInfo {
 impl QueryEntityInfo {
     pub fn new() -> QueryEntityInfo {
         let mut msg = QueryEntityInfo {
-            header: Header::new(c_msg_id),
+            header: Header::new(4),
 
             _id: Default::default(),
         };
@@ -37,7 +35,7 @@ impl Message for QueryEntityInfo {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        4
     }
 
     fn clear(&mut self) {

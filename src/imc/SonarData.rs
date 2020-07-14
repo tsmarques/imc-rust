@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::BeamConfig::BeamConfig;
 
-const c_msg_id: u16 = 276;
-
 pub enum TypeEnum {
     // Sidescan
     ST_SIDESCAN = 0,
@@ -62,7 +60,7 @@ pub struct SonarData {
 impl SonarData {
     pub fn new() -> SonarData {
         let mut msg = SonarData {
-            header: Header::new(c_msg_id),
+            header: Header::new(276),
 
             _type: Default::default(),
             _frequency: Default::default(),
@@ -86,7 +84,7 @@ impl Message for SonarData {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        276
     }
 
     fn clear(&mut self) {

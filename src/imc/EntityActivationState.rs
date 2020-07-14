@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 14;
-
 pub enum StateEnum {
     // Entity is Inactive
     EAS_INACTIVE = 0,
@@ -55,7 +53,7 @@ pub struct EntityActivationState {
 impl EntityActivationState {
     pub fn new() -> EntityActivationState {
         let mut msg = EntityActivationState {
-            header: Header::new(c_msg_id),
+            header: Header::new(14),
 
             _state: Default::default(),
             _error: Default::default(),
@@ -73,7 +71,7 @@ impl Message for EntityActivationState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        14
     }
 
     fn clear(&mut self) {

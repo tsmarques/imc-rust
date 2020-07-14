@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 2001;
-
 /// Request the state of a given GPIO. The receiving entity shall reply
 /// with a GpioState message.
 pub struct GpioStateGet {
@@ -19,7 +17,7 @@ pub struct GpioStateGet {
 impl GpioStateGet {
     pub fn new() -> GpioStateGet {
         let mut msg = GpioStateGet {
-            header: Header::new(c_msg_id),
+            header: Header::new(2001),
 
             _name: Default::default(),
         };
@@ -36,7 +34,7 @@ impl Message for GpioStateGet {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        2001
     }
 
     fn clear(&mut self) {

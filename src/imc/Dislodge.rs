@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 483;
-
 pub enum DirectionEnum {
     // Let the vehicle decide
     DIR_AUTO = 0,
@@ -58,7 +56,7 @@ pub struct Dislodge {
 impl Dislodge {
     pub fn new() -> Dislodge {
         let mut msg = Dislodge {
-            header: Header::new(c_msg_id),
+            header: Header::new(483),
 
             _timeout: Default::default(),
             _rpm: Default::default(),
@@ -78,7 +76,7 @@ impl Message for Dislodge {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        483
     }
 
     fn clear(&mut self) {

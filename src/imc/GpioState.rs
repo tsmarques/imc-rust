@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 2000;
-
 /// Current state of a GPIO.
 pub struct GpioState {
     /// IMC Header
@@ -21,7 +19,7 @@ pub struct GpioState {
 impl GpioState {
     pub fn new() -> GpioState {
         let mut msg = GpioState {
-            header: Header::new(c_msg_id),
+            header: Header::new(2000),
 
             _name: Default::default(),
             _value: Default::default(),
@@ -39,7 +37,7 @@ impl Message for GpioState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        2000
     }
 
     fn clear(&mut self) {

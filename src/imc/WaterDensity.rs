@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 268;
-
 /// Water Density report.
 pub struct WaterDensity {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct WaterDensity {
 impl WaterDensity {
     pub fn new() -> WaterDensity {
         let mut msg = WaterDensity {
-            header: Header::new(c_msg_id),
+            header: Header::new(268),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for WaterDensity {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        268
     }
 
     fn clear(&mut self) {

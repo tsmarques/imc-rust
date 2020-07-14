@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 803;
-
 pub struct QueryEntityParameters {
     /// IMC Header
     pub header: Header,
@@ -20,7 +18,7 @@ pub struct QueryEntityParameters {
 impl QueryEntityParameters {
     pub fn new() -> QueryEntityParameters {
         let mut msg = QueryEntityParameters {
-            header: Header::new(c_msg_id),
+            header: Header::new(803),
 
             _name: Default::default(),
             _visibility: Default::default(),
@@ -39,7 +37,7 @@ impl Message for QueryEntityParameters {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        803
     }
 
     fn clear(&mut self) {

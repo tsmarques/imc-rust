@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 264;
-
 /// Report of external pressure.
 pub struct Pressure {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Pressure {
 impl Pressure {
     pub fn new() -> Pressure {
         let mut msg = Pressure {
-            header: Header::new(c_msg_id),
+            header: Header::new(264),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Pressure {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        264
     }
 
     fn clear(&mut self) {

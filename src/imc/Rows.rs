@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 456;
-
 pub enum FlagsEnum {
     // Square Curve
     FLG_SQUARE_CURVE = 0x0001,
@@ -86,7 +84,7 @@ pub struct Rows {
 impl Rows {
     pub fn new() -> Rows {
         let mut msg = Rows {
-            header: Header::new(c_msg_id),
+            header: Header::new(456),
 
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -118,7 +116,7 @@ impl Message for Rows {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        456
     }
 
     fn clear(&mut self) {

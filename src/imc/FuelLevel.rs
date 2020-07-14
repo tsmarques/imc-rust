@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 279;
-
 /// Report of fuel level.
 pub struct FuelLevel {
     /// IMC Header
@@ -26,7 +24,7 @@ pub struct FuelLevel {
 impl FuelLevel {
     pub fn new() -> FuelLevel {
         let mut msg = FuelLevel {
-            header: Header::new(c_msg_id),
+            header: Header::new(279),
 
             _value: Default::default(),
             _confidence: Default::default(),
@@ -45,7 +43,7 @@ impl Message for FuelLevel {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        279
     }
 
     fn clear(&mut self) {

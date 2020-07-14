@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 513;
-
 pub enum OperationEnum {
     // Request Start of Reports
     OP_REQUEST_START = 0,
@@ -80,7 +78,7 @@ pub struct ReportControl {
 impl ReportControl {
     pub fn new() -> ReportControl {
         let mut msg = ReportControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(513),
 
             _op: Default::default(),
             _comm_interface: Default::default(),
@@ -100,7 +98,7 @@ impl Message for ReportControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        513
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 355;
-
 /// Report of navigation data.
 /// This is constituted by data which is not
 /// part of the vehicle estimated state but
@@ -45,7 +43,7 @@ pub struct NavigationData {
 impl NavigationData {
     pub fn new() -> NavigationData {
         let mut msg = NavigationData {
-            header: Header::new(c_msg_id),
+            header: Header::new(355),
 
             _bias_psi: Default::default(),
             _bias_r: Default::default(),
@@ -70,7 +68,7 @@ impl Message for NavigationData {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        355
     }
 
     fn clear(&mut self) {

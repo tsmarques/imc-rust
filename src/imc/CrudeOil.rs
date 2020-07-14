@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 286;
-
 /// Crude oil measurement.
 pub struct CrudeOil {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct CrudeOil {
 impl CrudeOil {
     pub fn new() -> CrudeOil {
         let mut msg = CrudeOil {
-            header: Header::new(c_msg_id),
+            header: Header::new(286),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for CrudeOil {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        286
     }
 
     fn clear(&mut self) {

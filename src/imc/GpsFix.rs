@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 253;
-
 pub enum ValidityEnum {
     // Valid Date
     GFV_VALID_DATE = 0x0001,
@@ -126,7 +124,7 @@ pub struct GpsFix {
 impl GpsFix {
     pub fn new() -> GpsFix {
         let mut msg = GpsFix {
-            header: Header::new(c_msg_id),
+            header: Header::new(253),
 
             _validity: Default::default(),
             _type: Default::default(),
@@ -158,7 +156,7 @@ impl Message for GpsFix {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        253
     }
 
     fn clear(&mut self) {

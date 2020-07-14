@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 306;
-
 /// Event of a specific hardware button.
 pub struct ButtonEvent {
     /// IMC Header
@@ -21,7 +19,7 @@ pub struct ButtonEvent {
 impl ButtonEvent {
     pub fn new() -> ButtonEvent {
         let mut msg = ButtonEvent {
-            header: Header::new(c_msg_id),
+            header: Header::new(306),
 
             _button: Default::default(),
             _value: Default::default(),
@@ -39,7 +37,7 @@ impl Message for ButtonEvent {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        306
     }
 
     fn clear(&mut self) {

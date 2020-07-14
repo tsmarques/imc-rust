@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 814;
-
 pub enum FlagsEnum {
     // Acknowledgement
     UTF_ACK = 0x01,
@@ -51,7 +49,7 @@ pub struct UamTxFrame {
 impl UamTxFrame {
     pub fn new() -> UamTxFrame {
         let mut msg = UamTxFrame {
-            header: Header::new(c_msg_id),
+            header: Header::new(814),
 
             _seq: Default::default(),
             _sys_dst: Default::default(),
@@ -71,7 +69,7 @@ impl Message for UamTxFrame {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        814
     }
 
     fn clear(&mut self) {

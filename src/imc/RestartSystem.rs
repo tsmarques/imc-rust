@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 9;
-
 /// Request the destination system to restart itself.
 pub struct RestartSystem {
     /// IMC Header
@@ -15,7 +13,7 @@ pub struct RestartSystem {
 impl RestartSystem {
     pub fn new() -> RestartSystem {
         let mut msg = RestartSystem {
-            header: Header::new(c_msg_id),
+            header: Header::new(9),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -30,7 +28,7 @@ impl Message for RestartSystem {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        9
     }
 
     fn clear(&mut self) {

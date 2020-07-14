@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 502;
-
 pub enum CommandEnum {
     // Reset to defaults
     MES_RESET = 0,
@@ -46,7 +44,7 @@ pub struct MonitorEntityState {
 impl MonitorEntityState {
     pub fn new() -> MonitorEntityState {
         let mut msg = MonitorEntityState {
-            header: Header::new(c_msg_id),
+            header: Header::new(502),
 
             _command: Default::default(),
             _entities: Default::default(),
@@ -64,7 +62,7 @@ impl Message for MonitorEntityState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        502
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 901;
-
 /// Position and configuration of an Ultra-Short Base Line modem.
 pub struct UsblModem {
     /// IMC Header
@@ -31,7 +29,7 @@ pub struct UsblModem {
 impl UsblModem {
     pub fn new() -> UsblModem {
         let mut msg = UsblModem {
-            header: Header::new(c_msg_id),
+            header: Header::new(901),
 
             _name: Default::default(),
             _lat: Default::default(),
@@ -52,7 +50,7 @@ impl Message for UsblModem {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        901
     }
 
     fn clear(&mut self) {

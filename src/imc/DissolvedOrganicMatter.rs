@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 903;
-
 pub enum TypeofmeasurementEnum {
     // Colored
     DT_COLORED = 0,
@@ -37,7 +35,7 @@ pub struct DissolvedOrganicMatter {
 impl DissolvedOrganicMatter {
     pub fn new() -> DissolvedOrganicMatter {
         let mut msg = DissolvedOrganicMatter {
-            header: Header::new(c_msg_id),
+            header: Header::new(903),
 
             _value: Default::default(),
             _type: Default::default(),
@@ -55,7 +53,7 @@ impl Message for DissolvedOrganicMatter {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        903
     }
 
     fn clear(&mut self) {

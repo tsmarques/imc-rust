@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 159;
-
 pub enum StateEnum {
     // Accepted
     SMS_ACCEPTED = 0,
@@ -53,7 +51,7 @@ pub struct SmsState {
 impl SmsState {
     pub fn new() -> SmsState {
         let mut msg = SmsState {
-            header: Header::new(c_msg_id),
+            header: Header::new(159),
 
             _seq: Default::default(),
             _state: Default::default(),
@@ -72,7 +70,7 @@ impl Message for SmsState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        159
     }
 
     fn clear(&mut self) {

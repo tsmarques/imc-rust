@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 16;
-
 pub enum ActiononthevehicleoperationallimitsEnum {
     // Request
     OP_REQUEST = 0,
@@ -94,7 +92,7 @@ pub struct VehicleOperationalLimits {
 impl VehicleOperationalLimits {
     pub fn new() -> VehicleOperationalLimits {
         let mut msg = VehicleOperationalLimits {
-            header: Header::new(c_msg_id),
+            header: Header::new(16),
 
             _op: Default::default(),
             _speed_min: Default::default(),
@@ -128,7 +126,7 @@ impl Message for VehicleOperationalLimits {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        16
     }
 
     fn clear(&mut self) {

@@ -4,11 +4,9 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-use crate::imc::DeviceState::DeviceState;
-
 use crate::imc::BeamConfig::BeamConfig;
 
-const c_msg_id: u16 = 262;
+use crate::imc::DeviceState::DeviceState;
 
 pub enum ValidityEnum {
     // Invalid
@@ -47,7 +45,7 @@ pub struct Distance {
 impl Distance {
     pub fn new() -> Distance {
         let mut msg = Distance {
-            header: Header::new(c_msg_id),
+            header: Header::new(262),
 
             _validity: Default::default(),
             _location: Default::default(),
@@ -67,7 +65,7 @@ impl Message for Distance {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        262
     }
 
     fn clear(&mut self) {

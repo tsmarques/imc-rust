@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 499;
-
 pub enum DirectionEnum {
     // Clockwise First
     MD_CLOCKW_FIRST = 0,
@@ -72,7 +70,7 @@ pub struct Magnetometer {
 impl Magnetometer {
     pub fn new() -> Magnetometer {
         let mut msg = Magnetometer {
-            header: Header::new(c_msg_id),
+            header: Header::new(499),
 
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -99,7 +97,7 @@ impl Message for Magnetometer {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        499
     }
 
     fn clear(&mut self) {

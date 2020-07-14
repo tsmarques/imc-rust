@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 314;
-
 /// Control the brightness of an LED (Light-Emitting Diode). The
 /// recipient of this message shall set the intensity of the LED to
 /// the desired 'value' and reply with 'LedBrightness'.
@@ -23,7 +21,7 @@ pub struct SetLedBrightness {
 impl SetLedBrightness {
     pub fn new() -> SetLedBrightness {
         let mut msg = SetLedBrightness {
-            header: Header::new(c_msg_id),
+            header: Header::new(314),
 
             _name: Default::default(),
             _value: Default::default(),
@@ -41,7 +39,7 @@ impl Message for SetLedBrightness {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        314
     }
 
     fn clear(&mut self) {

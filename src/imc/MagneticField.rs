@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 258;
-
 /// Vector quantifying the direction and magnitude of the measured
 /// magnetic field that a device is exposed to.
 pub struct MagneticField {
@@ -28,7 +26,7 @@ pub struct MagneticField {
 impl MagneticField {
     pub fn new() -> MagneticField {
         let mut msg = MagneticField {
-            header: Header::new(c_msg_id),
+            header: Header::new(258),
 
             _time: Default::default(),
             _x: Default::default(),
@@ -48,7 +46,7 @@ impl Message for MagneticField {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        258
     }
 
     fn clear(&mut self) {

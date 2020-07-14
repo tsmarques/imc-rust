@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 413;
-
 pub enum OperationEnum {
     // Stop Braking
     OP_STOP = 0,
@@ -37,7 +35,7 @@ pub struct Brake {
 impl Brake {
     pub fn new() -> Brake {
         let mut msg = Brake {
-            header: Header::new(c_msg_id),
+            header: Header::new(413),
 
             _op: Default::default(),
         };
@@ -54,7 +52,7 @@ impl Message for Brake {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        413
     }
 
     fn clear(&mut self) {

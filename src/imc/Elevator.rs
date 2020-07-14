@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 462;
-
 pub enum FlagsEnum {
     // Start from current position
     FLG_CURR_POS = 0x01,
@@ -78,7 +76,7 @@ pub struct Elevator {
 impl Elevator {
     pub fn new() -> Elevator {
         let mut msg = Elevator {
-            header: Header::new(c_msg_id),
+            header: Header::new(462),
 
             _timeout: Default::default(),
             _flags: Default::default(),
@@ -106,7 +104,7 @@ impl Message for Elevator {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        462
     }
 
     fn clear(&mut self) {

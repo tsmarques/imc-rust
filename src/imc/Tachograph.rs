@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 905;
-
 /// This messages is used to record system activity parameters. These
 /// parameters are mainly used for used for maintenance purposes.
 pub struct Tachograph {
@@ -66,7 +64,7 @@ pub struct Tachograph {
 impl Tachograph {
     pub fn new() -> Tachograph {
         let mut msg = Tachograph {
-            header: Header::new(c_msg_id),
+            header: Header::new(905),
 
             _timestamp_last_service: Default::default(),
             _time_next_service: Default::default(),
@@ -98,7 +96,7 @@ impl Message for Tachograph {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        905
     }
 
     fn clear(&mut self) {

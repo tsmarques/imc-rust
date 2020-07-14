@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 1;
-
 pub enum StateEnum {
     // Bootstrapping
     ESTA_BOOT = 0,
@@ -63,7 +61,7 @@ pub struct EntityState {
 impl EntityState {
     pub fn new() -> EntityState {
         let mut msg = EntityState {
-            header: Header::new(c_msg_id),
+            header: Header::new(1),
 
             _state: Default::default(),
             _flags: Default::default(),
@@ -82,7 +80,7 @@ impl Message for EntityState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        1
     }
 
     fn clear(&mut self) {

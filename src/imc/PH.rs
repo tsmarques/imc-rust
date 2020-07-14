@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 298;
-
 /// Report of pH.
 pub struct PH {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct PH {
 impl PH {
     pub fn new() -> PH {
         let mut msg = PH {
-            header: Header::new(c_msg_id),
+            header: Header::new(298),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for PH {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        298
     }
 
     fn clear(&mut self) {

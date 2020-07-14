@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 816;
-
 pub enum ValueEnum {
     // Transmission Completed
     UTS_DONE = 0,
@@ -63,7 +61,7 @@ pub struct UamTxStatus {
 impl UamTxStatus {
     pub fn new() -> UamTxStatus {
         let mut msg = UamTxStatus {
-            header: Header::new(c_msg_id),
+            header: Header::new(816),
 
             _seq: Default::default(),
             _value: Default::default(),
@@ -82,7 +80,7 @@ impl Message for UamTxStatus {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        816
     }
 
     fn clear(&mut self) {

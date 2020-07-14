@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 606;
-
 pub enum EventTypeEnum {
     // Log Book Entry Added
     EVT_LOG_ENTRY = 1,
@@ -58,7 +56,7 @@ pub struct CcuEvent {
 impl CcuEvent {
     pub fn new() -> CcuEvent {
         let mut msg = CcuEvent {
-            header: Header::new(c_msg_id),
+            header: Header::new(606),
 
             _type: Default::default(),
             _id: Default::default(),
@@ -77,7 +75,7 @@ impl Message for CcuEvent {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        606
     }
 
     fn clear(&mut self) {

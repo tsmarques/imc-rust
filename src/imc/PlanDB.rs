@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 556;
-
 pub enum TypeEnum {
     // Request
     DBT_REQUEST = 0,
@@ -98,7 +96,7 @@ pub struct PlanDB {
 impl PlanDB {
     pub fn new() -> PlanDB {
         let mut msg = PlanDB {
-            header: Header::new(c_msg_id),
+            header: Header::new(556),
 
             _type: Default::default(),
             _op: Default::default(),
@@ -120,7 +118,7 @@ impl Message for PlanDB {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        556
     }
 
     fn clear(&mut self) {

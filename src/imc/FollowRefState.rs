@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::Reference::Reference;
 
-const c_msg_id: u16 = 480;
-
 pub enum StateEnum {
     // Waiting for first reference
     FR_WAIT = 1,
@@ -84,7 +82,7 @@ pub struct FollowRefState {
 impl FollowRefState {
     pub fn new() -> FollowRefState {
         let mut msg = FollowRefState {
-            header: Header::new(c_msg_id),
+            header: Header::new(480),
 
             _control_src: Default::default(),
             _control_ent: Default::default(),
@@ -105,7 +103,7 @@ impl Message for FollowRefState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        480
     }
 
     fn clear(&mut self) {

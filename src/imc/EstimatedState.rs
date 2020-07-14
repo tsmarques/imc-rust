@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 350;
-
 /// This message presents the estimated state of the vehicle.
 ///  
 /// EstimatedState is a complete description of the system
@@ -98,7 +96,7 @@ pub struct EstimatedState {
 impl EstimatedState {
     pub fn new() -> EstimatedState {
         let mut msg = EstimatedState {
-            header: Header::new(c_msg_id),
+            header: Header::new(350),
 
             _lat: Default::default(),
             _lon: Default::default(),
@@ -134,7 +132,7 @@ impl Message for EstimatedState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        350
     }
 
     fn clear(&mut self) {

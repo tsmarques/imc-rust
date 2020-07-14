@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::PlanDBInformation::PlanDBInformation;
 
-const c_msg_id: u16 = 557;
-
 /// Characterizes the state of the entire plan database.
 pub struct PlanDBState {
     /// IMC Header
@@ -41,7 +39,7 @@ pub struct PlanDBState {
 impl PlanDBState {
     pub fn new() -> PlanDBState {
         let mut msg = PlanDBState {
-            header: Header::new(c_msg_id),
+            header: Header::new(557),
 
             _plan_count: Default::default(),
             _plan_size: Default::default(),
@@ -64,7 +62,7 @@ impl Message for PlanDBState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        557
     }
 
     fn clear(&mut self) {

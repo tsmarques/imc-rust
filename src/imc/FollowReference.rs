@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 478;
-
 /// message-group: Maneuver
 impl Maneuver for FollowReference {}
 
@@ -43,7 +41,7 @@ pub struct FollowReference {
 impl FollowReference {
     pub fn new() -> FollowReference {
         let mut msg = FollowReference {
-            header: Header::new(c_msg_id),
+            header: Header::new(478),
 
             _control_src: Default::default(),
             _control_ent: Default::default(),
@@ -64,7 +62,7 @@ impl Message for FollowReference {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        478
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 101;
-
 pub enum ControlOperationEnum {
     // Store
     COP_STORE = 0,
@@ -49,7 +47,7 @@ pub struct CacheControl {
 impl CacheControl {
     pub fn new() -> CacheControl {
         let mut msg = CacheControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(101),
 
             _op: Default::default(),
             _snapshot: Default::default(),
@@ -68,7 +66,7 @@ impl Message for CacheControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        101
     }
 
     fn clear(&mut self) {

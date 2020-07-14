@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::LogBookEntry::LogBookEntry;
 
-const c_msg_id: u16 = 104;
-
 pub enum CommandEnum {
     // Get
     LBC_GET = 0,
@@ -49,7 +47,7 @@ pub struct LogBookControl {
 impl LogBookControl {
     pub fn new() -> LogBookControl {
         let mut msg = LogBookControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(104),
 
             _command: Default::default(),
             _htime: Default::default(),
@@ -68,7 +66,7 @@ impl Message for LogBookControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        104
     }
 
     fn clear(&mut self) {

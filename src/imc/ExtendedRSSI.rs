@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 183;
-
 /// Measure of the RSSI by a networking device.
 /// Indicates the gain or loss in the signal strenght due to the transmission
 /// and reception equipment and the transmission medium and distance.
@@ -23,7 +21,7 @@ pub struct ExtendedRSSI {
 impl ExtendedRSSI {
     pub fn new() -> ExtendedRSSI {
         let mut msg = ExtendedRSSI {
-            header: Header::new(c_msg_id),
+            header: Header::new(183),
 
             _value: Default::default(),
             _units: Default::default(),
@@ -41,7 +39,7 @@ impl Message for ExtendedRSSI {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        183
     }
 
     fn clear(&mut self) {

@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 459;
-
 /// message-group: Maneuver
 impl Maneuver for YoYo {}
 
@@ -54,7 +52,7 @@ pub struct YoYo {
 impl YoYo {
     pub fn new() -> YoYo {
         let mut msg = YoYo {
-            header: Header::new(c_msg_id),
+            header: Header::new(459),
 
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -80,7 +78,7 @@ impl Message for YoYo {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        459
     }
 
     fn clear(&mut self) {

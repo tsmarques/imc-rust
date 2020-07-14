@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 251;
-
 /// Report of electrical voltage.
 pub struct Voltage {
     /// IMC Header
@@ -19,7 +17,7 @@ pub struct Voltage {
 impl Voltage {
     pub fn new() -> Voltage {
         let mut msg = Voltage {
-            header: Header::new(c_msg_id),
+            header: Header::new(251),
 
             _value: Default::default(),
         };
@@ -36,7 +34,7 @@ impl Message for Voltage {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        251
     }
 
     fn clear(&mut self) {

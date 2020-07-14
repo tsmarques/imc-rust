@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 452;
-
 /// message-group: Maneuver
 impl Maneuver for Teleoperation {}
 
@@ -25,7 +23,7 @@ pub struct Teleoperation {
 impl Teleoperation {
     pub fn new() -> Teleoperation {
         let mut msg = Teleoperation {
-            header: Header::new(c_msg_id),
+            header: Header::new(452),
 
             _custom: Default::default(),
         };
@@ -42,7 +40,7 @@ impl Message for Teleoperation {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        452
     }
 
     fn clear(&mut self) {

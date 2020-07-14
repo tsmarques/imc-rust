@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 278;
-
 pub enum OperationEnum {
     // Pulse Detection OFF
     POP_OFF = 0,
@@ -34,7 +32,7 @@ pub struct PulseDetectionControl {
 impl PulseDetectionControl {
     pub fn new() -> PulseDetectionControl {
         let mut msg = PulseDetectionControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(278),
 
             _op: Default::default(),
         };
@@ -51,7 +49,7 @@ impl Message for PulseDetectionControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        278
     }
 
     fn clear(&mut self) {

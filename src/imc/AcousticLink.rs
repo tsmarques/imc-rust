@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 214;
-
 /// This message is used to report the perceived link quality to other
 /// acoustic peers.
 pub struct AcousticLink {
@@ -33,7 +31,7 @@ pub struct AcousticLink {
 impl AcousticLink {
     pub fn new() -> AcousticLink {
         let mut msg = AcousticLink {
-            header: Header::new(c_msg_id),
+            header: Header::new(214),
 
             _peer: Default::default(),
             _rssi: Default::default(),
@@ -52,7 +50,7 @@ impl Message for AcousticLink {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        214
     }
 
     fn clear(&mut self) {

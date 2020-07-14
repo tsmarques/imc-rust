@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 156;
-
 /// Send a SMS message.
 pub struct Sms {
     /// IMC Header
@@ -24,7 +22,7 @@ pub struct Sms {
 impl Sms {
     pub fn new() -> Sms {
         let mut msg = Sms {
-            header: Header::new(c_msg_id),
+            header: Header::new(156),
 
             _number: Default::default(),
             _timeout: Default::default(),
@@ -43,7 +41,7 @@ impl Message for Sms {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        156
     }
 
     fn clear(&mut self) {

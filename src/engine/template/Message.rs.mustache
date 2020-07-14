@@ -7,8 +7,6 @@ use crate::imc::Header::Header;
 use crate::imc::{{imc-import-module}}::{{imc-import-abbrev}};
 {{/imc-has-message-imports}}
 
-const c_msg_id :u16 = {{imc_message_id}};
-
 {{#imc_message_enums}}
 pub enum {{enum-abbrev}}Enum { {{#enum-values}}
     {{enum-desc}}
@@ -44,7 +42,7 @@ pub struct {{imc_message_abbrev}} {
 impl {{imc_message_abbrev}} {
     pub fn new() -> {{imc_message_abbrev}} {
         let mut msg = {{imc_message_abbrev}} {
-            header : Header::new(c_msg_id),
+            header : Header::new({{imc_message_id}}),
 {{#imc-message-fields-init}}
            {{imc-message-field-abbrev}}: {{imc-message-field-init}},{{/imc-message-fields-init}}
         };
@@ -61,7 +59,7 @@ impl Message for {{imc_message_abbrev}} {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+       {{imc_message_id}}
     }
 
     fn clear(&mut self) {

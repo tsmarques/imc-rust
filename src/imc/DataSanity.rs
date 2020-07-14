@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 284;
-
 pub enum SanityEnum {
     // Sane
     DS_SANE = 0,
@@ -34,7 +32,7 @@ pub struct DataSanity {
 impl DataSanity {
     pub fn new() -> DataSanity {
         let mut msg = DataSanity {
-            header: Header::new(c_msg_id),
+            header: Header::new(284),
 
             _sane: Default::default(),
         };
@@ -51,7 +49,7 @@ impl Message for DataSanity {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        284
     }
 
     fn clear(&mut self) {

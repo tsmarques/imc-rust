@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 261;
-
 /// Component of incremetal velocity vector.
 pub struct VelocityDelta {
     /// IMC Header
@@ -27,7 +25,7 @@ pub struct VelocityDelta {
 impl VelocityDelta {
     pub fn new() -> VelocityDelta {
         let mut msg = VelocityDelta {
-            header: Header::new(c_msg_id),
+            header: Header::new(261),
 
             _time: Default::default(),
             _x: Default::default(),
@@ -47,7 +45,7 @@ impl Message for VelocityDelta {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        261
     }
 
     fn clear(&mut self) {

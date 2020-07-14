@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 468;
-
 /// Command used to stop currently executing maneuver.
 pub struct StopManeuver {
     /// IMC Header
@@ -15,7 +13,7 @@ pub struct StopManeuver {
 impl StopManeuver {
     pub fn new() -> StopManeuver {
         let mut msg = StopManeuver {
-            header: Header::new(c_msg_id),
+            header: Header::new(468),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -30,7 +28,7 @@ impl Message for StopManeuver {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        468
     }
 
     fn clear(&mut self) {

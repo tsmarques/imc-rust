@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 250;
-
 /// Number of revolutions per minute.
 pub struct Rpm {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Rpm {
 impl Rpm {
     pub fn new() -> Rpm {
         let mut msg = Rpm {
-            header: Header::new(c_msg_id),
+            header: Header::new(250),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Rpm {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        250
     }
 
     fn clear(&mut self) {

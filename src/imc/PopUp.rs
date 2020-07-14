@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 451;
-
 pub enum FlagsEnum {
     // Start from current position
     FLG_CURR_POS = 0x01,
@@ -81,7 +79,7 @@ pub struct PopUp {
 impl PopUp {
     pub fn new() -> PopUp {
         let mut msg = PopUp {
-            header: Header::new(c_msg_id),
+            header: Header::new(451),
 
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -108,7 +106,7 @@ impl Message for PopUp {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        451
     }
 
     fn clear(&mut self) {

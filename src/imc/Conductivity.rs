@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 269;
-
 /// Report of conductivity.
 pub struct Conductivity {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Conductivity {
 impl Conductivity {
     pub fn new() -> Conductivity {
         let mut msg = Conductivity {
-            header: Header::new(c_msg_id),
+            header: Header::new(269),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Conductivity {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        269
     }
 
     fn clear(&mut self) {

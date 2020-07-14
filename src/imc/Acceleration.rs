@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 257;
-
 /// Vector quantifying the direction and magnitude of the measured
 /// acceleration that a device is exposed to.
 pub struct Acceleration {
@@ -28,7 +26,7 @@ pub struct Acceleration {
 impl Acceleration {
     pub fn new() -> Acceleration {
         let mut msg = Acceleration {
-            header: Header::new(c_msg_id),
+            header: Header::new(257),
 
             _time: Default::default(),
             _x: Default::default(),
@@ -48,7 +46,7 @@ impl Message for Acceleration {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        257
     }
 
     fn clear(&mut self) {

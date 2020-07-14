@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 273;
-
 /// Verbatim representation of device data in plain text format.
 pub struct DevDataText {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct DevDataText {
 impl DevDataText {
     pub fn new() -> DevDataText {
         let mut msg = DevDataText {
-            header: Header::new(c_msg_id),
+            header: Header::new(273),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for DevDataText {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        273
     }
 
     fn clear(&mut self) {

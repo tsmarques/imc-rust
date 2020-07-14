@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 283;
-
 /// Beam configuration of the device.
 pub struct BeamConfig {
     /// IMC Header
@@ -23,7 +21,7 @@ pub struct BeamConfig {
 impl BeamConfig {
     pub fn new() -> BeamConfig {
         let mut msg = BeamConfig {
-            header: Header::new(c_msg_id),
+            header: Header::new(283),
 
             _beam_width: Default::default(),
             _beam_height: Default::default(),
@@ -41,7 +39,7 @@ impl Message for BeamConfig {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        283
     }
 
     fn clear(&mut self) {

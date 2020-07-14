@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 356;
-
 pub enum ReasonEnum {
     // Above Threshold
     RR_ABOVE_THRESHOLD = 0,
@@ -47,7 +45,7 @@ pub struct GpsFixRejection {
 impl GpsFixRejection {
     pub fn new() -> GpsFixRejection {
         let mut msg = GpsFixRejection {
-            header: Header::new(c_msg_id),
+            header: Header::new(356),
 
             _utc_time: Default::default(),
             _reason: Default::default(),
@@ -65,7 +63,7 @@ impl Message for GpsFixRejection {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        356
     }
 
     fn clear(&mut self) {

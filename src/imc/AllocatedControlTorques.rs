@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 411;
-
 /// Control torques allocated to the actuators.
 pub struct AllocatedControlTorques {
     /// IMC Header
@@ -24,7 +22,7 @@ pub struct AllocatedControlTorques {
 impl AllocatedControlTorques {
     pub fn new() -> AllocatedControlTorques {
         let mut msg = AllocatedControlTorques {
-            header: Header::new(c_msg_id),
+            header: Header::new(411),
 
             _k: Default::default(),
             _m: Default::default(),
@@ -43,7 +41,7 @@ impl Message for AllocatedControlTorques {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        411
     }
 
     fn clear(&mut self) {

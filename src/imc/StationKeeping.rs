@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 461;
-
 /// message-group: Maneuver
 impl Maneuver for StationKeeping {}
 
@@ -52,7 +50,7 @@ pub struct StationKeeping {
 impl StationKeeping {
     pub fn new() -> StationKeeping {
         let mut msg = StationKeeping {
-            header: Header::new(c_msg_id),
+            header: Header::new(461),
 
             _lat: Default::default(),
             _lon: Default::default(),
@@ -77,7 +75,7 @@ impl Message for StationKeeping {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        461
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 5;
-
 pub enum operationEnum {
     // Report
     OP_REPORT = 0,
@@ -38,7 +36,7 @@ pub struct EntityList {
 impl EntityList {
     pub fn new() -> EntityList {
         let mut msg = EntityList {
-            header: Header::new(c_msg_id),
+            header: Header::new(5),
 
             _op: Default::default(),
             _list: Default::default(),
@@ -56,7 +54,7 @@ impl Message for EntityList {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        5
     }
 
     fn clear(&mut self) {

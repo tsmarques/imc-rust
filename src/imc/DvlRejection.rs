@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 358;
-
 pub enum TypeofvelocityEnum {
     // Ground velocity
     TYPE_GV = 0x01,
@@ -79,7 +77,7 @@ pub struct DvlRejection {
 impl DvlRejection {
     pub fn new() -> DvlRejection {
         let mut msg = DvlRejection {
-            header: Header::new(c_msg_id),
+            header: Header::new(358),
 
             _type: Default::default(),
             _reason: Default::default(),
@@ -99,7 +97,7 @@ impl Message for DvlRejection {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        358
     }
 
     fn clear(&mut self) {

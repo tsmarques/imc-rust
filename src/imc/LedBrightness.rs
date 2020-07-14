@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 312;
-
 /// Brightness value of an LED (Light-Emitting Diode).
 pub struct LedBrightness {
     /// IMC Header
@@ -21,7 +19,7 @@ pub struct LedBrightness {
 impl LedBrightness {
     pub fn new() -> LedBrightness {
         let mut msg = LedBrightness {
-            header: Header::new(c_msg_id),
+            header: Header::new(312),
 
             _name: Default::default(),
             _value: Default::default(),
@@ -39,7 +37,7 @@ impl Message for LedBrightness {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        312
     }
 
     fn clear(&mut self) {

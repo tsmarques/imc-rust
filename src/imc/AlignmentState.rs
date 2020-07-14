@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 361;
-
 pub enum StateEnum {
     // Not Aligned
     AS_NOT_ALIGNED = 0,
@@ -52,7 +50,7 @@ pub struct AlignmentState {
 impl AlignmentState {
     pub fn new() -> AlignmentState {
         let mut msg = AlignmentState {
-            header: Header::new(c_msg_id),
+            header: Header::new(361),
 
             _state: Default::default(),
         };
@@ -69,7 +67,7 @@ impl Message for AlignmentState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        361
     }
 
     fn clear(&mut self) {

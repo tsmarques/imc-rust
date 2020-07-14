@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 213;
-
 /// This message is sent in reply to an AcousticSystemsQuery message
 /// and lists all known underwater acoustic systems (modems, narrow
 /// band transponders, etc).
@@ -20,7 +18,7 @@ pub struct AcousticSystems {
 impl AcousticSystems {
     pub fn new() -> AcousticSystems {
         let mut msg = AcousticSystems {
-            header: Header::new(c_msg_id),
+            header: Header::new(213),
 
             _list: Default::default(),
         };
@@ -37,7 +35,7 @@ impl Message for AcousticSystems {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        213
     }
 
     fn clear(&mut self) {

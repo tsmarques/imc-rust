@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 160;
-
 /// A text message has been received.
 pub struct TextMessage {
     /// IMC Header
@@ -21,7 +19,7 @@ pub struct TextMessage {
 impl TextMessage {
     pub fn new() -> TextMessage {
         let mut msg = TextMessage {
-            header: Header::new(c_msg_id),
+            header: Header::new(160),
 
             _origin: Default::default(),
             _text: Default::default(),
@@ -39,7 +37,7 @@ impl Message for TextMessage {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        160
     }
 
     fn clear(&mut self) {

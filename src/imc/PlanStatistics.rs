@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 564;
-
 pub enum TypeEnum {
     // Before Plan
     TP_PREPLAN = 0,
@@ -80,7 +78,7 @@ pub struct PlanStatistics {
 impl PlanStatistics {
     pub fn new() -> PlanStatistics {
         let mut msg = PlanStatistics {
-            header: Header::new(c_msg_id),
+            header: Header::new(564),
 
             _plan_id: Default::default(),
             _type: Default::default(),
@@ -103,7 +101,7 @@ impl Message for PlanStatistics {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        564
     }
 
     fn clear(&mut self) {

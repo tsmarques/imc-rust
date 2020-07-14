@@ -8,8 +8,6 @@ use crate::imc::PathPoint::PathPoint;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 457;
-
 /// message-group: Maneuver
 impl Maneuver for FollowPath {}
 
@@ -51,7 +49,7 @@ pub struct FollowPath {
 impl FollowPath {
     pub fn new() -> FollowPath {
         let mut msg = FollowPath {
-            header: Header::new(c_msg_id),
+            header: Header::new(457),
 
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -76,7 +74,7 @@ impl Message for FollowPath {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        457
     }
 
     fn clear(&mut self) {

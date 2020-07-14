@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 281;
-
 /// Actual position of a servo.
 pub struct ServoPosition {
     /// IMC Header
@@ -21,7 +19,7 @@ pub struct ServoPosition {
 impl ServoPosition {
     pub fn new() -> ServoPosition {
         let mut msg = ServoPosition {
-            header: Header::new(c_msg_id),
+            header: Header::new(281),
 
             _id: Default::default(),
             _value: Default::default(),
@@ -39,7 +37,7 @@ impl Message for ServoPosition {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        281
     }
 
     fn clear(&mut self) {

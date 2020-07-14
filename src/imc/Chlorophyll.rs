@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 289;
-
 /// Chlorophyll measurement.
 pub struct Chlorophyll {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Chlorophyll {
 impl Chlorophyll {
     pub fn new() -> Chlorophyll {
         let mut msg = Chlorophyll {
-            header: Header::new(c_msg_id),
+            header: Header::new(289),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Chlorophyll {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        289
     }
 
     fn clear(&mut self) {

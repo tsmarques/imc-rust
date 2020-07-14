@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 509;
-
 pub enum TypeEnum {
     // X-axis
     CD_X = 0x01,
@@ -43,7 +41,7 @@ pub struct Collision {
 impl Collision {
     pub fn new() -> Collision {
         let mut msg = Collision {
-            header: Header::new(c_msg_id),
+            header: Header::new(509),
 
             _value: Default::default(),
             _type: Default::default(),
@@ -61,7 +59,7 @@ impl Message for Collision {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        509
     }
 
     fn clear(&mut self) {

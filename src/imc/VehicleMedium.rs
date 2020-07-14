@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 508;
-
 pub enum MediumEnum {
     // Ground
     VM_GROUND = 0,
@@ -43,7 +41,7 @@ pub struct VehicleMedium {
 impl VehicleMedium {
     pub fn new() -> VehicleMedium {
         let mut msg = VehicleMedium {
-            header: Header::new(c_msg_id),
+            header: Header::new(508),
 
             _medium: Default::default(),
         };
@@ -60,7 +58,7 @@ impl Message for VehicleMedium {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        508
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 151;
-
 /// A system description that is to be broadcasted to other systems.
 pub struct Announce {
     /// IMC Header
@@ -40,7 +38,7 @@ pub struct Announce {
 impl Announce {
     pub fn new() -> Announce {
         let mut msg = Announce {
-            header: Header::new(c_msg_id),
+            header: Header::new(151),
 
             _sys_name: Default::default(),
             _sys_type: Default::default(),
@@ -63,7 +61,7 @@ impl Message for Announce {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        151
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 267;
-
 /// Sound Speed report.
 pub struct SoundSpeed {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct SoundSpeed {
 impl SoundSpeed {
     pub fn new() -> SoundSpeed {
         let mut msg = SoundSpeed {
-            header: Header::new(c_msg_id),
+            header: Header::new(267),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for SoundSpeed {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        267
     }
 
     fn clear(&mut self) {

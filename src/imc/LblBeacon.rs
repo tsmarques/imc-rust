@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 202;
-
 /// Position and configuration of an LBL transponder (beacon).
 pub struct LblBeacon {
     /// IMC Header
@@ -36,7 +34,7 @@ pub struct LblBeacon {
 impl LblBeacon {
     pub fn new() -> LblBeacon {
         let mut msg = LblBeacon {
-            header: Header::new(c_msg_id),
+            header: Header::new(202),
 
             _beacon: Default::default(),
             _lat: Default::default(),
@@ -59,7 +57,7 @@ impl Message for LblBeacon {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        202
     }
 
     fn clear(&mut self) {

@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 454;
-
 /// message-group: Maneuver
 impl Maneuver for IdleManeuver {}
 
@@ -28,7 +26,7 @@ pub struct IdleManeuver {
 impl IdleManeuver {
     pub fn new() -> IdleManeuver {
         let mut msg = IdleManeuver {
-            header: Header::new(c_msg_id),
+            header: Header::new(454),
 
             _duration: Default::default(),
             _custom: Default::default(),
@@ -46,7 +44,7 @@ impl Message for IdleManeuver {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        454
     }
 
     fn clear(&mut self) {

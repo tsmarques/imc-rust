@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::ControlCommand;
 
-const c_msg_id: u16 = 402;
-
 /// message-group: ControlCommand
 impl ControlCommand for DesiredSpeed {}
 
@@ -28,7 +26,7 @@ pub struct DesiredSpeed {
 impl DesiredSpeed {
     pub fn new() -> DesiredSpeed {
         let mut msg = DesiredSpeed {
-            header: Header::new(c_msg_id),
+            header: Header::new(402),
 
             _value: Default::default(),
             _speed_units: Default::default(),
@@ -46,7 +44,7 @@ impl Message for DesiredSpeed {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        402
     }
 
     fn clear(&mut self) {

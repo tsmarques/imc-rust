@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 263;
-
 /// Report of temperature.
 pub struct Temperature {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Temperature {
 impl Temperature {
     pub fn new() -> Temperature {
         let mut msg = Temperature {
-            header: Header::new(c_msg_id),
+            header: Header::new(263),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Temperature {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        263
     }
 
     fn clear(&mut self) {

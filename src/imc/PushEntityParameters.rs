@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 811;
-
 pub struct PushEntityParameters {
     /// IMC Header
     pub header: Header,
@@ -16,7 +14,7 @@ pub struct PushEntityParameters {
 impl PushEntityParameters {
     pub fn new() -> PushEntityParameters {
         let mut msg = PushEntityParameters {
-            header: Header::new(c_msg_id),
+            header: Header::new(811),
 
             _name: Default::default(),
         };
@@ -33,7 +31,7 @@ impl Message for PushEntityParameters {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        811
     }
 
     fn clear(&mut self) {

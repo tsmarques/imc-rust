@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 307;
-
 pub enum OperationEnum {
     // Turn off display
     OP_TURN_OFF = 0,
@@ -46,7 +44,7 @@ pub struct LcdControl {
 impl LcdControl {
     pub fn new() -> LcdControl {
         let mut msg = LcdControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(307),
 
             _op: Default::default(),
             _text: Default::default(),
@@ -64,7 +62,7 @@ impl Message for LcdControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        307
     }
 
     fn clear(&mut self) {

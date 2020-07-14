@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 497;
-
 pub enum FlagsEnum {
     // Use Speed Reference in meters per second
     FLAG_SPEED_METERS_PS = 0x01,
@@ -60,7 +58,7 @@ pub struct Command {
 impl Command {
     pub fn new() -> Command {
         let mut msg = Command {
-            header: Header::new(c_msg_id),
+            header: Header::new(497),
 
             _flags: Default::default(),
             _speed: Default::default(),
@@ -80,7 +78,7 @@ impl Message for Command {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        497
     }
 
     fn clear(&mut self) {

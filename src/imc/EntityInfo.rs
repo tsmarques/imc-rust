@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 3;
-
 /// This message describes an entity.
 pub struct EntityInfo {
     /// IMC Header
@@ -31,7 +29,7 @@ pub struct EntityInfo {
 impl EntityInfo {
     pub fn new() -> EntityInfo {
         let mut msg = EntityInfo {
-            header: Header::new(c_msg_id),
+            header: Header::new(3),
 
             _id: Default::default(),
             _label: Default::default(),
@@ -52,7 +50,7 @@ impl Message for EntityInfo {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        3
     }
 
     fn clear(&mut self) {

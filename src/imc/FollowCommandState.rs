@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::Command::Command;
 
-const c_msg_id: u16 = 498;
-
 pub enum StateEnum {
     // Waiting for first command
     FC_WAIT = 1,
@@ -56,7 +54,7 @@ pub struct FollowCommandState {
 impl FollowCommandState {
     pub fn new() -> FollowCommandState {
         let mut msg = FollowCommandState {
-            header: Header::new(c_msg_id),
+            header: Header::new(498),
 
             _control_src: Default::default(),
             _control_ent: Default::default(),
@@ -76,7 +74,7 @@ impl Message for FollowCommandState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        498
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 274;
-
 /// Verbatim representation of device data in binary format.
 pub struct DevDataBinary {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct DevDataBinary {
 impl DevDataBinary {
     pub fn new() -> DevDataBinary {
         let mut msg = DevDataBinary {
-            header: Header::new(c_msg_id),
+            header: Header::new(274),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for DevDataBinary {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        274
     }
 
     fn clear(&mut self) {

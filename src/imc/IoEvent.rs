@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 813;
-
 pub enum TypeEnum {
     // Input Available
     IOV_TYPE_INPUT = 1,
@@ -37,7 +35,7 @@ pub struct IoEvent {
 impl IoEvent {
     pub fn new() -> IoEvent {
         let mut msg = IoEvent {
-            header: Header::new(c_msg_id),
+            header: Header::new(813),
 
             _type: Default::default(),
             _error: Default::default(),
@@ -55,7 +53,7 @@ impl Message for IoEvent {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        813
     }
 
     fn clear(&mut self) {

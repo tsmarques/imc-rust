@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 295;
-
 /// Dissolved Oxygen measurement.
 pub struct DissolvedOxygen {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct DissolvedOxygen {
 impl DissolvedOxygen {
     pub fn new() -> DissolvedOxygen {
         let mut msg = DissolvedOxygen {
-            header: Header::new(c_msg_id),
+            header: Header::new(295),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for DissolvedOxygen {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        295
     }
 
     fn clear(&mut self) {

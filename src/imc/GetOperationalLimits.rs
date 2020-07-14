@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 505;
-
 /// Command to obtain the operational limits in use by the vehicle.
 pub struct GetOperationalLimits {
     /// IMC Header
@@ -15,7 +13,7 @@ pub struct GetOperationalLimits {
 impl GetOperationalLimits {
     pub fn new() -> GetOperationalLimits {
         let mut msg = GetOperationalLimits {
-            header: Header::new(c_msg_id),
+            header: Header::new(505),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -30,7 +28,7 @@ impl Message for GetOperationalLimits {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        505
     }
 
     fn clear(&mut self) {

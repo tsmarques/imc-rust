@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::ControlCommand;
 
-const c_msg_id: u16 = 401;
-
 /// message-group: ControlCommand
 impl ControlCommand for DesiredZ {}
 
@@ -27,7 +25,7 @@ pub struct DesiredZ {
 impl DesiredZ {
     pub fn new() -> DesiredZ {
         let mut msg = DesiredZ {
-            header: Header::new(c_msg_id),
+            header: Header::new(401),
 
             _value: Default::default(),
             _z_units: 0 as u8,
@@ -45,7 +43,7 @@ impl Message for DesiredZ {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        401
     }
 
     fn clear(&mut self) {

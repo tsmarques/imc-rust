@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::LblBeacon::LblBeacon;
 
-const c_msg_id: u16 = 203;
-
 pub enum OperationEnum {
     // Set LBL Configuration
     OP_SET_CFG = 0,
@@ -42,7 +40,7 @@ pub struct LblConfig {
 impl LblConfig {
     pub fn new() -> LblConfig {
         let mut msg = LblConfig {
-            header: Header::new(c_msg_id),
+            header: Header::new(203),
 
             _op: Default::default(),
             _beacons: Default::default(),
@@ -60,7 +58,7 @@ impl Message for LblConfig {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        203
     }
 
     fn clear(&mut self) {

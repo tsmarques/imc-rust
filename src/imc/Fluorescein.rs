@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 290;
-
 /// Fluorescein measurement.
 pub struct Fluorescein {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Fluorescein {
 impl Fluorescein {
     pub fn new() -> Fluorescein {
         let mut msg = Fluorescein {
-            header: Header::new(c_msg_id),
+            header: Header::new(290),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Fluorescein {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        290
     }
 
     fn clear(&mut self) {

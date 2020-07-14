@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 105;
-
 pub enum OperationEnum {
     // Start
     ROP_START = 0,
@@ -43,7 +41,7 @@ pub struct ReplayControl {
 impl ReplayControl {
     pub fn new() -> ReplayControl {
         let mut msg = ReplayControl {
-            header: Header::new(c_msg_id),
+            header: Header::new(105),
 
             _op: Default::default(),
             _file: Default::default(),
@@ -61,7 +59,7 @@ impl Message for ReplayControl {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        105
     }
 
     fn clear(&mut self) {

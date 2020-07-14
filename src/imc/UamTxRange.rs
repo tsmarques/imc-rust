@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 818;
-
 /// Request an acoustic modem driver to measure the distance to another system.
 pub struct UamTxRange {
     /// IMC Header
@@ -26,7 +24,7 @@ pub struct UamTxRange {
 impl UamTxRange {
     pub fn new() -> UamTxRange {
         let mut msg = UamTxRange {
-            header: Header::new(c_msg_id),
+            header: Header::new(818),
 
             _seq: Default::default(),
             _sys_dst: Default::default(),
@@ -45,7 +43,7 @@ impl Message for UamTxRange {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        818
     }
 
     fn clear(&mut self) {

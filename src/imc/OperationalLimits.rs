@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 504;
-
 /// Definition of operational limits.
 pub struct OperationalLimits {
     /// IMC Header
@@ -39,7 +37,7 @@ pub struct OperationalLimits {
 impl OperationalLimits {
     pub fn new() -> OperationalLimits {
         let mut msg = OperationalLimits {
-            header: Header::new(c_msg_id),
+            header: Header::new(504),
 
             _mask: Default::default(),
             _max_depth: Default::default(),
@@ -67,7 +65,7 @@ impl Message for OperationalLimits {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        504
     }
 
     fn clear(&mut self) {

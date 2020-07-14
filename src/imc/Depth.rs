@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 265;
-
 /// Depth report.
 pub struct Depth {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct Depth {
 impl Depth {
     pub fn new() -> Depth {
         let mut msg = Depth {
-            header: Header::new(c_msg_id),
+            header: Header::new(265),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for Depth {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        265
     }
 
     fn clear(&mut self) {

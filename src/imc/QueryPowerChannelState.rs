@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 310;
-
 /// Request the state of power channels.
 pub struct QueryPowerChannelState {
     /// IMC Header
@@ -15,7 +13,7 @@ pub struct QueryPowerChannelState {
 impl QueryPowerChannelState {
     pub fn new() -> QueryPowerChannelState {
         let mut msg = QueryPowerChannelState {
-            header: Header::new(c_msg_id),
+            header: Header::new(310),
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -30,7 +28,7 @@ impl Message for QueryPowerChannelState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        310
     }
 
     fn clear(&mut self) {

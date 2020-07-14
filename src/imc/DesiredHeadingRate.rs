@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 408;
-
 /// Desired Heading Rate speed reference value for the control layer.
 pub struct DesiredHeadingRate {
     /// IMC Header
@@ -19,7 +17,7 @@ pub struct DesiredHeadingRate {
 impl DesiredHeadingRate {
     pub fn new() -> DesiredHeadingRate {
         let mut msg = DesiredHeadingRate {
-            header: Header::new(c_msg_id),
+            header: Header::new(408),
 
             _value: Default::default(),
         };
@@ -36,7 +34,7 @@ impl Message for DesiredHeadingRate {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        408
     }
 
     fn clear(&mut self) {

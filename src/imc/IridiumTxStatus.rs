@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 172;
-
 pub enum StatusCodeEnum {
     // Successfull transmission
     TXSTATUS_OK = 1,
@@ -46,7 +44,7 @@ pub struct IridiumTxStatus {
 impl IridiumTxStatus {
     pub fn new() -> IridiumTxStatus {
         let mut msg = IridiumTxStatus {
-            header: Header::new(c_msg_id),
+            header: Header::new(172),
 
             _req_id: Default::default(),
             _status: Default::default(),
@@ -65,7 +63,7 @@ impl Message for IridiumTxStatus {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        172
     }
 
     fn clear(&mut self) {

@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 287;
-
 /// Fine oil measurement.
 pub struct FineOil {
     /// IMC Header
@@ -18,7 +16,7 @@ pub struct FineOil {
 impl FineOil {
     pub fn new() -> FineOil {
         let mut msg = FineOil {
-            header: Header::new(c_msg_id),
+            header: Header::new(287),
 
             _value: Default::default(),
         };
@@ -35,7 +33,7 @@ impl Message for FineOil {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        287
     }
 
     fn clear(&mut self) {

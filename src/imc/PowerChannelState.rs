@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 311;
-
 pub enum StateEnum {
     // Off
     PCS_OFF = 0,
@@ -37,7 +35,7 @@ pub struct PowerChannelState {
 impl PowerChannelState {
     pub fn new() -> PowerChannelState {
         let mut msg = PowerChannelState {
-            header: Header::new(c_msg_id),
+            header: Header::new(311),
 
             _name: Default::default(),
             _state: Default::default(),
@@ -55,7 +53,7 @@ impl Message for PowerChannelState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        311
     }
 
     fn clear(&mut self) {

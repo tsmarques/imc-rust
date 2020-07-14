@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 313;
-
 /// Query the brightness of an LED (Light-Emitting Diode). The
 /// recipient of this message shall reply with 'LedBrightness'.
 pub struct QueryLedBrightness {
@@ -19,7 +17,7 @@ pub struct QueryLedBrightness {
 impl QueryLedBrightness {
     pub fn new() -> QueryLedBrightness {
         let mut msg = QueryLedBrightness {
-            header: Header::new(c_msg_id),
+            header: Header::new(313),
 
             _name: Default::default(),
         };
@@ -36,7 +34,7 @@ impl Message for QueryLedBrightness {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        313
     }
 
     fn clear(&mut self) {

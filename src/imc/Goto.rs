@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::MessageGroup::Maneuver;
 
-const c_msg_id: u16 = 450;
-
 /// message-group: Maneuver
 impl Maneuver for Goto {}
 
@@ -71,7 +69,7 @@ pub struct Goto {
 impl Goto {
     pub fn new() -> Goto {
         let mut msg = Goto {
-            header: Header::new(c_msg_id),
+            header: Header::new(450),
 
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -98,7 +96,7 @@ impl Message for Goto {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        450
     }
 
     fn clear(&mut self) {

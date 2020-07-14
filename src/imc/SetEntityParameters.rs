@@ -6,8 +6,6 @@ use bytes::BufMut;
 
 use crate::imc::EntityParameter::EntityParameter;
 
-const c_msg_id: u16 = 804;
-
 pub struct SetEntityParameters {
     /// IMC Header
     pub header: Header,
@@ -20,7 +18,7 @@ pub struct SetEntityParameters {
 impl SetEntityParameters {
     pub fn new() -> SetEntityParameters {
         let mut msg = SetEntityParameters {
-            header: Header::new(c_msg_id),
+            header: Header::new(804),
 
             _name: Default::default(),
             _params: Default::default(),
@@ -38,7 +36,7 @@ impl Message for SetEntityParameters {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        804
     }
 
     fn clear(&mut self) {

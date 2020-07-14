@@ -4,8 +4,6 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-const c_msg_id: u16 = 410;
-
 pub enum FlagsEnum {
     // Near Endpoint
     FL_NEAR = 0x01,
@@ -107,7 +105,7 @@ pub struct PathControlState {
 impl PathControlState {
     pub fn new() -> PathControlState {
         let mut msg = PathControlState {
-            header: Header::new(c_msg_id),
+            header: Header::new(410),
 
             _path_ref: Default::default(),
             _start_lat: Default::default(),
@@ -142,7 +140,7 @@ impl Message for PathControlState {
     }
 
     fn static_id(&self) -> u16 {
-        c_msg_id
+        410
     }
 
     fn clear(&mut self) {
