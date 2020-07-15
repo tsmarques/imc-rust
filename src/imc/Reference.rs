@@ -4,9 +4,9 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
-use crate::imc::DesiredSpeed::DesiredSpeed;
-
 use crate::imc::DesiredZ::DesiredZ;
+
+use crate::imc::DesiredSpeed::DesiredSpeed;
 
 pub enum FlagsEnum {
     // Use Location Reference

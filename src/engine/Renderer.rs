@@ -335,6 +335,14 @@ pub fn render_imc_file(args: &RendererArguments, ctx: &Parser::Context) {
             ctx.header.fixed_serialization_size.to_string(),
         );
 
+    let mut pubmod_data = rustache::VecBuilder::new();
+    for msg in &ctx.messages {
+        pubmod_data = pubmod_data
+            .push(rustache::HashBuilder::new().insert("imc_message_abbrev", msg.abbrev.clone()));
+    }
+
+    data = data.insert("imc-mod-messages", pubmod_data);
+
     let mut out = Cursor::new(Vec::new());
     match read_template_file(args, RenderType::Constants) {
         Ok(content) => {

@@ -1,7 +1,9 @@
 pub mod Message;
 pub mod Header;
 pub mod MessageGroup;
-{{imc_mod_messages}}
+
+{{#imc-mod-messages}}pub mod {{imc_message_abbrev}};
+{{/imc-mod-messages}}
 
 pub const DUNE_IMC_VERSION :&'static str = "{{imc_version}}";
 

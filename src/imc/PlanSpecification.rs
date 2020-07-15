@@ -4,11 +4,11 @@ use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use crate::imc::Header::Header;
 use bytes::BufMut;
 
+use crate::imc::PlanManeuver::PlanManeuver;
+
 use crate::imc::PlanTransition::PlanTransition;
 
 use crate::imc::PlanVariable::PlanVariable;
-
-use crate::imc::PlanManeuver::PlanManeuver;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in
