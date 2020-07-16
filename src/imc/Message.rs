@@ -3,7 +3,7 @@
 use crate::imc;
 use crate::imc::Header::Header;
 use bytes::BufMut;
-use crc16::*;
+use crc16::{State, ARC};
 
 macro_rules! serialize_bytes {
     ($bfr:expr, $bytes_slice:expr) => {
