@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// This message contains the WGS-84 position of a target computed using
 /// USBL.
@@ -69,7 +70,7 @@ impl Message for UsblFix {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        23
     }
 
     fn dynamic_serialization_size(&self) -> usize {

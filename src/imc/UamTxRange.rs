@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Request an acoustic modem driver to measure the distance to another system.
 pub struct UamTxRange {
@@ -57,7 +58,7 @@ impl Message for UamTxRange {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        6
     }
 
     fn dynamic_serialization_size(&self) -> usize {

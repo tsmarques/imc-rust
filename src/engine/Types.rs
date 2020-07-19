@@ -23,25 +23,6 @@ pub enum ImcTypeEnum {
     Unknown,
 }
 
-impl ImcTypeEnum {
-    fn size(&self) -> Option<i32> {
-        match *self {
-            ImcTypeEnum::U8 | ImcTypeEnum::I8 => Option::from(1),
-            ImcTypeEnum::U16 | ImcTypeEnum::I16 => Option::from(2),
-            ImcTypeEnum::U32 | ImcTypeEnum::I32 => Option::from(4),
-            ImcTypeEnum::U64 | ImcTypeEnum::I64 => Option::from(8),
-            ImcTypeEnum::Fp32 => Option::from(4),
-            ImcTypeEnum::Fp64 => Option::from(8),
-            ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => Option::from(1),
-            ImcTypeEnum::Unknown
-            | ImcTypeEnum::Raw
-            | ImcTypeEnum::Message
-            | ImcTypeEnum::MessageList => Option::None,
-            _ => panic!("unknown type"),
-        }
-    }
-}
-
 pub struct ImcType {
     pub(crate) type_enum: ImcTypeEnum,
     pub(crate) message_type: Option<String>,
@@ -86,11 +67,22 @@ impl fmt::Display for ImcType {
     }
 }
 
-// impl fmt::Debug for ImcType {
-//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-//         write!(f, *self)
-//     }
-// }
+pub fn get_fixed_size(field: &Field) -> Option<i32> {
+    match field.ftype.type_enum {
+        ImcTypeEnum::U8 | ImcTypeEnum::I8 => Option::from(1),
+        ImcTypeEnum::U16 | ImcTypeEnum::I16 => Option::from(2),
+        ImcTypeEnum::U32 | ImcTypeEnum::I32 => Option::from(4),
+        ImcTypeEnum::U64 | ImcTypeEnum::I64 => Option::from(8),
+        ImcTypeEnum::Fp32 => Option::from(4),
+        ImcTypeEnum::Fp64 => Option::from(8),
+        ImcTypeEnum::Enum | ImcTypeEnum::Bitfield => Option::from(1),
+        ImcTypeEnum::Unknown
+        | ImcTypeEnum::PlainText
+        | ImcTypeEnum::Raw
+        | ImcTypeEnum::Message
+        | ImcTypeEnum::MessageList => Option::None,
+    }
+}
 
 pub fn convert(ftype: &str) -> ImcTypeEnum {
     match ftype {

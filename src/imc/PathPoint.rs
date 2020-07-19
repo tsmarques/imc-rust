@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Waypoint coordinate of a Follow Path maneuver.
 pub struct PathPoint {
@@ -58,7 +59,7 @@ impl Message for PathPoint {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        12
     }
 
     fn dynamic_serialization_size(&self) -> usize {

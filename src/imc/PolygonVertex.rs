@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// This message is used to store the various polygon vertices for
 /// CoverArea maneuvers.
@@ -50,7 +51,7 @@ impl Message for PolygonVertex {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        16
     }
 
     fn dynamic_serialization_size(&self) -> usize {

@@ -374,10 +374,6 @@ pub fn render_message(
         .insert("imc_message_id", msg.id.clone())
         .insert("imc_message_abbrev", msg.abbrev.clone())
         .insert(
-            "imc_message_fixed_serialization_size",
-            msg.fixed_serialization_size.to_string(),
-        )
-        .insert(
             "imc_message_dynamic_serialization_size",
             "unimplemented!();",
         );
@@ -418,6 +414,17 @@ pub fn render_message(
         if imports_ret.is_some() {
             data = data.insert("imc-has-message-imports", imports_ret.unwrap());
         }
+
+        // fixed serialization size
+        let mut fixed_size = 0;
+        for field in &msg.fields {
+            match Types::get_fixed_size(field) {
+                None => {}
+                Some(size) => fixed_size += size,
+            }
+        }
+
+        data = data.insert("imc-message-fields-fixed-serialization-size", fixed_size);
     }
 
     // enumerator

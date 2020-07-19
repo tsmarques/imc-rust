@@ -2,6 +2,7 @@ use crate::imc::Message::*;
 use crate::imc::{IMC_CONST_UNK_EID, DUNE_IMC_CONST_SYNC};
 
 use bytes::BufMut;
+
 use crate::imc::Header::Header;
 {{#imc-has-message-imports}}
 use crate::imc::{{imc-import-module}}::{{imc-import-abbrev}};
@@ -70,7 +71,10 @@ impl Message for {{imc_message_abbrev}} {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        {{imc_message_fixed_serialization_size}}
+        {{imc-message-fields-fixed-serialization-size}}
+        {{^imc-message-fields-fixed-serialization-size}}
+            0
+        {{/imc-message-fields-fixed-serialization-size}}
     }
 
     fn dynamic_serialization_size(&self) -> usize {

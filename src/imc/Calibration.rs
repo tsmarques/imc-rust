@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Initiate overall calibration of a vehicle.
 pub struct Calibration {
@@ -43,7 +44,7 @@ impl Message for Calibration {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        2
     }
 
     fn dynamic_serialization_size(&self) -> usize {

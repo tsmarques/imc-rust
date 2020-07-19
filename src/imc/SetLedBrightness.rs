@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Control the brightness of an LED (Light-Emitting Diode). The
 /// recipient of this message shall set the intensity of the LED to
@@ -51,7 +52,7 @@ impl Message for SetLedBrightness {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        1
     }
 
     fn dynamic_serialization_size(&self) -> usize {

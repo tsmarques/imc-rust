@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// This messages is used to record system activity parameters. These
 /// parameters are mainly used for used for maintenance purposes.
@@ -136,7 +137,7 @@ impl Message for Tachograph {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        64
     }
 
     fn dynamic_serialization_size(&self) -> usize {

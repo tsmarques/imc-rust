@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Component of incremetal orientation vector over a period of time.
 pub struct EulerAnglesDelta {
@@ -67,7 +68,7 @@ impl Message for EulerAnglesDelta {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        36
     }
 
     fn dynamic_serialization_size(&self) -> usize {

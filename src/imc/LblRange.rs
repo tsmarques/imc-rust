@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// When the vehicle uses Long Base Line navigation, this message
 /// notifies that a new range was received from one of the acoustics
@@ -53,7 +54,7 @@ impl Message for LblRange {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        5
     }
 
     fn dynamic_serialization_size(&self) -> usize {

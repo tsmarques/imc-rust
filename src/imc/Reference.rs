@@ -1,12 +1,13 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
 
-use crate::imc::DesiredZ::DesiredZ;
+use crate::imc::Header::Header;
 
 use crate::imc::DesiredSpeed::DesiredSpeed;
+
+use crate::imc::DesiredZ::DesiredZ;
 
 pub enum FlagsEnum {
     // Use Location Reference
@@ -109,7 +110,7 @@ impl Message for Reference {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        21
     }
 
     fn dynamic_serialization_size(&self) -> usize {

@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Measure of the RSSI by a networking device.
 /// Indicates the gain or loss in the signal strenght due to the transmission
@@ -51,7 +52,7 @@ impl Message for ExtendedRSSI {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        5
     }
 
     fn dynamic_serialization_size(&self) -> usize {

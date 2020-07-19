@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 pub enum FlagsEnum {
     // Use Speed Reference in meters per second
@@ -94,7 +95,7 @@ impl Message for Command {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        13
     }
 
     fn dynamic_serialization_size(&self) -> usize {

@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Fluorescent Dissolved Organic Matter measurement.
 pub struct FluorescentDissolvedOrganicMatter {
@@ -43,7 +44,7 @@ impl Message for FluorescentDissolvedOrganicMatter {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        4
     }
 
     fn dynamic_serialization_size(&self) -> usize {

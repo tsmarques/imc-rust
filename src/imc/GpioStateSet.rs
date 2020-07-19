@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Set the state of a given GPIO. The receiving entity shall reply
 /// with a GpioState message.
@@ -50,7 +51,7 @@ impl Message for GpioStateSet {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        1
     }
 
     fn dynamic_serialization_size(&self) -> usize {

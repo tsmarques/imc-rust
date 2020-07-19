@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Report of PID control parcels.
 pub struct ControlParcel {
@@ -61,7 +62,7 @@ impl Message for ControlParcel {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        16
     }
 
     fn dynamic_serialization_size(&self) -> usize {

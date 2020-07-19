@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Position and configuration of an Ultra-Short Base Line modem.
 pub struct UsblModem {
@@ -68,7 +69,7 @@ impl Message for UsblModem {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        21
     }
 
     fn dynamic_serialization_size(&self) -> usize {

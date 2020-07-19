@@ -1,8 +1,9 @@
 use crate::imc::Message::*;
 use crate::imc::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
-use crate::imc::Header::Header;
 use bytes::BufMut;
+
+use crate::imc::Header::Header;
 
 /// Vector quantifying the direction and magnitude of the measured
 /// angular velocity that a device is exposed to.
@@ -62,7 +63,7 @@ impl Message for AngularVelocity {
     }
 
     fn fixed_serialization_size(&self) -> usize {
-        0
+        32
     }
 
     fn dynamic_serialization_size(&self) -> usize {
