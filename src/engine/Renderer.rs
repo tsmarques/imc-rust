@@ -45,7 +45,7 @@ fn read_template_file(
     }
 }
 
-fn render_file(args: &RendererArguments, filename: &str, data: &String) {
+fn render_file(args: &RendererArguments, filename: &str, data: &str) {
     // let mut out_filepath = imc_path.clone();
     let mut out_filepath = PathBuf::new();
     out_filepath.push(args.imc_output_dir);
@@ -203,7 +203,7 @@ pub fn render_imc_imports<'a>(
     }
 }
 
-pub fn render_description<'a>(desc: &String) -> Option<VecBuilder<'a>> {
+pub fn render_description<'a>(desc: &str) -> Option<VecBuilder<'a>> {
     if desc.is_empty() {
         return Option::None;
     }
