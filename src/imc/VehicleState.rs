@@ -147,7 +147,13 @@ impl Message for VehicleState {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        unimplemented!();
+        let mut dyn_size: usize = 0;
+
+        dyn_size += self._error_ents.len();
+
+        dyn_size += self._last_error.len();
+
+        dyn_size
     }
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {

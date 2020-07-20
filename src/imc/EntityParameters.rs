@@ -58,7 +58,15 @@ impl Message for EntityParameters {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        unimplemented!();
+        let mut dyn_size: usize = 0;
+
+        dyn_size += self._name.len();
+
+        for msg in &self._params {
+            dyn_size += msg.dynamic_serialization_size();
+        }
+
+        dyn_size
     }
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {

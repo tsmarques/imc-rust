@@ -5,9 +5,9 @@ use bytes::BufMut;
 
 use crate::imc::Header::Header;
 
-use crate::imc::DesiredSpeed::DesiredSpeed;
-
 use crate::imc::DesiredZ::DesiredZ;
+
+use crate::imc::DesiredSpeed::DesiredSpeed;
 
 pub enum FlagsEnum {
     // Use Location Reference
@@ -114,7 +114,23 @@ impl Message for Reference {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        unimplemented!();
+        let mut dyn_size: usize = 0;
+
+        match &self._speed {
+            None => {}
+            Some(msg) => {
+                dyn_size += msg.dynamic_serialization_size();
+            }
+        }
+
+        match &self._z {
+            None => {}
+            Some(msg) => {
+                dyn_size += msg.dynamic_serialization_size();
+            }
+        }
+
+        dyn_size
     }
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {

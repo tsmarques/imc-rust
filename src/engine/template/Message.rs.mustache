@@ -78,7 +78,25 @@ impl Message for {{imc_message_abbrev}} {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        {{imc_message_dynamic_serialization_size}}
+        let mut dyn_size :usize = 0;
+        {{#imc-message-dynamic-serialization-size}}
+            {{#imc-serialization-type-plaintext-raw?}}
+                dyn_size += self._{{field-abbrev}}.len();
+            {{/imc-serialization-type-plaintext-raw?}}
+            {{#imc-serialization-type-message?}}
+                match &self._{{field-abbrev}} {
+                   None => {},
+                   Some(msg) => { dyn_size += msg.dynamic_serialization_size(); },
+                }
+            {{/imc-serialization-type-message?}}
+            {{#imc-serialization-type-message-list?}}
+                for msg in &self._{{field-abbrev}} {
+                    dyn_size += msg.dynamic_serialization_size();
+                }
+            {{/imc-serialization-type-message-list?}}
+        {{/imc-message-dynamic-serialization-size}}
+
+        dyn_size
     }
 
     fn serialize(&self, bfr :&mut bytes::BytesMut) {

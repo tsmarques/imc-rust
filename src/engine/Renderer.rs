@@ -260,6 +260,50 @@ pub fn render_enums<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuil
     Option::from(enum_builder)
 }
 
+pub fn render_dynamic_serialization<'a>(
+    fields: &Vec<Tokens::Field>,
+) -> Option<rustache::VecBuilder<'a>> {
+    if fields.is_empty() {
+        return Option::None;
+    }
+
+    let mut data = rustache::VecBuilder::new();
+    let mut is_empty = true;
+    for field in fields {
+        let ser_str = rustache::HashBuilder::new()
+            .insert("field-abbrev", format!("{}", field.abbrev.clone()));
+        match field.ftype.type_enum {
+            ImcTypeEnum::PlainText | ImcTypeEnum::Raw => {
+                is_empty = false;
+                data = data.push(
+                    rustache::HashBuilder::new()
+                        .insert("imc-serialization-type-plaintext-raw?", ser_str),
+                );
+            }
+            ImcTypeEnum::Message => {
+                is_empty = false;
+                data = data.push(
+                    rustache::HashBuilder::new().insert("imc-serialization-type-message?", ser_str),
+                );
+            }
+            ImcTypeEnum::MessageList => {
+                is_empty = false;
+                data = data.push(
+                    rustache::HashBuilder::new()
+                        .insert("imc-serialization-type-message-list?", ser_str),
+                );
+            }
+            _ => continue,
+        }
+    }
+
+    if !is_empty {
+        Option::from(data)
+    } else {
+        Option::None
+    }
+}
+
 pub fn render_message_groups(args: &RendererArguments, groups: &HashSet<String>) {
     let mut groups_vec = rustache::VecBuilder::new();
     let mut data = rustache::HashBuilder::new();
@@ -425,6 +469,11 @@ pub fn render_message(
         }
 
         data = data.insert("imc-message-fields-fixed-serialization-size", fixed_size);
+        let dyn_size = render_dynamic_serialization(&msg.fields);
+        match dyn_size {
+            None => {}
+            Some(v) => data = data.insert("imc-message-dynamic-serialization-size", v),
+        }
     }
 
     // enumerator

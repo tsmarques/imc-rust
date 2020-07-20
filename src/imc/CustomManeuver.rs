@@ -72,7 +72,13 @@ impl Message for CustomManeuver {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        unimplemented!();
+        let mut dyn_size: usize = 0;
+
+        dyn_size += self._name.len();
+
+        dyn_size += self._custom.len();
+
+        dyn_size
     }
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {

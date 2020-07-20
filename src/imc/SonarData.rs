@@ -115,7 +115,15 @@ impl Message for SonarData {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        unimplemented!();
+        let mut dyn_size: usize = 0;
+
+        for msg in &self._beam_config {
+            dyn_size += msg.dynamic_serialization_size();
+        }
+
+        dyn_size += self._data.len();
+
+        dyn_size
     }
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {

@@ -122,7 +122,37 @@ impl Message for PlanSpecification {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        unimplemented!();
+        let mut dyn_size: usize = 0;
+
+        dyn_size += self._plan_id.len();
+
+        dyn_size += self._description.len();
+
+        dyn_size += self._vnamespace.len();
+
+        for msg in &self._variables {
+            dyn_size += msg.dynamic_serialization_size();
+        }
+
+        dyn_size += self._start_man_id.len();
+
+        for msg in &self._maneuvers {
+            dyn_size += msg.dynamic_serialization_size();
+        }
+
+        for msg in &self._transitions {
+            dyn_size += msg.dynamic_serialization_size();
+        }
+
+        for msg in &self._start_actions {
+            dyn_size += msg.dynamic_serialization_size();
+        }
+
+        for msg in &self._end_actions {
+            dyn_size += msg.dynamic_serialization_size();
+        }
+
+        dyn_size
     }
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {

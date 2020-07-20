@@ -79,7 +79,19 @@ impl Message for PlanTransition {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        unimplemented!();
+        let mut dyn_size: usize = 0;
+
+        dyn_size += self._source_man.len();
+
+        dyn_size += self._dest_man.len();
+
+        dyn_size += self._conditions.len();
+
+        for msg in &self._actions {
+            dyn_size += msg.dynamic_serialization_size();
+        }
+
+        dyn_size
     }
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {

@@ -86,7 +86,16 @@ impl Message for LblEstimate {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        unimplemented!();
+        let mut dyn_size: usize = 0;
+
+        match &self._beacon {
+            None => {}
+            Some(msg) => {
+                dyn_size += msg.dynamic_serialization_size();
+            }
+        }
+
+        dyn_size
     }
 
     fn serialize(&self, bfr: &mut bytes::BytesMut) {
