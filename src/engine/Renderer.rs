@@ -60,7 +60,7 @@ fn render_file(args: &RendererArguments, filename: &str, data: &String) {
     }
 }
 
-fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
+fn render_fields<'a>(fields: &[Tokens::Field]) -> Option<rustache::VecBuilder<'a>> {
     if fields.is_empty() {
         return Option::None;
     }
@@ -88,9 +88,7 @@ fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder
 
 // @todo initialize fields
 //       perhaps fill default-value while parsing xml?
-fn render_fields_initialization<'a>(
-    fields: &Vec<Tokens::Field>,
-) -> Option<rustache::VecBuilder<'a>> {
+fn render_fields_initialization<'a>(fields: &[Tokens::Field]) -> Option<rustache::VecBuilder<'a>> {
     if fields.is_empty() {
         return Option::None;
     }
@@ -110,9 +108,7 @@ fn render_fields_initialization<'a>(
     Option::from(data)
 }
 
-fn render_fields_serialization<'a>(
-    fields: &Vec<Tokens::Field>,
-) -> Option<rustache::VecBuilder<'a>> {
+fn render_fields_serialization<'a>(fields: &[Tokens::Field]) -> Option<rustache::VecBuilder<'a>> {
     if fields.is_empty() {
         return Option::None;
     }
@@ -128,7 +124,7 @@ fn render_fields_serialization<'a>(
     Option::from(data)
 }
 
-pub fn render_fields_clear<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
+pub fn render_fields_clear<'a>(fields: &[Tokens::Field]) -> Option<rustache::VecBuilder<'a>> {
     if fields.is_empty() {
         return Option::None;
     }
@@ -223,7 +219,7 @@ pub fn render_description<'a>(desc: &String) -> Option<VecBuilder<'a>> {
 }
 
 // @todo
-pub fn render_enums<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
+pub fn render_enums<'a>(fields: &[Tokens::Field]) -> Option<rustache::VecBuilder<'a>> {
     if fields.is_empty() {
         return Option::None;
     }
@@ -262,7 +258,7 @@ pub fn render_enums<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuil
 }
 
 pub fn render_dynamic_serialization<'a>(
-    fields: &Vec<Tokens::Field>,
+    fields: &[Tokens::Field],
 ) -> Option<rustache::VecBuilder<'a>> {
     if fields.is_empty() {
         return Option::None;
