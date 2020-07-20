@@ -104,32 +104,34 @@ fn main() {
     engine::Renderer::render_imc_file(&rnd_args, &ctx);
 
     let ret = matches.value_of("only-message");
-    if ret.is_none() {
-        println!(".. rendering messages");
-        for msg in &ctx.messages {
-            println!("   .. {}", msg.abbrev);
-            engine::Renderer::render_message(&rnd_args, msg, &ctx);
+    match ret {
+        None => {
+            println!(".. rendering messages");
+            for msg in &ctx.messages {
+                println!("   .. {}", msg.abbrev);
+                engine::Renderer::render_message(&rnd_args, msg, &ctx);
+            }
         }
-    } else {
-        let msg_abbrev = ret.unwrap();
-        println!(".. DEBUG rendering only {}", msg_abbrev);
+        Some(msg_abbrev) => {
+            println!(".. DEBUG rendering only {}", msg_abbrev);
 
-        let it = &mut ctx.messages.iter();
-        let mut found = false;
-        let mut ret = it.next();
-        while ret.is_some() && !found {
-            let m = ret.unwrap();
+            let it = &mut ctx.messages.iter();
+            let mut found = false;
+            let mut ret = it.next();
+            while ret.is_some() && !found {
+                let m = ret.unwrap();
 
-            if m.abbrev == msg_abbrev {
-                found = true;
-                engine::Renderer::render_message(&rnd_args, &m, &ctx);
+                if m.abbrev == msg_abbrev {
+                    found = true;
+                    engine::Renderer::render_message(&rnd_args, &m, &ctx);
+                }
+
+                ret = it.next();
             }
 
-            ret = it.next();
-        }
-
-        if !found {
-            println!("   .. ERROR can't find message");
+            if !found {
+                println!("   .. ERROR can't find message");
+            }
         }
     }
 
