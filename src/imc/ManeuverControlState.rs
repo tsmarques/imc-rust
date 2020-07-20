@@ -85,7 +85,7 @@ impl Message for ManeuverControlState {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._info.len();
+        dyn_size += self._info.len() + 2;
 
         dyn_size
     }

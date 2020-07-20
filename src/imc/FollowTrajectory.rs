@@ -113,7 +113,7 @@ impl Message for FollowTrajectory {
             dyn_size += msg.dynamic_serialization_size();
         }
 
-        dyn_size += self._custom.len();
+        dyn_size += self._custom.len() + 2;
 
         dyn_size
     }

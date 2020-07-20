@@ -121,7 +121,7 @@ impl Message for SonarData {
             dyn_size += msg.dynamic_serialization_size();
         }
 
-        dyn_size += self._data.len();
+        dyn_size += self._data.len() + 2;
 
         dyn_size
     }

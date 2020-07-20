@@ -78,7 +78,7 @@ impl Message for ReplayControl {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._file.len();
+        dyn_size += self._file.len() + 2;
 
         dyn_size
     }

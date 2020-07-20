@@ -73,7 +73,7 @@ impl Message for EntityList {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._list.len();
+        dyn_size += self._list.len() + 2;
 
         dyn_size
     }

@@ -92,13 +92,13 @@ impl Message for EntityMonitoringState {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._mnames.len();
+        dyn_size += self._mnames.len() + 2;
 
-        dyn_size += self._enames.len();
+        dyn_size += self._enames.len() + 2;
 
-        dyn_size += self._cnames.len();
+        dyn_size += self._cnames.len() + 2;
 
-        dyn_size += self._last_error.len();
+        dyn_size += self._last_error.len() + 2;
 
         dyn_size
     }

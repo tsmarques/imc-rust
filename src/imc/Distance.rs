@@ -5,9 +5,9 @@ use bytes::BufMut;
 
 use crate::imc::Header::Header;
 
-use crate::imc::DeviceState::DeviceState;
-
 use crate::imc::BeamConfig::BeamConfig;
+
+use crate::imc::DeviceState::DeviceState;
 
 pub enum ValidityEnum {
     // Invalid

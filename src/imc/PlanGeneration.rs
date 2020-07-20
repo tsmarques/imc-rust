@@ -106,9 +106,9 @@ impl Message for PlanGeneration {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._plan_id.len();
+        dyn_size += self._plan_id.len() + 2;
 
-        dyn_size += self._params.len();
+        dyn_size += self._params.len() + 2;
 
         dyn_size
     }

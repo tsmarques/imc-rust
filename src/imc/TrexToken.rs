@@ -62,9 +62,9 @@ impl Message for TrexToken {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._timeline.len();
+        dyn_size += self._timeline.len() + 2;
 
-        dyn_size += self._predicate.len();
+        dyn_size += self._predicate.len() + 2;
 
         for msg in &self._attributes {
             dyn_size += msg.dynamic_serialization_size();

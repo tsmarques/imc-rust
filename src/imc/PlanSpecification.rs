@@ -7,9 +7,9 @@ use crate::imc::Header::Header;
 
 use crate::imc::PlanManeuver::PlanManeuver;
 
-use crate::imc::PlanTransition::PlanTransition;
-
 use crate::imc::PlanVariable::PlanVariable;
+
+use crate::imc::PlanTransition::PlanTransition;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in
@@ -124,17 +124,17 @@ impl Message for PlanSpecification {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._plan_id.len();
+        dyn_size += self._plan_id.len() + 2;
 
-        dyn_size += self._description.len();
+        dyn_size += self._description.len() + 2;
 
-        dyn_size += self._vnamespace.len();
+        dyn_size += self._vnamespace.len() + 2;
 
         for msg in &self._variables {
             dyn_size += msg.dynamic_serialization_size();
         }
 
-        dyn_size += self._start_man_id.len();
+        dyn_size += self._start_man_id.len() + 2;
 
         for msg in &self._maneuvers {
             dyn_size += msg.dynamic_serialization_size();

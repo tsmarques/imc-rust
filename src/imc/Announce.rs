@@ -90,9 +90,9 @@ impl Message for Announce {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._sys_name.len();
+        dyn_size += self._sys_name.len() + 2;
 
-        dyn_size += self._services.len();
+        dyn_size += self._services.len() + 2;
 
         dyn_size
     }

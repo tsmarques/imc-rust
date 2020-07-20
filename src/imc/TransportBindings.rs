@@ -56,7 +56,7 @@ impl Message for TransportBindings {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._consumer.len();
+        dyn_size += self._consumer.len() + 2;
 
         dyn_size
     }

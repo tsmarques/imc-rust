@@ -82,11 +82,11 @@ impl Message for PlanDBInformation {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._plan_id.len();
+        dyn_size += self._plan_id.len() + 2;
 
-        dyn_size += self._change_sname.len();
+        dyn_size += self._change_sname.len() + 2;
 
-        dyn_size += self._md5.len();
+        dyn_size += self._md5.len() + 2;
 
         dyn_size
     }

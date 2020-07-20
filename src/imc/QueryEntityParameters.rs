@@ -58,11 +58,11 @@ impl Message for QueryEntityParameters {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._name.len();
+        dyn_size += self._name.len() + 2;
 
-        dyn_size += self._visibility.len();
+        dyn_size += self._visibility.len() + 2;
 
-        dyn_size += self._scope.len();
+        dyn_size += self._scope.len() + 2;
 
         dyn_size
     }

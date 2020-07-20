@@ -81,7 +81,7 @@ impl Message for {{imc_message_abbrev}} {
         let mut dyn_size :usize = 0;
         {{#imc-message-dynamic-serialization-size}}
             {{#imc-serialization-type-plaintext-raw?}}
-                dyn_size += self._{{field-abbrev}}.len();
+                dyn_size += self._{{field-abbrev}}.len() + 2;
             {{/imc-serialization-type-plaintext-raw?}}
             {{#imc-serialization-type-message?}}
                 match &self._{{field-abbrev}} {

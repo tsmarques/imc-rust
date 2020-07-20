@@ -57,7 +57,7 @@ impl Message for SetEntityParameters {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._name.len();
+        dyn_size += self._name.len() + 2;
 
         for msg in &self._params {
             dyn_size += msg.dynamic_serialization_size();

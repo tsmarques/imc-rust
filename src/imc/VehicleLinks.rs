@@ -60,7 +60,7 @@ impl Message for VehicleLinks {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._localname.len();
+        dyn_size += self._localname.len() + 2;
 
         for msg in &self._links {
             dyn_size += msg.dynamic_serialization_size();

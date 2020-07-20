@@ -90,7 +90,7 @@ impl Message for EntityActivationState {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._error.len();
+        dyn_size += self._error.len() + 2;
 
         dyn_size
     }

@@ -136,7 +136,7 @@ impl Message for AcousticOperation {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._system.len();
+        dyn_size += self._system.len() + 2;
 
         match &self._msg {
             None => {}

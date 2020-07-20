@@ -62,9 +62,9 @@ impl Message for Sms {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._number.len();
+        dyn_size += self._number.len() + 2;
 
-        dyn_size += self._contents.len();
+        dyn_size += self._contents.len() + 2;
 
         dyn_size
     }

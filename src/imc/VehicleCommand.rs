@@ -136,7 +136,7 @@ impl Message for VehicleCommand {
             }
         }
 
-        dyn_size += self._info.len();
+        dyn_size += self._info.len() + 2;
 
         dyn_size
     }

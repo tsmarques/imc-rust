@@ -91,11 +91,11 @@ impl Message for TrexAttribute {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._name.len();
+        dyn_size += self._name.len() + 2;
 
-        dyn_size += self._min.len();
+        dyn_size += self._min.len() + 2;
 
-        dyn_size += self._max.len();
+        dyn_size += self._max.len() + 2;
 
         dyn_size
     }

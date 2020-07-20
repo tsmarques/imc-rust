@@ -100,7 +100,7 @@ impl Message for CcuEvent {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._id.len();
+        dyn_size += self._id.len() + 2;
 
         match &self._arg {
             None => {}
