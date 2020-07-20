@@ -138,7 +138,7 @@ fn parse_global_enum(out: &mut Vec<Tokens::Field>, parser: &mut EventReader<BufR
     }
 }
 
-fn parse_field_enum(field: &mut Tokens::Field, attr: &Vec<OwnedAttribute>) {
+fn parse_field_enum(field: &mut Tokens::Field, attr: &[OwnedAttribute]) {
     let mut field_enum: Tokens::Enum = Tokens::Enum {
         id: "".to_string(),
         name: "".to_string(),
@@ -160,7 +160,7 @@ fn parse_field_enum(field: &mut Tokens::Field, attr: &Vec<OwnedAttribute>) {
     field.enums.push(field_enum);
 }
 
-fn parse_field_attributes(field: &mut Tokens::Field, attr: &Vec<OwnedAttribute>) {
+fn parse_field_attributes(field: &mut Tokens::Field, attr: &[OwnedAttribute]) {
     for attr in attr {
         let value = attr.value.trim().to_string();
         match attr.name.local_name.as_str() {
@@ -249,7 +249,7 @@ fn parse_message(parser: &mut EventReader<BufReader<File>>) -> (String, Vec<Toke
     (message_descr, fields)
 }
 
-fn parse_message_attributes(message: &mut Tokens::Message, attributes: &Vec<OwnedAttribute>) {
+fn parse_message_attributes(message: &mut Tokens::Message, attributes: &[OwnedAttribute]) {
     for attr in attributes {
         let value = attr.value.trim().to_string();
         match attr.name.local_name.as_str() {
