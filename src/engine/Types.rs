@@ -59,7 +59,7 @@ impl fmt::Display for ImcType {
                     write!(f, r"Vec<Box<{}>>", self.message_type.clone().unwrap())
                 } else {
                     // for some reason type wasn't specified
-                    write!(f, "{}", "Vec<Box<dyn Message>>")
+                    write!(f, "Vec<Box<dyn Message>>")
                 }
             }
             _ => unimplemented!(),
