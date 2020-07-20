@@ -25,7 +25,7 @@ pub enum StateEnum {
 }
 
 impl StateEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             AS_NOT_ALIGNED => 0,
             AS_ALIGNED => 1,

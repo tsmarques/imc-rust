@@ -17,7 +17,7 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             ROP_START => 0,
             ROP_STOP => 1,

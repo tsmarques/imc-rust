@@ -19,7 +19,7 @@ pub enum TypeEnum {
 }
 
 impl TypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             VC_REQUEST => 0,
             VC_SUCCESS => 1,
@@ -41,7 +41,7 @@ pub enum CommandEnum {
 }
 
 impl CommandEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             VC_EXEC_MANEUVER => 0,
             VC_STOP_MANEUVER => 1,

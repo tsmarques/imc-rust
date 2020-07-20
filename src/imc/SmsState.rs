@@ -23,7 +23,7 @@ pub enum StateEnum {
 }
 
 impl StateEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             SMS_ACCEPTED => 0,
             SMS_REJECTED => 1,

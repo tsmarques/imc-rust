@@ -17,7 +17,7 @@ pub enum TypeEnum {
 }
 
 impl TypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             PC_REQUEST => 0,
             PC_SUCCESS => 1,
@@ -39,7 +39,7 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             PC_START => 0,
             PC_STOP => 1,
@@ -57,7 +57,7 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             FLG_CALIBRATE => 0x0001,
             FLG_IGNORE_ERRORS => 0x0002,

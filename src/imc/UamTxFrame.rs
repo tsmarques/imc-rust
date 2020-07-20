@@ -13,7 +13,7 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             UTF_ACK => 0x01,
             UTF_DELAYED => 0x02,

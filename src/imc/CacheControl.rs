@@ -19,7 +19,7 @@ pub enum ControlOperationEnum {
 }
 
 impl ControlOperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             COP_STORE => 0,
             COP_LOAD => 1,

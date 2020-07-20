@@ -19,7 +19,7 @@ pub enum StatusCodeEnum {
 }
 
 impl StatusCodeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             TXSTATUS_OK => 1,
             TXSTATUS_ERROR => 2,

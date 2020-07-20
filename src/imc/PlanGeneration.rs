@@ -13,7 +13,7 @@ pub enum CommandEnum {
 }
 
 impl CommandEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             CMD_GENERATE => 0,
             CMD_EXECUTE => 1,
@@ -31,7 +31,7 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             OP_REQUEST => 0,
             OP_ERROR => 1,

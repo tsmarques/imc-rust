@@ -19,7 +19,7 @@ pub enum CommandEnum {
 }
 
 impl CommandEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             LBC_GET => 0,
             LBC_CLEAR => 1,

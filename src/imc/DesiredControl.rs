@@ -21,7 +21,7 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             FL_X => 0x01,
             FL_Y => 0x02,

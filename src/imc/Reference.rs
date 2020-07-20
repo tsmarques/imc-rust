@@ -5,9 +5,9 @@ use bytes::BufMut;
 
 use crate::imc::Header::Header;
 
-use crate::imc::DesiredZ::DesiredZ;
-
 use crate::imc::DesiredSpeed::DesiredSpeed;
+
+use crate::imc::DesiredZ::DesiredZ;
 
 pub enum FlagsEnum {
     // Use Location Reference
@@ -27,7 +27,7 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             FLAG_LOCATION => 0x01,
             FLAG_SPEED => 0x02,

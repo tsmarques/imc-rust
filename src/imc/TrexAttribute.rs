@@ -19,7 +19,7 @@ pub enum AttributetypeEnum {
 }
 
 impl AttributetypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             TYPE_BOOL => 1,
             TYPE_INT => 2,

@@ -13,7 +13,7 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             POP_OFF => 0,
             POP_ON => 1,

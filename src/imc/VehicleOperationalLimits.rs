@@ -15,7 +15,7 @@ pub enum ActiononthevehicleoperationallimitsEnum {
 }
 
 impl ActiononthevehicleoperationallimitsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             OP_REQUEST => 0,
             OP_SET => 1,

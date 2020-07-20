@@ -23,7 +23,7 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             FLAG_SPEED_METERS_PS => 0x01,
             FLAG_SPEED_RPM => 0x02,

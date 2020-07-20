@@ -17,7 +17,7 @@ pub enum StateEnum {
 }
 
 impl StateEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             MCS_EXECUTING => 0,
             MCS_DONE => 1,

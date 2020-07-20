@@ -17,7 +17,7 @@ pub enum TypeEnum {
 }
 
 impl TypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             PVT_BOOLEAN => 0,
             PVT_NUMBER => 1,
@@ -37,7 +37,7 @@ pub enum AccessTypeEnum {
 }
 
 impl AccessTypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             PVA_INPUT => 0,
             PVA_OUTPUT => 1,

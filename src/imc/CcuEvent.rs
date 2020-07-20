@@ -27,7 +27,7 @@ pub enum EventTypeEnum {
 }
 
 impl EventTypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             EVT_LOG_ENTRY => 1,
             EVT_PLAN_ADDED => 2,

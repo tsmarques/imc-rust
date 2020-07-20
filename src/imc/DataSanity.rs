@@ -13,7 +13,7 @@ pub enum SanityEnum {
 }
 
 impl SanityEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             DS_SANE => 0,
             DS_NOT_SANE => 1,

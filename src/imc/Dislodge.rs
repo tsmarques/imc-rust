@@ -17,7 +17,7 @@ pub enum DirectionEnum {
 }
 
 impl DirectionEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             DIR_AUTO => 0,
             DIR_FORWARD => 1,

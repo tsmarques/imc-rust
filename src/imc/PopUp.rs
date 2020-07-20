@@ -17,7 +17,7 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             FLG_CURR_POS => 0x01,
             FLG_WAIT_AT_SURFACE => 0x02,

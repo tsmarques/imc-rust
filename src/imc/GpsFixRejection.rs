@@ -19,7 +19,7 @@ pub enum ReasonEnum {
 }
 
 impl ReasonEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             RR_ABOVE_THRESHOLD => 0,
             RR_INVALID => 1,

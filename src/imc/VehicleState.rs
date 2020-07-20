@@ -21,7 +21,7 @@ pub enum OperationModeEnum {
 }
 
 impl OperationModeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             VS_SERVICE => 0,
             VS_CALIBRATION => 1,
@@ -39,7 +39,7 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             VFLG_MANEUVER_DONE => 0x01,
         }

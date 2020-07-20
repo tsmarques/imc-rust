@@ -15,7 +15,7 @@ pub enum TypeEnum {
 }
 
 impl TypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             TP_PREPLAN => 0,
             TP_INPLAN => 1,
@@ -38,7 +38,7 @@ pub enum PropertiesEnum {
 }
 
 impl PropertiesEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             PRP_BASIC => 0x00,
             PRP_NONLINEAR => 0x01,

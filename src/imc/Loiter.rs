@@ -21,7 +21,7 @@ pub enum LoiterTypeEnum {
 }
 
 impl LoiterTypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             LT_DEFAULT => 0,
             LT_CIRCULAR => 1,
@@ -44,7 +44,7 @@ pub enum DirectionEnum {
 }
 
 impl DirectionEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             LD_VDEP => 0,
             LD_CLOCKW => 1,

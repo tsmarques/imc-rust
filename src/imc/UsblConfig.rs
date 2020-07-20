@@ -17,7 +17,7 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             OP_SET_CFG => 0,
             OP_GET_CFG => 1,

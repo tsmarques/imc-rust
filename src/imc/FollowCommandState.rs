@@ -21,7 +21,7 @@ pub enum StateEnum {
 }
 
 impl StateEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             FC_WAIT => 1,
             FC_MOVING => 2,

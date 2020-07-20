@@ -17,7 +17,7 @@ pub enum TypeEnum {
 }
 
 impl TypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             CD_X => 0x01,
             CD_Y => 0x02,

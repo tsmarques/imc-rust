@@ -13,7 +13,7 @@ pub enum TypeEnum {
 }
 
 impl TypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             IOV_TYPE_INPUT => 1,
             IOV_TYPE_INPUT_ERROR => 2,

@@ -21,7 +21,7 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             OP_POST_TOKEN => 1,
             OP_POST_GOAL => 2,

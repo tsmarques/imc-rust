@@ -21,7 +21,7 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             COP_SYNC_EXEC => 0,
             COP_SYNC_REQUEST => 1,

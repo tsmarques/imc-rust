@@ -17,7 +17,7 @@ pub enum TypeEnum {
 }
 
 impl TypeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             DBT_REQUEST => 0,
             DBT_SUCCESS => 1,
@@ -47,7 +47,7 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             DBOP_SET => 0,
             DBOP_DEL => 1,

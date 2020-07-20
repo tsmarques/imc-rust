@@ -17,7 +17,7 @@ pub enum ValidityEnum {
 }
 
 impl ValidityEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             DV_INVALID => 0,
             DV_VALID => 1,

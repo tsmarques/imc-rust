@@ -19,7 +19,7 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             FL_NEAR => 0x01,
             FL_LOITERING => 0x02,

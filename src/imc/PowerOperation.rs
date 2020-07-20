@@ -23,7 +23,7 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             POP_PWR_DOWN => 0,
             POP_PWR_DOWN_IP => 1,

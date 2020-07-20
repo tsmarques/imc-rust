@@ -19,7 +19,7 @@ pub enum StateEnum {
 }
 
 impl StateEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             ESTA_BOOT => 0,
             ESTA_NORMAL => 1,
@@ -36,7 +36,7 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             EFLA_HUMAN_INTERVENTION => 0x01,
         }

@@ -17,7 +17,7 @@ pub enum StateEnum {
 }
 
 impl StateEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             PCS_BLOCKED => 0,
             PCS_READY => 1,
@@ -37,7 +37,7 @@ pub enum LastPlanOutcomeEnum {
 }
 
 impl LastPlanOutcomeEnum {
-    pub fn as_u32(&self) -> u32 {
+    pub fn as_primitive(&self) -> u32 {
         match self {
             LPO_NONE => 0,
             LPO_SUCCESS => 1,
