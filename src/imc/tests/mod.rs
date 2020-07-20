@@ -1,45 +1,45 @@
 #[cfg(test)]
 mod tests {
-    use crate::imc::Message::Message;
-    use crate::imc::EntityState::EntityState;
-    use crate::imc::QueryEntityState::QueryEntityState;
-    use crate::imc::EntityInfo::EntityInfo;
-    use crate::imc::QueryEntityInfo::QueryEntityInfo;
-    use crate::imc::EntityList::EntityList;
-    use crate::imc::CpuUsage::CpuUsage;
-    use crate::imc::TransportBindings::TransportBindings;
-    use crate::imc::RestartSystem::RestartSystem;
-    use crate::imc::EntityActivationState::EntityActivationState;
-    use crate::imc::QueryEntityActivationState::QueryEntityActivationState;
-    use crate::imc::VehicleOperationalLimits::VehicleOperationalLimits;
-    use crate::imc::MsgList::MsgList;
-    use crate::imc::SimulatedState::SimulatedState;
-    use crate::imc::StorageUsage::StorageUsage;
-    use crate::imc::CacheControl::CacheControl;
-    use crate::imc::LoggingControl::LoggingControl;
-    use crate::imc::LogBookEntry::LogBookEntry;
-    use crate::imc::LogBookControl::LogBookControl;
-    use crate::imc::ReplayControl::ReplayControl;
-    use crate::imc::ClockControl::ClockControl;
-    use crate::imc::Heartbeat::Heartbeat;
     use crate::imc::Announce::Announce;
     use crate::imc::AnnounceService::AnnounceService;
-    use crate::imc::RSSI::RSSI;
-    use crate::imc::Sms::Sms;
-    use crate::imc::SmsTx::SmsTx;
-    use crate::imc::SmsRx::SmsRx;
-    use crate::imc::SmsState::SmsState;
-    use crate::imc::TextMessage::TextMessage;
+    use crate::imc::CacheControl::CacheControl;
+    use crate::imc::ClockControl::ClockControl;
+    use crate::imc::CpuUsage::CpuUsage;
+    use crate::imc::DesiredPath::DesiredPath;
+    use crate::imc::EntityActivationState::EntityActivationState;
+    use crate::imc::EntityInfo::EntityInfo;
+    use crate::imc::EntityList::EntityList;
+    use crate::imc::EntityState::EntityState;
+    use crate::imc::EstimatedState::EstimatedState;
+    use crate::imc::ExtendedRSSI::ExtendedRSSI;
+    use crate::imc::Heartbeat::Heartbeat;
     use crate::imc::IridiumMsgRx::IridiumMsgRx;
     use crate::imc::IridiumMsgTx::IridiumMsgTx;
     use crate::imc::IridiumTxStatus::IridiumTxStatus;
-    use crate::imc::ExtendedRSSI::ExtendedRSSI;
-    use crate::imc::LblRange::LblRange;
     use crate::imc::LblBeacon::LblBeacon;
-    use crate::imc::EstimatedState::EstimatedState;
+    use crate::imc::LblRange::LblRange;
+    use crate::imc::LogBookControl::LogBookControl;
+    use crate::imc::LogBookEntry::LogBookEntry;
+    use crate::imc::LoggingControl::LoggingControl;
+    use crate::imc::Message::Message;
+    use crate::imc::MsgList::MsgList;
     use crate::imc::NavigationUncertainty::NavigationUncertainty;
-    use crate::imc::DesiredPath::DesiredPath;
     use crate::imc::PathControlState::PathControlState;
+    use crate::imc::QueryEntityActivationState::QueryEntityActivationState;
+    use crate::imc::QueryEntityInfo::QueryEntityInfo;
+    use crate::imc::QueryEntityState::QueryEntityState;
+    use crate::imc::ReplayControl::ReplayControl;
+    use crate::imc::RestartSystem::RestartSystem;
+    use crate::imc::SimulatedState::SimulatedState;
+    use crate::imc::Sms::Sms;
+    use crate::imc::SmsRx::SmsRx;
+    use crate::imc::SmsState::SmsState;
+    use crate::imc::SmsTx::SmsTx;
+    use crate::imc::StorageUsage::StorageUsage;
+    use crate::imc::TextMessage::TextMessage;
+    use crate::imc::TransportBindings::TransportBindings;
+    use crate::imc::VehicleOperationalLimits::VehicleOperationalLimits;
+    use crate::imc::RSSI::RSSI;
 
     #[test]
     fn test_fixed_serialization_size_EntityState() {
@@ -88,12 +88,18 @@ mod tests {
 
     #[test]
     fn test_fixed_serialization_size_QueryEntityActivationState() {
-        assert_eq!(QueryEntityActivationState::new().fixed_serialization_size(), 0);
+        assert_eq!(
+            QueryEntityActivationState::new().fixed_serialization_size(),
+            0
+        );
     }
 
     #[test]
     fn test_fixed_serialization_size_VehicleOperationalLimits() {
-        assert_eq!(VehicleOperationalLimits::new().fixed_serialization_size(), 69);
+        assert_eq!(
+            VehicleOperationalLimits::new().fixed_serialization_size(),
+            69
+        );
     }
 
     #[test]

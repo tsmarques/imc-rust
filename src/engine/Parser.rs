@@ -4,7 +4,7 @@ use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::BufReader;
 use xml::attribute::OwnedAttribute;
-use xml::reader::{XmlEvent};
+use xml::reader::XmlEvent;
 use xml::EventReader;
 
 pub struct Context {

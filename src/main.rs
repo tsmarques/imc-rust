@@ -8,10 +8,7 @@ mod engine;
 use crate::engine::Renderer::RendererArguments;
 use clap::{App, Arg};
 
-
-
-
-use std::path::{PathBuf};
+use std::path::PathBuf;
 
 fn main() {
     let matches = App::new("IMC Rust")
