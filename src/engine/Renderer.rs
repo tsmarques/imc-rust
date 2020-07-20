@@ -54,7 +54,7 @@ fn render_file(args: &RendererArguments, filename: &str, data: &String) {
 
     match File::create(out_filepath) {
         Ok(mut file) => {
-            file.write(data.as_ref()).unwrap();
+            file.write_all(data.as_ref()).unwrap();
         }
         Err(_err) => panic!("can't open out file"),
     }
