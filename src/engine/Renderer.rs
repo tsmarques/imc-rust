@@ -1,10 +1,10 @@
 use crate::engine;
-use crate::engine::Tokens::{Field, Message};
+
 use crate::engine::Types::ImcTypeEnum;
 use crate::engine::{Parser, Tokens, Types};
 use rustache::{Render, VecBuilder};
-use std::collections::{HashMap, HashSet};
-use std::env;
+use std::collections::{HashSet};
+
 use std::fs::File;
 use std::io::{Cursor, Error, Read, Write};
 use std::path::{Path, PathBuf};
@@ -56,12 +56,12 @@ fn render_file(args: &RendererArguments, filename: &str, data: &String) {
         Ok(mut file) => {
             file.write(data.as_ref()).unwrap();
         }
-        Err(err) => panic!("can't open out file"),
+        Err(_err) => panic!("can't open out file"),
     }
 }
 
 fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
-    if fields.len() == 0 {
+    if fields.is_empty() {
         return Option::None;
     }
 
@@ -91,7 +91,7 @@ fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder
 fn render_fields_initialization<'a>(
     fields: &Vec<Tokens::Field>,
 ) -> Option<rustache::VecBuilder<'a>> {
-    if fields.len() == 0 {
+    if fields.is_empty() {
         return Option::None;
     }
 
@@ -129,7 +129,7 @@ fn render_fields_serialization<'a>(
 }
 
 pub fn render_fields_clear<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder<'a>> {
-    if fields.len() == 0 {
+    if fields.is_empty() {
         return Option::None;
     }
 
@@ -212,7 +212,7 @@ pub fn render_description<'a>(desc: &String) -> Option<VecBuilder<'a>> {
     }
 
     let mut data = rustache::VecBuilder::new();
-    let mut parts: Vec<&str> = desc.split('\n').collect::<Vec<&str>>();
+    let parts: Vec<&str> = desc.split('\n').collect::<Vec<&str>>();
     for line in parts.iter() {
         let trim_line = line.trim();
         data = data.push(rustache::HashBuilder::new().insert("desc-line", trim_line));
@@ -271,7 +271,7 @@ pub fn render_dynamic_serialization<'a>(
     let mut is_empty = true;
     for field in fields {
         let ser_str = rustache::HashBuilder::new()
-            .insert("field-abbrev", format!("{}", field.abbrev.clone()));
+            .insert("field-abbrev", field.abbrev.clone().to_string());
         match field.ftype.type_enum {
             ImcTypeEnum::PlainText | ImcTypeEnum::Raw => {
                 is_empty = false;
@@ -328,7 +328,7 @@ pub fn render_message_groups(args: &RendererArguments, groups: &HashSet<String>)
 }
 
 pub fn render_header(args: &RendererArguments, header: &Tokens::Message) {
-    let mut data = rustache::HashBuilder::new()
+    let data = rustache::HashBuilder::new()
         .insert("header_desc", render_description(&header.desc).unwrap())
         .insert("header-fields", render_fields(&header.fields).unwrap())
         .insert(
@@ -392,7 +392,7 @@ pub fn render_imc_file(args: &RendererArguments, ctx: &Parser::Context) {
         Ok(content) => {
             data.render(content.as_str(), &mut out).unwrap();
         }
-        Err(error) => panic!("failed to read header template file"),
+        Err(_error) => panic!("failed to read header template file"),
     }
 
     let rendered_data = String::from_utf8(out.into_inner()).unwrap();

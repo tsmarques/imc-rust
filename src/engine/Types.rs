@@ -108,9 +108,7 @@ pub fn get_init_string(field: &Field) -> String {
     let default_v = field.default_value.clone();
     match default_v {
         Some(value) => format!("{} as {}", value, field.ftype),
-        None => match &field.ftype.type_enum {
-            _ => String::from("Default::default()"),
-        },
+        None => String::from("Default::default()"),
     }
 }
 
@@ -134,7 +132,7 @@ pub fn get_serialization_string(field: &Field) -> String {
             field.abbrev
         ),
         ImcTypeEnum::I8 => format!("bfr.put_i8(self._{})", field.abbrev),
-        v => format!("bfr.put_{}_le(self._{})", field.ftype, field.abbrev),
+        _v => format!("bfr.put_{}_le(self._{})", field.ftype, field.abbrev),
         _ => panic!("unhandled type"),
     }
 }
@@ -153,6 +151,6 @@ pub fn get_clear_string(field: &Field) -> String {
             }}\n",
             field.abbrev
         ),
-        primitive_type => format!("self._{} = Default::default();", field.abbrev),
+        _primitive_type => format!("self._{} = Default::default();", field.abbrev),
     }
 }

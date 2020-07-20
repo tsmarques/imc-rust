@@ -4,7 +4,7 @@ use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::BufReader;
 use xml::attribute::OwnedAttribute;
-use xml::reader::{Error, XmlEvent};
+use xml::reader::{XmlEvent};
 use xml::EventReader;
 
 pub struct Context {
@@ -175,7 +175,7 @@ fn parse_field_attributes(field: &mut Tokens::Field, attr: &Vec<OwnedAttribute>)
             "enum-def" => {} // TODO handle global enumerator
             "value" => field.default_value = Option::from(value),
             "bitfield-def" => {} // TODO handle global bitfield
-            "fixed" => field.read_only = (value == "true"),
+            "fixed" => field.read_only = value == "true",
             _ => panic!("unhandled field attribute : {}", attr.name),
         }
     }
@@ -395,7 +395,7 @@ pub(crate) fn parse(xml_path: &str) -> Context {
                     _ => panic!("parse: unhandled tag {}", name.local_name),
                 }
             }
-            Ok(XmlEvent::EndElement { name }) => {}
+            Ok(XmlEvent::EndElement { name: _ }) => {}
             Ok(XmlEvent::EndDocument) => break,
             Ok(XmlEvent::Whitespace(..)) | Ok(XmlEvent::Characters(..)) => {}
             _ => panic!("parse: unhandled event"),

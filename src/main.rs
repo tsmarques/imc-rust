@@ -7,11 +7,11 @@ mod engine;
 
 use crate::engine::Renderer::RendererArguments;
 use clap::{App, Arg};
-use rustache::Render;
-use std::env;
-use std::fs::File;
-use std::io::{Cursor, Read};
-use std::path::{Path, PathBuf};
+
+
+
+
+use std::path::{PathBuf};
 
 fn main() {
     let matches = App::new("IMC Rust")
@@ -91,7 +91,7 @@ fn main() {
     println!("      .. {:?}", ctx.message_group);
 
     // render IMC messages
-    let mut rnd_args: RendererArguments = RendererArguments {
+    let rnd_args: RendererArguments = RendererArguments {
         templates_dir: templates_path.as_path(),
         imc_output_dir: out_imc_path.as_path(),
     };
@@ -117,7 +117,7 @@ fn main() {
         let msg_abbrev = ret.unwrap();
         println!(".. DEBUG rendering only {}", msg_abbrev);
 
-        let mut it = &mut ctx.messages.iter();
+        let it = &mut ctx.messages.iter();
         let mut found = false;
         let mut ret = it.next();
         while ret.is_some() && !found {
