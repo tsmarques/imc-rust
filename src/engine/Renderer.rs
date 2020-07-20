@@ -3,7 +3,7 @@ use crate::engine;
 use crate::engine::Types::ImcTypeEnum;
 use crate::engine::{Parser, Tokens, Types};
 use rustache::{Render, VecBuilder};
-use std::collections::{HashSet};
+use std::collections::HashSet;
 
 use std::fs::File;
 use std::io::{Cursor, Error, Read, Write};
@@ -76,8 +76,8 @@ fn render_fields<'a>(fields: &Vec<Tokens::Field>) -> Option<rustache::VecBuilder
             .insert("imc-message-field-type", format!("{}", field.ftype));
 
         let desc_ret = render_description(&field.desc);
-        if desc_ret.is_some() {
-            field_data = field_data.insert("imc-message-field-desc", desc_ret.unwrap());
+        if let Some(value) = desc_ret {
+            field_data = field_data.insert("imc-message-field-desc", value);
         }
 
         data = data.push(field_data);
@@ -155,10 +155,9 @@ pub fn render_imc_imports<'a>(
     let mut group_imports: HashSet<String> = HashSet::new();
 
     // import trait / group
-    let ret_group = ctx.message_group.get(msg.abbrev.clone().as_str());
-    if ret_group.is_some() {
+    if let Some(value) = ctx.message_group.get(msg.abbrev.clone().as_str()) {
         has_imports = true;
-        group_imports.insert(ret_group.unwrap().clone());
+        group_imports.insert(value.clone());
     }
 
     // collect message fields
@@ -170,11 +169,13 @@ pub fn render_imc_imports<'a>(
                     Some(v) => {
                         has_imports = true;
 
-                        let ret_group = ctx.message_groups.get(v.as_str());
-                        if ret_group.is_some() {
-                            group_imports.insert(ret_group.unwrap().clone());
-                        } else {
-                            imc_imports.insert(v.clone());
+                        match ctx.message_groups.get(v.as_str()) {
+                            None => {
+                                imc_imports.insert(v.clone());
+                            }
+                            Some(_value) => {
+                                group_imports.insert(_value.clone());
+                            }
                         }
                     }
                 }
@@ -270,8 +271,8 @@ pub fn render_dynamic_serialization<'a>(
     let mut data = rustache::VecBuilder::new();
     let mut is_empty = true;
     for field in fields {
-        let ser_str = rustache::HashBuilder::new()
-            .insert("field-abbrev", field.abbrev.clone().to_string());
+        let ser_str =
+            rustache::HashBuilder::new().insert("field-abbrev", field.abbrev.clone().to_string());
         match field.ftype.type_enum {
             ImcTypeEnum::PlainText | ImcTypeEnum::Raw => {
                 is_empty = false;
@@ -409,9 +410,8 @@ pub fn render_message(
     let mut data = rustache::HashBuilder::new();
 
     // description
-    let desc_ret = render_description(&msg.desc);
-    if desc_ret.is_some() {
-        data = data.insert("imc-message-desc", desc_ret.unwrap());
+    if let Some(value) = render_description(&msg.desc) {
+        data = data.insert("imc-message-desc", value);
     }
 
     data = data
@@ -423,18 +423,16 @@ pub fn render_message(
         );
 
     // message group
-    let group = ctx.message_group.get(msg.abbrev.clone().as_str());
-    if group.is_some() {
+    if let Some(value) = ctx.message_group.get(msg.abbrev.clone().as_str()) {
         data = data
             .insert("imc-has-message-group", true)
             .insert("imc_message_abbrev", msg.abbrev.clone())
-            .insert("imc-group-abbrev", group.unwrap().clone());
+            .insert("imc-group-abbrev", value.clone());
     }
 
     // fields
-    let mut ret = render_fields(&msg.fields);
-    if ret.is_some() {
-        data = data.insert("imc-message-fields", ret.unwrap());
+    if let Some(value) = render_fields(&msg.fields) {
+        data = data.insert("imc-message-fields", value);
         // fields' initialization
         data = data.insert(
             "imc-message-fields-init",
@@ -454,9 +452,8 @@ pub fn render_message(
         );
 
         // imports
-        let imports_ret = render_imc_imports(&msg, &ctx);
-        if imports_ret.is_some() {
-            data = data.insert("imc-has-message-imports", imports_ret.unwrap());
+        if let Some(value) = render_imc_imports(&msg, &ctx) {
+            data = data.insert("imc-has-message-imports", value);
         }
 
         // fixed serialization size
@@ -477,9 +474,8 @@ pub fn render_message(
     }
 
     // enumerator
-    ret = render_enums(&msg.fields);
-    if ret.is_some() {
-        data = data.insert("imc_message_enums", ret.unwrap());
+    if let Some(value) = render_enums(&msg.fields) {
+        data = data.insert("imc_message_enums", value);
     }
 
     let mut out = Cursor::new(Vec::new());
