@@ -1,3 +1,5 @@
+#![allow(non_snake_case)]
+
 pub mod Header;
 pub mod Message;
 pub mod MessageGroup;
@@ -216,14 +218,26 @@ pub const DUNE_IMC_VERSION: &'static str = "5.4.24";
 // IMC Synchronization number
 pub const DUNE_IMC_CONST_SYNC: u16 = 0xFE54;
 
+// Reversed synchronization number.
+pub const DUNE_IMC_CONST_SYNC_REV: u16 = 0x54FE;
+
 // IMC's header size
-pub const IMC_CONST_HEADER_SIZE: u8 = 0;
+pub const IMC_CONST_HEADER_SIZE: u8 = 20;
 
 // IMC's footer size
-pub const IMC_CONST_FOOTER_SIZE: u8 = 0;
+pub const IMC_CONST_FOOTER_SIZE: u8 = 2;
 
 // Unknown entity identifier.
 pub const IMC_CONST_UNK_EID: u8 = 255;
+
+// Identification number of the null message.
+pub const DUNE_IMC_CONST_NULL_ID: u16 = 65535;
+
+// Maximum message data size.
+pub const DUNE_IMC_CONST_MAX_SIZE: usize = 65535;
+
+// System entity identifier.
+pub const DUNE_IMC_CONST_SYS_EID: u8 = 0;
 
 pub mod utils {
     use std::time::{SystemTime, UNIX_EPOCH};

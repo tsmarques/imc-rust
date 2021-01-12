@@ -5,9 +5,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DesiredZ::DesiredZ;
-
 use crate::DesiredSpeed::DesiredSpeed;
+
+use crate::DesiredZ::DesiredZ;
 
 pub enum FlagsEnum {
     // Use Location Reference
