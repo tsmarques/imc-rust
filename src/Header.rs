@@ -57,6 +57,8 @@ impl Header {
             _dst_ent: Default::default(),
         };
 
+        header._mgid = msg_id;
+
         header
     }
 
