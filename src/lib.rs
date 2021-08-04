@@ -4,6 +4,8 @@ pub mod Header;
 pub mod Message;
 pub mod MessageGroup;
 
+pub type MessageList<T> = Vec<Option<Box<T>>>;
+
 pub mod Abort;
 pub mod Aborted;
 pub mod Acceleration;

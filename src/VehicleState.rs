@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -47,6 +49,7 @@ impl FlagsEnum {
 }
 
 /// External control is active.
+#[derive(Default)]
 pub struct VehicleState {
     /// IMC Header
     pub header: Header,
@@ -156,9 +159,7 @@ impl Message for VehicleState {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op_mode);
         bfr.put_u8(self._error_count);
         serialize_bytes!(bfr, self._error_ents.as_bytes());
@@ -169,7 +170,5 @@ impl Message for VehicleState {
         bfr.put_u8(self._flags);
         serialize_bytes!(bfr, self._last_error.as_bytes());
         bfr.put_f64_le(self._last_error_time);
-
-        serialize_footer(bfr);
     }
 }

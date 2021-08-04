@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -7,6 +9,7 @@ use crate::Header::Header;
 
 /// This messages is used to record system activity parameters. These
 /// parameters are mainly used for used for maintenance purposes.
+#[derive(Default)]
 pub struct Tachograph {
     /// IMC Header
     pub header: Header,
@@ -146,9 +149,7 @@ impl Message for Tachograph {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f64_le(self._timestamp_last_service);
         bfr.put_f32_le(self._time_next_service);
         bfr.put_f32_le(self._time_motor_next_service);
@@ -165,7 +166,5 @@ impl Message for Tachograph {
         bfr.put_i16_le(self._rpm_min);
         bfr.put_i16_le(self._rpm_max);
         bfr.put_f32_le(self._depth_max);
-
-        serialize_footer(bfr);
     }
 }

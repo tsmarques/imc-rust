@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -7,6 +9,7 @@ use crate::Header::Header;
 
 use crate::TrexAttribute::TrexAttribute;
 
+#[derive(Default)]
 pub struct TrexToken {
     /// IMC Header
     pub header: Header,
@@ -15,7 +18,7 @@ pub struct TrexToken {
 
     pub _predicate: String,
 
-    pub _attributes: Vec<Box<TrexAttribute>>,
+    pub _attributes: MessageList<TrexAttribute>,
 }
 
 impl TrexToken {
@@ -25,7 +28,7 @@ impl TrexToken {
 
             _timeline: Default::default(),
             _predicate: Default::default(),
-            _attributes: Default::default(),
+            _attributes: vec![],
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -51,7 +54,13 @@ impl Message for TrexToken {
         self._predicate = Default::default();
 
         for msg in self._attributes.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
     }
 
@@ -66,22 +75,29 @@ impl Message for TrexToken {
 
         dyn_size += self._predicate.len() + 2;
 
-        for msg in &self._attributes {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._attributes.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._timeline.as_bytes());
         serialize_bytes!(bfr, self._predicate.as_bytes());
         for msg in self._attributes.iter() {
-            msg.serialize(bfr);
-        }
+            match msg {
+                None => {}
 
-        serialize_footer(bfr);
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
+        }
     }
 }

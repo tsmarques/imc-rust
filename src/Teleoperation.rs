@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -13,6 +15,7 @@ impl Maneuver for Teleoperation {}
 /// The Teleoperation Maneuver lets the vehicle be controlled by an
 /// external human operator.
 /// message-group: Maneuver
+#[derive(Default)]
 pub struct Teleoperation {
     /// IMC Header
     pub header: Header,
@@ -62,11 +65,7 @@ impl Message for Teleoperation {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._custom.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

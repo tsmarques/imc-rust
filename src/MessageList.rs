@@ -2,22 +2,12 @@ use crate::Message::Message;
 use std::option::Iter;
 use std::slice::IterMut;
 
-pub struct MessageList<T>
+#[derive(Default)]
+pub struct MessageList<T: ?Sized>
 where
     T: Message,
 {
     _list: Vec<Option<Box<T>>>,
-}
-
-impl<T> Default for MessageList<T>
-where
-    T: Message,
-{
-    fn default() -> Self {
-        Self {
-            _list: Default::default(),
-        }
-    }
 }
 
 impl<T> MessageList<T>

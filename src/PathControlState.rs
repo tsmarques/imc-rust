@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -33,6 +35,7 @@ impl FlagsEnum {
 /// Indicates that loitering, if active, is being done
 /// counter-clockwise. Otherwise, clockwise loitering should be
 /// assumed.
+#[derive(Default)]
 pub struct PathControlState {
     /// IMC Header
     pub header: Header,
@@ -196,9 +199,7 @@ impl Message for PathControlState {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u32_le(self._path_ref);
         bfr.put_f64_le(self._start_lat);
         bfr.put_f64_le(self._start_lon);
@@ -218,7 +219,5 @@ impl Message for PathControlState {
         bfr.put_f32_le(self._vz);
         bfr.put_f32_le(self._course_error);
         bfr.put_u16_le(self._eta);
-
-        serialize_footer(bfr);
     }
 }

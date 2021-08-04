@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -8,6 +10,7 @@ use crate::Header::Header;
 use crate::PlanDBInformation::PlanDBInformation;
 
 /// Characterizes the state of the entire plan database.
+#[derive(Default)]
 pub struct PlanDBState {
     /// IMC Header
     pub header: Header,
@@ -34,7 +37,7 @@ pub struct PlanDBState {
     pub _md5: Vec<u8>,
 
     /// Individual information for plans.
-    pub _plans_info: Vec<Box<PlanDBInformation>>,
+    pub _plans_info: MessageList<PlanDBInformation>,
 }
 
 impl PlanDBState {
@@ -48,7 +51,7 @@ impl PlanDBState {
             _change_sid: Default::default(),
             _change_sname: Default::default(),
             _md5: Default::default(),
-            _plans_info: Default::default(),
+            _plans_info: vec![],
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -82,7 +85,13 @@ impl Message for PlanDBState {
         self._md5 = Default::default();
 
         for msg in self._plans_info.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
     }
 
@@ -97,16 +106,19 @@ impl Message for PlanDBState {
 
         dyn_size += self._md5.len() + 2;
 
-        for msg in &self._plans_info {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._plans_info.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._plan_count);
         bfr.put_u32_le(self._plan_size);
         bfr.put_f64_le(self._change_time);
@@ -114,9 +126,13 @@ impl Message for PlanDBState {
         serialize_bytes!(bfr, self._change_sname.as_bytes());
         serialize_bytes!(bfr, self._md5.as_slice());
         for msg in self._plans_info.iter() {
-            msg.serialize(bfr);
-        }
+            match msg {
+                None => {}
 
-        serialize_footer(bfr);
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
+        }
     }
 }

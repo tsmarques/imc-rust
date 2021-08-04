@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -36,6 +38,7 @@ impl Maneuver for CompassCalibration {}
 /// The vehicle cirlcles around a specific waypoint with a variable Z
 /// reference between a minimum and maximum value.
 /// message-group: Maneuver
+#[derive(Default)]
 pub struct CompassCalibration {
     /// IMC Header
     pub header: Header,
@@ -159,9 +162,7 @@ impl Message for CompassCalibration {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._timeout);
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
@@ -175,7 +176,5 @@ impl Message for CompassCalibration {
         bfr.put_f32_le(self._radius);
         bfr.put_u8(self._direction);
         serialize_bytes!(bfr, self._custom.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

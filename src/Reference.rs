@@ -1,13 +1,15 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DesiredSpeed::DesiredSpeed;
-
 use crate::DesiredZ::DesiredZ;
+
+use crate::DesiredSpeed::DesiredSpeed;
 
 pub enum FlagsEnum {
     // Use Location Reference
@@ -40,6 +42,7 @@ impl FlagsEnum {
     }
 }
 
+#[derive(Default)]
 pub struct Reference {
     /// IMC Header
     pub header: Header,
@@ -133,24 +136,12 @@ impl Message for Reference {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._flags);
-        match &self._speed {
-            Some(field) => field.serialize(bfr),
-
-            None => {}
-        };
-        match &self._z {
-            Some(field) => field.serialize(bfr),
-
-            None => {}
-        };
+        serialize_inline_message!(self._speed, bfr);
+        serialize_inline_message!(self._z, bfr);
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
         bfr.put_f32_le(self._radius);
-
-        serialize_footer(bfr);
     }
 }

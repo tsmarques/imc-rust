@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -7,6 +9,7 @@ use crate::Header::Header;
 
 /// This message contains the WGS-84 position of a target computed using
 /// USBL.
+#[derive(Default)]
 pub struct UsblFixExtended {
     /// IMC Header
     pub header: Header,
@@ -87,16 +90,12 @@ impl Message for UsblFixExtended {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._target.as_bytes());
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
         bfr.put_u8(self._z_units);
         bfr.put_f32_le(self._z);
         bfr.put_f32_le(self._accuracy);
-
-        serialize_footer(bfr);
     }
 }

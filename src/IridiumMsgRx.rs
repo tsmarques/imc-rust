@@ -1,10 +1,13 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[derive(Default)]
 pub struct IridiumMsgRx {
     /// IMC Header
     pub header: Header,
@@ -78,15 +81,11 @@ impl Message for IridiumMsgRx {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._origin.as_bytes());
         bfr.put_f64_le(self._htime);
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
         serialize_bytes!(bfr, self._data.as_slice());
-
-        serialize_footer(bfr);
     }
 }

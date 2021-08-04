@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// Location of a specific device in the system infrastructure.
+#[derive(Default)]
 pub struct DeviceState {
     /// IMC Header
     pub header: Header,
@@ -83,16 +86,12 @@ impl Message for DeviceState {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._x);
         bfr.put_f32_le(self._y);
         bfr.put_f32_le(self._z);
         bfr.put_f32_le(self._phi);
         bfr.put_f32_le(self._theta);
         bfr.put_f32_le(self._psi);
-
-        serialize_footer(bfr);
     }
 }

@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -43,6 +45,7 @@ impl OperationEnum {
 /// Some error has occurred while executing the command. The
 /// error can be found in the 'params' tuplelist (under the
 /// key 'error').
+#[derive(Default)]
 pub struct PlanGeneration {
     /// IMC Header
     pub header: Header,
@@ -113,14 +116,10 @@ impl Message for PlanGeneration {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._cmd);
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._plan_id.as_bytes());
         serialize_bytes!(bfr, self._params.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

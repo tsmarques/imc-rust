@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -7,6 +9,7 @@ use crate::Header::Header;
 
 /// Request entities to report their state. Entities should respond
 /// by issuing an appropriate EntityState message.
+#[derive(Default)]
 pub struct QueryEntityState {
     /// IMC Header
     pub header: Header,
@@ -47,9 +50,5 @@ impl Message for QueryEntityState {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
-        serialize_footer(bfr);
-    }
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}
 }

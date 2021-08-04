@@ -1,15 +1,17 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::PlanVariable::PlanVariable;
+use crate::PlanManeuver::PlanManeuver;
 
 use crate::PlanTransition::PlanTransition;
 
-use crate::PlanManeuver::PlanManeuver;
+use crate::PlanVariable::PlanVariable;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in
@@ -20,6 +22,7 @@ use crate::PlanManeuver::PlanManeuver;
 ///  
 /// See the :ref:`PlanManeuver` message for details on maneuver
 /// specification.
+#[derive(Default)]
 pub struct PlanSpecification {
     /// IMC Header
     pub header: Header,
@@ -34,24 +37,24 @@ pub struct PlanSpecification {
     pub _vnamespace: String,
 
     /// Plan variables.
-    pub _variables: Vec<Box<PlanVariable>>,
+    pub _variables: MessageList<PlanVariable>,
 
     /// Indicates the id of the starting maneuver for this plan.
     pub _start_man_id: String,
 
     /// List of maneuver specifications.
-    pub _maneuvers: Vec<Box<PlanManeuver>>,
+    pub _maneuvers: MessageList<PlanManeuver>,
 
     /// List of maneuver specifications.
-    pub _transitions: Vec<Box<PlanTransition>>,
+    pub _transitions: MessageList<PlanTransition>,
 
     /// Contains an optionally defined 'MessageList' for actions fired
     /// on plan activation.
-    pub _start_actions: Vec<Box<dyn Message>>,
+    pub _start_actions: MessageList<dyn Message>,
 
     /// Contains an optionally defined 'MessageList' for actions fired
     /// on plan termination.
-    pub _end_actions: Vec<Box<dyn Message>>,
+    pub _end_actions: MessageList<dyn Message>,
 }
 
 impl PlanSpecification {
@@ -62,12 +65,12 @@ impl PlanSpecification {
             _plan_id: Default::default(),
             _description: Default::default(),
             _vnamespace: Default::default(),
-            _variables: Default::default(),
+            _variables: vec![],
             _start_man_id: Default::default(),
-            _maneuvers: Default::default(),
-            _transitions: Default::default(),
-            _start_actions: Default::default(),
-            _end_actions: Default::default(),
+            _maneuvers: vec![],
+            _transitions: vec![],
+            _start_actions: vec![],
+            _end_actions: vec![],
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -95,25 +98,55 @@ impl Message for PlanSpecification {
         self._vnamespace = Default::default();
 
         for msg in self._variables.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
 
         self._start_man_id = Default::default();
 
         for msg in self._maneuvers.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
 
         for msg in self._transitions.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
 
         for msg in self._start_actions.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
 
         for msg in self._end_actions.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
     }
 
@@ -130,54 +163,105 @@ impl Message for PlanSpecification {
 
         dyn_size += self._vnamespace.len() + 2;
 
-        for msg in &self._variables {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._variables.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size += self._start_man_id.len() + 2;
 
-        for msg in &self._maneuvers {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._maneuvers.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
-        for msg in &self._transitions {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._transitions.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
-        for msg in &self._start_actions {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._start_actions.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
-        for msg in &self._end_actions {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._end_actions.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._plan_id.as_bytes());
         serialize_bytes!(bfr, self._description.as_bytes());
         serialize_bytes!(bfr, self._vnamespace.as_bytes());
         for msg in self._variables.iter() {
-            msg.serialize(bfr);
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
         }
         serialize_bytes!(bfr, self._start_man_id.as_bytes());
         for msg in self._maneuvers.iter() {
-            msg.serialize(bfr);
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
         }
         for msg in self._transitions.iter() {
-            msg.serialize(bfr);
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
         }
         for msg in self._start_actions.iter() {
-            msg.serialize(bfr);
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
         }
         for msg in self._end_actions.iter() {
-            msg.serialize(bfr);
-        }
+            match msg {
+                None => {}
 
-        serialize_footer(bfr);
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
+        }
     }
 }

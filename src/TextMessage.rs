@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// A text message has been received.
+#[derive(Default)]
 pub struct TextMessage {
     /// IMC Header
     pub header: Header,
@@ -63,12 +66,8 @@ impl Message for TextMessage {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._origin.as_bytes());
         serialize_bytes!(bfr, self._text.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

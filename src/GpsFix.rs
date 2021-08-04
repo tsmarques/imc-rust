@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -68,6 +70,7 @@ impl TypeEnum {
 }
 
 /// Simulated solution.
+#[derive(Default)]
 pub struct GpsFix {
     /// IMC Header
     pub header: Header,
@@ -206,9 +209,7 @@ impl Message for GpsFix {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._validity);
         bfr.put_u8(self._type);
         bfr.put_u16_le(self._utc_year);
@@ -225,7 +226,5 @@ impl Message for GpsFix {
         bfr.put_f32_le(self._vdop);
         bfr.put_f32_le(self._hacc);
         bfr.put_f32_le(self._vacc);
-
-        serialize_footer(bfr);
     }
 }

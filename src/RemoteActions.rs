@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -8,6 +10,7 @@ use crate::Header::Header;
 /// This message is used to send a periodic update of values for
 /// each remote action. If the action is not on the list the assumed
 /// value is 0.
+#[derive(Default)]
 pub struct RemoteActions {
     /// IMC Header
     pub header: Header,
@@ -57,11 +60,7 @@ impl Message for RemoteActions {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._actions.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

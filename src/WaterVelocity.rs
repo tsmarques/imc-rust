@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -26,6 +28,7 @@ impl ValidityEnum {
 
 /// Vector quantifying the direction and magnitude of the measured
 /// velocity relative to the water that a device is exposed to.
+#[derive(Default)]
 pub struct WaterVelocity {
     /// IMC Header
     pub header: Header,
@@ -92,14 +95,10 @@ impl Message for WaterVelocity {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._validity);
         bfr.put_f64_le(self._x);
         bfr.put_f64_le(self._y);
         bfr.put_f64_le(self._z);
-
-        serialize_footer(bfr);
     }
 }

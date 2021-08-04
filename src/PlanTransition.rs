@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -10,6 +12,7 @@ use crate::Header::Header;
 /// signal the transition, the maneuver that should be started as a
 /// result, and an optional set of actions triggered by the
 /// transition.
+#[derive(Default)]
 pub struct PlanTransition {
     /// IMC Header
     pub header: Header,
@@ -31,7 +34,7 @@ pub struct PlanTransition {
     pub _conditions: String,
 
     /// Messages processed when the transition is triggered.
-    pub _actions: Vec<Box<dyn Message>>,
+    pub _actions: MessageList<dyn Message>,
 }
 
 impl PlanTransition {
@@ -42,7 +45,7 @@ impl PlanTransition {
             _source_man: Default::default(),
             _dest_man: Default::default(),
             _conditions: Default::default(),
-            _actions: Default::default(),
+            _actions: vec![],
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -70,7 +73,13 @@ impl Message for PlanTransition {
         self._conditions = Default::default();
 
         for msg in self._actions.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
     }
 
@@ -87,23 +96,30 @@ impl Message for PlanTransition {
 
         dyn_size += self._conditions.len() + 2;
 
-        for msg in &self._actions {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._actions.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._source_man.as_bytes());
         serialize_bytes!(bfr, self._dest_man.as_bytes());
         serialize_bytes!(bfr, self._conditions.as_bytes());
         for msg in self._actions.iter() {
-            msg.serialize(bfr);
-        }
+            match msg {
+                None => {}
 
-        serialize_footer(bfr);
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
+        }
     }
 }

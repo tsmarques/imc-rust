@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -31,6 +33,7 @@ impl TypeEnum {
 }
 
 /// Human readable message reporting an event of interest.
+#[derive(Default)]
 pub struct LogBookEntry {
     /// IMC Header
     pub header: Header,
@@ -100,14 +103,10 @@ impl Message for LogBookEntry {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._type);
         bfr.put_f64_le(self._htime);
         serialize_bytes!(bfr, self._context.as_bytes());
         serialize_bytes!(bfr, self._text.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

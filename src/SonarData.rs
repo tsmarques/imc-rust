@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -28,6 +30,7 @@ impl TypeEnum {
 
 /// This message contains the data acquired by a single sonar
 /// measurement.
+#[derive(Default)]
 pub struct SonarData {
     /// IMC Header
     pub header: Header,
@@ -52,7 +55,7 @@ pub struct SonarData {
     pub _scale_factor: f32,
 
     /// Beam configuration of the device.
-    pub _beam_config: Vec<Box<BeamConfig>>,
+    pub _beam_config: MessageList<BeamConfig>,
 
     /// Data acquired by the measurement.
     pub _data: Vec<u8>,
@@ -69,7 +72,7 @@ impl SonarData {
             _max_range: Default::default(),
             _bits_per_point: Default::default(),
             _scale_factor: Default::default(),
-            _beam_config: Default::default(),
+            _beam_config: vec![],
             _data: Default::default(),
         };
 
@@ -104,7 +107,13 @@ impl Message for SonarData {
         self._scale_factor = Default::default();
 
         for msg in self._beam_config.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
 
         self._data = Default::default();
@@ -117,8 +126,13 @@ impl Message for SonarData {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in &self._beam_config {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._beam_config.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size += self._data.len() + 2;
@@ -126,9 +140,7 @@ impl Message for SonarData {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._type);
         bfr.put_u32_le(self._frequency);
         bfr.put_u16_le(self._min_range);
@@ -136,10 +148,14 @@ impl Message for SonarData {
         bfr.put_u8(self._bits_per_point);
         bfr.put_f32_le(self._scale_factor);
         for msg in self._beam_config.iter() {
-            msg.serialize(bfr);
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
         }
         serialize_bytes!(bfr, self._data.as_slice());
-
-        serialize_footer(bfr);
     }
 }

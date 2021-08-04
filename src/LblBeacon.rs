@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// Position and configuration of an LBL transponder (beacon).
+#[derive(Default)]
 pub struct LblBeacon {
     /// IMC Header
     pub header: Header,
@@ -91,9 +94,7 @@ impl Message for LblBeacon {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._beacon.as_bytes());
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
@@ -101,7 +102,5 @@ impl Message for LblBeacon {
         bfr.put_u8(self._query_channel);
         bfr.put_u8(self._reply_channel);
         bfr.put_u8(self._transponder_delay);
-
-        serialize_footer(bfr);
     }
 }

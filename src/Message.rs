@@ -54,7 +54,7 @@ pub trait Message {
 
     fn fixed_serialization_size(&self) -> usize;
     fn dynamic_serialization_size(&self) -> usize;
-    fn serialize(&self, bfr: &mut bytes::BytesMut);
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut);
 
     fn payload_serialization_size(&self) -> usize {
         self.fixed_serialization_size() + self.dynamic_serialization_size()

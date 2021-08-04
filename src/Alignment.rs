@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -17,6 +19,7 @@ impl Maneuver for Alignment {}
 /// Mandatory parameters defined for a &quot;Launch&quot; are
 /// timeout, speed and speed units.
 /// message-group: Maneuver
+#[derive(Default)]
 pub struct Alignment {
     /// IMC Header
     pub header: Header,
@@ -96,16 +99,12 @@ impl Message for Alignment {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._timeout);
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
         bfr.put_f32_le(self._speed);
         bfr.put_u8(self._speed_units);
         serialize_bytes!(bfr, self._custom.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

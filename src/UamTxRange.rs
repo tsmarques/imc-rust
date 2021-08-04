@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// Request an acoustic modem driver to measure the distance to another system.
+#[derive(Default)]
 pub struct UamTxRange {
     /// IMC Header
     pub header: Header,
@@ -69,13 +72,9 @@ impl Message for UamTxRange {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._seq);
         serialize_bytes!(bfr, self._sys_dst.as_bytes());
         bfr.put_f32_le(self._timeout);
-
-        serialize_footer(bfr);
     }
 }

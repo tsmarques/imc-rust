@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// Acoustic range measurement.
+#[derive(Default)]
 pub struct UamRxRange {
     /// IMC Header
     pub header: Header,
@@ -67,13 +70,9 @@ impl Message for UamRxRange {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._seq);
         serialize_bytes!(bfr, self._sys.as_bytes());
         bfr.put_f32_le(self._value);
-
-        serialize_footer(bfr);
     }
 }

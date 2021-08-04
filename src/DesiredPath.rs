@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -46,6 +48,7 @@ impl ControlCommand for DesiredPath {}
 
 /// Indicates that takeoff should be done before going to the end position.
 /// message-group: ControlCommand
+#[derive(Default)]
 pub struct DesiredPath {
     /// IMC Header
     pub header: Header,
@@ -174,9 +177,7 @@ impl Message for DesiredPath {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u32_le(self._path_ref);
         bfr.put_f64_le(self._start_lat);
         bfr.put_f64_le(self._start_lon);
@@ -190,7 +191,5 @@ impl Message for DesiredPath {
         bfr.put_u8(self._speed_units);
         bfr.put_f32_le(self._lradius);
         bfr.put_u8(self._flags);
-
-        serialize_footer(bfr);
     }
 }

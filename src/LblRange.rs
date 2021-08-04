@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -9,6 +11,7 @@ use crate::Header::Header;
 /// notifies that a new range was received from one of the acoustics
 /// transponders. The message fields are used to identify the range
 /// value and the transponder name.
+#[derive(Default)]
 pub struct LblRange {
     /// IMC Header
     pub header: Header,
@@ -63,12 +66,8 @@ impl Message for LblRange {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._id);
         bfr.put_f32_le(self._range);
-
-        serialize_footer(bfr);
     }
 }

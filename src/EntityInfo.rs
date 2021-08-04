@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// This message describes an entity.
+#[derive(Default)]
 pub struct EntityInfo {
     /// IMC Header
     pub header: Header,
@@ -82,15 +85,11 @@ impl Message for EntityInfo {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._id);
         serialize_bytes!(bfr, self._label.as_bytes());
         serialize_bytes!(bfr, self._component.as_bytes());
         bfr.put_u16_le(self._act_time);
         bfr.put_u16_le(self._deact_time);
-
-        serialize_footer(bfr);
     }
 }

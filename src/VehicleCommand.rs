@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -52,6 +54,7 @@ impl CommandEnum {
 }
 
 /// Start calibrating vehicle.
+#[derive(Default)]
 pub struct VehicleCommand {
     /// IMC Header
     pub header: Header,
@@ -141,20 +144,12 @@ impl Message for VehicleCommand {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._type);
         bfr.put_u16_le(self._request_id);
         bfr.put_u8(self._command);
-        match &self._maneuver {
-            Some(field) => field.serialize(bfr),
-
-            None => {}
-        };
+        serialize_inline_message!(self._maneuver, bfr);
         bfr.put_u16_le(self._calib_time);
         serialize_bytes!(bfr, self._info.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

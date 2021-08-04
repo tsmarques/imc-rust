@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -7,6 +9,7 @@ use crate::Header::Header;
 
 /// This message is used to report the perceived link quality to other
 /// acoustic peers.
+#[derive(Default)]
 pub struct AcousticLink {
     /// IMC Header
     pub header: Header,
@@ -76,13 +79,9 @@ impl Message for AcousticLink {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._peer.as_bytes());
         bfr.put_f32_le(self._rssi);
         bfr.put_u16_le(self._integrity);
-
-        serialize_footer(bfr);
     }
 }

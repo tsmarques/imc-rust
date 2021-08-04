@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -26,6 +28,7 @@ impl ActiononthevehicleoperationallimitsEnum {
 
 /// Vehicle opertional limits.
 /// For aircraft this should represent the flight envelope and the dynamic contraints.
+#[derive(Default)]
 pub struct VehicleOperationalLimits {
     /// IMC Header
     pub header: Header,
@@ -180,9 +183,7 @@ impl Message for VehicleOperationalLimits {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
         bfr.put_f32_le(self._speed_min);
         bfr.put_f32_le(self._speed_max);
@@ -201,7 +202,5 @@ impl Message for VehicleOperationalLimits {
         bfr.put_f32_le(self._rpm_min);
         bfr.put_f32_le(self._rpm_max);
         bfr.put_f32_le(self._rpm_rate_max);
-
-        serialize_footer(bfr);
     }
 }

@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -8,6 +10,7 @@ use crate::Header::Header;
 use crate::Announce::Announce;
 
 /// This message is sent by the TREX task which gives further information to a TREX instance about connected IMC nodes
+#[derive(Default)]
 pub struct VehicleLinks {
     /// IMC Header
     pub header: Header,
@@ -16,7 +19,7 @@ pub struct VehicleLinks {
     pub _localname: String,
 
     /// A list of Announce messages with last announces heard
-    pub _links: Vec<Box<Announce>>,
+    pub _links: MessageList<Announce>,
 }
 
 impl VehicleLinks {
@@ -25,7 +28,7 @@ impl VehicleLinks {
             header: Header::new(650),
 
             _localname: Default::default(),
-            _links: Default::default(),
+            _links: vec![],
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -49,7 +52,13 @@ impl Message for VehicleLinks {
         self._localname = Default::default();
 
         for msg in self._links.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
     }
 
@@ -62,21 +71,28 @@ impl Message for VehicleLinks {
 
         dyn_size += self._localname.len() + 2;
 
-        for msg in &self._links {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._links.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._localname.as_bytes());
         for msg in self._links.iter() {
-            msg.serialize(bfr);
-        }
+            match msg {
+                None => {}
 
-        serialize_footer(bfr);
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
+        }
     }
 }

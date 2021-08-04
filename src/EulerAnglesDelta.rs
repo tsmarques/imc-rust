@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// Component of incremetal orientation vector over a period of time.
+#[derive(Default)]
 pub struct EulerAnglesDelta {
     /// IMC Header
     pub header: Header,
@@ -77,15 +80,11 @@ impl Message for EulerAnglesDelta {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f64_le(self._time);
         bfr.put_f64_le(self._x);
         bfr.put_f64_le(self._y);
         bfr.put_f64_le(self._z);
         bfr.put_f32_le(self._timestep);
-
-        serialize_footer(bfr);
     }
 }

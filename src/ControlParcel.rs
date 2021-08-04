@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// Report of PID control parcels.
+#[derive(Default)]
 pub struct ControlParcel {
     /// IMC Header
     pub header: Header,
@@ -71,14 +74,10 @@ impl Message for ControlParcel {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._p);
         bfr.put_f32_le(self._i);
         bfr.put_f32_le(self._d);
         bfr.put_f32_le(self._a);
-
-        serialize_footer(bfr);
     }
 }

@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -46,6 +48,7 @@ impl ReasonEnum {
 /// The current DVL x-axis measurement is discarded
 /// because the the absolute value is above a
 /// configurable threshold.
+#[derive(Default)]
 pub struct DvlRejection {
     /// IMC Header
     pub header: Header,
@@ -123,14 +126,10 @@ impl Message for DvlRejection {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._type);
         bfr.put_u8(self._reason);
         bfr.put_f32_le(self._value);
         bfr.put_f32_le(self._timestep);
-
-        serialize_footer(bfr);
     }
 }

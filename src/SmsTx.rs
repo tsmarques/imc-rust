@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// Request to send SMS.
+#[derive(Default)]
 pub struct SmsTx {
     /// IMC Header
     pub header: Header,
@@ -75,14 +78,10 @@ impl Message for SmsTx {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u32_le(self._seq);
         serialize_bytes!(bfr, self._destination.as_bytes());
         bfr.put_u16_le(self._timeout);
         serialize_bytes!(bfr, self._data.as_slice());
-
-        serialize_footer(bfr);
     }
 }

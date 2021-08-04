@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -7,6 +9,7 @@ use crate::Header::Header;
 
 /// This message contains information, collected using USBL, about the
 /// bearing and elevation of a target.
+#[derive(Default)]
 pub struct UsblAnglesExtended {
     /// IMC Header
     pub header: Header,
@@ -104,9 +107,7 @@ impl Message for UsblAnglesExtended {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._target.as_bytes());
         bfr.put_f32_le(self._lbearing);
         bfr.put_f32_le(self._lelevation);
@@ -116,7 +117,5 @@ impl Message for UsblAnglesExtended {
         bfr.put_f32_le(self._theta);
         bfr.put_f32_le(self._psi);
         bfr.put_f32_le(self._accuracy);
-
-        serialize_footer(bfr);
     }
 }

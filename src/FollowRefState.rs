@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -60,6 +62,7 @@ impl ProximityEnum {
     }
 }
 
+#[derive(Default)]
 pub struct FollowRefState {
     /// IMC Header
     pub header: Header,
@@ -142,19 +145,11 @@ impl Message for FollowRefState {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._control_src);
         bfr.put_u8(self._control_ent);
-        match &self._reference {
-            Some(field) => field.serialize(bfr),
-
-            None => {}
-        };
+        serialize_inline_message!(self._reference, bfr);
         bfr.put_u8(self._state);
         bfr.put_u8(self._proximity);
-
-        serialize_footer(bfr);
     }
 }

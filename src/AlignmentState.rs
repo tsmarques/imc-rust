@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -40,6 +42,7 @@ impl StateEnum {
 }
 
 /// This message notifies the vehicle is ready for dead-reckoning missions.
+#[derive(Default)]
 pub struct AlignmentState {
     /// IMC Header
     pub header: Header,
@@ -87,11 +90,7 @@ impl Message for AlignmentState {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._state);
-
-        serialize_footer(bfr);
     }
 }

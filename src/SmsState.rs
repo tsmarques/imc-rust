@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -36,6 +38,7 @@ impl StateEnum {
     }
 }
 
+#[derive(Default)]
 pub struct SmsState {
     /// IMC Header
     pub header: Header,
@@ -96,13 +99,9 @@ impl Message for SmsState {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u32_le(self._seq);
         bfr.put_u8(self._state);
         serialize_bytes!(bfr, self._error.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

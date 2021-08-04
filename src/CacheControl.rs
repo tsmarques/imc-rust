@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -31,6 +33,7 @@ impl ControlOperationEnum {
 }
 
 /// Control caching of messages to persistent storage.
+#[derive(Default)]
 pub struct CacheControl {
     /// IMC Header
     pub header: Header,
@@ -103,17 +106,9 @@ impl Message for CacheControl {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._snapshot.as_bytes());
-        match &self._message {
-            Some(field) => field.serialize(bfr),
-
-            None => {}
-        };
-
-        serialize_footer(bfr);
+        serialize_inline_message!(self._message, bfr);
     }
 }

@@ -1,10 +1,13 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[derive(Default)]
 pub struct EntityMonitoringState {
     /// IMC Header
     pub header: Header,
@@ -103,9 +106,7 @@ impl Message for EntityMonitoringState {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._mcount);
         serialize_bytes!(bfr, self._mnames.as_bytes());
         bfr.put_u8(self._ecount);
@@ -114,7 +115,5 @@ impl Message for EntityMonitoringState {
         serialize_bytes!(bfr, self._cnames.as_bytes());
         serialize_bytes!(bfr, self._last_error.as_bytes());
         bfr.put_f64_le(self._last_error_time);
-
-        serialize_footer(bfr);
     }
 }

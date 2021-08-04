@@ -1,13 +1,15 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::BeamConfig::BeamConfig;
-
 use crate::DeviceState::DeviceState;
+
+use crate::BeamConfig::BeamConfig;
 
 pub enum ValidityEnum {
     // Invalid
@@ -26,6 +28,7 @@ impl ValidityEnum {
 }
 
 /// Measurement is invalid.
+#[derive(Default)]
 pub struct Distance {
     /// IMC Header
     pub header: Header,
@@ -34,10 +37,10 @@ pub struct Distance {
     pub _validity: u8,
 
     /// Device Location in the system.
-    pub _location: Vec<Box<DeviceState>>,
+    pub _location: MessageList<DeviceState>,
 
     /// Beam configuration of the device.
-    pub _beam_config: Vec<Box<BeamConfig>>,
+    pub _beam_config: MessageList<BeamConfig>,
 
     /// Measured distance.
     pub _value: f32,
@@ -49,8 +52,8 @@ impl Distance {
             header: Header::new(262),
 
             _validity: Default::default(),
-            _location: Default::default(),
-            _beam_config: Default::default(),
+            _location: vec![],
+            _beam_config: vec![],
             _value: Default::default(),
         };
 
@@ -75,11 +78,23 @@ impl Message for Distance {
         self._validity = Default::default();
 
         for msg in self._location.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
 
         for msg in self._beam_config.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
 
         self._value = Default::default();
@@ -92,29 +107,47 @@ impl Message for Distance {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in &self._location {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._location.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
-        for msg in &self._beam_config {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._beam_config.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._validity);
         for msg in self._location.iter() {
-            msg.serialize(bfr);
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
         }
         for msg in self._beam_config.iter() {
-            msg.serialize(bfr);
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
         }
         bfr.put_f32_le(self._value);
-
-        serialize_footer(bfr);
     }
 }

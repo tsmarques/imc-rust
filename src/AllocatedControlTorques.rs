@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// Control torques allocated to the actuators.
+#[derive(Default)]
 pub struct AllocatedControlTorques {
     /// IMC Header
     pub header: Header,
@@ -65,13 +68,9 @@ impl Message for AllocatedControlTorques {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f64_le(self._k);
         bfr.put_f64_le(self._m);
         bfr.put_f64_le(self._n);
-
-        serialize_footer(bfr);
     }
 }

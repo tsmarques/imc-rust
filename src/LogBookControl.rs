@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -30,6 +32,7 @@ impl CommandEnum {
 }
 
 /// Retrieve log book entries corresponding to errors.
+#[derive(Default)]
 pub struct LogBookControl {
     /// IMC Header
     pub header: Header,
@@ -42,7 +45,7 @@ pub struct LogBookControl {
     pub _htime: f64,
 
     /// Argument, currently used only for 'REPLY'.
-    pub _msg: Vec<Box<LogBookEntry>>,
+    pub _msg: MessageList<LogBookEntry>,
 }
 
 impl LogBookControl {
@@ -52,7 +55,7 @@ impl LogBookControl {
 
             _command: Default::default(),
             _htime: Default::default(),
-            _msg: Default::default(),
+            _msg: vec![],
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -78,7 +81,13 @@ impl Message for LogBookControl {
         self._htime = Default::default();
 
         for msg in self._msg.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
     }
 
@@ -89,22 +98,29 @@ impl Message for LogBookControl {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in &self._msg {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._msg.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._command);
         bfr.put_f64_le(self._htime);
         for msg in self._msg.iter() {
-            msg.serialize(bfr);
-        }
+            match msg {
+                None => {}
 
-        serialize_footer(bfr);
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -40,6 +42,7 @@ impl OperationEnum {
 /// it's devices at the time given in the field 'sched_time'. If
 /// the destination entity is the special entity '0' the whole
 /// system will power up.
+#[derive(Default)]
 pub struct PowerOperation {
     /// IMC Header
     pub header: Header,
@@ -99,13 +102,9 @@ impl Message for PowerOperation {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
         bfr.put_f32_le(self._time_remain);
         bfr.put_f64_le(self._sched_time);
-
-        serialize_footer(bfr);
     }
 }

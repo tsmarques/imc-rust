@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -8,6 +10,7 @@ use crate::Header::Header;
 use crate::LblBeacon::LblBeacon;
 
 /// LBL Beacon position estimate.
+#[derive(Default)]
 pub struct LblEstimate {
     /// IMC Header
     pub header: Header,
@@ -98,20 +101,12 @@ impl Message for LblEstimate {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
-        match &self._beacon {
-            Some(field) => field.serialize(bfr),
-
-            None => {}
-        };
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
+        serialize_inline_message!(self._beacon, bfr);
         bfr.put_f32_le(self._x);
         bfr.put_f32_le(self._y);
         bfr.put_f32_le(self._var_x);
         bfr.put_f32_le(self._var_y);
         bfr.put_f32_le(self._distance);
-
-        serialize_footer(bfr);
     }
 }

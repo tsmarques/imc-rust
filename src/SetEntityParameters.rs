@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -7,13 +9,14 @@ use crate::Header::Header;
 
 use crate::EntityParameter::EntityParameter;
 
+#[derive(Default)]
 pub struct SetEntityParameters {
     /// IMC Header
     pub header: Header,
 
     pub _name: String,
 
-    pub _params: Vec<Box<EntityParameter>>,
+    pub _params: MessageList<EntityParameter>,
 }
 
 impl SetEntityParameters {
@@ -22,7 +25,7 @@ impl SetEntityParameters {
             header: Header::new(804),
 
             _name: Default::default(),
-            _params: Default::default(),
+            _params: vec![],
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -46,7 +49,13 @@ impl Message for SetEntityParameters {
         self._name = Default::default();
 
         for msg in self._params.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
     }
 
@@ -59,21 +68,28 @@ impl Message for SetEntityParameters {
 
         dyn_size += self._name.len() + 2;
 
-        for msg in &self._params {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._params.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._name.as_bytes());
         for msg in self._params.iter() {
-            msg.serialize(bfr);
-        }
+            match msg {
+                None => {}
 
-        serialize_footer(bfr);
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
+        }
     }
 }

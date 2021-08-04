@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -30,6 +32,7 @@ impl AttributetypeEnum {
     }
 }
 
+#[derive(Default)]
 pub struct TrexAttribute {
     /// IMC Header
     pub header: Header,
@@ -100,14 +103,10 @@ impl Message for TrexAttribute {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._name.as_bytes());
         bfr.put_u8(self._attr_type);
         serialize_bytes!(bfr, self._min.as_bytes());
         serialize_bytes!(bfr, self._max.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

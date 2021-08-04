@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -25,6 +27,7 @@ impl OperationEnum {
 }
 
 /// Revert Actuation.
+#[derive(Default)]
 pub struct Brake {
     /// IMC Header
     pub header: Header,
@@ -72,11 +75,7 @@ impl Message for Brake {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
-
-        serialize_footer(bfr);
     }
 }

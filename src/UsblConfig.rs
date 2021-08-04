@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -27,6 +29,7 @@ impl OperationEnum {
 }
 
 /// Set the beacons configuration aboard the vehicle.
+#[derive(Default)]
 pub struct UsblConfig {
     /// IMC Header
     pub header: Header,
@@ -35,7 +38,7 @@ pub struct UsblConfig {
     pub _op: u8,
 
     /// A list of USBL modem configuration messages.
-    pub _modems: Vec<Box<UsblModem>>,
+    pub _modems: MessageList<UsblModem>,
 }
 
 impl UsblConfig {
@@ -44,7 +47,7 @@ impl UsblConfig {
             header: Header::new(902),
 
             _op: Default::default(),
-            _modems: Default::default(),
+            _modems: vec![],
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);
@@ -68,7 +71,13 @@ impl Message for UsblConfig {
         self._op = Default::default();
 
         for msg in self._modems.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
     }
 
@@ -79,21 +88,28 @@ impl Message for UsblConfig {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in &self._modems {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._modems.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
         for msg in self._modems.iter() {
-            msg.serialize(bfr);
-        }
+            match msg {
+                None => {}
 
-        serialize_footer(bfr);
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
+        }
     }
 }

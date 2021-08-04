@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -28,6 +30,7 @@ impl Maneuver for Rows {}
 
 /// Rows maneuver (i.e: lawn mower type maneuver)
 /// message-group: Maneuver
+#[derive(Default)]
 pub struct Rows {
     /// IMC Header
     pub header: Header,
@@ -168,9 +171,7 @@ impl Message for Rows {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._timeout);
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
@@ -187,7 +188,5 @@ impl Message for Rows {
         bfr.put_u8(self._alternation);
         bfr.put_u8(self._flags);
         serialize_bytes!(bfr, self._custom.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

@@ -1,10 +1,13 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[derive(Default)]
 pub struct MessagePart {
     /// IMC Header
     pub header: Header,
@@ -68,14 +71,10 @@ impl Message for MessagePart {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._uid);
         bfr.put_u8(self._frag_number);
         bfr.put_u8(self._num_frags);
         serialize_bytes!(bfr, self._data.as_slice());
-
-        serialize_footer(bfr);
     }
 }

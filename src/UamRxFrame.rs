@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -23,6 +25,7 @@ impl FlagsEnum {
 
 /// The data frame was transmitted to an acoustic modem other than
 /// the one the acoustic modem driver is controlling.
+#[derive(Default)]
 pub struct UamRxFrame {
     /// IMC Header
     pub header: Header,
@@ -96,14 +99,10 @@ impl Message for UamRxFrame {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._sys_src.as_bytes());
         serialize_bytes!(bfr, self._sys_dst.as_bytes());
         bfr.put_u8(self._flags);
         serialize_bytes!(bfr, self._data.as_slice());
-
-        serialize_footer(bfr);
     }
 }

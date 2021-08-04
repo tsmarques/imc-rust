@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -15,6 +17,7 @@ impl Maneuver for CustomManeuver {}
 /// settings of the maneuver are just its id, timeout and other
 /// settings encoded as a tuple list.
 /// message-group: Maneuver
+#[derive(Default)]
 pub struct CustomManeuver {
     /// IMC Header
     pub header: Header,
@@ -81,13 +84,9 @@ impl Message for CustomManeuver {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._timeout);
         serialize_bytes!(bfr, self._name.as_bytes());
         serialize_bytes!(bfr, self._custom.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

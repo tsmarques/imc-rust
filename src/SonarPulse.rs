@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// Information regarding a sent/received Sonar pulse.
+#[derive(Default)]
 pub struct SonarPulse {
     /// IMC Header
     pub header: Header,
@@ -71,14 +74,10 @@ impl Message for SonarPulse {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_i32_le(self._frequency);
         bfr.put_i32_le(self._pulse_length);
         bfr.put_i32_le(self._time_delay);
         bfr.put_i32_le(self._simulated_speed);
-
-        serialize_footer(bfr);
     }
 }

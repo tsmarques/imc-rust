@@ -1,6 +1,7 @@
 use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 use bytes::{BufMut, BytesMut, LittleEndian};
 
+#[derive(Default)]
 pub struct Header {
     /// The synchronization number marks the beginning of a packet.
     ///  

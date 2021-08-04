@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -7,6 +9,7 @@ use crate::Header::Header;
 
 /// Vector quantifying the direction and magnitude of the measured
 /// angular velocity that a device is exposed to.
+#[derive(Default)]
 pub struct AngularVelocity {
     /// IMC Header
     pub header: Header,
@@ -72,14 +75,10 @@ impl Message for AngularVelocity {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f64_le(self._time);
         bfr.put_f64_le(self._x);
         bfr.put_f64_le(self._y);
         bfr.put_f64_le(self._z);
-
-        serialize_footer(bfr);
     }
 }

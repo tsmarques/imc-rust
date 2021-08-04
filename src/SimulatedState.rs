@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -8,6 +10,7 @@ use crate::Header::Header;
 /// This message presents the simulated state of the vehicle. The simulated
 /// state attempts to provide a realistic state interpretation of operating
 /// various kinds of vehicles.
+#[derive(Default)]
 pub struct SimulatedState {
     /// IMC Header
     pub header: Header,
@@ -157,9 +160,7 @@ impl Message for SimulatedState {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
         bfr.put_f32_le(self._height);
@@ -178,7 +179,5 @@ impl Message for SimulatedState {
         bfr.put_f32_le(self._svx);
         bfr.put_f32_le(self._svy);
         bfr.put_f32_le(self._svz);
-
-        serialize_footer(bfr);
     }
 }

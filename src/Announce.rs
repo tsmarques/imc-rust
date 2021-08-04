@@ -1,11 +1,14 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
 /// A system description that is to be broadcasted to other systems.
+#[derive(Default)]
 pub struct Announce {
     /// IMC Header
     pub header: Header,
@@ -97,9 +100,7 @@ impl Message for Announce {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._sys_name.as_bytes());
         bfr.put_u8(self._sys_type);
         bfr.put_u16_le(self._owner);
@@ -107,7 +108,5 @@ impl Message for Announce {
         bfr.put_f64_le(self._lon);
         bfr.put_f32_le(self._height);
         serialize_bytes!(bfr, self._services.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

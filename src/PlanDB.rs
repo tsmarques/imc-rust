@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -65,6 +67,7 @@ impl OperationEnum {
 /// will yield a 'PlanDBState' message in the 'arg' field with
 /// individual plan information (in the 'plans_info' field of
 /// 'PlanDBState').
+#[derive(Default)]
 pub struct PlanDB {
     /// IMC Header
     pub header: Header,
@@ -163,20 +166,12 @@ impl Message for PlanDB {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._type);
         bfr.put_u8(self._op);
         bfr.put_u16_le(self._request_id);
         serialize_bytes!(bfr, self._plan_id.as_bytes());
-        match &self._arg {
-            Some(field) => field.serialize(bfr),
-
-            None => {}
-        };
+        serialize_inline_message!(self._arg, bfr);
         serialize_bytes!(bfr, self._info.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

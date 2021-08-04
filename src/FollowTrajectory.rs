@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -14,6 +16,7 @@ impl Maneuver for FollowTrajectory {}
 
 /// Maneuver constituted by a list of Trajectory Points.
 /// message-group: Maneuver
+#[derive(Default)]
 pub struct FollowTrajectory {
     /// IMC Header
     pub header: Header,
@@ -41,7 +44,7 @@ pub struct FollowTrajectory {
     pub _speed_units: u8,
 
     /// List of trajectory points.
-    pub _points: Vec<Box<TrajectoryPoint>>,
+    pub _points: MessageList<TrajectoryPoint>,
 
     /// Custom settings for maneuver.
     pub _custom: String,
@@ -59,7 +62,7 @@ impl FollowTrajectory {
             _z_units: 0 as u8,
             _speed: Default::default(),
             _speed_units: 0 as u8,
-            _points: Default::default(),
+            _points: vec![],
             _custom: Default::default(),
         };
 
@@ -96,7 +99,13 @@ impl Message for FollowTrajectory {
         self._speed_units = Default::default();
 
         for msg in self._points.iter_mut() {
-            msg.clear();
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.clear();
+                }
+            }
         }
 
         self._custom = Default::default();
@@ -109,8 +118,13 @@ impl Message for FollowTrajectory {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in &self._points {
-            dyn_size += msg.dynamic_serialization_size();
+        for msg in self._points.iter() {
+            match msg {
+                None => {}
+                Some(m) => {
+                    dyn_size += m.dynamic_serialization_size();
+                }
+            }
         }
 
         dyn_size += self._custom.len() + 2;
@@ -118,9 +132,7 @@ impl Message for FollowTrajectory {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._timeout);
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
@@ -129,10 +141,14 @@ impl Message for FollowTrajectory {
         bfr.put_f32_le(self._speed);
         bfr.put_u8(self._speed_units);
         for msg in self._points.iter() {
-            msg.serialize(bfr);
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.serialize_fields(bfr);
+                }
+            }
         }
         serialize_bytes!(bfr, self._custom.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

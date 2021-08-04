@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -37,6 +39,7 @@ impl ControlOperationEnum {
 /// message with operation CURRENT_NAME containing the complete
 /// name of the current log in the field 'name'. The field
 /// 'name' with this operation type has no meaning.
+#[derive(Default)]
 pub struct LoggingControl {
     /// IMC Header
     pub header: Header,
@@ -95,12 +98,8 @@ impl Message for LoggingControl {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._name.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

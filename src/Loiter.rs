@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -60,6 +62,7 @@ impl Maneuver for Loiter {}
 /// The Loiter maneuver makes the vehicle circle around a specific
 /// waypoint with fixed depth reference.
 /// message-group: Maneuver
+#[derive(Default)]
 pub struct Loiter {
     /// IMC Header
     pub header: Header,
@@ -190,9 +193,7 @@ impl Message for Loiter {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._timeout);
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
@@ -207,7 +208,5 @@ impl Message for Loiter {
         bfr.put_f64_le(self._bearing);
         bfr.put_u8(self._direction);
         serialize_bytes!(bfr, self._custom.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

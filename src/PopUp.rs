@@ -1,5 +1,7 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -33,6 +35,7 @@ impl Maneuver for PopUp {}
 /// While holding position at surface the vehicle will assume a
 /// station keeping behavior.
 /// message-group: Maneuver
+#[derive(Default)]
 pub struct PopUp {
     /// IMC Header
     pub header: Header,
@@ -148,9 +151,7 @@ impl Message for PopUp {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._timeout);
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
@@ -162,7 +163,5 @@ impl Message for PopUp {
         bfr.put_f32_le(self._radius);
         bfr.put_u8(self._flags);
         serialize_bytes!(bfr, self._custom.as_bytes());
-
-        serialize_footer(bfr);
     }
 }

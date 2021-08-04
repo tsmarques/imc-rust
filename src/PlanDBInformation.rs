@@ -1,10 +1,13 @@
+#![allow(non_snake_case)]
+
 use crate::Message::*;
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[derive(Default)]
 pub struct PlanDBInformation {
     /// IMC Header
     pub header: Header,
@@ -91,16 +94,12 @@ impl Message for PlanDBInformation {
         dyn_size
     }
 
-    fn serialize(&self, bfr: &mut bytes::BytesMut) {
-        self.header.serialize(bfr);
-
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._plan_id.as_bytes());
         bfr.put_u16_le(self._plan_size);
         bfr.put_f64_le(self._change_time);
         bfr.put_u16_le(self._change_sid);
         serialize_bytes!(bfr, self._change_sname.as_bytes());
         serialize_bytes!(bfr, self._md5.as_slice());
-
-        serialize_footer(bfr);
     }
 }
