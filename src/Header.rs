@@ -1,5 +1,4 @@
-use crate::{DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
-use bytes::{BufMut, BytesMut, LittleEndian};
+use bytes::BufMut;
 
 #[derive(Default)]
 pub struct Header {

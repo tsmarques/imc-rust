@@ -1,7 +1,4 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -9,6 +6,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+#[allow(non_camel_case_types)]
 pub enum TypeEnum {
     // Request
     VC_REQUEST = 0,
@@ -31,6 +29,7 @@ impl TypeEnum {
     }
 }
 
+#[allow(non_camel_case_types)]
 pub enum CommandEnum {
     // Execute Maneuver
     VC_EXEC_MANEUVER = 0,
@@ -148,7 +147,11 @@ impl Message for VehicleCommand {
         bfr.put_u8(self._type);
         bfr.put_u16_le(self._request_id);
         bfr.put_u8(self._command);
-        serialize_inline_message!(self._maneuver, bfr);
+        match &self._maneuver {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
         bfr.put_u16_le(self._calib_time);
         serialize_bytes!(bfr, self._info.as_bytes());
     }

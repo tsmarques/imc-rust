@@ -1,12 +1,10 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[allow(non_camel_case_types)]
 pub enum EventTypeEnum {
     // Log Book Entry Added
     EVT_LOG_ENTRY = 1,
@@ -118,6 +116,10 @@ impl Message for CcuEvent {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._type);
         serialize_bytes!(bfr, self._id.as_bytes());
-        serialize_inline_message!(self._arg, bfr);
+        match &self._arg {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
     }
 }

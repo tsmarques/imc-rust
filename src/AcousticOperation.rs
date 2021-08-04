@@ -1,12 +1,10 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Abort
     AOP_ABORT = 0,
@@ -155,6 +153,10 @@ impl Message for AcousticOperation {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._system.as_bytes());
         bfr.put_f32_le(self._range);
-        serialize_inline_message!(self._msg, bfr);
+        match &self._msg {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
     }
 }

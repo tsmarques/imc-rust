@@ -1,7 +1,4 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -9,6 +6,7 @@ use crate::Header::Header;
 
 use crate::TrexToken::TrexToken;
 
+#[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Post Token
     OP_POST_TOKEN = 1,
@@ -110,6 +108,10 @@ impl Message for TrexOperation {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._goal_id.as_bytes());
-        serialize_inline_message!(self._token, bfr);
+        match &self._token {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
     }
 }

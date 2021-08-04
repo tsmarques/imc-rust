@@ -1,7 +1,6 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+use crate::MessageList;
 
 use bytes::BufMut;
 
@@ -9,6 +8,7 @@ use crate::Header::Header;
 
 use crate::UsblModem::UsblModem;
 
+#[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Set LBL Configuration
     OP_SET_CFG = 0,

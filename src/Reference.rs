@@ -1,16 +1,14 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DesiredZ::DesiredZ;
-
 use crate::DesiredSpeed::DesiredSpeed;
 
+use crate::DesiredZ::DesiredZ;
+
+#[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Use Location Reference
     FLAG_LOCATION = 0x01,
@@ -138,8 +136,16 @@ impl Message for Reference {
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._flags);
-        serialize_inline_message!(self._speed, bfr);
-        serialize_inline_message!(self._z, bfr);
+        match &self._speed {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
+        match &self._z {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
         bfr.put_f32_le(self._radius);

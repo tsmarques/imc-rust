@@ -1,12 +1,10 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[allow(non_camel_case_types)]
 pub enum TypeEnum {
     // Boolean
     PVT_BOOLEAN = 0,
@@ -29,6 +27,7 @@ impl TypeEnum {
     }
 }
 
+#[allow(non_camel_case_types)]
 pub enum AccessTypeEnum {
     // Input
     PVA_INPUT = 0,

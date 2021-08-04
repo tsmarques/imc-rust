@@ -1,12 +1,10 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[allow(non_camel_case_types)]
 pub enum OperationModeEnum {
     // Service
     VS_SERVICE = 0,
@@ -35,6 +33,7 @@ impl OperationModeEnum {
     }
 }
 
+#[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Maneuver Done
     VFLG_MANEUVER_DONE = 0x01,

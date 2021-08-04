@@ -1,7 +1,4 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -9,6 +6,7 @@ use crate::Header::Header;
 
 use crate::Command::Command;
 
+#[allow(non_camel_case_types)]
 pub enum StateEnum {
     // Waiting for first command
     FC_WAIT = 1,
@@ -117,7 +115,11 @@ impl Message for FollowCommandState {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._control_src);
         bfr.put_u8(self._control_ent);
-        serialize_inline_message!(self._command, bfr);
+        match &self._command {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
         bfr.put_u8(self._state);
     }
 }

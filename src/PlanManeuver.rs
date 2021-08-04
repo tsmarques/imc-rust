@@ -1,7 +1,6 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+use crate::MessageList;
 
 use bytes::BufMut;
 
@@ -127,7 +126,11 @@ impl Message for PlanManeuver {
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._maneuver_id.as_bytes());
-        serialize_inline_message!(self._data, bfr);
+        match &self._data {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
         for msg in self._start_actions.iter() {
             match msg {
                 None => {}

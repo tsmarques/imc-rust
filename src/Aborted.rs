@@ -1,9 +1,4 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
-
-use bytes::BufMut;
 
 use crate::Header::Header;
 
@@ -44,9 +39,7 @@ impl Message for Aborted {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        let mut dyn_size: usize = 0;
-
-        dyn_size
+        0
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}

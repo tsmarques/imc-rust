@@ -1,17 +1,16 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+use crate::MessageList;
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::PlanManeuver::PlanManeuver;
-
 use crate::PlanTransition::PlanTransition;
 
 use crate::PlanVariable::PlanVariable;
+
+use crate::PlanManeuver::PlanManeuver;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in

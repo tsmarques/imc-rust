@@ -1,12 +1,10 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[allow(non_camel_case_types)]
 pub enum ReasonEnum {
     // Above Threshold
     RR_ABOVE_THRESHOLD = 0,
@@ -83,9 +81,7 @@ impl Message for GpsFixRejection {
     }
 
     fn dynamic_serialization_size(&self) -> usize {
-        let mut dyn_size: usize = 0;
-
-        dyn_size
+        0
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {

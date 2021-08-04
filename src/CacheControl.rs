@@ -1,12 +1,10 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[allow(non_camel_case_types)]
 pub enum ControlOperationEnum {
     // Store
     COP_STORE = 0,
@@ -109,6 +107,10 @@ impl Message for CacheControl {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._snapshot.as_bytes());
-        serialize_inline_message!(self._message, bfr);
+        match &self._message {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
     }
 }

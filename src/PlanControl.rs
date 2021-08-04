@@ -1,12 +1,10 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[allow(non_camel_case_types)]
 pub enum TypeEnum {
     // Request
     PC_REQUEST = 0,
@@ -29,6 +27,7 @@ impl TypeEnum {
     }
 }
 
+#[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Start Plan
     PC_START = 0,
@@ -51,6 +50,7 @@ impl OperationEnum {
     }
 }
 
+#[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Calibrate Vehicle
     FLG_CALIBRATE = 0x0001,
@@ -182,7 +182,11 @@ impl Message for PlanControl {
         bfr.put_u16_le(self._request_id);
         serialize_bytes!(bfr, self._plan_id.as_bytes());
         bfr.put_u16_le(self._flags);
-        serialize_inline_message!(self._arg, bfr);
+        match &self._arg {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
         serialize_bytes!(bfr, self._info.as_bytes());
     }
 }

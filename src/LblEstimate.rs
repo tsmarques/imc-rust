@@ -1,7 +1,4 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -102,7 +99,11 @@ impl Message for LblEstimate {
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
-        serialize_inline_message!(self._beacon, bfr);
+        match &self._beacon {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
         bfr.put_f32_le(self._x);
         bfr.put_f32_le(self._y);
         bfr.put_f32_le(self._var_x);

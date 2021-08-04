@@ -1,7 +1,6 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
+
+use crate::MessageList;
 
 use bytes::BufMut;
 
@@ -11,6 +10,7 @@ use crate::DeviceState::DeviceState;
 
 use crate::BeamConfig::BeamConfig;
 
+#[allow(non_camel_case_types)]
 pub enum ValidityEnum {
     // Invalid
     DV_INVALID = 0,

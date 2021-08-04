@@ -1,12 +1,10 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
 use crate::Header::Header;
 
+#[allow(non_camel_case_types)]
 pub enum StateEnum {
     // Blocked
     PCS_BLOCKED = 0,
@@ -29,6 +27,7 @@ impl StateEnum {
     }
 }
 
+#[allow(non_camel_case_types)]
 pub enum LastPlanOutcomeEnum {
     // None
     LPO_NONE = 0,

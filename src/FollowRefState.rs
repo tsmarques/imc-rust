@@ -1,7 +1,4 @@
-#![allow(non_snake_case)]
-
 use crate::Message::*;
-use crate::{MessageList, DUNE_IMC_CONST_SYNC, IMC_CONST_UNK_EID};
 
 use bytes::BufMut;
 
@@ -9,6 +6,7 @@ use crate::Header::Header;
 
 use crate::Reference::Reference;
 
+#[allow(non_camel_case_types)]
 pub enum StateEnum {
     // Waiting for first reference
     FR_WAIT = 1,
@@ -37,6 +35,7 @@ impl StateEnum {
     }
 }
 
+#[allow(non_camel_case_types)]
 pub enum ProximityEnum {
     // Far from the destination
     PROX_FAR = 0x01,
@@ -148,7 +147,11 @@ impl Message for FollowRefState {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._control_src);
         bfr.put_u8(self._control_ent);
-        serialize_inline_message!(self._reference, bfr);
+        match &self._reference {
+            None => {}
+
+            Some(m) => m.serialize_fields(bfr),
+        };
         bfr.put_u8(self._state);
         bfr.put_u8(self._proximity);
     }
