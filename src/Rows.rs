@@ -15,7 +15,8 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             FLG_SQUARE_CURVE => 0x0001,
             FLG_CURVE_RIGHT => 0x0002,

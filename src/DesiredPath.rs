@@ -27,7 +27,8 @@ pub enum FlagsEnum {
 }
 
 impl FlagsEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             FL_START => 0x01,
             FL_DIRECT => 0x02,

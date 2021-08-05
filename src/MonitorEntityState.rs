@@ -19,7 +19,8 @@ pub enum CommandEnum {
 }
 
 impl CommandEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             MES_RESET => 0,
             MES_ENABLE => 1,

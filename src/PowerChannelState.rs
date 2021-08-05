@@ -13,7 +13,8 @@ pub enum StateEnum {
 }
 
 impl StateEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             PCS_OFF => 0,
             PCS_ON => 1,

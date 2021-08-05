@@ -27,7 +27,8 @@ pub enum ValueEnum {
 }
 
 impl ValueEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             UTS_DONE => 0,
             UTS_FAILED => 1,

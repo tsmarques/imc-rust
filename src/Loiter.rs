@@ -21,7 +21,8 @@ pub enum LoiterTypeEnum {
 }
 
 impl LoiterTypeEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             LT_DEFAULT => 0,
             LT_CIRCULAR => 1,
@@ -45,7 +46,8 @@ pub enum DirectionEnum {
 }
 
 impl DirectionEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             LD_VDEP => 0,
             LD_CLOCKW => 1,

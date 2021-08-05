@@ -19,7 +19,8 @@ pub enum MediumEnum {
 }
 
 impl MediumEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             VM_GROUND => 0,
             VM_AIR => 1,

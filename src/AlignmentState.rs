@@ -25,7 +25,8 @@ pub enum StateEnum {
 }
 
 impl StateEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             AS_NOT_ALIGNED => 0,
             AS_ALIGNED => 1,

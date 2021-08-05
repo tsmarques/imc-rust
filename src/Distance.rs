@@ -6,9 +6,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DeviceState::DeviceState;
-
 use crate::BeamConfig::BeamConfig;
+
+use crate::DeviceState::DeviceState;
 
 #[allow(non_camel_case_types)]
 pub enum ValidityEnum {
@@ -19,7 +19,8 @@ pub enum ValidityEnum {
 }
 
 impl ValidityEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             DV_INVALID => 0,
             DV_VALID => 1,

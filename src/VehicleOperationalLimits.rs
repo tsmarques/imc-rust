@@ -15,7 +15,8 @@ pub enum ActiononthevehicleoperationallimitsEnum {
 }
 
 impl ActiononthevehicleoperationallimitsEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             OP_REQUEST => 0,
             OP_SET => 1,

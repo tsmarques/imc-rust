@@ -17,7 +17,8 @@ pub enum DirectionEnum {
 }
 
 impl DirectionEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             DIR_AUTO => 0,
             DIR_FORWARD => 1,

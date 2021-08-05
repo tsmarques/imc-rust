@@ -19,7 +19,8 @@ pub enum AcceptanceEnum {
 }
 
 impl AcceptanceEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             RR_ACCEPTED => 0,
             RR_ABOVE_THRESHOLD => 1,

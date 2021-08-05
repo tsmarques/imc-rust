@@ -13,7 +13,8 @@ pub enum EnableEnum {
 }
 
 impl EnableEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             CL_DISABLE => 0,
             CL_ENABLE => 1,

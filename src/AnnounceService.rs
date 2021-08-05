@@ -13,7 +13,8 @@ pub enum ServiceTypeEnum {
 }
 
 impl ServiceTypeEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             SRV_TYPE_EXTERNAL => 0x01,
             SRV_TYPE_LOCAL => 0x02,

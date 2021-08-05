@@ -13,7 +13,8 @@ pub enum TypeofvelocityEnum {
 }
 
 impl TypeofvelocityEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             TYPE_GV => 0x01,
             TYPE_WV => 0x02,
@@ -34,7 +35,8 @@ pub enum ReasonEnum {
 }
 
 impl ReasonEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             RR_INNOV_THRESHOLD_X => 0,
             RR_INNOV_THRESHOLD_Y => 1,

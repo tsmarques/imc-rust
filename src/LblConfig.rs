@@ -19,7 +19,8 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             OP_SET_CFG => 0,
             OP_GET_CFG => 1,

@@ -27,7 +27,8 @@ pub enum EventTypeEnum {
 }
 
 impl EventTypeEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             EVT_LOG_ENTRY => 1,
             EVT_PLAN_ADDED => 2,

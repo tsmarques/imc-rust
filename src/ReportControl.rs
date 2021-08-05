@@ -21,7 +21,8 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             OP_REQUEST_START => 0,
             OP_STARTED => 1,
@@ -46,7 +47,8 @@ pub enum CommunicationInterfaceEnum {
 }
 
 impl CommunicationInterfaceEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             CI_ACOUSTIC => 0x01,
             CI_SATELLITE => 0x02,

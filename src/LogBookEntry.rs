@@ -19,7 +19,8 @@ pub enum TypeEnum {
 }
 
 impl TypeEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             LBET_INFO => 0,
             LBET_WARNING => 1,

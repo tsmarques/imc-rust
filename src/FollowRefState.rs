@@ -23,7 +23,8 @@ pub enum StateEnum {
 }
 
 impl StateEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             FR_WAIT => 1,
             FR_GOTO => 2,
@@ -50,7 +51,8 @@ pub enum ProximityEnum {
 }
 
 impl ProximityEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             PROX_FAR => 0x01,
             PROX_XY_NEAR => 0x02,

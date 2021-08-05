@@ -21,7 +21,8 @@ pub enum OperationEnum {
 }
 
 impl OperationEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             OP_POST_TOKEN => 1,
             OP_POST_GOAL => 2,

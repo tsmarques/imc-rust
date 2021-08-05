@@ -13,7 +13,8 @@ pub enum TypeofmeasurementEnum {
 }
 
 impl TypeofmeasurementEnum {
-    pub fn as_primitive(&self) -> u32 {
+    /// Match an enum value to its primitive type
+    pub fn value(&self) -> u8 {
         match self {
             DT_COLORED => 0,
             DT_FLUORESCENT => 1,
