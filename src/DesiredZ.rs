@@ -29,7 +29,7 @@ impl DesiredZ {
             header: Header::new(401),
 
             _value: Default::default(),
-            _z_units: 0 as u8,
+            _z_units: 0_u8,
         };
 
         msg.set_size(msg.payload_serialization_size() as u16);

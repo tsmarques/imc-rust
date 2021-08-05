@@ -6,11 +6,11 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::PlanTransition::PlanTransition;
-
 use crate::PlanVariable::PlanVariable;
 
 use crate::PlanManeuver::PlanManeuver;
+
+use crate::PlanTransition::PlanTransition;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in

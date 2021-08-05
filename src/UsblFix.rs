@@ -36,7 +36,7 @@ impl UsblFix {
             _target: Default::default(),
             _lat: Default::default(),
             _lon: Default::default(),
-            _z_units: 0 as u8,
+            _z_units: 0_u8,
             _z: Default::default(),
         };
 

@@ -47,7 +47,7 @@ pub struct Header {
 impl Header {
     pub(crate) fn new(msg_id: u16) -> Header {
         let mut header = Header {
-            _sync: 0xFE54 as u16,
+            _sync: 0xFE54_u16,
             _mgid: Default::default(),
             _size: Default::default(),
             _timestamp: Default::default(),

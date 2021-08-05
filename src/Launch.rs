@@ -57,9 +57,9 @@ impl Launch {
             _lat: Default::default(),
             _lon: Default::default(),
             _z: Default::default(),
-            _z_units: 0 as u8,
+            _z_units: 0_u8,
             _speed: Default::default(),
-            _speed_units: 0 as u8,
+            _speed_units: 0_u8,
             _custom: Default::default(),
         };
 

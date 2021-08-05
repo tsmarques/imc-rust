@@ -49,7 +49,7 @@ impl Alignment {
             _lat: Default::default(),
             _lon: Default::default(),
             _speed: Default::default(),
-            _speed_units: 0 as u8,
+            _speed_units: 0_u8,
             _custom: Default::default(),
         };
 

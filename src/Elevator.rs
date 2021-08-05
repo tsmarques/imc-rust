@@ -85,12 +85,12 @@ impl Elevator {
             _lat: Default::default(),
             _lon: Default::default(),
             _start_z: Default::default(),
-            _start_z_units: 0 as u8,
+            _start_z_units: 0_u8,
             _end_z: Default::default(),
-            _end_z_units: 0 as u8,
+            _end_z_units: 0_u8,
             _radius: Default::default(),
             _speed: Default::default(),
-            _speed_units: 0 as u8,
+            _speed_units: 0_u8,
             _custom: Default::default(),
         };
 

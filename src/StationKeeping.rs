@@ -56,7 +56,7 @@ impl StationKeeping {
             _lat: Default::default(),
             _lon: Default::default(),
             _z: Default::default(),
-            _z_units: 0 as u8,
+            _z_units: 0_u8,
             _radius: Default::default(),
             _duration: Default::default(),
             _speed: Default::default(),
