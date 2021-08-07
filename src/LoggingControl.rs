@@ -1,6 +1,6 @@
 use crate::Message::*;
 
-use bytes::BufMut;
+use bytes::{BufMut, Buf};
 
 use crate::Header::Header;
 
@@ -127,5 +127,12 @@ impl Message for LoggingControl {
         serialize_bytes!(bfr, self._name.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+
+        let size = bfr.get_u16_le();
+        for _ in 0..size {
+            self._name.push(char::from(bfr.get_u8()));
+        }
+    }
 }

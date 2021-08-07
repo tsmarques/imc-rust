@@ -5,6 +5,7 @@ pub mod Header;
 pub mod Message;
 pub mod MessageGroup;
 pub mod packet;
+pub mod factory;
 
 pub type MessageList<T> = Vec<Option<Box<T>>>;
 
@@ -248,8 +249,8 @@ pub mod utils {
 
     pub(crate) fn get_timestamp_secs() -> f64 {
         SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("failed to get timestamp")
-        .as_secs_f64()
+            .duration_since(UNIX_EPOCH)
+            .expect("failed to get timestamp")
+            .as_secs_f64()
     }
 }

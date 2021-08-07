@@ -1,6 +1,9 @@
 use bytes::BufMut;
+use crc16::{State, ARC};
+use std::borrow::Borrow;
+use crate::IMC_CONST_HEADER_SIZE;
 
-#[derive(Default)]
+#[derive(Default, PartialEq, Debug)]
 pub struct Header {
     /// The synchronization number marks the beginning of a packet.
     ///  
@@ -45,7 +48,7 @@ pub struct Header {
 }
 
 impl Header {
-    pub(crate) fn new(msg_id: u16) -> Header {
+    pub fn new(msg_id: u16) -> Header {
         let mut header = Header {
             _sync: 0xFE54_u16,
             _mgid: Default::default(),

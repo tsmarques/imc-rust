@@ -1,9 +1,51 @@
+use bytes::{IntoBuf, BufMut};
 use imc::EstimatedState::EstimatedState;
 use imc::LoggingControl::{ControlOperationEnum, LoggingControl};
 use imc::Message::Message;
+use imc::Header::Header;
+use imc::IMC_CONST_HEADER_SIZE;
+use imc::packet::deserializeHeader;
+use crc16::{State, ARC};
 
 #[test]
-fn logging_control_0() {
+fn buffer_write() {
+    let mut bfr = bytes::BytesMut::with_capacity(1024);
+    bfr.put("IMC RUST");
+
+    assert_eq!(bfr[0], b'I');
+    // make sure it doesn't advance cursor
+    assert_ne!(bfr[0], b'M');
+    assert_eq!(bfr.len(), 8);
+
+    bfr.put("look at me testing");
+    assert_eq!(bfr[0], b'I');
+    assert_eq!(bfr[8], b'l');
+    assert_eq!(bfr[8..].len(), b"look at me testing".len());
+}
+
+#[test]
+fn header_serialization() {
+    let mut hdr :Header = Header::new(1_u16);
+    hdr._timestamp = 0.143432;
+    hdr._size = 42;
+    hdr._src = 205;
+    hdr._src_ent = 2;
+    hdr._dst = 300;
+    hdr._dst_ent = 10;
+
+    let mut bfr: bytes::BytesMut = bytes::BytesMut::with_capacity(IMC_CONST_HEADER_SIZE as usize);
+    hdr.serialize(&mut bfr);
+
+    let mut hdr2 :Header = Header::new(0);
+    let inbfr = bytes::Bytes::from(bfr);
+    let ret = deserializeHeader(&mut hdr2, &mut inbfr.into_buf());
+
+    assert!(ret.is_ok());
+    assert_eq!(hdr, hdr2);
+}
+
+#[test]
+fn deserialize_as() {
     let mut lc = LoggingControl::new();
     lc.set_timestamp_secs(0.23424);
     lc.set_source(765);
@@ -18,4 +60,11 @@ fn logging_control_0() {
     let ret = imc::packet::serialize(&mut lc, &mut bfr);
     assert!(ret.is_ok());
     assert_eq!(ret.ok().unwrap(), lc.serialization_size());
+
+    let inbfr = bytes::Bytes::from(bfr);
+    let ret = imc::packet::deserialize_as::<LoggingControl>(&mut inbfr.into_buf());
+    assert!(ret.is_ok());
+
+    let mut lc2 = ret.ok().unwrap();
+    assert_eq!(lc.get_header(), lc2.get_header());
 }
