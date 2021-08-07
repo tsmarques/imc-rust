@@ -79,8 +79,30 @@ pub struct DvlRejection {
     pub _timestep: f32,
 }
 
-impl DvlRejection {
-    pub fn new() -> DvlRejection {
+impl Message for DvlRejection {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = DvlRejection {
+            header: hdr,
+
+            _type: Default::default(),
+            _reason: Default::default(),
+            _value: Default::default(),
+            _timestep: Default::default(),
+        };
+
+        msg.get_header()._mgid = 358;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = DvlRejection {
             header: Header::new(358),
 
@@ -94,15 +116,20 @@ impl DvlRejection {
 
         msg
     }
-}
 
-impl Message for DvlRejection {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        358
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         358
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -131,4 +158,6 @@ impl Message for DvlRejection {
         bfr.put_f32_le(self._value);
         bfr.put_f32_le(self._timestep);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

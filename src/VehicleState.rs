@@ -90,8 +90,36 @@ pub struct VehicleState {
     pub _last_error_time: f64,
 }
 
-impl VehicleState {
-    pub fn new() -> VehicleState {
+impl Message for VehicleState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = VehicleState {
+            header: hdr,
+
+            _op_mode: Default::default(),
+            _error_count: Default::default(),
+            _error_ents: Default::default(),
+            _maneuver_type: Default::default(),
+            _maneuver_stime: Default::default(),
+            _maneuver_eta: Default::default(),
+            _control_loops: Default::default(),
+            _flags: Default::default(),
+            _last_error: Default::default(),
+            _last_error_time: Default::default(),
+        };
+
+        msg.get_header()._mgid = 500;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = VehicleState {
             header: Header::new(500),
 
@@ -111,15 +139,20 @@ impl VehicleState {
 
         msg
     }
-}
 
-impl Message for VehicleState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        500
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         500
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -172,4 +205,6 @@ impl Message for VehicleState {
         serialize_bytes!(bfr, self._last_error.as_bytes());
         bfr.put_f64_le(self._last_error_time);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

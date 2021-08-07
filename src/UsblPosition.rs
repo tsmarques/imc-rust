@@ -24,8 +24,30 @@ pub struct UsblPosition {
     pub _z: f32,
 }
 
-impl UsblPosition {
-    pub fn new() -> UsblPosition {
+impl Message for UsblPosition {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = UsblPosition {
+            header: hdr,
+
+            _target: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+        };
+
+        msg.get_header()._mgid = 891;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = UsblPosition {
             header: Header::new(891),
 
@@ -39,15 +61,20 @@ impl UsblPosition {
 
         msg
     }
-}
 
-impl Message for UsblPosition {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        891
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         891
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -76,4 +103,6 @@ impl Message for UsblPosition {
         bfr.put_f32_le(self._y);
         bfr.put_f32_le(self._z);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -48,8 +48,29 @@ pub struct TrexOperation {
     pub _token: Option<Box<TrexToken>>,
 }
 
-impl TrexOperation {
-    pub fn new() -> TrexOperation {
+impl Message for TrexOperation {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = TrexOperation {
+            header: hdr,
+
+            _op: Default::default(),
+            _goal_id: Default::default(),
+            _token: Default::default(),
+        };
+
+        msg.get_header()._mgid = 655;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = TrexOperation {
             header: Header::new(655),
 
@@ -62,15 +83,20 @@ impl TrexOperation {
 
         msg
     }
-}
 
-impl Message for TrexOperation {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        655
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         655
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -115,4 +141,6 @@ impl Message for TrexOperation {
             Some(m) => m.serialize_fields(bfr),
         };
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

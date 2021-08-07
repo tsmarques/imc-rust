@@ -14,8 +14,27 @@ pub struct Phycoerythrin {
     pub _value: f32,
 }
 
-impl Phycoerythrin {
-    pub fn new() -> Phycoerythrin {
+impl Message for Phycoerythrin {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Phycoerythrin {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 292;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Phycoerythrin {
             header: Header::new(292),
 
@@ -26,15 +45,20 @@ impl Phycoerythrin {
 
         msg
     }
-}
 
-impl Message for Phycoerythrin {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        292
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         292
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -54,4 +78,6 @@ impl Message for Phycoerythrin {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

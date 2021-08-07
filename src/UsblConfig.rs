@@ -42,8 +42,28 @@ pub struct UsblConfig {
     pub _modems: MessageList<UsblModem>,
 }
 
-impl UsblConfig {
-    pub fn new() -> UsblConfig {
+impl Message for UsblConfig {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = UsblConfig {
+            header: hdr,
+
+            _op: Default::default(),
+            _modems: vec![],
+        };
+
+        msg.get_header()._mgid = 902;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = UsblConfig {
             header: Header::new(902),
 
@@ -55,15 +75,20 @@ impl UsblConfig {
 
         msg
     }
-}
 
-impl Message for UsblConfig {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        902
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         902
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -113,4 +138,6 @@ impl Message for UsblConfig {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

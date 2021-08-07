@@ -84,8 +84,31 @@ pub struct FollowRefState {
     pub _proximity: u8,
 }
 
-impl FollowRefState {
-    pub fn new() -> FollowRefState {
+impl Message for FollowRefState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = FollowRefState {
+            header: hdr,
+
+            _control_src: Default::default(),
+            _control_ent: Default::default(),
+            _reference: Default::default(),
+            _state: Default::default(),
+            _proximity: Default::default(),
+        };
+
+        msg.get_header()._mgid = 480;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = FollowRefState {
             header: Header::new(480),
 
@@ -100,15 +123,20 @@ impl FollowRefState {
 
         msg
     }
-}
 
-impl Message for FollowRefState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        480
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         480
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -157,4 +185,6 @@ impl Message for FollowRefState {
         bfr.put_u8(self._state);
         bfr.put_u8(self._proximity);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -26,8 +26,30 @@ pub struct TrajectoryPoint {
     pub _t: f32,
 }
 
-impl TrajectoryPoint {
-    pub fn new() -> TrajectoryPoint {
+impl Message for TrajectoryPoint {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = TrajectoryPoint {
+            header: hdr,
+
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _t: Default::default(),
+        };
+
+        msg.get_header()._mgid = 464;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = TrajectoryPoint {
             header: Header::new(464),
 
@@ -41,15 +63,20 @@ impl TrajectoryPoint {
 
         msg
     }
-}
 
-impl Message for TrajectoryPoint {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        464
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         464
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -78,4 +105,6 @@ impl Message for TrajectoryPoint {
         bfr.put_f32_le(self._z);
         bfr.put_f32_le(self._t);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

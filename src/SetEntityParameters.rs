@@ -18,8 +18,28 @@ pub struct SetEntityParameters {
     pub _params: MessageList<EntityParameter>,
 }
 
-impl SetEntityParameters {
-    pub fn new() -> SetEntityParameters {
+impl Message for SetEntityParameters {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = SetEntityParameters {
+            header: hdr,
+
+            _name: Default::default(),
+            _params: vec![],
+        };
+
+        msg.get_header()._mgid = 804;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = SetEntityParameters {
             header: Header::new(804),
 
@@ -31,15 +51,20 @@ impl SetEntityParameters {
 
         msg
     }
-}
 
-impl Message for SetEntityParameters {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        804
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         804
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -91,4 +116,6 @@ impl Message for SetEntityParameters {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

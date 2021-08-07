@@ -17,8 +17,28 @@ pub struct EntityParameter {
     pub _value: String,
 }
 
-impl EntityParameter {
-    pub fn new() -> EntityParameter {
+impl Message for EntityParameter {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = EntityParameter {
+            header: hdr,
+
+            _name: Default::default(),
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 801;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = EntityParameter {
             header: Header::new(801),
 
@@ -30,15 +50,20 @@ impl EntityParameter {
 
         msg
     }
-}
 
-impl Message for EntityParameter {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        801
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         801
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -67,4 +92,6 @@ impl Message for EntityParameter {
         serialize_bytes!(bfr, self._name.as_bytes());
         serialize_bytes!(bfr, self._value.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

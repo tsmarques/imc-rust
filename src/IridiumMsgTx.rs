@@ -22,8 +22,30 @@ pub struct IridiumMsgTx {
     pub _data: Vec<u8>,
 }
 
-impl IridiumMsgTx {
-    pub fn new() -> IridiumMsgTx {
+impl Message for IridiumMsgTx {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = IridiumMsgTx {
+            header: hdr,
+
+            _req_id: Default::default(),
+            _ttl: Default::default(),
+            _destination: Default::default(),
+            _data: Default::default(),
+        };
+
+        msg.get_header()._mgid = 171;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = IridiumMsgTx {
             header: Header::new(171),
 
@@ -37,15 +59,20 @@ impl IridiumMsgTx {
 
         msg
     }
-}
 
-impl Message for IridiumMsgTx {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        171
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         171
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -80,4 +107,6 @@ impl Message for IridiumMsgTx {
         serialize_bytes!(bfr, self._destination.as_bytes());
         serialize_bytes!(bfr, self._data.as_slice());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

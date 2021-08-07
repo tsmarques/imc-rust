@@ -30,8 +30,29 @@ pub struct FollowCommand {
     pub _timeout: f32,
 }
 
-impl FollowCommand {
-    pub fn new() -> FollowCommand {
+impl Message for FollowCommand {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = FollowCommand {
+            header: hdr,
+
+            _control_src: Default::default(),
+            _control_ent: Default::default(),
+            _timeout: Default::default(),
+        };
+
+        msg.get_header()._mgid = 496;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = FollowCommand {
             header: Header::new(496),
 
@@ -44,15 +65,20 @@ impl FollowCommand {
 
         msg
     }
-}
 
-impl Message for FollowCommand {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        496
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         496
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -78,4 +104,6 @@ impl Message for FollowCommand {
         bfr.put_u8(self._control_ent);
         bfr.put_f32_le(self._timeout);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -14,8 +14,27 @@ pub struct MsgList {
     pub _msgs: MessageList<dyn Message>,
 }
 
-impl MsgList {
-    pub fn new() -> MsgList {
+impl Message for MsgList {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = MsgList {
+            header: hdr,
+
+            _msgs: vec![],
+        };
+
+        msg.get_header()._mgid = 20;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = MsgList {
             header: Header::new(20),
 
@@ -26,15 +45,20 @@ impl MsgList {
 
         msg
     }
-}
 
-impl Message for MsgList {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        20
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         20
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -81,4 +105,6 @@ impl Message for MsgList {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

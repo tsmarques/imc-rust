@@ -79,8 +79,37 @@ pub struct PopUp {
     pub _custom: String,
 }
 
-impl PopUp {
-    pub fn new() -> PopUp {
+impl Message for PopUp {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PopUp {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z: Default::default(),
+            _z_units: 0_u8,
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _duration: Default::default(),
+            _radius: Default::default(),
+            _flags: Default::default(),
+            _custom: Default::default(),
+        };
+
+        msg.get_header()._mgid = 451;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PopUp {
             header: Header::new(451),
 
@@ -101,15 +130,20 @@ impl PopUp {
 
         msg
     }
-}
 
-impl Message for PopUp {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        451
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         451
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -163,4 +197,6 @@ impl Message for PopUp {
         bfr.put_u8(self._flags);
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

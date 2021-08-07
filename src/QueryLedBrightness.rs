@@ -15,8 +15,27 @@ pub struct QueryLedBrightness {
     pub _name: String,
 }
 
-impl QueryLedBrightness {
-    pub fn new() -> QueryLedBrightness {
+impl Message for QueryLedBrightness {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = QueryLedBrightness {
+            header: hdr,
+
+            _name: Default::default(),
+        };
+
+        msg.get_header()._mgid = 313;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = QueryLedBrightness {
             header: Header::new(313),
 
@@ -27,15 +46,20 @@ impl QueryLedBrightness {
 
         msg
     }
-}
 
-impl Message for QueryLedBrightness {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        313
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         313
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -59,4 +83,6 @@ impl Message for QueryLedBrightness {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._name.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

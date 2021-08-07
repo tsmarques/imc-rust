@@ -45,8 +45,28 @@ pub struct GpsFixRejection {
     pub _reason: u8,
 }
 
-impl GpsFixRejection {
-    pub fn new() -> GpsFixRejection {
+impl Message for GpsFixRejection {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = GpsFixRejection {
+            header: hdr,
+
+            _utc_time: Default::default(),
+            _reason: Default::default(),
+        };
+
+        msg.get_header()._mgid = 356;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = GpsFixRejection {
             header: Header::new(356),
 
@@ -58,15 +78,20 @@ impl GpsFixRejection {
 
         msg
     }
-}
 
-impl Message for GpsFixRejection {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        356
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         356
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -89,4 +114,6 @@ impl Message for GpsFixRejection {
         bfr.put_f32_le(self._utc_time);
         bfr.put_u8(self._reason);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

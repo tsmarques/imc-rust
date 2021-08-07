@@ -44,8 +44,30 @@ pub struct UamRxFrame {
     pub _data: Vec<u8>,
 }
 
-impl UamRxFrame {
-    pub fn new() -> UamRxFrame {
+impl Message for UamRxFrame {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = UamRxFrame {
+            header: hdr,
+
+            _sys_src: Default::default(),
+            _sys_dst: Default::default(),
+            _flags: Default::default(),
+            _data: Default::default(),
+        };
+
+        msg.get_header()._mgid = 815;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = UamRxFrame {
             header: Header::new(815),
 
@@ -59,15 +81,20 @@ impl UamRxFrame {
 
         msg
     }
-}
 
-impl Message for UamRxFrame {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        815
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         815
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -104,4 +131,6 @@ impl Message for UamRxFrame {
         bfr.put_u8(self._flags);
         serialize_bytes!(bfr, self._data.as_slice());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

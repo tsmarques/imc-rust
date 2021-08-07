@@ -15,8 +15,27 @@ pub struct Voltage {
     pub _value: f32,
 }
 
-impl Voltage {
-    pub fn new() -> Voltage {
+impl Message for Voltage {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Voltage {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 251;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Voltage {
             header: Header::new(251),
 
@@ -27,15 +46,20 @@ impl Voltage {
 
         msg
     }
-}
 
-impl Message for Voltage {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        251
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         251
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -55,4 +79,6 @@ impl Message for Voltage {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

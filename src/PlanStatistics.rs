@@ -80,8 +80,33 @@ pub struct PlanStatistics {
     pub _fuel: String,
 }
 
-impl PlanStatistics {
-    pub fn new() -> PlanStatistics {
+impl Message for PlanStatistics {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanStatistics {
+            header: hdr,
+
+            _plan_id: Default::default(),
+            _type: Default::default(),
+            _properties: Default::default(),
+            _durations: Default::default(),
+            _distances: Default::default(),
+            _actions: Default::default(),
+            _fuel: Default::default(),
+        };
+
+        msg.get_header()._mgid = 564;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanStatistics {
             header: Header::new(564),
 
@@ -98,15 +123,20 @@ impl PlanStatistics {
 
         msg
     }
-}
 
-impl Message for PlanStatistics {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        564
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         564
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -156,4 +186,6 @@ impl Message for PlanStatistics {
         serialize_bytes!(bfr, self._actions.as_bytes());
         serialize_bytes!(bfr, self._fuel.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

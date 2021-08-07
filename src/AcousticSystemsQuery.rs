@@ -11,8 +11,23 @@ pub struct AcousticSystemsQuery {
     pub header: Header,
 }
 
-impl AcousticSystemsQuery {
-    pub fn new() -> AcousticSystemsQuery {
+impl Message for AcousticSystemsQuery {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = AcousticSystemsQuery { header: hdr };
+
+        msg.get_header()._mgid = 212;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = AcousticSystemsQuery {
             header: Header::new(212),
         };
@@ -21,15 +36,20 @@ impl AcousticSystemsQuery {
 
         msg
     }
-}
 
-impl Message for AcousticSystemsQuery {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        212
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         212
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -45,4 +65,6 @@ impl Message for AcousticSystemsQuery {
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

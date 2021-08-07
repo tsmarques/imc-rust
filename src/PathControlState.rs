@@ -105,8 +105,45 @@ pub struct PathControlState {
     pub _eta: u16,
 }
 
-impl PathControlState {
-    pub fn new() -> PathControlState {
+impl Message for PathControlState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PathControlState {
+            header: hdr,
+
+            _path_ref: Default::default(),
+            _start_lat: Default::default(),
+            _start_lon: Default::default(),
+            _start_z: Default::default(),
+            _start_z_units: 0_u8,
+            _end_lat: Default::default(),
+            _end_lon: Default::default(),
+            _end_z: Default::default(),
+            _end_z_units: 0_u8,
+            _lradius: Default::default(),
+            _flags: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _vx: Default::default(),
+            _vy: Default::default(),
+            _vz: Default::default(),
+            _course_error: Default::default(),
+            _eta: Default::default(),
+        };
+
+        msg.get_header()._mgid = 410;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PathControlState {
             header: Header::new(410),
 
@@ -135,15 +172,20 @@ impl PathControlState {
 
         msg
     }
-}
 
-impl Message for PathControlState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        410
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         410
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -217,4 +259,6 @@ impl Message for PathControlState {
         bfr.put_f32_le(self._course_error);
         bfr.put_u16_le(self._eta);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

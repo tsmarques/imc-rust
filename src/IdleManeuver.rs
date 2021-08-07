@@ -24,8 +24,28 @@ pub struct IdleManeuver {
     pub _custom: String,
 }
 
-impl IdleManeuver {
-    pub fn new() -> IdleManeuver {
+impl Message for IdleManeuver {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = IdleManeuver {
+            header: hdr,
+
+            _duration: Default::default(),
+            _custom: Default::default(),
+        };
+
+        msg.get_header()._mgid = 454;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = IdleManeuver {
             header: Header::new(454),
 
@@ -37,15 +57,20 @@ impl IdleManeuver {
 
         msg
     }
-}
 
-impl Message for IdleManeuver {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        454
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         454
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -72,4 +97,6 @@ impl Message for IdleManeuver {
         bfr.put_u16_le(self._duration);
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

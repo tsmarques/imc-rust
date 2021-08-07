@@ -46,8 +46,30 @@ pub struct WaterVelocity {
     pub _z: f64,
 }
 
-impl WaterVelocity {
-    pub fn new() -> WaterVelocity {
+impl Message for WaterVelocity {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = WaterVelocity {
+            header: hdr,
+
+            _validity: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+        };
+
+        msg.get_header()._mgid = 260;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = WaterVelocity {
             header: Header::new(260),
 
@@ -61,15 +83,20 @@ impl WaterVelocity {
 
         msg
     }
-}
 
-impl Message for WaterVelocity {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        260
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         260
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -98,4 +125,6 @@ impl Message for WaterVelocity {
         bfr.put_f64_le(self._y);
         bfr.put_f64_le(self._z);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

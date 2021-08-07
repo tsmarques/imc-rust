@@ -35,8 +35,34 @@ pub struct EntityMonitoringState {
     pub _last_error_time: f64,
 }
 
-impl EntityMonitoringState {
-    pub fn new() -> EntityMonitoringState {
+impl Message for EntityMonitoringState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = EntityMonitoringState {
+            header: hdr,
+
+            _mcount: Default::default(),
+            _mnames: Default::default(),
+            _ecount: Default::default(),
+            _enames: Default::default(),
+            _ccount: Default::default(),
+            _cnames: Default::default(),
+            _last_error: Default::default(),
+            _last_error_time: Default::default(),
+        };
+
+        msg.get_header()._mgid = 503;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = EntityMonitoringState {
             header: Header::new(503),
 
@@ -54,15 +80,20 @@ impl EntityMonitoringState {
 
         msg
     }
-}
 
-impl Message for EntityMonitoringState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        503
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         503
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -113,4 +144,6 @@ impl Message for EntityMonitoringState {
         serialize_bytes!(bfr, self._last_error.as_bytes());
         bfr.put_f64_le(self._last_error_time);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

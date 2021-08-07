@@ -44,8 +44,28 @@ pub struct MonitorEntityState {
     pub _entities: String,
 }
 
-impl MonitorEntityState {
-    pub fn new() -> MonitorEntityState {
+impl Message for MonitorEntityState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = MonitorEntityState {
+            header: hdr,
+
+            _command: Default::default(),
+            _entities: Default::default(),
+        };
+
+        msg.get_header()._mgid = 502;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = MonitorEntityState {
             header: Header::new(502),
 
@@ -57,15 +77,20 @@ impl MonitorEntityState {
 
         msg
     }
-}
 
-impl Message for MonitorEntityState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        502
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         502
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -92,4 +117,6 @@ impl Message for MonitorEntityState {
         bfr.put_u8(self._command);
         serialize_bytes!(bfr, self._entities.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

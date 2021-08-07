@@ -56,8 +56,29 @@ pub struct PowerOperation {
     pub _sched_time: f64,
 }
 
-impl PowerOperation {
-    pub fn new() -> PowerOperation {
+impl Message for PowerOperation {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PowerOperation {
+            header: hdr,
+
+            _op: Default::default(),
+            _time_remain: Default::default(),
+            _sched_time: Default::default(),
+        };
+
+        msg.get_header()._mgid = 308;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PowerOperation {
             header: Header::new(308),
 
@@ -70,15 +91,20 @@ impl PowerOperation {
 
         msg
     }
-}
 
-impl Message for PowerOperation {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        308
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         308
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -104,4 +130,6 @@ impl Message for PowerOperation {
         bfr.put_f32_le(self._time_remain);
         bfr.put_f64_le(self._sched_time);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

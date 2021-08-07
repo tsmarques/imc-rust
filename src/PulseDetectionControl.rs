@@ -32,8 +32,27 @@ pub struct PulseDetectionControl {
     pub _op: u8,
 }
 
-impl PulseDetectionControl {
-    pub fn new() -> PulseDetectionControl {
+impl Message for PulseDetectionControl {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PulseDetectionControl {
+            header: hdr,
+
+            _op: Default::default(),
+        };
+
+        msg.get_header()._mgid = 278;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PulseDetectionControl {
             header: Header::new(278),
 
@@ -44,15 +63,20 @@ impl PulseDetectionControl {
 
         msg
     }
-}
 
-impl Message for PulseDetectionControl {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        278
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         278
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -72,4 +96,6 @@ impl Message for PulseDetectionControl {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

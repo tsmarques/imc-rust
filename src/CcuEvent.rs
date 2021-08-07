@@ -56,8 +56,29 @@ pub struct CcuEvent {
     pub _arg: Option<Box<dyn Message>>,
 }
 
-impl CcuEvent {
-    pub fn new() -> CcuEvent {
+impl Message for CcuEvent {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = CcuEvent {
+            header: hdr,
+
+            _type: Default::default(),
+            _id: Default::default(),
+            _arg: Default::default(),
+        };
+
+        msg.get_header()._mgid = 606;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = CcuEvent {
             header: Header::new(606),
 
@@ -70,15 +91,20 @@ impl CcuEvent {
 
         msg
     }
-}
 
-impl Message for CcuEvent {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        606
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         606
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -123,4 +149,6 @@ impl Message for CcuEvent {
             Some(m) => m.serialize_fields(bfr),
         };
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

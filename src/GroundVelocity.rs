@@ -46,8 +46,30 @@ pub struct GroundVelocity {
     pub _z: f64,
 }
 
-impl GroundVelocity {
-    pub fn new() -> GroundVelocity {
+impl Message for GroundVelocity {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = GroundVelocity {
+            header: hdr,
+
+            _validity: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+        };
+
+        msg.get_header()._mgid = 259;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = GroundVelocity {
             header: Header::new(259),
 
@@ -61,15 +83,20 @@ impl GroundVelocity {
 
         msg
     }
-}
 
-impl Message for GroundVelocity {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        259
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         259
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -98,4 +125,6 @@ impl Message for GroundVelocity {
         bfr.put_f64_le(self._y);
         bfr.put_f64_le(self._z);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

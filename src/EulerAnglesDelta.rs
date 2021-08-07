@@ -26,8 +26,31 @@ pub struct EulerAnglesDelta {
     pub _timestep: f32,
 }
 
-impl EulerAnglesDelta {
-    pub fn new() -> EulerAnglesDelta {
+impl Message for EulerAnglesDelta {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = EulerAnglesDelta {
+            header: hdr,
+
+            _time: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _timestep: Default::default(),
+        };
+
+        msg.get_header()._mgid = 255;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = EulerAnglesDelta {
             header: Header::new(255),
 
@@ -42,15 +65,20 @@ impl EulerAnglesDelta {
 
         msg
     }
-}
 
-impl Message for EulerAnglesDelta {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        255
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         255
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -82,4 +110,6 @@ impl Message for EulerAnglesDelta {
         bfr.put_f64_le(self._z);
         bfr.put_f32_le(self._timestep);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

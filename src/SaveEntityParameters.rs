@@ -12,8 +12,27 @@ pub struct SaveEntityParameters {
     pub _name: String,
 }
 
-impl SaveEntityParameters {
-    pub fn new() -> SaveEntityParameters {
+impl Message for SaveEntityParameters {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = SaveEntityParameters {
+            header: hdr,
+
+            _name: Default::default(),
+        };
+
+        msg.get_header()._mgid = 805;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = SaveEntityParameters {
             header: Header::new(805),
 
@@ -24,15 +43,20 @@ impl SaveEntityParameters {
 
         msg
     }
-}
 
-impl Message for SaveEntityParameters {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        805
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         805
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -56,4 +80,6 @@ impl Message for SaveEntityParameters {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._name.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -19,8 +19,28 @@ pub struct BeamConfig {
     pub _beam_height: f32,
 }
 
-impl BeamConfig {
-    pub fn new() -> BeamConfig {
+impl Message for BeamConfig {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = BeamConfig {
+            header: hdr,
+
+            _beam_width: Default::default(),
+            _beam_height: Default::default(),
+        };
+
+        msg.get_header()._mgid = 283;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = BeamConfig {
             header: Header::new(283),
 
@@ -32,15 +52,20 @@ impl BeamConfig {
 
         msg
     }
-}
 
-impl Message for BeamConfig {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        283
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         283
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -63,4 +88,6 @@ impl Message for BeamConfig {
         bfr.put_f32_le(self._beam_width);
         bfr.put_f32_le(self._beam_height);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

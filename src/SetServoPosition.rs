@@ -17,8 +17,28 @@ pub struct SetServoPosition {
     pub _value: f32,
 }
 
-impl SetServoPosition {
-    pub fn new() -> SetServoPosition {
+impl Message for SetServoPosition {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = SetServoPosition {
+            header: hdr,
+
+            _id: Default::default(),
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 302;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = SetServoPosition {
             header: Header::new(302),
 
@@ -30,15 +50,20 @@ impl SetServoPosition {
 
         msg
     }
-}
 
-impl Message for SetServoPosition {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        302
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         302
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -61,4 +86,6 @@ impl Message for SetServoPosition {
         bfr.put_u8(self._id);
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -54,8 +54,30 @@ pub struct FollowCommandState {
     pub _state: u8,
 }
 
-impl FollowCommandState {
-    pub fn new() -> FollowCommandState {
+impl Message for FollowCommandState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = FollowCommandState {
+            header: hdr,
+
+            _control_src: Default::default(),
+            _control_ent: Default::default(),
+            _command: Default::default(),
+            _state: Default::default(),
+        };
+
+        msg.get_header()._mgid = 498;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = FollowCommandState {
             header: Header::new(498),
 
@@ -69,15 +91,20 @@ impl FollowCommandState {
 
         msg
     }
-}
 
-impl Message for FollowCommandState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        498
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         498
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -123,4 +150,6 @@ impl Message for FollowCommandState {
         };
         bfr.put_u8(self._state);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

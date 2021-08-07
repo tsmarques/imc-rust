@@ -33,8 +33,31 @@ pub struct EulerAngles {
     pub _psi_magnetic: f64,
 }
 
-impl EulerAngles {
-    pub fn new() -> EulerAngles {
+impl Message for EulerAngles {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = EulerAngles {
+            header: hdr,
+
+            _time: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+            _psi_magnetic: Default::default(),
+        };
+
+        msg.get_header()._mgid = 254;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = EulerAngles {
             header: Header::new(254),
 
@@ -49,15 +72,20 @@ impl EulerAngles {
 
         msg
     }
-}
 
-impl Message for EulerAngles {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        254
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         254
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -89,4 +117,6 @@ impl Message for EulerAngles {
         bfr.put_f64_le(self._psi);
         bfr.put_f64_le(self._psi_magnetic);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

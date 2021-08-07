@@ -33,8 +33,32 @@ pub struct LblEstimate {
     pub _distance: f32,
 }
 
-impl LblEstimate {
-    pub fn new() -> LblEstimate {
+impl Message for LblEstimate {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = LblEstimate {
+            header: hdr,
+
+            _beacon: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _var_x: Default::default(),
+            _var_y: Default::default(),
+            _distance: Default::default(),
+        };
+
+        msg.get_header()._mgid = 360;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = LblEstimate {
             header: Header::new(360),
 
@@ -50,15 +74,20 @@ impl LblEstimate {
 
         msg
     }
-}
 
-impl Message for LblEstimate {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        360
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         360
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -110,4 +139,6 @@ impl Message for LblEstimate {
         bfr.put_f32_le(self._var_y);
         bfr.put_f32_le(self._distance);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

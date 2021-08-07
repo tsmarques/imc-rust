@@ -31,8 +31,32 @@ pub struct UsblFixExtended {
     pub _accuracy: f32,
 }
 
-impl UsblFixExtended {
-    pub fn new() -> UsblFixExtended {
+impl Message for UsblFixExtended {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = UsblFixExtended {
+            header: hdr,
+
+            _target: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z_units: 0_u8,
+            _z: Default::default(),
+            _accuracy: Default::default(),
+        };
+
+        msg.get_header()._mgid = 900;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = UsblFixExtended {
             header: Header::new(900),
 
@@ -48,15 +72,20 @@ impl UsblFixExtended {
 
         msg
     }
-}
 
-impl Message for UsblFixExtended {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        900
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         900
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -95,4 +124,6 @@ impl Message for UsblFixExtended {
         bfr.put_f32_le(self._z);
         bfr.put_f32_le(self._accuracy);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

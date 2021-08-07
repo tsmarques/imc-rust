@@ -14,8 +14,27 @@ pub struct Fluorescein {
     pub _value: f32,
 }
 
-impl Fluorescein {
-    pub fn new() -> Fluorescein {
+impl Message for Fluorescein {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Fluorescein {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 290;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Fluorescein {
             header: Header::new(290),
 
@@ -26,15 +45,20 @@ impl Fluorescein {
 
         msg
     }
-}
 
-impl Message for Fluorescein {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        290
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         290
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -54,4 +78,6 @@ impl Message for Fluorescein {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

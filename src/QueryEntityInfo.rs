@@ -16,8 +16,27 @@ pub struct QueryEntityInfo {
     pub _id: u8,
 }
 
-impl QueryEntityInfo {
-    pub fn new() -> QueryEntityInfo {
+impl Message for QueryEntityInfo {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = QueryEntityInfo {
+            header: hdr,
+
+            _id: Default::default(),
+        };
+
+        msg.get_header()._mgid = 4;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = QueryEntityInfo {
             header: Header::new(4),
 
@@ -28,15 +47,20 @@ impl QueryEntityInfo {
 
         msg
     }
-}
 
-impl Message for QueryEntityInfo {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        4
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         4
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -56,4 +80,6 @@ impl Message for QueryEntityInfo {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._id);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

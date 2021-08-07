@@ -89,8 +89,30 @@ pub struct AcousticOperation {
     pub _msg: Option<Box<dyn Message>>,
 }
 
-impl AcousticOperation {
-    pub fn new() -> AcousticOperation {
+impl Message for AcousticOperation {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = AcousticOperation {
+            header: hdr,
+
+            _op: Default::default(),
+            _system: Default::default(),
+            _range: Default::default(),
+            _msg: Default::default(),
+        };
+
+        msg.get_header()._mgid = 211;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = AcousticOperation {
             header: Header::new(211),
 
@@ -104,15 +126,20 @@ impl AcousticOperation {
 
         msg
     }
-}
 
-impl Message for AcousticOperation {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        211
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         211
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -160,4 +187,6 @@ impl Message for AcousticOperation {
             Some(m) => m.serialize_fields(bfr),
         };
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

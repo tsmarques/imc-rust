@@ -23,8 +23,30 @@ pub struct SonarPulse {
     pub _simulated_speed: i32,
 }
 
-impl SonarPulse {
-    pub fn new() -> SonarPulse {
+impl Message for SonarPulse {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = SonarPulse {
+            header: hdr,
+
+            _frequency: Default::default(),
+            _pulse_length: Default::default(),
+            _time_delay: Default::default(),
+            _simulated_speed: Default::default(),
+        };
+
+        msg.get_header()._mgid = 2006;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = SonarPulse {
             header: Header::new(2006),
 
@@ -38,15 +60,20 @@ impl SonarPulse {
 
         msg
     }
-}
 
-impl Message for SonarPulse {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        2006
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         2006
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -75,4 +102,6 @@ impl Message for SonarPulse {
         bfr.put_i32_le(self._time_delay);
         bfr.put_i32_le(self._simulated_speed);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

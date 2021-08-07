@@ -67,8 +67,44 @@ pub struct SimulatedState {
     pub _svz: f32,
 }
 
-impl SimulatedState {
-    pub fn new() -> SimulatedState {
+impl Message for SimulatedState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = SimulatedState {
+            header: hdr,
+
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _height: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+            _u: Default::default(),
+            _v: Default::default(),
+            _w: Default::default(),
+            _p: Default::default(),
+            _q: Default::default(),
+            _r: Default::default(),
+            _svx: Default::default(),
+            _svy: Default::default(),
+            _svz: Default::default(),
+        };
+
+        msg.get_header()._mgid = 50;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = SimulatedState {
             header: Header::new(50),
 
@@ -96,15 +132,20 @@ impl SimulatedState {
 
         msg
     }
-}
 
-impl Message for SimulatedState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        50
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         50
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -175,4 +216,6 @@ impl Message for SimulatedState {
         bfr.put_f32_le(self._svy);
         bfr.put_f32_le(self._svz);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

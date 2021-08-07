@@ -21,8 +21,27 @@ pub struct Teleoperation {
     pub _custom: String,
 }
 
-impl Teleoperation {
-    pub fn new() -> Teleoperation {
+impl Message for Teleoperation {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Teleoperation {
+            header: hdr,
+
+            _custom: Default::default(),
+        };
+
+        msg.get_header()._mgid = 452;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Teleoperation {
             header: Header::new(452),
 
@@ -33,15 +52,20 @@ impl Teleoperation {
 
         msg
     }
-}
 
-impl Message for Teleoperation {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        452
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         452
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -65,4 +89,6 @@ impl Message for Teleoperation {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

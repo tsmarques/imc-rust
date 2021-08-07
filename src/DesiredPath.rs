@@ -101,8 +101,39 @@ pub struct DesiredPath {
     pub _flags: u8,
 }
 
-impl DesiredPath {
-    pub fn new() -> DesiredPath {
+impl Message for DesiredPath {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = DesiredPath {
+            header: hdr,
+
+            _path_ref: Default::default(),
+            _start_lat: Default::default(),
+            _start_lon: Default::default(),
+            _start_z: Default::default(),
+            _start_z_units: 0_u8,
+            _end_lat: Default::default(),
+            _end_lon: Default::default(),
+            _end_z: Default::default(),
+            _end_z_units: 0_u8,
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _lradius: Default::default(),
+            _flags: Default::default(),
+        };
+
+        msg.get_header()._mgid = 406;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = DesiredPath {
             header: Header::new(406),
 
@@ -125,15 +156,20 @@ impl DesiredPath {
 
         msg
     }
-}
 
-impl Message for DesiredPath {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        406
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         406
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -189,4 +225,6 @@ impl Message for DesiredPath {
         bfr.put_f32_le(self._lradius);
         bfr.put_u8(self._flags);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

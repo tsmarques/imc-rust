@@ -65,8 +65,30 @@ pub struct PlanGeneration {
     pub _params: String,
 }
 
-impl PlanGeneration {
-    pub fn new() -> PlanGeneration {
+impl Message for PlanGeneration {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanGeneration {
+            header: hdr,
+
+            _cmd: Default::default(),
+            _op: Default::default(),
+            _plan_id: Default::default(),
+            _params: Default::default(),
+        };
+
+        msg.get_header()._mgid = 562;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanGeneration {
             header: Header::new(562),
 
@@ -80,15 +102,20 @@ impl PlanGeneration {
 
         msg
     }
-}
 
-impl Message for PlanGeneration {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        562
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         562
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -123,4 +150,6 @@ impl Message for PlanGeneration {
         serialize_bytes!(bfr, self._plan_id.as_bytes());
         serialize_bytes!(bfr, self._params.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

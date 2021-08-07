@@ -23,8 +23,30 @@ pub struct ControlParcel {
     pub _a: f32,
 }
 
-impl ControlParcel {
-    pub fn new() -> ControlParcel {
+impl Message for ControlParcel {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = ControlParcel {
+            header: hdr,
+
+            _p: Default::default(),
+            _i: Default::default(),
+            _d: Default::default(),
+            _a: Default::default(),
+        };
+
+        msg.get_header()._mgid = 412;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = ControlParcel {
             header: Header::new(412),
 
@@ -38,15 +60,20 @@ impl ControlParcel {
 
         msg
     }
-}
 
-impl Message for ControlParcel {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        412
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         412
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -75,4 +102,6 @@ impl Message for ControlParcel {
         bfr.put_f32_le(self._d);
         bfr.put_f32_le(self._a);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

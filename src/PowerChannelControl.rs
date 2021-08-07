@@ -55,8 +55,29 @@ pub struct PowerChannelControl {
     pub _sched_time: f64,
 }
 
-impl PowerChannelControl {
-    pub fn new() -> PowerChannelControl {
+impl Message for PowerChannelControl {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PowerChannelControl {
+            header: hdr,
+
+            _name: Default::default(),
+            _op: Default::default(),
+            _sched_time: Default::default(),
+        };
+
+        msg.get_header()._mgid = 309;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PowerChannelControl {
             header: Header::new(309),
 
@@ -69,15 +90,20 @@ impl PowerChannelControl {
 
         msg
     }
-}
 
-impl Message for PowerChannelControl {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        309
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         309
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -107,4 +133,6 @@ impl Message for PowerChannelControl {
         bfr.put_u8(self._op);
         bfr.put_f64_le(self._sched_time);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

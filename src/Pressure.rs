@@ -14,8 +14,27 @@ pub struct Pressure {
     pub _value: f64,
 }
 
-impl Pressure {
-    pub fn new() -> Pressure {
+impl Message for Pressure {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Pressure {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 264;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Pressure {
             header: Header::new(264),
 
@@ -26,15 +45,20 @@ impl Pressure {
 
         msg
     }
-}
 
-impl Message for Pressure {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        264
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         264
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -54,4 +78,6 @@ impl Message for Pressure {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f64_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

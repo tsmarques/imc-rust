@@ -25,8 +25,31 @@ pub struct IridiumMsgTxExtended {
     pub _data: Vec<u8>,
 }
 
-impl IridiumMsgTxExtended {
-    pub fn new() -> IridiumMsgTxExtended {
+impl Message for IridiumMsgTxExtended {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = IridiumMsgTxExtended {
+            header: hdr,
+
+            _req_id: Default::default(),
+            _ttl: Default::default(),
+            _expiration: Default::default(),
+            _destination: Default::default(),
+            _data: Default::default(),
+        };
+
+        msg.get_header()._mgid = 2005;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = IridiumMsgTxExtended {
             header: Header::new(2005),
 
@@ -41,15 +64,20 @@ impl IridiumMsgTxExtended {
 
         msg
     }
-}
 
-impl Message for IridiumMsgTxExtended {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        2005
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         2005
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -87,4 +115,6 @@ impl Message for IridiumMsgTxExtended {
         serialize_bytes!(bfr, self._destination.as_bytes());
         serialize_bytes!(bfr, self._data.as_slice());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

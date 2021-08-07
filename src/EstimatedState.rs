@@ -94,8 +94,46 @@ pub struct EstimatedState {
     pub _alt: f32,
 }
 
-impl EstimatedState {
-    pub fn new() -> EstimatedState {
+impl Message for EstimatedState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = EstimatedState {
+            header: hdr,
+
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _height: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+            _u: Default::default(),
+            _v: Default::default(),
+            _w: Default::default(),
+            _vx: Default::default(),
+            _vy: Default::default(),
+            _vz: Default::default(),
+            _p: Default::default(),
+            _q: Default::default(),
+            _r: Default::default(),
+            _depth: Default::default(),
+            _alt: Default::default(),
+        };
+
+        msg.get_header()._mgid = 350;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = EstimatedState {
             header: Header::new(350),
 
@@ -125,15 +163,20 @@ impl EstimatedState {
 
         msg
     }
-}
 
-impl Message for EstimatedState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        350
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         350
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -210,4 +253,6 @@ impl Message for EstimatedState {
         bfr.put_f32_le(self._depth);
         bfr.put_f32_le(self._alt);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

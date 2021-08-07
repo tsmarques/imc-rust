@@ -84,8 +84,34 @@ pub struct PlanControlState {
     pub _last_outcome: u8,
 }
 
-impl PlanControlState {
-    pub fn new() -> PlanControlState {
+impl Message for PlanControlState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanControlState {
+            header: hdr,
+
+            _state: Default::default(),
+            _plan_id: Default::default(),
+            _plan_eta: Default::default(),
+            _plan_progress: Default::default(),
+            _man_id: Default::default(),
+            _man_type: Default::default(),
+            _man_eta: Default::default(),
+            _last_outcome: Default::default(),
+        };
+
+        msg.get_header()._mgid = 560;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanControlState {
             header: Header::new(560),
 
@@ -103,15 +129,20 @@ impl PlanControlState {
 
         msg
     }
-}
 
-impl Message for PlanControlState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        560
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         560
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -158,4 +189,6 @@ impl Message for PlanControlState {
         bfr.put_i32_le(self._man_eta);
         bfr.put_u8(self._last_outcome);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

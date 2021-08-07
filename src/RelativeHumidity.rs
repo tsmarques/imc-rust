@@ -14,8 +14,27 @@ pub struct RelativeHumidity {
     pub _value: f32,
 }
 
-impl RelativeHumidity {
-    pub fn new() -> RelativeHumidity {
+impl Message for RelativeHumidity {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = RelativeHumidity {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 272;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = RelativeHumidity {
             header: Header::new(272),
 
@@ -26,15 +45,20 @@ impl RelativeHumidity {
 
         msg
     }
-}
 
-impl Message for RelativeHumidity {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        272
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         272
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -54,4 +78,6 @@ impl Message for RelativeHumidity {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

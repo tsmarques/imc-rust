@@ -18,8 +18,28 @@ pub struct PolygonVertex {
     pub _lon: f64,
 }
 
-impl PolygonVertex {
-    pub fn new() -> PolygonVertex {
+impl Message for PolygonVertex {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PolygonVertex {
+            header: hdr,
+
+            _lat: Default::default(),
+            _lon: Default::default(),
+        };
+
+        msg.get_header()._mgid = 474;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PolygonVertex {
             header: Header::new(474),
 
@@ -31,15 +51,20 @@ impl PolygonVertex {
 
         msg
     }
-}
 
-impl Message for PolygonVertex {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        474
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         474
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -62,4 +87,6 @@ impl Message for PolygonVertex {
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

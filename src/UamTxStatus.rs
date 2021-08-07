@@ -61,8 +61,29 @@ pub struct UamTxStatus {
     pub _error: String,
 }
 
-impl UamTxStatus {
-    pub fn new() -> UamTxStatus {
+impl Message for UamTxStatus {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = UamTxStatus {
+            header: hdr,
+
+            _seq: Default::default(),
+            _value: Default::default(),
+            _error: Default::default(),
+        };
+
+        msg.get_header()._mgid = 816;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = UamTxStatus {
             header: Header::new(816),
 
@@ -75,15 +96,20 @@ impl UamTxStatus {
 
         msg
     }
-}
 
-impl Message for UamTxStatus {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        816
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         816
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -113,4 +139,6 @@ impl Message for UamTxStatus {
         bfr.put_u8(self._value);
         serialize_bytes!(bfr, self._error.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

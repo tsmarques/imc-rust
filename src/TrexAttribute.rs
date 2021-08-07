@@ -48,8 +48,30 @@ pub struct TrexAttribute {
     pub _max: String,
 }
 
-impl TrexAttribute {
-    pub fn new() -> TrexAttribute {
+impl Message for TrexAttribute {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = TrexAttribute {
+            header: hdr,
+
+            _name: Default::default(),
+            _attr_type: Default::default(),
+            _min: Default::default(),
+            _max: Default::default(),
+        };
+
+        msg.get_header()._mgid = 656;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = TrexAttribute {
             header: Header::new(656),
 
@@ -63,15 +85,20 @@ impl TrexAttribute {
 
         msg
     }
-}
 
-impl Message for TrexAttribute {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        656
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         656
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -108,4 +135,6 @@ impl Message for TrexAttribute {
         serialize_bytes!(bfr, self._min.as_bytes());
         serialize_bytes!(bfr, self._max.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

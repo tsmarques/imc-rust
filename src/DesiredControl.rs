@@ -62,8 +62,33 @@ pub struct DesiredControl {
     pub _flags: u8,
 }
 
-impl DesiredControl {
-    pub fn new() -> DesiredControl {
+impl Message for DesiredControl {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = DesiredControl {
+            header: hdr,
+
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _k: Default::default(),
+            _m: Default::default(),
+            _n: Default::default(),
+            _flags: Default::default(),
+        };
+
+        msg.get_header()._mgid = 407;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = DesiredControl {
             header: Header::new(407),
 
@@ -80,15 +105,20 @@ impl DesiredControl {
 
         msg
     }
-}
 
-impl Message for DesiredControl {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        407
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         407
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -126,4 +156,6 @@ impl Message for DesiredControl {
         bfr.put_f64_le(self._n);
         bfr.put_u8(self._flags);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

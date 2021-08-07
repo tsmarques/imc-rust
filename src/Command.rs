@@ -58,8 +58,30 @@ pub struct Command {
     pub _heading: f32,
 }
 
-impl Command {
-    pub fn new() -> Command {
+impl Message for Command {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Command {
+            header: hdr,
+
+            _flags: Default::default(),
+            _speed: Default::default(),
+            _z: Default::default(),
+            _heading: Default::default(),
+        };
+
+        msg.get_header()._mgid = 497;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Command {
             header: Header::new(497),
 
@@ -73,15 +95,20 @@ impl Command {
 
         msg
     }
-}
 
-impl Message for Command {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        497
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         497
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -110,4 +137,6 @@ impl Message for Command {
         bfr.put_f32_le(self._z);
         bfr.put_f32_le(self._heading);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

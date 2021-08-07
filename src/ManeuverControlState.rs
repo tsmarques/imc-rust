@@ -45,8 +45,29 @@ pub struct ManeuverControlState {
     pub _info: String,
 }
 
-impl ManeuverControlState {
-    pub fn new() -> ManeuverControlState {
+impl Message for ManeuverControlState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = ManeuverControlState {
+            header: hdr,
+
+            _state: Default::default(),
+            _eta: Default::default(),
+            _info: Default::default(),
+        };
+
+        msg.get_header()._mgid = 470;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = ManeuverControlState {
             header: Header::new(470),
 
@@ -59,15 +80,20 @@ impl ManeuverControlState {
 
         msg
     }
-}
 
-impl Message for ManeuverControlState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        470
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         470
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -97,4 +123,6 @@ impl Message for ManeuverControlState {
         bfr.put_u16_le(self._eta);
         serialize_bytes!(bfr, self._info.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

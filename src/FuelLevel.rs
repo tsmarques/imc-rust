@@ -22,8 +22,29 @@ pub struct FuelLevel {
     pub _opmodes: String,
 }
 
-impl FuelLevel {
-    pub fn new() -> FuelLevel {
+impl Message for FuelLevel {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = FuelLevel {
+            header: hdr,
+
+            _value: Default::default(),
+            _confidence: Default::default(),
+            _opmodes: Default::default(),
+        };
+
+        msg.get_header()._mgid = 279;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = FuelLevel {
             header: Header::new(279),
 
@@ -36,15 +57,20 @@ impl FuelLevel {
 
         msg
     }
-}
 
-impl Message for FuelLevel {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        279
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         279
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -74,4 +100,6 @@ impl Message for FuelLevel {
         bfr.put_f32_le(self._confidence);
         serialize_bytes!(bfr, self._opmodes.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

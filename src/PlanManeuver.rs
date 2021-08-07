@@ -29,8 +29,30 @@ pub struct PlanManeuver {
     pub _end_actions: MessageList<dyn Message>,
 }
 
-impl PlanManeuver {
-    pub fn new() -> PlanManeuver {
+impl Message for PlanManeuver {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanManeuver {
+            header: hdr,
+
+            _maneuver_id: Default::default(),
+            _data: Default::default(),
+            _start_actions: vec![],
+            _end_actions: vec![],
+        };
+
+        msg.get_header()._mgid = 552;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanManeuver {
             header: Header::new(552),
 
@@ -44,15 +66,20 @@ impl PlanManeuver {
 
         msg
     }
-}
 
-impl Message for PlanManeuver {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        552
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         552
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -150,4 +177,6 @@ impl Message for PlanManeuver {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

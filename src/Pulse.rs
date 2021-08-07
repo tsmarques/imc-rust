@@ -9,8 +9,23 @@ pub struct Pulse {
     pub header: Header,
 }
 
-impl Pulse {
-    pub fn new() -> Pulse {
+impl Message for Pulse {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Pulse { header: hdr };
+
+        msg.get_header()._mgid = 277;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Pulse {
             header: Header::new(277),
         };
@@ -19,15 +34,20 @@ impl Pulse {
 
         msg
     }
-}
 
-impl Message for Pulse {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        277
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         277
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -43,4 +63,6 @@ impl Message for Pulse {
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

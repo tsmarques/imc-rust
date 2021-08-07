@@ -84,8 +84,42 @@ pub struct Rows {
     pub _custom: String,
 }
 
-impl Rows {
-    pub fn new() -> Rows {
+impl Message for Rows {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Rows {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z: Default::default(),
+            _z_units: 0_u8,
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _bearing: Default::default(),
+            _cross_angle: Default::default(),
+            _width: Default::default(),
+            _length: Default::default(),
+            _hstep: 30_f32,
+            _coff: Default::default(),
+            _alternation: 50_u8,
+            _flags: Default::default(),
+            _custom: Default::default(),
+        };
+
+        msg.get_header()._mgid = 456;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Rows {
             header: Header::new(456),
 
@@ -111,15 +145,20 @@ impl Rows {
 
         msg
     }
-}
 
-impl Message for Rows {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        456
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         456
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -188,4 +227,6 @@ impl Message for Rows {
         bfr.put_u8(self._flags);
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

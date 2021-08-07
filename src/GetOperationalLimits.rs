@@ -9,8 +9,23 @@ pub struct GetOperationalLimits {
     pub header: Header,
 }
 
-impl GetOperationalLimits {
-    pub fn new() -> GetOperationalLimits {
+impl Message for GetOperationalLimits {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = GetOperationalLimits { header: hdr };
+
+        msg.get_header()._mgid = 505;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = GetOperationalLimits {
             header: Header::new(505),
         };
@@ -19,15 +34,20 @@ impl GetOperationalLimits {
 
         msg
     }
-}
 
-impl Message for GetOperationalLimits {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        505
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         505
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -43,4 +63,6 @@ impl Message for GetOperationalLimits {
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

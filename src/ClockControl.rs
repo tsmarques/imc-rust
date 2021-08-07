@@ -50,8 +50,29 @@ pub struct ClockControl {
     pub _tz: i8,
 }
 
-impl ClockControl {
-    pub fn new() -> ClockControl {
+impl Message for ClockControl {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = ClockControl {
+            header: hdr,
+
+            _op: Default::default(),
+            _clock: Default::default(),
+            _tz: Default::default(),
+        };
+
+        msg.get_header()._mgid = 106;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = ClockControl {
             header: Header::new(106),
 
@@ -64,15 +85,20 @@ impl ClockControl {
 
         msg
     }
-}
 
-impl Message for ClockControl {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        106
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         106
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -98,4 +124,6 @@ impl Message for ClockControl {
         bfr.put_f64_le(self._clock);
         bfr.put_i8(self._tz);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

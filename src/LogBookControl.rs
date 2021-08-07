@@ -49,8 +49,29 @@ pub struct LogBookControl {
     pub _msg: MessageList<LogBookEntry>,
 }
 
-impl LogBookControl {
-    pub fn new() -> LogBookControl {
+impl Message for LogBookControl {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = LogBookControl {
+            header: hdr,
+
+            _command: Default::default(),
+            _htime: Default::default(),
+            _msg: vec![],
+        };
+
+        msg.get_header()._mgid = 104;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = LogBookControl {
             header: Header::new(104),
 
@@ -63,15 +84,20 @@ impl LogBookControl {
 
         msg
     }
-}
 
-impl Message for LogBookControl {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        104
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         104
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -124,4 +150,6 @@ impl Message for LogBookControl {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

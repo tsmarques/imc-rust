@@ -14,8 +14,27 @@ pub struct Rpm {
     pub _value: i16,
 }
 
-impl Rpm {
-    pub fn new() -> Rpm {
+impl Message for Rpm {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Rpm {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 250;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Rpm {
             header: Header::new(250),
 
@@ -26,15 +45,20 @@ impl Rpm {
 
         msg
     }
-}
 
-impl Message for Rpm {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        250
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         250
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -54,4 +78,6 @@ impl Message for Rpm {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_i16_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -20,8 +20,27 @@ pub struct DesiredRoll {
     pub _value: f64,
 }
 
-impl DesiredRoll {
-    pub fn new() -> DesiredRoll {
+impl Message for DesiredRoll {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = DesiredRoll {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 403;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = DesiredRoll {
             header: Header::new(403),
 
@@ -32,15 +51,20 @@ impl DesiredRoll {
 
         msg
     }
-}
 
-impl Message for DesiredRoll {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        403
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         403
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -60,4 +84,6 @@ impl Message for DesiredRoll {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f64_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

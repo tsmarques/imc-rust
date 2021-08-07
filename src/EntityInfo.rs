@@ -27,8 +27,31 @@ pub struct EntityInfo {
     pub _deact_time: u16,
 }
 
-impl EntityInfo {
-    pub fn new() -> EntityInfo {
+impl Message for EntityInfo {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = EntityInfo {
+            header: hdr,
+
+            _id: Default::default(),
+            _label: Default::default(),
+            _component: Default::default(),
+            _act_time: Default::default(),
+            _deact_time: Default::default(),
+        };
+
+        msg.get_header()._mgid = 3;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = EntityInfo {
             header: Header::new(3),
 
@@ -43,15 +66,20 @@ impl EntityInfo {
 
         msg
     }
-}
 
-impl Message for EntityInfo {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        3
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         3
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -89,4 +117,6 @@ impl Message for EntityInfo {
         bfr.put_u16_le(self._act_time);
         bfr.put_u16_le(self._deact_time);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

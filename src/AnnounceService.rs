@@ -36,8 +36,28 @@ pub struct AnnounceService {
     pub _service_type: u8,
 }
 
-impl AnnounceService {
-    pub fn new() -> AnnounceService {
+impl Message for AnnounceService {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = AnnounceService {
+            header: hdr,
+
+            _service: Default::default(),
+            _service_type: Default::default(),
+        };
+
+        msg.get_header()._mgid = 152;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = AnnounceService {
             header: Header::new(152),
 
@@ -49,15 +69,20 @@ impl AnnounceService {
 
         msg
     }
-}
 
-impl Message for AnnounceService {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        152
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         152
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -84,4 +109,6 @@ impl Message for AnnounceService {
         serialize_bytes!(bfr, self._service.as_bytes());
         bfr.put_u8(self._service_type);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

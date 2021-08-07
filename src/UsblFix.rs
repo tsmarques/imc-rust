@@ -28,8 +28,31 @@ pub struct UsblFix {
     pub _z: f32,
 }
 
-impl UsblFix {
-    pub fn new() -> UsblFix {
+impl Message for UsblFix {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = UsblFix {
+            header: hdr,
+
+            _target: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z_units: 0_u8,
+            _z: Default::default(),
+        };
+
+        msg.get_header()._mgid = 892;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = UsblFix {
             header: Header::new(892),
 
@@ -44,15 +67,20 @@ impl UsblFix {
 
         msg
     }
-}
 
-impl Message for UsblFix {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        892
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         892
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -84,4 +112,6 @@ impl Message for UsblFix {
         bfr.put_u8(self._z_units);
         bfr.put_f32_le(self._z);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

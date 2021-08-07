@@ -36,8 +36,28 @@ pub struct EntityList {
     pub _list: String,
 }
 
-impl EntityList {
-    pub fn new() -> EntityList {
+impl Message for EntityList {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = EntityList {
+            header: hdr,
+
+            _op: Default::default(),
+            _list: Default::default(),
+        };
+
+        msg.get_header()._mgid = 5;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = EntityList {
             header: Header::new(5),
 
@@ -49,15 +69,20 @@ impl EntityList {
 
         msg
     }
-}
 
-impl Message for EntityList {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        5
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         5
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -84,4 +109,6 @@ impl Message for EntityList {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._list.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

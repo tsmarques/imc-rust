@@ -16,8 +16,27 @@ pub struct AcousticSystems {
     pub _list: String,
 }
 
-impl AcousticSystems {
-    pub fn new() -> AcousticSystems {
+impl Message for AcousticSystems {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = AcousticSystems {
+            header: hdr,
+
+            _list: Default::default(),
+        };
+
+        msg.get_header()._mgid = 213;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = AcousticSystems {
             header: Header::new(213),
 
@@ -28,15 +47,20 @@ impl AcousticSystems {
 
         msg
     }
-}
 
-impl Message for AcousticSystems {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        213
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         213
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -60,4 +84,6 @@ impl Message for AcousticSystems {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._list.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

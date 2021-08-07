@@ -80,8 +80,30 @@ pub struct ReportControl {
     pub _sys_dst: String,
 }
 
-impl ReportControl {
-    pub fn new() -> ReportControl {
+impl Message for ReportControl {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = ReportControl {
+            header: hdr,
+
+            _op: Default::default(),
+            _comm_interface: Default::default(),
+            _period: Default::default(),
+            _sys_dst: Default::default(),
+        };
+
+        msg.get_header()._mgid = 513;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = ReportControl {
             header: Header::new(513),
 
@@ -95,15 +117,20 @@ impl ReportControl {
 
         msg
     }
-}
 
-impl Message for ReportControl {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        513
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         513
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -136,4 +163,6 @@ impl Message for ReportControl {
         bfr.put_u16_le(self._period);
         serialize_bytes!(bfr, self._sys_dst.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

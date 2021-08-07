@@ -18,8 +18,30 @@ pub struct MessagePart {
     pub _data: Vec<u8>,
 }
 
-impl MessagePart {
-    pub fn new() -> MessagePart {
+impl Message for MessagePart {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = MessagePart {
+            header: hdr,
+
+            _uid: Default::default(),
+            _frag_number: Default::default(),
+            _num_frags: Default::default(),
+            _data: Default::default(),
+        };
+
+        msg.get_header()._mgid = 877;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = MessagePart {
             header: Header::new(877),
 
@@ -33,15 +55,20 @@ impl MessagePart {
 
         msg
     }
-}
 
-impl Message for MessagePart {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        877
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         877
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -74,4 +101,6 @@ impl Message for MessagePart {
         bfr.put_u8(self._num_frags);
         serialize_bytes!(bfr, self._data.as_slice());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

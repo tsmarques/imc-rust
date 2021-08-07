@@ -48,8 +48,29 @@ pub struct LblRangeAcceptance {
     pub _acceptance: u8,
 }
 
-impl LblRangeAcceptance {
-    pub fn new() -> LblRangeAcceptance {
+impl Message for LblRangeAcceptance {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = LblRangeAcceptance {
+            header: hdr,
+
+            _id: Default::default(),
+            _range: Default::default(),
+            _acceptance: Default::default(),
+        };
+
+        msg.get_header()._mgid = 357;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = LblRangeAcceptance {
             header: Header::new(357),
 
@@ -62,15 +83,20 @@ impl LblRangeAcceptance {
 
         msg
     }
-}
 
-impl Message for LblRangeAcceptance {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        357
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         357
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -96,4 +122,6 @@ impl Message for LblRangeAcceptance {
         bfr.put_f32_le(self._range);
         bfr.put_u8(self._acceptance);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

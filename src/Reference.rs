@@ -4,9 +4,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DesiredSpeed::DesiredSpeed;
-
 use crate::DesiredZ::DesiredZ;
+
+use crate::DesiredSpeed::DesiredSpeed;
 
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
@@ -59,8 +59,32 @@ pub struct Reference {
     pub _radius: f32,
 }
 
-impl Reference {
-    pub fn new() -> Reference {
+impl Message for Reference {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Reference {
+            header: hdr,
+
+            _flags: Default::default(),
+            _speed: Default::default(),
+            _z: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _radius: Default::default(),
+        };
+
+        msg.get_header()._mgid = 479;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Reference {
             header: Header::new(479),
 
@@ -76,15 +100,20 @@ impl Reference {
 
         msg
     }
-}
 
-impl Message for Reference {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        479
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         479
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -151,4 +180,6 @@ impl Message for Reference {
         bfr.put_f64_le(self._lon);
         bfr.put_f32_le(self._radius);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

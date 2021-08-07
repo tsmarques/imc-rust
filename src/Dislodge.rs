@@ -56,8 +56,30 @@ pub struct Dislodge {
     pub _custom: String,
 }
 
-impl Dislodge {
-    pub fn new() -> Dislodge {
+impl Message for Dislodge {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Dislodge {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _rpm: Default::default(),
+            _direction: Default::default(),
+            _custom: Default::default(),
+        };
+
+        msg.get_header()._mgid = 483;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Dislodge {
             header: Header::new(483),
 
@@ -71,15 +93,20 @@ impl Dislodge {
 
         msg
     }
-}
 
-impl Message for Dislodge {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        483
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         483
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -112,4 +139,6 @@ impl Message for Dislodge {
         bfr.put_u8(self._direction);
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

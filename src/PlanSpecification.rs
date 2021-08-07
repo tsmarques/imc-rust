@@ -8,9 +8,9 @@ use crate::Header::Header;
 
 use crate::PlanTransition::PlanTransition;
 
-use crate::PlanManeuver::PlanManeuver;
-
 use crate::PlanVariable::PlanVariable;
+
+use crate::PlanManeuver::PlanManeuver;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in
@@ -56,8 +56,35 @@ pub struct PlanSpecification {
     pub _end_actions: MessageList<dyn Message>,
 }
 
-impl PlanSpecification {
-    pub fn new() -> PlanSpecification {
+impl Message for PlanSpecification {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanSpecification {
+            header: hdr,
+
+            _plan_id: Default::default(),
+            _description: Default::default(),
+            _vnamespace: Default::default(),
+            _variables: vec![],
+            _start_man_id: Default::default(),
+            _maneuvers: vec![],
+            _transitions: vec![],
+            _start_actions: vec![],
+            _end_actions: vec![],
+        };
+
+        msg.get_header()._mgid = 551;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanSpecification {
             header: Header::new(551),
 
@@ -76,15 +103,20 @@ impl PlanSpecification {
 
         msg
     }
-}
 
-impl Message for PlanSpecification {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        551
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         551
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -263,4 +295,6 @@ impl Message for PlanSpecification {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

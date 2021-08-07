@@ -40,8 +40,28 @@ pub struct RemoteActionsRequest {
     pub _actions: String,
 }
 
-impl RemoteActionsRequest {
-    pub fn new() -> RemoteActionsRequest {
+impl Message for RemoteActionsRequest {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = RemoteActionsRequest {
+            header: hdr,
+
+            _op: Default::default(),
+            _actions: Default::default(),
+        };
+
+        msg.get_header()._mgid = 304;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = RemoteActionsRequest {
             header: Header::new(304),
 
@@ -53,15 +73,20 @@ impl RemoteActionsRequest {
 
         msg
     }
-}
 
-impl Message for RemoteActionsRequest {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        304
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         304
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -88,4 +113,6 @@ impl Message for RemoteActionsRequest {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._actions.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -10,8 +10,23 @@ pub struct QueryEntityState {
     pub header: Header,
 }
 
-impl QueryEntityState {
-    pub fn new() -> QueryEntityState {
+impl Message for QueryEntityState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = QueryEntityState { header: hdr };
+
+        msg.get_header()._mgid = 2;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = QueryEntityState {
             header: Header::new(2),
         };
@@ -20,15 +35,20 @@ impl QueryEntityState {
 
         msg
     }
-}
 
-impl Message for QueryEntityState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        2
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         2
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -44,4 +64,6 @@ impl Message for QueryEntityState {
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

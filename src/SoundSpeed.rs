@@ -14,8 +14,27 @@ pub struct SoundSpeed {
     pub _value: f32,
 }
 
-impl SoundSpeed {
-    pub fn new() -> SoundSpeed {
+impl Message for SoundSpeed {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = SoundSpeed {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 267;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = SoundSpeed {
             header: Header::new(267),
 
@@ -26,15 +45,20 @@ impl SoundSpeed {
 
         msg
     }
-}
 
-impl Message for SoundSpeed {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        267
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         267
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -54,4 +78,6 @@ impl Message for SoundSpeed {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

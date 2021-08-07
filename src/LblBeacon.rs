@@ -32,8 +32,33 @@ pub struct LblBeacon {
     pub _transponder_delay: u8,
 }
 
-impl LblBeacon {
-    pub fn new() -> LblBeacon {
+impl Message for LblBeacon {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = LblBeacon {
+            header: hdr,
+
+            _beacon: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _depth: Default::default(),
+            _query_channel: Default::default(),
+            _reply_channel: Default::default(),
+            _transponder_delay: Default::default(),
+        };
+
+        msg.get_header()._mgid = 202;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = LblBeacon {
             header: Header::new(202),
 
@@ -50,15 +75,20 @@ impl LblBeacon {
 
         msg
     }
-}
 
-impl Message for LblBeacon {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        202
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         202
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -100,4 +130,6 @@ impl Message for LblBeacon {
         bfr.put_u8(self._reply_channel);
         bfr.put_u8(self._transponder_delay);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

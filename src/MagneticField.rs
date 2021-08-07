@@ -24,8 +24,30 @@ pub struct MagneticField {
     pub _z: f64,
 }
 
-impl MagneticField {
-    pub fn new() -> MagneticField {
+impl Message for MagneticField {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = MagneticField {
+            header: hdr,
+
+            _time: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+        };
+
+        msg.get_header()._mgid = 258;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = MagneticField {
             header: Header::new(258),
 
@@ -39,15 +61,20 @@ impl MagneticField {
 
         msg
     }
-}
 
-impl Message for MagneticField {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        258
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         258
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -76,4 +103,6 @@ impl Message for MagneticField {
         bfr.put_f64_le(self._y);
         bfr.put_f64_le(self._z);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

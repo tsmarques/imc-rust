@@ -39,8 +39,33 @@ pub struct PlanDBState {
     pub _plans_info: MessageList<PlanDBInformation>,
 }
 
-impl PlanDBState {
-    pub fn new() -> PlanDBState {
+impl Message for PlanDBState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanDBState {
+            header: hdr,
+
+            _plan_count: Default::default(),
+            _plan_size: Default::default(),
+            _change_time: Default::default(),
+            _change_sid: Default::default(),
+            _change_sname: Default::default(),
+            _md5: Default::default(),
+            _plans_info: vec![],
+        };
+
+        msg.get_header()._mgid = 557;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanDBState {
             header: Header::new(557),
 
@@ -57,15 +82,20 @@ impl PlanDBState {
 
         msg
     }
-}
 
-impl Message for PlanDBState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        557
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         557
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -134,4 +164,6 @@ impl Message for PlanDBState {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

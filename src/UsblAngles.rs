@@ -21,8 +21,29 @@ pub struct UsblAngles {
     pub _elevation: f32,
 }
 
-impl UsblAngles {
-    pub fn new() -> UsblAngles {
+impl Message for UsblAngles {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = UsblAngles {
+            header: hdr,
+
+            _target: Default::default(),
+            _bearing: Default::default(),
+            _elevation: Default::default(),
+        };
+
+        msg.get_header()._mgid = 890;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = UsblAngles {
             header: Header::new(890),
 
@@ -35,15 +56,20 @@ impl UsblAngles {
 
         msg
     }
-}
 
-impl Message for UsblAngles {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        890
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         890
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -69,4 +95,6 @@ impl Message for UsblAngles {
         bfr.put_f32_le(self._bearing);
         bfr.put_f32_le(self._elevation);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -12,8 +12,27 @@ pub struct PushEntityParameters {
     pub _name: String,
 }
 
-impl PushEntityParameters {
-    pub fn new() -> PushEntityParameters {
+impl Message for PushEntityParameters {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PushEntityParameters {
+            header: hdr,
+
+            _name: Default::default(),
+        };
+
+        msg.get_header()._mgid = 811;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PushEntityParameters {
             header: Header::new(811),
 
@@ -24,15 +43,20 @@ impl PushEntityParameters {
 
         msg
     }
-}
 
-impl Message for PushEntityParameters {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        811
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         811
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -56,4 +80,6 @@ impl Message for PushEntityParameters {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._name.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

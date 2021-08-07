@@ -92,8 +92,44 @@ pub struct VehicleOperationalLimits {
     pub _rpm_rate_max: f32,
 }
 
-impl VehicleOperationalLimits {
-    pub fn new() -> VehicleOperationalLimits {
+impl Message for VehicleOperationalLimits {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = VehicleOperationalLimits {
+            header: hdr,
+
+            _op: Default::default(),
+            _speed_min: Default::default(),
+            _speed_max: Default::default(),
+            _long_accel: Default::default(),
+            _alt_max_msl: Default::default(),
+            _dive_fraction_max: Default::default(),
+            _climb_fraction_max: Default::default(),
+            _bank_max: Default::default(),
+            _p_max: Default::default(),
+            _pitch_min: Default::default(),
+            _pitch_max: Default::default(),
+            _q_max: Default::default(),
+            _g_min: Default::default(),
+            _g_max: Default::default(),
+            _g_lat_max: Default::default(),
+            _rpm_min: Default::default(),
+            _rpm_max: Default::default(),
+            _rpm_rate_max: Default::default(),
+        };
+
+        msg.get_header()._mgid = 16;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = VehicleOperationalLimits {
             header: Header::new(16),
 
@@ -121,15 +157,20 @@ impl VehicleOperationalLimits {
 
         msg
     }
-}
 
-impl Message for VehicleOperationalLimits {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        16
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         16
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -200,4 +241,6 @@ impl Message for VehicleOperationalLimits {
         bfr.put_f32_le(self._rpm_max);
         bfr.put_f32_le(self._rpm_rate_max);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

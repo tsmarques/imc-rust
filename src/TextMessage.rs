@@ -17,8 +17,28 @@ pub struct TextMessage {
     pub _text: String,
 }
 
-impl TextMessage {
-    pub fn new() -> TextMessage {
+impl Message for TextMessage {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = TextMessage {
+            header: hdr,
+
+            _origin: Default::default(),
+            _text: Default::default(),
+        };
+
+        msg.get_header()._mgid = 160;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = TextMessage {
             header: Header::new(160),
 
@@ -30,15 +50,20 @@ impl TextMessage {
 
         msg
     }
-}
 
-impl Message for TextMessage {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        160
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         160
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -67,4 +92,6 @@ impl Message for TextMessage {
         serialize_bytes!(bfr, self._origin.as_bytes());
         serialize_bytes!(bfr, self._text.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

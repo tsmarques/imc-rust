@@ -32,8 +32,29 @@ pub struct CustomManeuver {
     pub _custom: String,
 }
 
-impl CustomManeuver {
-    pub fn new() -> CustomManeuver {
+impl Message for CustomManeuver {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = CustomManeuver {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _name: Default::default(),
+            _custom: Default::default(),
+        };
+
+        msg.get_header()._mgid = 465;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = CustomManeuver {
             header: Header::new(465),
 
@@ -46,15 +67,20 @@ impl CustomManeuver {
 
         msg
     }
-}
 
-impl Message for CustomManeuver {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        465
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         465
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -86,4 +112,6 @@ impl Message for CustomManeuver {
         serialize_bytes!(bfr, self._name.as_bytes());
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

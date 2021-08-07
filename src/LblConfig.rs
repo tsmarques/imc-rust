@@ -42,8 +42,28 @@ pub struct LblConfig {
     pub _beacons: MessageList<LblBeacon>,
 }
 
-impl LblConfig {
-    pub fn new() -> LblConfig {
+impl Message for LblConfig {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = LblConfig {
+            header: hdr,
+
+            _op: Default::default(),
+            _beacons: vec![],
+        };
+
+        msg.get_header()._mgid = 203;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = LblConfig {
             header: Header::new(203),
 
@@ -55,15 +75,20 @@ impl LblConfig {
 
         msg
     }
-}
 
-impl Message for LblConfig {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        203
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         203
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -113,4 +138,6 @@ impl Message for LblConfig {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

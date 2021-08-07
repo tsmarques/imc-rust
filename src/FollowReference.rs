@@ -39,8 +39,31 @@ pub struct FollowReference {
     pub _altitude_interval: f32,
 }
 
-impl FollowReference {
-    pub fn new() -> FollowReference {
+impl Message for FollowReference {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = FollowReference {
+            header: hdr,
+
+            _control_src: Default::default(),
+            _control_ent: Default::default(),
+            _timeout: Default::default(),
+            _loiter_radius: Default::default(),
+            _altitude_interval: Default::default(),
+        };
+
+        msg.get_header()._mgid = 478;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = FollowReference {
             header: Header::new(478),
 
@@ -55,15 +78,20 @@ impl FollowReference {
 
         msg
     }
-}
 
-impl Message for FollowReference {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        478
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         478
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -95,4 +123,6 @@ impl Message for FollowReference {
         bfr.put_f32_le(self._loiter_radius);
         bfr.put_f32_le(self._altitude_interval);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

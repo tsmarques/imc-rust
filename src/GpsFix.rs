@@ -126,8 +126,42 @@ pub struct GpsFix {
     pub _vacc: f32,
 }
 
-impl GpsFix {
-    pub fn new() -> GpsFix {
+impl Message for GpsFix {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = GpsFix {
+            header: hdr,
+
+            _validity: Default::default(),
+            _type: Default::default(),
+            _utc_year: Default::default(),
+            _utc_month: Default::default(),
+            _utc_day: Default::default(),
+            _utc_time: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _height: Default::default(),
+            _satellites: Default::default(),
+            _cog: Default::default(),
+            _sog: Default::default(),
+            _hdop: Default::default(),
+            _vdop: Default::default(),
+            _hacc: Default::default(),
+            _vacc: Default::default(),
+        };
+
+        msg.get_header()._mgid = 253;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = GpsFix {
             header: Header::new(253),
 
@@ -153,15 +187,20 @@ impl GpsFix {
 
         msg
     }
-}
 
-impl Message for GpsFix {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        253
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         253
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -226,4 +265,6 @@ impl Message for GpsFix {
         bfr.put_f32_le(self._hacc);
         bfr.put_f32_le(self._vacc);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

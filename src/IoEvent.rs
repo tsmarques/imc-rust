@@ -35,8 +35,28 @@ pub struct IoEvent {
     pub _error: String,
 }
 
-impl IoEvent {
-    pub fn new() -> IoEvent {
+impl Message for IoEvent {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = IoEvent {
+            header: hdr,
+
+            _type: Default::default(),
+            _error: Default::default(),
+        };
+
+        msg.get_header()._mgid = 813;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = IoEvent {
             header: Header::new(813),
 
@@ -48,15 +68,20 @@ impl IoEvent {
 
         msg
     }
-}
 
-impl Message for IoEvent {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        813
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         813
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -83,4 +108,6 @@ impl Message for IoEvent {
         bfr.put_u8(self._type);
         serialize_bytes!(bfr, self._error.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

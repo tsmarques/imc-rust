@@ -39,8 +39,35 @@ pub struct UsblAnglesExtended {
     pub _accuracy: f32,
 }
 
-impl UsblAnglesExtended {
-    pub fn new() -> UsblAnglesExtended {
+impl Message for UsblAnglesExtended {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = UsblAnglesExtended {
+            header: hdr,
+
+            _target: Default::default(),
+            _lbearing: Default::default(),
+            _lelevation: Default::default(),
+            _bearing: Default::default(),
+            _elevation: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+            _accuracy: Default::default(),
+        };
+
+        msg.get_header()._mgid = 898;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = UsblAnglesExtended {
             header: Header::new(898),
 
@@ -59,15 +86,20 @@ impl UsblAnglesExtended {
 
         msg
     }
-}
 
-impl Message for UsblAnglesExtended {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        898
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         898
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -115,4 +147,6 @@ impl Message for UsblAnglesExtended {
         bfr.put_f32_le(self._psi);
         bfr.put_f32_le(self._accuracy);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -20,8 +20,29 @@ pub struct TrexToken {
     pub _attributes: MessageList<TrexAttribute>,
 }
 
-impl TrexToken {
-    pub fn new() -> TrexToken {
+impl Message for TrexToken {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = TrexToken {
+            header: hdr,
+
+            _timeline: Default::default(),
+            _predicate: Default::default(),
+            _attributes: vec![],
+        };
+
+        msg.get_header()._mgid = 657;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = TrexToken {
             header: Header::new(657),
 
@@ -34,15 +55,20 @@ impl TrexToken {
 
         msg
     }
-}
 
-impl Message for TrexToken {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        657
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         657
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -99,4 +125,6 @@ impl Message for TrexToken {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

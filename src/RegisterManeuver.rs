@@ -15,8 +15,27 @@ pub struct RegisterManeuver {
     pub _mid: u16,
 }
 
-impl RegisterManeuver {
-    pub fn new() -> RegisterManeuver {
+impl Message for RegisterManeuver {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = RegisterManeuver {
+            header: hdr,
+
+            _mid: Default::default(),
+        };
+
+        msg.get_header()._mgid = 469;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = RegisterManeuver {
             header: Header::new(469),
 
@@ -27,15 +46,20 @@ impl RegisterManeuver {
 
         msg
     }
-}
 
-impl Message for RegisterManeuver {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        469
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         469
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -55,4 +79,6 @@ impl Message for RegisterManeuver {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._mid);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

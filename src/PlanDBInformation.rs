@@ -31,8 +31,32 @@ pub struct PlanDBInformation {
     pub _md5: Vec<u8>,
 }
 
-impl PlanDBInformation {
-    pub fn new() -> PlanDBInformation {
+impl Message for PlanDBInformation {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanDBInformation {
+            header: hdr,
+
+            _plan_id: Default::default(),
+            _plan_size: Default::default(),
+            _change_time: Default::default(),
+            _change_sid: Default::default(),
+            _change_sname: Default::default(),
+            _md5: Default::default(),
+        };
+
+        msg.get_header()._mgid = 558;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanDBInformation {
             header: Header::new(558),
 
@@ -48,15 +72,20 @@ impl PlanDBInformation {
 
         msg
     }
-}
 
-impl Message for PlanDBInformation {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        558
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         558
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -99,4 +128,6 @@ impl Message for PlanDBInformation {
         serialize_bytes!(bfr, self._change_sname.as_bytes());
         serialize_bytes!(bfr, self._md5.as_slice());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

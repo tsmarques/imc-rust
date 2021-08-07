@@ -17,8 +17,28 @@ pub struct StorageUsage {
     pub _value: u8,
 }
 
-impl StorageUsage {
-    pub fn new() -> StorageUsage {
+impl Message for StorageUsage {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = StorageUsage {
+            header: hdr,
+
+            _available: Default::default(),
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 100;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = StorageUsage {
             header: Header::new(100),
 
@@ -30,15 +50,20 @@ impl StorageUsage {
 
         msg
     }
-}
 
-impl Message for StorageUsage {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        100
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         100
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -61,4 +86,6 @@ impl Message for StorageUsage {
         bfr.put_u32_le(self._available);
         bfr.put_u8(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

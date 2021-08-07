@@ -14,8 +14,27 @@ pub struct FluorescentDissolvedOrganicMatter {
     pub _value: f32,
 }
 
-impl FluorescentDissolvedOrganicMatter {
-    pub fn new() -> FluorescentDissolvedOrganicMatter {
+impl Message for FluorescentDissolvedOrganicMatter {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = FluorescentDissolvedOrganicMatter {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 2004;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = FluorescentDissolvedOrganicMatter {
             header: Header::new(2004),
 
@@ -26,15 +45,20 @@ impl FluorescentDissolvedOrganicMatter {
 
         msg
     }
-}
 
-impl Message for FluorescentDissolvedOrganicMatter {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        2004
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         2004
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -54,4 +78,6 @@ impl Message for FluorescentDissolvedOrganicMatter {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

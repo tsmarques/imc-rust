@@ -16,8 +16,29 @@ pub struct QueryEntityParameters {
     pub _scope: String,
 }
 
-impl QueryEntityParameters {
-    pub fn new() -> QueryEntityParameters {
+impl Message for QueryEntityParameters {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = QueryEntityParameters {
+            header: hdr,
+
+            _name: Default::default(),
+            _visibility: Default::default(),
+            _scope: Default::default(),
+        };
+
+        msg.get_header()._mgid = 803;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = QueryEntityParameters {
             header: Header::new(803),
 
@@ -30,15 +51,20 @@ impl QueryEntityParameters {
 
         msg
     }
-}
 
-impl Message for QueryEntityParameters {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        803
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         803
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -72,4 +98,6 @@ impl Message for QueryEntityParameters {
         serialize_bytes!(bfr, self._visibility.as_bytes());
         serialize_bytes!(bfr, self._scope.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

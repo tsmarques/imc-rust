@@ -36,8 +36,33 @@ pub struct Announce {
     pub _services: String,
 }
 
-impl Announce {
-    pub fn new() -> Announce {
+impl Message for Announce {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Announce {
+            header: hdr,
+
+            _sys_name: Default::default(),
+            _sys_type: Default::default(),
+            _owner: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _height: Default::default(),
+            _services: Default::default(),
+        };
+
+        msg.get_header()._mgid = 151;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Announce {
             header: Header::new(151),
 
@@ -54,15 +79,20 @@ impl Announce {
 
         msg
     }
-}
 
-impl Message for Announce {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        151
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         151
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -106,4 +136,6 @@ impl Message for Announce {
         bfr.put_f32_le(self._height);
         serialize_bytes!(bfr, self._services.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

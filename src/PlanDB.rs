@@ -98,8 +98,32 @@ pub struct PlanDB {
     pub _info: String,
 }
 
-impl PlanDB {
-    pub fn new() -> PlanDB {
+impl Message for PlanDB {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanDB {
+            header: hdr,
+
+            _type: Default::default(),
+            _op: Default::default(),
+            _request_id: Default::default(),
+            _plan_id: Default::default(),
+            _arg: Default::default(),
+            _info: Default::default(),
+        };
+
+        msg.get_header()._mgid = 556;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanDB {
             header: Header::new(556),
 
@@ -115,15 +139,20 @@ impl PlanDB {
 
         msg
     }
-}
 
-impl Message for PlanDB {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        556
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         556
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -179,4 +208,6 @@ impl Message for PlanDB {
         };
         serialize_bytes!(bfr, self._info.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

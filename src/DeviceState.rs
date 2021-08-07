@@ -29,8 +29,32 @@ pub struct DeviceState {
     pub _psi: f32,
 }
 
-impl DeviceState {
-    pub fn new() -> DeviceState {
+impl Message for DeviceState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = DeviceState {
+            header: hdr,
+
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+        };
+
+        msg.get_header()._mgid = 282;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = DeviceState {
             header: Header::new(282),
 
@@ -46,15 +70,20 @@ impl DeviceState {
 
         msg
     }
-}
 
-impl Message for DeviceState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        282
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         282
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -89,4 +118,6 @@ impl Message for DeviceState {
         bfr.put_f32_le(self._theta);
         bfr.put_f32_le(self._psi);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

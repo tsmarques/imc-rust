@@ -15,8 +15,27 @@ pub struct RSSI {
     pub _value: f32,
 }
 
-impl RSSI {
-    pub fn new() -> RSSI {
+impl Message for RSSI {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = RSSI {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 153;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = RSSI {
             header: Header::new(153),
 
@@ -27,15 +46,20 @@ impl RSSI {
 
         msg
     }
-}
 
-impl Message for RSSI {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        153
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         153
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -55,4 +79,6 @@ impl Message for RSSI {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

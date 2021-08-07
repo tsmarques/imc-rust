@@ -40,8 +40,32 @@ pub struct Alignment {
     pub _custom: String,
 }
 
-impl Alignment {
-    pub fn new() -> Alignment {
+impl Message for Alignment {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Alignment {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _custom: Default::default(),
+        };
+
+        msg.get_header()._mgid = 495;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Alignment {
             header: Header::new(495),
 
@@ -57,15 +81,20 @@ impl Alignment {
 
         msg
     }
-}
 
-impl Message for Alignment {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        495
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         495
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -104,4 +133,6 @@ impl Message for Alignment {
         bfr.put_u8(self._speed_units);
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

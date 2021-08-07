@@ -14,8 +14,27 @@ pub struct Turbidity {
     pub _value: f32,
 }
 
-impl Turbidity {
-    pub fn new() -> Turbidity {
+impl Message for Turbidity {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Turbidity {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 288;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Turbidity {
             header: Header::new(288),
 
@@ -26,15 +45,20 @@ impl Turbidity {
 
         msg
     }
-}
 
-impl Message for Turbidity {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        288
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         288
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -54,4 +78,6 @@ impl Message for Turbidity {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

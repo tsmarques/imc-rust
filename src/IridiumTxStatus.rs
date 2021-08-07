@@ -44,8 +44,29 @@ pub struct IridiumTxStatus {
     pub _text: String,
 }
 
-impl IridiumTxStatus {
-    pub fn new() -> IridiumTxStatus {
+impl Message for IridiumTxStatus {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = IridiumTxStatus {
+            header: hdr,
+
+            _req_id: Default::default(),
+            _status: Default::default(),
+            _text: Default::default(),
+        };
+
+        msg.get_header()._mgid = 172;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = IridiumTxStatus {
             header: Header::new(172),
 
@@ -58,15 +79,20 @@ impl IridiumTxStatus {
 
         msg
     }
-}
 
-impl Message for IridiumTxStatus {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        172
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         172
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -96,4 +122,6 @@ impl Message for IridiumTxStatus {
         bfr.put_u8(self._status);
         serialize_bytes!(bfr, self._text.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

@@ -19,8 +19,28 @@ pub struct ExtendedRSSI {
     pub _units: u8,
 }
 
-impl ExtendedRSSI {
-    pub fn new() -> ExtendedRSSI {
+impl Message for ExtendedRSSI {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = ExtendedRSSI {
+            header: hdr,
+
+            _value: Default::default(),
+            _units: Default::default(),
+        };
+
+        msg.get_header()._mgid = 183;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = ExtendedRSSI {
             header: Header::new(183),
 
@@ -32,15 +52,20 @@ impl ExtendedRSSI {
 
         msg
     }
-}
 
-impl Message for ExtendedRSSI {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        183
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         183
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -63,4 +88,6 @@ impl Message for ExtendedRSSI {
         bfr.put_f32_le(self._value);
         bfr.put_u8(self._units);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

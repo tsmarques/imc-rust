@@ -17,8 +17,28 @@ pub struct LedBrightness {
     pub _value: u8,
 }
 
-impl LedBrightness {
-    pub fn new() -> LedBrightness {
+impl Message for LedBrightness {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = LedBrightness {
+            header: hdr,
+
+            _name: Default::default(),
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 312;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = LedBrightness {
             header: Header::new(312),
 
@@ -30,15 +50,20 @@ impl LedBrightness {
 
         msg
     }
-}
 
-impl Message for LedBrightness {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        312
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         312
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -65,4 +90,6 @@ impl Message for LedBrightness {
         serialize_bytes!(bfr, self._name.as_bytes());
         bfr.put_u8(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

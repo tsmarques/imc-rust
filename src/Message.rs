@@ -20,6 +20,20 @@ pub fn serialize_footer(bfr: &mut bytes::BytesMut) {
 }
 
 pub trait Message {
+    fn new() -> Self
+    where
+        Self: Sized;
+
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized;
+
+    fn static_id() -> u16
+    where
+        Self: Sized;
+
+    fn id(&self) -> u16;
+
     fn get_header(&mut self) -> &mut Header;
 
     fn set_size(&mut self, size: u16) {
@@ -46,15 +60,13 @@ pub trait Message {
         self.get_header()._dst_ent = dst_ent;
     }
 
-    // Get this messages's static ID
-    fn static_id(&self) -> u16;
-
     // Clear message's fields
     fn clear(&mut self);
 
     fn fixed_serialization_size(&self) -> usize;
     fn dynamic_serialization_size(&self) -> usize;
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut);
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf);
 
     fn payload_serialization_size(&self) -> usize {
         self.fixed_serialization_size() + self.dynamic_serialization_size()

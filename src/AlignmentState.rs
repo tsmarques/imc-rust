@@ -50,8 +50,27 @@ pub struct AlignmentState {
     pub _state: u8,
 }
 
-impl AlignmentState {
-    pub fn new() -> AlignmentState {
+impl Message for AlignmentState {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = AlignmentState {
+            header: hdr,
+
+            _state: Default::default(),
+        };
+
+        msg.get_header()._mgid = 361;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = AlignmentState {
             header: Header::new(361),
 
@@ -62,15 +81,20 @@ impl AlignmentState {
 
         msg
     }
-}
 
-impl Message for AlignmentState {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        361
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         361
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -90,4 +114,6 @@ impl Message for AlignmentState {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._state);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

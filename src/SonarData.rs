@@ -62,8 +62,34 @@ pub struct SonarData {
     pub _data: Vec<u8>,
 }
 
-impl SonarData {
-    pub fn new() -> SonarData {
+impl Message for SonarData {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = SonarData {
+            header: hdr,
+
+            _type: Default::default(),
+            _frequency: Default::default(),
+            _min_range: Default::default(),
+            _max_range: Default::default(),
+            _bits_per_point: Default::default(),
+            _scale_factor: Default::default(),
+            _beam_config: vec![],
+            _data: Default::default(),
+        };
+
+        msg.get_header()._mgid = 276;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = SonarData {
             header: Header::new(276),
 
@@ -81,15 +107,20 @@ impl SonarData {
 
         msg
     }
-}
 
-impl Message for SonarData {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        276
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         276
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -159,4 +190,6 @@ impl Message for SonarData {
         }
         serialize_bytes!(bfr, self._data.as_slice());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

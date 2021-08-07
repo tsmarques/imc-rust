@@ -45,8 +45,37 @@ pub struct UsblPositionExtended {
     pub _accuracy: f32,
 }
 
-impl UsblPositionExtended {
-    pub fn new() -> UsblPositionExtended {
+impl Message for UsblPositionExtended {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = UsblPositionExtended {
+            header: hdr,
+
+            _target: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _n: Default::default(),
+            _e: Default::default(),
+            _d: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+            _accuracy: Default::default(),
+        };
+
+        msg.get_header()._mgid = 899;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = UsblPositionExtended {
             header: Header::new(899),
 
@@ -67,15 +96,20 @@ impl UsblPositionExtended {
 
         msg
     }
-}
 
-impl Message for UsblPositionExtended {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        899
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         899
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -129,4 +163,6 @@ impl Message for UsblPositionExtended {
         bfr.put_f32_le(self._psi);
         bfr.put_f32_le(self._accuracy);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

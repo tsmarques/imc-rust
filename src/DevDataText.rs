@@ -14,8 +14,27 @@ pub struct DevDataText {
     pub _value: String,
 }
 
-impl DevDataText {
-    pub fn new() -> DevDataText {
+impl Message for DevDataText {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = DevDataText {
+            header: hdr,
+
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 273;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = DevDataText {
             header: Header::new(273),
 
@@ -26,15 +45,20 @@ impl DevDataText {
 
         msg
     }
-}
 
-impl Message for DevDataText {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        273
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         273
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -58,4 +82,6 @@ impl Message for DevDataText {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._value.as_bytes());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

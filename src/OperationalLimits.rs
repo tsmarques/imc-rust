@@ -35,8 +35,38 @@ pub struct OperationalLimits {
     pub _length: f32,
 }
 
-impl OperationalLimits {
-    pub fn new() -> OperationalLimits {
+impl Message for OperationalLimits {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = OperationalLimits {
+            header: hdr,
+
+            _mask: Default::default(),
+            _max_depth: Default::default(),
+            _min_altitude: Default::default(),
+            _max_altitude: Default::default(),
+            _min_speed: Default::default(),
+            _max_speed: Default::default(),
+            _max_vrate: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _orientation: Default::default(),
+            _width: Default::default(),
+            _length: Default::default(),
+        };
+
+        msg.get_header()._mgid = 504;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = OperationalLimits {
             header: Header::new(504),
 
@@ -58,15 +88,20 @@ impl OperationalLimits {
 
         msg
     }
-}
 
-impl Message for OperationalLimits {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        504
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         504
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -119,4 +154,6 @@ impl Message for OperationalLimits {
         bfr.put_f32_le(self._width);
         bfr.put_f32_le(self._length);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

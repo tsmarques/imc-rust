@@ -41,8 +41,35 @@ pub struct NavigationData {
     pub _custom_z: f32,
 }
 
-impl NavigationData {
-    pub fn new() -> NavigationData {
+impl Message for NavigationData {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = NavigationData {
+            header: hdr,
+
+            _bias_psi: Default::default(),
+            _bias_r: Default::default(),
+            _cog: Default::default(),
+            _cyaw: Default::default(),
+            _lbl_rej_level: Default::default(),
+            _gps_rej_level: Default::default(),
+            _custom_x: Default::default(),
+            _custom_y: Default::default(),
+            _custom_z: Default::default(),
+        };
+
+        msg.get_header()._mgid = 355;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = NavigationData {
             header: Header::new(355),
 
@@ -61,15 +88,20 @@ impl NavigationData {
 
         msg
     }
-}
 
-impl Message for NavigationData {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        355
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         355
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -113,4 +145,6 @@ impl Message for NavigationData {
         bfr.put_f32_le(self._custom_y);
         bfr.put_f32_le(self._custom_z);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

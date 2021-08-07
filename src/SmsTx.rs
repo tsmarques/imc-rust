@@ -23,8 +23,30 @@ pub struct SmsTx {
     pub _data: Vec<u8>,
 }
 
-impl SmsTx {
-    pub fn new() -> SmsTx {
+impl Message for SmsTx {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = SmsTx {
+            header: hdr,
+
+            _seq: Default::default(),
+            _destination: Default::default(),
+            _timeout: Default::default(),
+            _data: Default::default(),
+        };
+
+        msg.get_header()._mgid = 157;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = SmsTx {
             header: Header::new(157),
 
@@ -38,15 +60,20 @@ impl SmsTx {
 
         msg
     }
-}
 
-impl Message for SmsTx {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        157
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         157
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -81,4 +108,6 @@ impl Message for SmsTx {
         bfr.put_u16_le(self._timeout);
         serialize_bytes!(bfr, self._data.as_slice());
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

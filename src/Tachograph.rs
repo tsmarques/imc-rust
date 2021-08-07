@@ -62,8 +62,42 @@ pub struct Tachograph {
     pub _depth_max: f32,
 }
 
-impl Tachograph {
-    pub fn new() -> Tachograph {
+impl Message for Tachograph {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Tachograph {
+            header: hdr,
+
+            _timestamp_last_service: Default::default(),
+            _time_next_service: Default::default(),
+            _time_motor_next_service: Default::default(),
+            _time_idle_ground: Default::default(),
+            _time_idle_air: Default::default(),
+            _time_idle_water: Default::default(),
+            _time_idle_underwater: Default::default(),
+            _time_idle_unknown: Default::default(),
+            _time_motor_ground: Default::default(),
+            _time_motor_air: Default::default(),
+            _time_motor_water: Default::default(),
+            _time_motor_underwater: Default::default(),
+            _time_motor_unknown: Default::default(),
+            _rpm_min: Default::default(),
+            _rpm_max: Default::default(),
+            _depth_max: Default::default(),
+        };
+
+        msg.get_header()._mgid = 905;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Tachograph {
             header: Header::new(905),
 
@@ -89,15 +123,20 @@ impl Tachograph {
 
         msg
     }
-}
 
-impl Message for Tachograph {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        905
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         905
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -162,4 +201,6 @@ impl Message for Tachograph {
         bfr.put_i16_le(self._rpm_max);
         bfr.put_f32_le(self._depth_max);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

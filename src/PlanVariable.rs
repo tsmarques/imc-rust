@@ -64,8 +64,30 @@ pub struct PlanVariable {
     pub _access: u8,
 }
 
-impl PlanVariable {
-    pub fn new() -> PlanVariable {
+impl Message for PlanVariable {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanVariable {
+            header: hdr,
+
+            _name: Default::default(),
+            _value: Default::default(),
+            _type: Default::default(),
+            _access: Default::default(),
+        };
+
+        msg.get_header()._mgid = 561;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanVariable {
             header: Header::new(561),
 
@@ -79,15 +101,20 @@ impl PlanVariable {
 
         msg
     }
-}
 
-impl Message for PlanVariable {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        561
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         561
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -122,4 +149,6 @@ impl Message for PlanVariable {
         bfr.put_u8(self._type);
         bfr.put_u8(self._access);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

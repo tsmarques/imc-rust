@@ -29,8 +29,29 @@ pub struct AcousticLink {
     pub _integrity: u16,
 }
 
-impl AcousticLink {
-    pub fn new() -> AcousticLink {
+impl Message for AcousticLink {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = AcousticLink {
+            header: hdr,
+
+            _peer: Default::default(),
+            _rssi: Default::default(),
+            _integrity: Default::default(),
+        };
+
+        msg.get_header()._mgid = 214;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = AcousticLink {
             header: Header::new(214),
 
@@ -43,15 +64,20 @@ impl AcousticLink {
 
         msg
     }
-}
 
-impl Message for AcousticLink {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        214
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         214
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -81,4 +107,6 @@ impl Message for AcousticLink {
         bfr.put_f32_le(self._rssi);
         bfr.put_u16_le(self._integrity);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

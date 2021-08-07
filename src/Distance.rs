@@ -6,9 +6,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::BeamConfig::BeamConfig;
-
 use crate::DeviceState::DeviceState;
+
+use crate::BeamConfig::BeamConfig;
 
 #[allow(non_camel_case_types)]
 pub enum ValidityEnum {
@@ -47,8 +47,30 @@ pub struct Distance {
     pub _value: f32,
 }
 
-impl Distance {
-    pub fn new() -> Distance {
+impl Message for Distance {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = Distance {
+            header: hdr,
+
+            _validity: Default::default(),
+            _location: vec![],
+            _beam_config: vec![],
+            _value: Default::default(),
+        };
+
+        msg.get_header()._mgid = 262;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = Distance {
             header: Header::new(262),
 
@@ -62,15 +84,20 @@ impl Distance {
 
         msg
     }
-}
 
-impl Message for Distance {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        262
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         262
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -151,4 +178,6 @@ impl Message for Distance {
         }
         bfr.put_f32_le(self._value);
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }

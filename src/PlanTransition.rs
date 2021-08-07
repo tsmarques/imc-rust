@@ -36,8 +36,30 @@ pub struct PlanTransition {
     pub _actions: MessageList<dyn Message>,
 }
 
-impl PlanTransition {
-    pub fn new() -> PlanTransition {
+impl Message for PlanTransition {
+    fn from(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let mut msg = PlanTransition {
+            header: hdr,
+
+            _source_man: Default::default(),
+            _dest_man: Default::default(),
+            _conditions: Default::default(),
+            _actions: vec![],
+        };
+
+        msg.get_header()._mgid = 553;
+        msg.set_size(msg.payload_serialization_size() as u16);
+
+        msg
+    }
+
+    fn new() -> Self
+    where
+        Self: Sized,
+    {
         let mut msg = PlanTransition {
             header: Header::new(553),
 
@@ -51,15 +73,20 @@ impl PlanTransition {
 
         msg
     }
-}
 
-impl Message for PlanTransition {
-    fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+    fn static_id() -> u16
+    where
+        Self: Sized,
+    {
+        553
     }
 
-    fn static_id(&self) -> u16 {
+    fn id(&self) -> u16 {
         553
+    }
+
+    fn get_header(&mut self) -> &mut Header {
+        &mut self.header
     }
 
     fn clear(&mut self) {
@@ -121,4 +148,6 @@ impl Message for PlanTransition {
             }
         }
     }
+
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
 }
