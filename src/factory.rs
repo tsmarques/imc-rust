@@ -17,9 +17,9 @@ pub(crate) fn buildFrom<T: Message>(hdr: Header) -> Option<Box<T>> {
     Option::Some(Box::new(msg))
 }
 
-pub(crate) fn build(mgid: u16) -> Option<Box<dyn Message>> {
-    match mgid {
-        102 => Option::Some(Box::new(LoggingControl::new())),
+pub(crate) fn build(hdr: Header) -> Option<Box<dyn Message>> {
+    match &hdr._mgid {
+        102 => Option::Some(Box::new(LoggingControl::fromHeader(hdr))),
         _ => Option::None,
     }
 }
