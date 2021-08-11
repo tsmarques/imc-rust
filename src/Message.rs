@@ -12,6 +12,24 @@ macro_rules! serialize_bytes {
     };
 }
 
+macro_rules! deserialize_string {
+    ($bfr:expr, $target_var:expr) => {
+        let size = $bfr.get_u16_le();
+        for _ in 0..size {
+            $target_var.push(char::from($bfr.get_u8()));
+        }
+    };
+}
+
+macro_rules! deserialize_bytes {
+    ($bfr:expr, $target_var:expr) => {
+        let size = $bfr.get_u16_le();
+        for _ in 0..size {
+            $target_var.push($bfr.get_u8());
+        }
+    };
+}
+
 pub fn serialize_footer(bfr: &mut bytes::BytesMut) {
     let mut state = State::<ARC>::new();
     state.update(bfr);
@@ -24,7 +42,7 @@ pub trait Message {
     where
         Self: Sized;
 
-    fn from(hdr: Header) -> Self
+    fn fromHeader(hdr: Header) -> Self
     where
         Self: Sized;
 
