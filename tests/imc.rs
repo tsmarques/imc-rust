@@ -3,8 +3,8 @@ use imc::EstimatedState::EstimatedState;
 use imc::LoggingControl::{ControlOperationEnum, LoggingControl};
 use imc::Message::Message;
 use imc::Header::Header;
-use imc::IMC_CONST_HEADER_SIZE;
-use imc::packet::deserializeHeader;
+use imc::{IMC_CONST_HEADER_SIZE, IMC_CONST_FOOTER_SIZE};
+use imc::packet::{deserializeHeader, crc};
 use crc16::{State, ARC};
 
 #[test]
@@ -21,6 +21,29 @@ fn buffer_write() {
     assert_eq!(bfr[0], b'I');
     assert_eq!(bfr[8], b'l');
     assert_eq!(bfr[8..].len(), b"look at me testing".len());
+}
+
+#[test]
+fn imc_crc() {
+    let mut lc = LoggingControl::new();
+    lc.set_timestamp_secs(0.23424);
+    lc.set_source(765);
+    lc.set_source_ent(230);
+    lc.set_destination(57);
+    lc.set_destination_ent(32);
+    lc._name = String::from("20210707_IMC_RUST_TEST");
+    lc._op = ControlOperationEnum::COP_REQUEST_START.value();
+
+    let mut bfr: bytes::BytesMut = bytes::BytesMut::with_capacity(lc.serialization_size());
+    let ret = imc::packet::serialize(&mut lc, &mut bfr);
+    assert!(ret.is_ok());
+    assert_eq!(ret.ok().unwrap(), lc.serialization_size());
+
+    let crc = crc::compute_from_range(0,
+                            lc.serialization_size() - IMC_CONST_FOOTER_SIZE as usize,
+                            &mut bfr);
+
+    assert_eq!(crc.get(), 1427_u16);
 }
 
 #[test]
