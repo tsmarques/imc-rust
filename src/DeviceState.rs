@@ -30,32 +30,11 @@ pub struct DeviceState {
 }
 
 impl Message for DeviceState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = DeviceState {
-            header: hdr,
-
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _phi: Default::default(),
-            _theta: Default::default(),
-            _psi: Default::default(),
-        };
-
-        msg.get_header()._mgid = 282;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = DeviceState {
+        let msg = DeviceState {
             header: Header::new(282),
 
             _x: Default::default(),
@@ -66,11 +45,28 @@ impl Message for DeviceState {
             _psi: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = DeviceState {
+            header: hdr,
+
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -78,6 +74,7 @@ impl Message for DeviceState {
         282
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         282
     }
@@ -102,6 +99,7 @@ impl Message for DeviceState {
         self._psi = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         24
     }
@@ -119,5 +117,17 @@ impl Message for DeviceState {
         bfr.put_f32_le(self._psi);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._x = bfr.get_f32_le();
+
+        self._y = bfr.get_f32_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._phi = bfr.get_f32_le();
+
+        self._theta = bfr.get_f32_le();
+
+        self._psi = bfr.get_f32_le();
+    }
 }

@@ -57,30 +57,11 @@ pub struct Dislodge {
 }
 
 impl Message for Dislodge {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Dislodge {
-            header: hdr,
-
-            _timeout: Default::default(),
-            _rpm: Default::default(),
-            _direction: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 483;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Dislodge {
+        let msg = Dislodge {
             header: Header::new(483),
 
             _timeout: Default::default(),
@@ -89,11 +70,26 @@ impl Message for Dislodge {
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Dislodge {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _rpm: Default::default(),
+            _direction: Default::default(),
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -101,6 +97,7 @@ impl Message for Dislodge {
         483
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         483
     }
@@ -121,6 +118,7 @@ impl Message for Dislodge {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         7
     }
@@ -140,5 +138,13 @@ impl Message for Dislodge {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timeout = bfr.get_u16_le();
+
+        self._rpm = bfr.get_f32_le();
+
+        self._direction = bfr.get_u8();
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

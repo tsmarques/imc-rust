@@ -18,39 +18,35 @@ pub struct TransportBindings {
 }
 
 impl Message for TransportBindings {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = TransportBindings {
-            header: hdr,
-
-            _consumer: Default::default(),
-            _message_id: Default::default(),
-        };
-
-        msg.get_header()._mgid = 8;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = TransportBindings {
+        let msg = TransportBindings {
             header: Header::new(8),
 
             _consumer: Default::default(),
             _message_id: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = TransportBindings {
+            header: hdr,
+
+            _consumer: Default::default(),
+            _message_id: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -58,6 +54,7 @@ impl Message for TransportBindings {
         8
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         8
     }
@@ -74,6 +71,7 @@ impl Message for TransportBindings {
         self._message_id = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         2
     }
@@ -91,5 +89,9 @@ impl Message for TransportBindings {
         bfr.put_u16_le(self._message_id);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._consumer);
+
+        self._message_id = bfr.get_u16_le();
+    }
 }

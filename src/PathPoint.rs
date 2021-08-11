@@ -24,29 +24,11 @@ pub struct PathPoint {
 }
 
 impl Message for PathPoint {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PathPoint {
-            header: hdr,
-
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-        };
-
-        msg.get_header()._mgid = 458;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PathPoint {
+        let msg = PathPoint {
             header: Header::new(458),
 
             _x: Default::default(),
@@ -54,11 +36,25 @@ impl Message for PathPoint {
             _z: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PathPoint {
+            header: hdr,
+
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -66,6 +62,7 @@ impl Message for PathPoint {
         458
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         458
     }
@@ -84,6 +81,7 @@ impl Message for PathPoint {
         self._z = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         12
     }
@@ -98,5 +96,11 @@ impl Message for PathPoint {
         bfr.put_f32_le(self._z);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._x = bfr.get_f32_le();
+
+        self._y = bfr.get_f32_le();
+
+        self._z = bfr.get_f32_le();
+    }
 }

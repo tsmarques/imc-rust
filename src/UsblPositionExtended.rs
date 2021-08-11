@@ -46,37 +46,11 @@ pub struct UsblPositionExtended {
 }
 
 impl Message for UsblPositionExtended {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = UsblPositionExtended {
-            header: hdr,
-
-            _target: Default::default(),
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _n: Default::default(),
-            _e: Default::default(),
-            _d: Default::default(),
-            _phi: Default::default(),
-            _theta: Default::default(),
-            _psi: Default::default(),
-            _accuracy: Default::default(),
-        };
-
-        msg.get_header()._mgid = 899;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = UsblPositionExtended {
+        let msg = UsblPositionExtended {
             header: Header::new(899),
 
             _target: Default::default(),
@@ -92,11 +66,33 @@ impl Message for UsblPositionExtended {
             _accuracy: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = UsblPositionExtended {
+            header: hdr,
+
+            _target: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _n: Default::default(),
+            _e: Default::default(),
+            _d: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+            _accuracy: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -104,6 +100,7 @@ impl Message for UsblPositionExtended {
         899
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         899
     }
@@ -138,6 +135,7 @@ impl Message for UsblPositionExtended {
         self._accuracy = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         40
     }
@@ -164,5 +162,27 @@ impl Message for UsblPositionExtended {
         bfr.put_f32_le(self._accuracy);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._target);
+
+        self._x = bfr.get_f32_le();
+
+        self._y = bfr.get_f32_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._n = bfr.get_f32_le();
+
+        self._e = bfr.get_f32_le();
+
+        self._d = bfr.get_f32_le();
+
+        self._phi = bfr.get_f32_le();
+
+        self._theta = bfr.get_f32_le();
+
+        self._psi = bfr.get_f32_le();
+
+        self._accuracy = bfr.get_f32_le();
+    }
 }

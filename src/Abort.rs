@@ -10,31 +10,27 @@ pub struct Abort {
 }
 
 impl Message for Abort {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Abort { header: hdr };
-
-        msg.get_header()._mgid = 550;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Abort {
+        let msg = Abort {
             header: Header::new(550),
         };
-
-        msg.set_size(msg.payload_serialization_size() as u16);
 
         msg
     }
 
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Abort { header: hdr };
+
+        msg
+    }
+
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -42,6 +38,7 @@ impl Message for Abort {
         550
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         550
     }
@@ -54,6 +51,7 @@ impl Message for Abort {
         self.header.clear();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }

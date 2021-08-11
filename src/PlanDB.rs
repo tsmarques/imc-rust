@@ -99,32 +99,11 @@ pub struct PlanDB {
 }
 
 impl Message for PlanDB {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PlanDB {
-            header: hdr,
-
-            _type: Default::default(),
-            _op: Default::default(),
-            _request_id: Default::default(),
-            _plan_id: Default::default(),
-            _arg: Default::default(),
-            _info: Default::default(),
-        };
-
-        msg.get_header()._mgid = 556;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PlanDB {
+        let msg = PlanDB {
             header: Header::new(556),
 
             _type: Default::default(),
@@ -135,11 +114,28 @@ impl Message for PlanDB {
             _info: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PlanDB {
+            header: hdr,
+
+            _type: Default::default(),
+            _op: Default::default(),
+            _request_id: Default::default(),
+            _plan_id: Default::default(),
+            _arg: Default::default(),
+            _info: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -147,6 +143,7 @@ impl Message for PlanDB {
         556
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         556
     }
@@ -175,6 +172,7 @@ impl Message for PlanDB {
         self._info = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         4
     }
@@ -209,5 +207,21 @@ impl Message for PlanDB {
         serialize_bytes!(bfr, self._info.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._type = bfr.get_u8();
+
+        self._op = bfr.get_u8();
+
+        self._request_id = bfr.get_u16_le();
+
+        deserialize_string!(bfr, self._plan_id);
+
+        match &mut self._arg {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+
+        deserialize_string!(bfr, self._info);
+    }
 }

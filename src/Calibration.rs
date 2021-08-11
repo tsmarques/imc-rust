@@ -15,37 +15,33 @@ pub struct Calibration {
 }
 
 impl Message for Calibration {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Calibration {
-            header: hdr,
-
-            _duration: Default::default(),
-        };
-
-        msg.get_header()._mgid = 506;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Calibration {
+        let msg = Calibration {
             header: Header::new(506),
 
             _duration: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Calibration {
+            header: hdr,
+
+            _duration: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -53,6 +49,7 @@ impl Message for Calibration {
         506
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         506
     }
@@ -67,6 +64,7 @@ impl Message for Calibration {
         self._duration = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         2
     }
@@ -79,5 +77,7 @@ impl Message for Calibration {
         bfr.put_u16_le(self._duration);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._duration = bfr.get_u16_le();
+    }
 }

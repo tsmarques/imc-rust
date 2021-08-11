@@ -56,29 +56,11 @@ pub struct PowerChannelControl {
 }
 
 impl Message for PowerChannelControl {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PowerChannelControl {
-            header: hdr,
-
-            _name: Default::default(),
-            _op: Default::default(),
-            _sched_time: Default::default(),
-        };
-
-        msg.get_header()._mgid = 309;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PowerChannelControl {
+        let msg = PowerChannelControl {
             header: Header::new(309),
 
             _name: Default::default(),
@@ -86,11 +68,25 @@ impl Message for PowerChannelControl {
             _sched_time: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PowerChannelControl {
+            header: hdr,
+
+            _name: Default::default(),
+            _op: Default::default(),
+            _sched_time: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -98,6 +94,7 @@ impl Message for PowerChannelControl {
         309
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         309
     }
@@ -116,6 +113,7 @@ impl Message for PowerChannelControl {
         self._sched_time = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         9
     }
@@ -134,5 +132,11 @@ impl Message for PowerChannelControl {
         bfr.put_f64_le(self._sched_time);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._name);
+
+        self._op = bfr.get_u8();
+
+        self._sched_time = bfr.get_f64_le();
+    }
 }

@@ -36,34 +36,11 @@ pub struct EntityMonitoringState {
 }
 
 impl Message for EntityMonitoringState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = EntityMonitoringState {
-            header: hdr,
-
-            _mcount: Default::default(),
-            _mnames: Default::default(),
-            _ecount: Default::default(),
-            _enames: Default::default(),
-            _ccount: Default::default(),
-            _cnames: Default::default(),
-            _last_error: Default::default(),
-            _last_error_time: Default::default(),
-        };
-
-        msg.get_header()._mgid = 503;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = EntityMonitoringState {
+        let msg = EntityMonitoringState {
             header: Header::new(503),
 
             _mcount: Default::default(),
@@ -76,11 +53,30 @@ impl Message for EntityMonitoringState {
             _last_error_time: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = EntityMonitoringState {
+            header: hdr,
+
+            _mcount: Default::default(),
+            _mnames: Default::default(),
+            _ecount: Default::default(),
+            _enames: Default::default(),
+            _ccount: Default::default(),
+            _cnames: Default::default(),
+            _last_error: Default::default(),
+            _last_error_time: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -88,6 +84,7 @@ impl Message for EntityMonitoringState {
         503
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         503
     }
@@ -116,6 +113,7 @@ impl Message for EntityMonitoringState {
         self._last_error_time = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         11
     }
@@ -145,5 +143,21 @@ impl Message for EntityMonitoringState {
         bfr.put_f64_le(self._last_error_time);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._mcount = bfr.get_u8();
+
+        deserialize_string!(bfr, self._mnames);
+
+        self._ecount = bfr.get_u8();
+
+        deserialize_string!(bfr, self._enames);
+
+        self._ccount = bfr.get_u8();
+
+        deserialize_string!(bfr, self._cnames);
+
+        deserialize_string!(bfr, self._last_error);
+
+        self._last_error_time = bfr.get_f64_le();
+    }
 }

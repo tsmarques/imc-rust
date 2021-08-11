@@ -41,32 +41,11 @@ pub struct Alignment {
 }
 
 impl Message for Alignment {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Alignment {
-            header: hdr,
-
-            _timeout: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 495;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Alignment {
+        let msg = Alignment {
             header: Header::new(495),
 
             _timeout: Default::default(),
@@ -77,11 +56,28 @@ impl Message for Alignment {
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Alignment {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -89,6 +85,7 @@ impl Message for Alignment {
         495
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         495
     }
@@ -113,6 +110,7 @@ impl Message for Alignment {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         23
     }
@@ -134,5 +132,17 @@ impl Message for Alignment {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timeout = bfr.get_u16_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._speed = bfr.get_f32_le();
+
+        self._speed_units = bfr.get_u8();
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

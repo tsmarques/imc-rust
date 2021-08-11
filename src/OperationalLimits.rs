@@ -36,38 +36,11 @@ pub struct OperationalLimits {
 }
 
 impl Message for OperationalLimits {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = OperationalLimits {
-            header: hdr,
-
-            _mask: Default::default(),
-            _max_depth: Default::default(),
-            _min_altitude: Default::default(),
-            _max_altitude: Default::default(),
-            _min_speed: Default::default(),
-            _max_speed: Default::default(),
-            _max_vrate: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _orientation: Default::default(),
-            _width: Default::default(),
-            _length: Default::default(),
-        };
-
-        msg.get_header()._mgid = 504;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = OperationalLimits {
+        let msg = OperationalLimits {
             header: Header::new(504),
 
             _mask: Default::default(),
@@ -84,11 +57,34 @@ impl Message for OperationalLimits {
             _length: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = OperationalLimits {
+            header: hdr,
+
+            _mask: Default::default(),
+            _max_depth: Default::default(),
+            _min_altitude: Default::default(),
+            _max_altitude: Default::default(),
+            _min_speed: Default::default(),
+            _max_speed: Default::default(),
+            _max_vrate: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _orientation: Default::default(),
+            _width: Default::default(),
+            _length: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -96,6 +92,7 @@ impl Message for OperationalLimits {
         504
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         504
     }
@@ -132,6 +129,7 @@ impl Message for OperationalLimits {
         self._length = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         53
     }
@@ -155,5 +153,29 @@ impl Message for OperationalLimits {
         bfr.put_f32_le(self._length);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._mask = bfr.get_u8();
+
+        self._max_depth = bfr.get_f32_le();
+
+        self._min_altitude = bfr.get_f32_le();
+
+        self._max_altitude = bfr.get_f32_le();
+
+        self._min_speed = bfr.get_f32_le();
+
+        self._max_speed = bfr.get_f32_le();
+
+        self._max_vrate = bfr.get_f32_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._orientation = bfr.get_f32_le();
+
+        self._width = bfr.get_f32_le();
+
+        self._length = bfr.get_f32_le();
+    }
 }

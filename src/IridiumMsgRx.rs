@@ -24,31 +24,11 @@ pub struct IridiumMsgRx {
 }
 
 impl Message for IridiumMsgRx {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = IridiumMsgRx {
-            header: hdr,
-
-            _origin: Default::default(),
-            _htime: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _data: Default::default(),
-        };
-
-        msg.get_header()._mgid = 170;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = IridiumMsgRx {
+        let msg = IridiumMsgRx {
             header: Header::new(170),
 
             _origin: Default::default(),
@@ -58,11 +38,27 @@ impl Message for IridiumMsgRx {
             _data: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = IridiumMsgRx {
+            header: hdr,
+
+            _origin: Default::default(),
+            _htime: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _data: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -70,6 +66,7 @@ impl Message for IridiumMsgRx {
         170
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         170
     }
@@ -92,6 +89,7 @@ impl Message for IridiumMsgRx {
         self._data = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         24
     }
@@ -114,5 +112,15 @@ impl Message for IridiumMsgRx {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._origin);
+
+        self._htime = bfr.get_f64_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        deserialize_bytes!(bfr, self._data);
+    }
 }

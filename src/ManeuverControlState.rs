@@ -46,29 +46,11 @@ pub struct ManeuverControlState {
 }
 
 impl Message for ManeuverControlState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = ManeuverControlState {
-            header: hdr,
-
-            _state: Default::default(),
-            _eta: Default::default(),
-            _info: Default::default(),
-        };
-
-        msg.get_header()._mgid = 470;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = ManeuverControlState {
+        let msg = ManeuverControlState {
             header: Header::new(470),
 
             _state: Default::default(),
@@ -76,11 +58,25 @@ impl Message for ManeuverControlState {
             _info: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = ManeuverControlState {
+            header: hdr,
+
+            _state: Default::default(),
+            _eta: Default::default(),
+            _info: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -88,6 +84,7 @@ impl Message for ManeuverControlState {
         470
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         470
     }
@@ -106,6 +103,7 @@ impl Message for ManeuverControlState {
         self._info = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         3
     }
@@ -124,5 +122,11 @@ impl Message for ManeuverControlState {
         serialize_bytes!(bfr, self._info.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._state = bfr.get_u8();
+
+        self._eta = bfr.get_u16_le();
+
+        deserialize_string!(bfr, self._info);
+    }
 }

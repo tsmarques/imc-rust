@@ -18,39 +18,35 @@ pub struct TextMessage {
 }
 
 impl Message for TextMessage {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = TextMessage {
-            header: hdr,
-
-            _origin: Default::default(),
-            _text: Default::default(),
-        };
-
-        msg.get_header()._mgid = 160;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = TextMessage {
+        let msg = TextMessage {
             header: Header::new(160),
 
             _origin: Default::default(),
             _text: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = TextMessage {
+            header: hdr,
+
+            _origin: Default::default(),
+            _text: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -58,6 +54,7 @@ impl Message for TextMessage {
         160
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         160
     }
@@ -74,6 +71,7 @@ impl Message for TextMessage {
         self._text = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -93,5 +91,9 @@ impl Message for TextMessage {
         serialize_bytes!(bfr, self._text.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._origin);
+
+        deserialize_string!(bfr, self._text);
+    }
 }

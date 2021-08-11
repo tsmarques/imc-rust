@@ -63,33 +63,11 @@ pub struct DesiredControl {
 }
 
 impl Message for DesiredControl {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = DesiredControl {
-            header: hdr,
-
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _k: Default::default(),
-            _m: Default::default(),
-            _n: Default::default(),
-            _flags: Default::default(),
-        };
-
-        msg.get_header()._mgid = 407;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = DesiredControl {
+        let msg = DesiredControl {
             header: Header::new(407),
 
             _x: Default::default(),
@@ -101,11 +79,29 @@ impl Message for DesiredControl {
             _flags: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = DesiredControl {
+            header: hdr,
+
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _k: Default::default(),
+            _m: Default::default(),
+            _n: Default::default(),
+            _flags: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -113,6 +109,7 @@ impl Message for DesiredControl {
         407
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         407
     }
@@ -139,6 +136,7 @@ impl Message for DesiredControl {
         self._flags = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         49
     }
@@ -157,5 +155,19 @@ impl Message for DesiredControl {
         bfr.put_u8(self._flags);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._x = bfr.get_f64_le();
+
+        self._y = bfr.get_f64_le();
+
+        self._z = bfr.get_f64_le();
+
+        self._k = bfr.get_f64_le();
+
+        self._m = bfr.get_f64_le();
+
+        self._n = bfr.get_f64_le();
+
+        self._flags = bfr.get_u8();
+    }
 }

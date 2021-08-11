@@ -40,31 +40,11 @@ pub struct FollowReference {
 }
 
 impl Message for FollowReference {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = FollowReference {
-            header: hdr,
-
-            _control_src: Default::default(),
-            _control_ent: Default::default(),
-            _timeout: Default::default(),
-            _loiter_radius: Default::default(),
-            _altitude_interval: Default::default(),
-        };
-
-        msg.get_header()._mgid = 478;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = FollowReference {
+        let msg = FollowReference {
             header: Header::new(478),
 
             _control_src: Default::default(),
@@ -74,11 +54,27 @@ impl Message for FollowReference {
             _altitude_interval: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = FollowReference {
+            header: hdr,
+
+            _control_src: Default::default(),
+            _control_ent: Default::default(),
+            _timeout: Default::default(),
+            _loiter_radius: Default::default(),
+            _altitude_interval: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -86,6 +82,7 @@ impl Message for FollowReference {
         478
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         478
     }
@@ -108,6 +105,7 @@ impl Message for FollowReference {
         self._altitude_interval = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         15
     }
@@ -124,5 +122,15 @@ impl Message for FollowReference {
         bfr.put_f32_le(self._altitude_interval);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._control_src = bfr.get_u16_le();
+
+        self._control_ent = bfr.get_u8();
+
+        self._timeout = bfr.get_f32_le();
+
+        self._loiter_radius = bfr.get_f32_le();
+
+        self._altitude_interval = bfr.get_f32_le();
+    }
 }

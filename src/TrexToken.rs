@@ -21,29 +21,11 @@ pub struct TrexToken {
 }
 
 impl Message for TrexToken {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = TrexToken {
-            header: hdr,
-
-            _timeline: Default::default(),
-            _predicate: Default::default(),
-            _attributes: vec![],
-        };
-
-        msg.get_header()._mgid = 657;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = TrexToken {
+        let msg = TrexToken {
             header: Header::new(657),
 
             _timeline: Default::default(),
@@ -51,11 +33,25 @@ impl Message for TrexToken {
             _attributes: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = TrexToken {
+            header: hdr,
+
+            _timeline: Default::default(),
+            _predicate: Default::default(),
+            _attributes: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -63,6 +59,7 @@ impl Message for TrexToken {
         657
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         657
     }
@@ -89,6 +86,7 @@ impl Message for TrexToken {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -126,5 +124,19 @@ impl Message for TrexToken {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._timeline);
+
+        deserialize_string!(bfr, self._predicate);
+
+        for msg in self._attributes.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

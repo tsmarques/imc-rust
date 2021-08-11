@@ -115,40 +115,11 @@ pub struct Loiter {
 }
 
 impl Message for Loiter {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Loiter {
-            header: hdr,
-
-            _timeout: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _z: Default::default(),
-            _z_units: 0_u8,
-            _duration: Default::default(),
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _type: Default::default(),
-            _radius: Default::default(),
-            _length: Default::default(),
-            _bearing: Default::default(),
-            _direction: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 453;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Loiter {
+        let msg = Loiter {
             header: Header::new(453),
 
             _timeout: Default::default(),
@@ -167,11 +138,36 @@ impl Message for Loiter {
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Loiter {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z: Default::default(),
+            _z_units: 0_u8,
+            _duration: Default::default(),
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _type: Default::default(),
+            _radius: Default::default(),
+            _length: Default::default(),
+            _bearing: Default::default(),
+            _direction: Default::default(),
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -179,6 +175,7 @@ impl Message for Loiter {
         453
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         453
     }
@@ -219,6 +216,7 @@ impl Message for Loiter {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         48
     }
@@ -248,5 +246,33 @@ impl Message for Loiter {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timeout = bfr.get_u16_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._z_units = bfr.get_u8();
+
+        self._duration = bfr.get_u16_le();
+
+        self._speed = bfr.get_f32_le();
+
+        self._speed_units = bfr.get_u8();
+
+        self._type = bfr.get_u8();
+
+        self._radius = bfr.get_f32_le();
+
+        self._length = bfr.get_f32_le();
+
+        self._bearing = bfr.get_f64_le();
+
+        self._direction = bfr.get_u8();
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

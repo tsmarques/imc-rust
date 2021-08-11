@@ -49,30 +49,11 @@ pub struct TrexAttribute {
 }
 
 impl Message for TrexAttribute {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = TrexAttribute {
-            header: hdr,
-
-            _name: Default::default(),
-            _attr_type: Default::default(),
-            _min: Default::default(),
-            _max: Default::default(),
-        };
-
-        msg.get_header()._mgid = 656;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = TrexAttribute {
+        let msg = TrexAttribute {
             header: Header::new(656),
 
             _name: Default::default(),
@@ -81,11 +62,26 @@ impl Message for TrexAttribute {
             _max: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = TrexAttribute {
+            header: hdr,
+
+            _name: Default::default(),
+            _attr_type: Default::default(),
+            _min: Default::default(),
+            _max: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -93,6 +89,7 @@ impl Message for TrexAttribute {
         656
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         656
     }
@@ -113,6 +110,7 @@ impl Message for TrexAttribute {
         self._max = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -136,5 +134,13 @@ impl Message for TrexAttribute {
         serialize_bytes!(bfr, self._max.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._name);
+
+        self._attr_type = bfr.get_u8();
+
+        deserialize_string!(bfr, self._min);
+
+        deserialize_string!(bfr, self._max);
+    }
 }

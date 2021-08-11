@@ -54,39 +54,35 @@ pub struct EntityActivationState {
 }
 
 impl Message for EntityActivationState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = EntityActivationState {
-            header: hdr,
-
-            _state: Default::default(),
-            _error: Default::default(),
-        };
-
-        msg.get_header()._mgid = 14;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = EntityActivationState {
+        let msg = EntityActivationState {
             header: Header::new(14),
 
             _state: Default::default(),
             _error: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = EntityActivationState {
+            header: hdr,
+
+            _state: Default::default(),
+            _error: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -94,6 +90,7 @@ impl Message for EntityActivationState {
         14
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         14
     }
@@ -110,6 +107,7 @@ impl Message for EntityActivationState {
         self._error = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -127,5 +125,9 @@ impl Message for EntityActivationState {
         serialize_bytes!(bfr, self._error.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._state = bfr.get_u8();
+
+        deserialize_string!(bfr, self._error);
+    }
 }

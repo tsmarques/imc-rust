@@ -19,39 +19,35 @@ pub struct GpioStateSet {
 }
 
 impl Message for GpioStateSet {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = GpioStateSet {
-            header: hdr,
-
-            _name: Default::default(),
-            _value: Default::default(),
-        };
-
-        msg.get_header()._mgid = 2002;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = GpioStateSet {
+        let msg = GpioStateSet {
             header: Header::new(2002),
 
             _name: Default::default(),
             _value: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = GpioStateSet {
+            header: hdr,
+
+            _name: Default::default(),
+            _value: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -59,6 +55,7 @@ impl Message for GpioStateSet {
         2002
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         2002
     }
@@ -75,6 +72,7 @@ impl Message for GpioStateSet {
         self._value = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -92,5 +90,9 @@ impl Message for GpioStateSet {
         bfr.put_u8(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._name);
+
+        self._value = bfr.get_u8();
+    }
 }

@@ -51,29 +51,11 @@ pub struct ClockControl {
 }
 
 impl Message for ClockControl {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = ClockControl {
-            header: hdr,
-
-            _op: Default::default(),
-            _clock: Default::default(),
-            _tz: Default::default(),
-        };
-
-        msg.get_header()._mgid = 106;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = ClockControl {
+        let msg = ClockControl {
             header: Header::new(106),
 
             _op: Default::default(),
@@ -81,11 +63,25 @@ impl Message for ClockControl {
             _tz: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = ClockControl {
+            header: hdr,
+
+            _op: Default::default(),
+            _clock: Default::default(),
+            _tz: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -93,6 +89,7 @@ impl Message for ClockControl {
         106
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         106
     }
@@ -111,6 +108,7 @@ impl Message for ClockControl {
         self._tz = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         10
     }
@@ -125,5 +123,11 @@ impl Message for ClockControl {
         bfr.put_i8(self._tz);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+
+        self._clock = bfr.get_f64_le();
+
+        self._tz = bfr.get_i8();
+    }
 }

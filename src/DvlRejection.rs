@@ -80,30 +80,11 @@ pub struct DvlRejection {
 }
 
 impl Message for DvlRejection {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = DvlRejection {
-            header: hdr,
-
-            _type: Default::default(),
-            _reason: Default::default(),
-            _value: Default::default(),
-            _timestep: Default::default(),
-        };
-
-        msg.get_header()._mgid = 358;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = DvlRejection {
+        let msg = DvlRejection {
             header: Header::new(358),
 
             _type: Default::default(),
@@ -112,11 +93,26 @@ impl Message for DvlRejection {
             _timestep: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = DvlRejection {
+            header: hdr,
+
+            _type: Default::default(),
+            _reason: Default::default(),
+            _value: Default::default(),
+            _timestep: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -124,6 +120,7 @@ impl Message for DvlRejection {
         358
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         358
     }
@@ -144,6 +141,7 @@ impl Message for DvlRejection {
         self._timestep = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         10
     }
@@ -159,5 +157,13 @@ impl Message for DvlRejection {
         bfr.put_f32_le(self._timestep);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._type = bfr.get_u8();
+
+        self._reason = bfr.get_u8();
+
+        self._value = bfr.get_f32_le();
+
+        self._timestep = bfr.get_f32_le();
+    }
 }

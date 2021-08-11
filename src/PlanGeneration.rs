@@ -66,30 +66,11 @@ pub struct PlanGeneration {
 }
 
 impl Message for PlanGeneration {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PlanGeneration {
-            header: hdr,
-
-            _cmd: Default::default(),
-            _op: Default::default(),
-            _plan_id: Default::default(),
-            _params: Default::default(),
-        };
-
-        msg.get_header()._mgid = 562;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PlanGeneration {
+        let msg = PlanGeneration {
             header: Header::new(562),
 
             _cmd: Default::default(),
@@ -98,11 +79,26 @@ impl Message for PlanGeneration {
             _params: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PlanGeneration {
+            header: hdr,
+
+            _cmd: Default::default(),
+            _op: Default::default(),
+            _plan_id: Default::default(),
+            _params: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -110,6 +106,7 @@ impl Message for PlanGeneration {
         562
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         562
     }
@@ -130,6 +127,7 @@ impl Message for PlanGeneration {
         self._params = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         2
     }
@@ -151,5 +149,13 @@ impl Message for PlanGeneration {
         serialize_bytes!(bfr, self._params.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._cmd = bfr.get_u8();
+
+        self._op = bfr.get_u8();
+
+        deserialize_string!(bfr, self._plan_id);
+
+        deserialize_string!(bfr, self._params);
+    }
 }

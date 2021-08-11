@@ -33,29 +33,11 @@ pub struct CustomManeuver {
 }
 
 impl Message for CustomManeuver {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = CustomManeuver {
-            header: hdr,
-
-            _timeout: Default::default(),
-            _name: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 465;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = CustomManeuver {
+        let msg = CustomManeuver {
             header: Header::new(465),
 
             _timeout: Default::default(),
@@ -63,11 +45,25 @@ impl Message for CustomManeuver {
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = CustomManeuver {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _name: Default::default(),
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -75,6 +71,7 @@ impl Message for CustomManeuver {
         465
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         465
     }
@@ -93,6 +90,7 @@ impl Message for CustomManeuver {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         2
     }
@@ -113,5 +111,11 @@ impl Message for CustomManeuver {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timeout = bfr.get_u16_le();
+
+        deserialize_string!(bfr, self._name);
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

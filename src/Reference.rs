@@ -4,9 +4,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DesiredZ::DesiredZ;
-
 use crate::DesiredSpeed::DesiredSpeed;
+
+use crate::DesiredZ::DesiredZ;
 
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
@@ -60,32 +60,11 @@ pub struct Reference {
 }
 
 impl Message for Reference {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Reference {
-            header: hdr,
-
-            _flags: Default::default(),
-            _speed: Default::default(),
-            _z: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _radius: Default::default(),
-        };
-
-        msg.get_header()._mgid = 479;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Reference {
+        let msg = Reference {
             header: Header::new(479),
 
             _flags: Default::default(),
@@ -96,11 +75,28 @@ impl Message for Reference {
             _radius: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Reference {
+            header: hdr,
+
+            _flags: Default::default(),
+            _speed: Default::default(),
+            _z: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _radius: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -108,6 +104,7 @@ impl Message for Reference {
         479
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         479
     }
@@ -140,6 +137,7 @@ impl Message for Reference {
         self._radius = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         21
     }
@@ -181,5 +179,25 @@ impl Message for Reference {
         bfr.put_f32_le(self._radius);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._flags = bfr.get_u8();
+
+        match &mut self._speed {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+
+        match &mut self._z {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._radius = bfr.get_f32_le();
+    }
 }

@@ -10,31 +10,27 @@ pub struct RestartSystem {
 }
 
 impl Message for RestartSystem {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = RestartSystem { header: hdr };
-
-        msg.get_header()._mgid = 9;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = RestartSystem {
+        let msg = RestartSystem {
             header: Header::new(9),
         };
-
-        msg.set_size(msg.payload_serialization_size() as u16);
 
         msg
     }
 
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = RestartSystem { header: hdr };
+
+        msg
+    }
+
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -42,6 +38,7 @@ impl Message for RestartSystem {
         9
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         9
     }
@@ -54,6 +51,7 @@ impl Message for RestartSystem {
         self.header.clear();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }

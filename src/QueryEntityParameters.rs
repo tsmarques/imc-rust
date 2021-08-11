@@ -17,29 +17,11 @@ pub struct QueryEntityParameters {
 }
 
 impl Message for QueryEntityParameters {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = QueryEntityParameters {
-            header: hdr,
-
-            _name: Default::default(),
-            _visibility: Default::default(),
-            _scope: Default::default(),
-        };
-
-        msg.get_header()._mgid = 803;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = QueryEntityParameters {
+        let msg = QueryEntityParameters {
             header: Header::new(803),
 
             _name: Default::default(),
@@ -47,11 +29,25 @@ impl Message for QueryEntityParameters {
             _scope: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = QueryEntityParameters {
+            header: hdr,
+
+            _name: Default::default(),
+            _visibility: Default::default(),
+            _scope: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -59,6 +55,7 @@ impl Message for QueryEntityParameters {
         803
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         803
     }
@@ -77,6 +74,7 @@ impl Message for QueryEntityParameters {
         self._scope = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -99,5 +97,11 @@ impl Message for QueryEntityParameters {
         serialize_bytes!(bfr, self._scope.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._name);
+
+        deserialize_string!(bfr, self._visibility);
+
+        deserialize_string!(bfr, self._scope);
+    }
 }

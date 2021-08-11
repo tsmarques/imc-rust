@@ -37,39 +37,35 @@ pub struct AnnounceService {
 }
 
 impl Message for AnnounceService {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = AnnounceService {
-            header: hdr,
-
-            _service: Default::default(),
-            _service_type: Default::default(),
-        };
-
-        msg.get_header()._mgid = 152;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = AnnounceService {
+        let msg = AnnounceService {
             header: Header::new(152),
 
             _service: Default::default(),
             _service_type: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = AnnounceService {
+            header: hdr,
+
+            _service: Default::default(),
+            _service_type: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -77,6 +73,7 @@ impl Message for AnnounceService {
         152
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         152
     }
@@ -93,6 +90,7 @@ impl Message for AnnounceService {
         self._service_type = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -110,5 +108,9 @@ impl Message for AnnounceService {
         bfr.put_u8(self._service_type);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._service);
+
+        self._service_type = bfr.get_u8();
+    }
 }

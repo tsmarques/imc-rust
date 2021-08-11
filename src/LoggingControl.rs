@@ -1,6 +1,6 @@
 use crate::Message::*;
 
-use bytes::{BufMut, Buf};
+use bytes::BufMut;
 
 use crate::Header::Header;
 
@@ -54,39 +54,35 @@ pub struct LoggingControl {
 }
 
 impl Message for LoggingControl {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = LoggingControl {
-            header: hdr,
-
-            _op: Default::default(),
-            _name: Default::default(),
-        };
-
-        msg.get_header()._mgid = 102;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = LoggingControl {
+        let msg = LoggingControl {
             header: Header::new(102),
 
             _op: Default::default(),
             _name: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = LoggingControl {
+            header: hdr,
+
+            _op: Default::default(),
+            _name: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -94,6 +90,7 @@ impl Message for LoggingControl {
         102
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         102
     }
@@ -110,6 +107,7 @@ impl Message for LoggingControl {
         self._name = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -130,9 +128,6 @@ impl Message for LoggingControl {
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
         self._op = bfr.get_u8();
 
-        let size = bfr.get_u16_le();
-        for _ in 0..size {
-            self._name.push(char::from(bfr.get_u8()));
-        }
+        deserialize_string!(bfr, self._name);
     }
 }

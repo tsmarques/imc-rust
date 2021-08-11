@@ -33,37 +33,33 @@ pub struct DataSanity {
 }
 
 impl Message for DataSanity {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = DataSanity {
-            header: hdr,
-
-            _sane: Default::default(),
-        };
-
-        msg.get_header()._mgid = 284;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = DataSanity {
+        let msg = DataSanity {
             header: Header::new(284),
 
             _sane: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = DataSanity {
+            header: hdr,
+
+            _sane: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -71,6 +67,7 @@ impl Message for DataSanity {
         284
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         284
     }
@@ -85,6 +82,7 @@ impl Message for DataSanity {
         self._sane = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -97,5 +95,7 @@ impl Message for DataSanity {
         bfr.put_u8(self._sane);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._sane = bfr.get_u8();
+    }
 }

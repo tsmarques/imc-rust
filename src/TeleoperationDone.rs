@@ -10,31 +10,27 @@ pub struct TeleoperationDone {
 }
 
 impl Message for TeleoperationDone {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = TeleoperationDone { header: hdr };
-
-        msg.get_header()._mgid = 460;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = TeleoperationDone {
+        let msg = TeleoperationDone {
             header: Header::new(460),
         };
-
-        msg.set_size(msg.payload_serialization_size() as u16);
 
         msg
     }
 
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = TeleoperationDone { header: hdr };
+
+        msg
+    }
+
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -42,6 +38,7 @@ impl Message for TeleoperationDone {
         460
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         460
     }
@@ -54,6 +51,7 @@ impl Message for TeleoperationDone {
         self.header.clear();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }

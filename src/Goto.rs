@@ -68,37 +68,11 @@ pub struct Goto {
 }
 
 impl Message for Goto {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Goto {
-            header: hdr,
-
-            _timeout: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _z: Default::default(),
-            _z_units: 0_u8,
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _roll: Default::default(),
-            _pitch: Default::default(),
-            _yaw: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 450;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Goto {
+        let msg = Goto {
             header: Header::new(450),
 
             _timeout: Default::default(),
@@ -114,11 +88,33 @@ impl Message for Goto {
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Goto {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z: Default::default(),
+            _z_units: 0_u8,
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _roll: Default::default(),
+            _pitch: Default::default(),
+            _yaw: Default::default(),
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -126,6 +122,7 @@ impl Message for Goto {
         450
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         450
     }
@@ -160,6 +157,7 @@ impl Message for Goto {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         52
     }
@@ -186,5 +184,27 @@ impl Message for Goto {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timeout = bfr.get_u16_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._z_units = bfr.get_u8();
+
+        self._speed = bfr.get_f32_le();
+
+        self._speed_units = bfr.get_u8();
+
+        self._roll = bfr.get_f64_le();
+
+        self._pitch = bfr.get_f64_le();
+
+        self._yaw = bfr.get_f64_le();
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

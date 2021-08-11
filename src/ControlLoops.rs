@@ -42,29 +42,11 @@ pub struct ControlLoops {
 }
 
 impl Message for ControlLoops {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = ControlLoops {
-            header: hdr,
-
-            _enable: Default::default(),
-            _mask: Default::default(),
-            _scope_ref: Default::default(),
-        };
-
-        msg.get_header()._mgid = 507;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = ControlLoops {
+        let msg = ControlLoops {
             header: Header::new(507),
 
             _enable: Default::default(),
@@ -72,11 +54,25 @@ impl Message for ControlLoops {
             _scope_ref: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = ControlLoops {
+            header: hdr,
+
+            _enable: Default::default(),
+            _mask: Default::default(),
+            _scope_ref: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -84,6 +80,7 @@ impl Message for ControlLoops {
         507
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         507
     }
@@ -102,6 +99,7 @@ impl Message for ControlLoops {
         self._scope_ref = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         9
     }
@@ -116,5 +114,11 @@ impl Message for ControlLoops {
         bfr.put_u32_le(self._scope_ref);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._enable = bfr.get_u8();
+
+        self._mask = bfr.get_u32_le();
+
+        self._scope_ref = bfr.get_u32_le();
+    }
 }

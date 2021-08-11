@@ -43,39 +43,35 @@ pub struct UsblConfig {
 }
 
 impl Message for UsblConfig {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = UsblConfig {
-            header: hdr,
-
-            _op: Default::default(),
-            _modems: vec![],
-        };
-
-        msg.get_header()._mgid = 902;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = UsblConfig {
+        let msg = UsblConfig {
             header: Header::new(902),
 
             _op: Default::default(),
             _modems: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = UsblConfig {
+            header: hdr,
+
+            _op: Default::default(),
+            _modems: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -83,6 +79,7 @@ impl Message for UsblConfig {
         902
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         902
     }
@@ -107,6 +104,7 @@ impl Message for UsblConfig {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -139,5 +137,17 @@ impl Message for UsblConfig {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+
+        for msg in self._modems.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

@@ -20,39 +20,35 @@ pub struct BeamConfig {
 }
 
 impl Message for BeamConfig {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = BeamConfig {
-            header: hdr,
-
-            _beam_width: Default::default(),
-            _beam_height: Default::default(),
-        };
-
-        msg.get_header()._mgid = 283;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = BeamConfig {
+        let msg = BeamConfig {
             header: Header::new(283),
 
             _beam_width: Default::default(),
             _beam_height: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = BeamConfig {
+            header: hdr,
+
+            _beam_width: Default::default(),
+            _beam_height: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -60,6 +56,7 @@ impl Message for BeamConfig {
         283
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         283
     }
@@ -76,6 +73,7 @@ impl Message for BeamConfig {
         self._beam_height = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         8
     }
@@ -89,5 +87,9 @@ impl Message for BeamConfig {
         bfr.put_f32_le(self._beam_height);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._beam_width = bfr.get_f32_le();
+
+        self._beam_height = bfr.get_f32_le();
+    }
 }

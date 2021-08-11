@@ -22,39 +22,35 @@ pub struct EntityParameters {
 }
 
 impl Message for EntityParameters {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = EntityParameters {
-            header: hdr,
-
-            _name: Default::default(),
-            _params: vec![],
-        };
-
-        msg.get_header()._mgid = 802;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = EntityParameters {
+        let msg = EntityParameters {
             header: Header::new(802),
 
             _name: Default::default(),
             _params: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = EntityParameters {
+            header: hdr,
+
+            _name: Default::default(),
+            _params: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -62,6 +58,7 @@ impl Message for EntityParameters {
         802
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         802
     }
@@ -86,6 +83,7 @@ impl Message for EntityParameters {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -120,5 +118,17 @@ impl Message for EntityParameters {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._name);
+
+        for msg in self._params.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

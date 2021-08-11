@@ -26,31 +26,11 @@ pub struct IridiumMsgTxExtended {
 }
 
 impl Message for IridiumMsgTxExtended {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = IridiumMsgTxExtended {
-            header: hdr,
-
-            _req_id: Default::default(),
-            _ttl: Default::default(),
-            _expiration: Default::default(),
-            _destination: Default::default(),
-            _data: Default::default(),
-        };
-
-        msg.get_header()._mgid = 2005;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = IridiumMsgTxExtended {
+        let msg = IridiumMsgTxExtended {
             header: Header::new(2005),
 
             _req_id: Default::default(),
@@ -60,11 +40,27 @@ impl Message for IridiumMsgTxExtended {
             _data: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = IridiumMsgTxExtended {
+            header: hdr,
+
+            _req_id: Default::default(),
+            _ttl: Default::default(),
+            _expiration: Default::default(),
+            _destination: Default::default(),
+            _data: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -72,6 +68,7 @@ impl Message for IridiumMsgTxExtended {
         2005
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         2005
     }
@@ -94,6 +91,7 @@ impl Message for IridiumMsgTxExtended {
         self._data = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         8
     }
@@ -116,5 +114,15 @@ impl Message for IridiumMsgTxExtended {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._req_id = bfr.get_u16_le();
+
+        self._ttl = bfr.get_u16_le();
+
+        self._expiration = bfr.get_u32_le();
+
+        deserialize_string!(bfr, self._destination);
+
+        deserialize_bytes!(bfr, self._data);
+    }
 }

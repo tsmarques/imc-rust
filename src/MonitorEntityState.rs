@@ -45,39 +45,35 @@ pub struct MonitorEntityState {
 }
 
 impl Message for MonitorEntityState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = MonitorEntityState {
-            header: hdr,
-
-            _command: Default::default(),
-            _entities: Default::default(),
-        };
-
-        msg.get_header()._mgid = 502;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = MonitorEntityState {
+        let msg = MonitorEntityState {
             header: Header::new(502),
 
             _command: Default::default(),
             _entities: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = MonitorEntityState {
+            header: hdr,
+
+            _command: Default::default(),
+            _entities: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -85,6 +81,7 @@ impl Message for MonitorEntityState {
         502
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         502
     }
@@ -101,6 +98,7 @@ impl Message for MonitorEntityState {
         self._entities = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -118,5 +116,9 @@ impl Message for MonitorEntityState {
         serialize_bytes!(bfr, self._entities.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._command = bfr.get_u8();
+
+        deserialize_string!(bfr, self._entities);
+    }
 }

@@ -6,9 +6,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DeviceState::DeviceState;
-
 use crate::BeamConfig::BeamConfig;
+
+use crate::DeviceState::DeviceState;
 
 #[allow(non_camel_case_types)]
 pub enum ValidityEnum {
@@ -48,30 +48,11 @@ pub struct Distance {
 }
 
 impl Message for Distance {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Distance {
-            header: hdr,
-
-            _validity: Default::default(),
-            _location: vec![],
-            _beam_config: vec![],
-            _value: Default::default(),
-        };
-
-        msg.get_header()._mgid = 262;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Distance {
+        let msg = Distance {
             header: Header::new(262),
 
             _validity: Default::default(),
@@ -80,11 +61,26 @@ impl Message for Distance {
             _value: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Distance {
+            header: hdr,
+
+            _validity: Default::default(),
+            _location: vec![],
+            _beam_config: vec![],
+            _value: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -92,6 +88,7 @@ impl Message for Distance {
         262
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         262
     }
@@ -128,6 +125,7 @@ impl Message for Distance {
         self._value = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         5
     }
@@ -179,5 +177,29 @@ impl Message for Distance {
         bfr.put_f32_le(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._validity = bfr.get_u8();
+
+        for msg in self._location.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+
+        for msg in self._beam_config.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+
+        self._value = bfr.get_f32_le();
+    }
 }

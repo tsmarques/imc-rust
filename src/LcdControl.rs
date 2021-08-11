@@ -45,39 +45,35 @@ pub struct LcdControl {
 }
 
 impl Message for LcdControl {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = LcdControl {
-            header: hdr,
-
-            _op: Default::default(),
-            _text: Default::default(),
-        };
-
-        msg.get_header()._mgid = 307;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = LcdControl {
+        let msg = LcdControl {
             header: Header::new(307),
 
             _op: Default::default(),
             _text: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = LcdControl {
+            header: hdr,
+
+            _op: Default::default(),
+            _text: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -85,6 +81,7 @@ impl Message for LcdControl {
         307
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         307
     }
@@ -101,6 +98,7 @@ impl Message for LcdControl {
         self._text = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -118,5 +116,9 @@ impl Message for LcdControl {
         serialize_bytes!(bfr, self._text.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+
+        deserialize_string!(bfr, self._text);
+    }
 }

@@ -51,30 +51,11 @@ pub struct LogBookEntry {
 }
 
 impl Message for LogBookEntry {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = LogBookEntry {
-            header: hdr,
-
-            _type: Default::default(),
-            _htime: Default::default(),
-            _context: Default::default(),
-            _text: Default::default(),
-        };
-
-        msg.get_header()._mgid = 103;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = LogBookEntry {
+        let msg = LogBookEntry {
             header: Header::new(103),
 
             _type: Default::default(),
@@ -83,11 +64,26 @@ impl Message for LogBookEntry {
             _text: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = LogBookEntry {
+            header: hdr,
+
+            _type: Default::default(),
+            _htime: Default::default(),
+            _context: Default::default(),
+            _text: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -95,6 +91,7 @@ impl Message for LogBookEntry {
         103
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         103
     }
@@ -115,6 +112,7 @@ impl Message for LogBookEntry {
         self._text = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         9
     }
@@ -136,5 +134,13 @@ impl Message for LogBookEntry {
         serialize_bytes!(bfr, self._text.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._type = bfr.get_u8();
+
+        self._htime = bfr.get_f64_le();
+
+        deserialize_string!(bfr, self._context);
+
+        deserialize_string!(bfr, self._text);
+    }
 }

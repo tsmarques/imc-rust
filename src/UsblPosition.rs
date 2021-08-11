@@ -25,30 +25,11 @@ pub struct UsblPosition {
 }
 
 impl Message for UsblPosition {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = UsblPosition {
-            header: hdr,
-
-            _target: Default::default(),
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-        };
-
-        msg.get_header()._mgid = 891;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = UsblPosition {
+        let msg = UsblPosition {
             header: Header::new(891),
 
             _target: Default::default(),
@@ -57,11 +38,26 @@ impl Message for UsblPosition {
             _z: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = UsblPosition {
+            header: hdr,
+
+            _target: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -69,6 +65,7 @@ impl Message for UsblPosition {
         891
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         891
     }
@@ -89,6 +86,7 @@ impl Message for UsblPosition {
         self._z = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         14
     }
@@ -104,5 +102,13 @@ impl Message for UsblPosition {
         bfr.put_f32_le(self._z);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._target = bfr.get_u16_le();
+
+        self._x = bfr.get_f32_le();
+
+        self._y = bfr.get_f32_le();
+
+        self._z = bfr.get_f32_le();
+    }
 }

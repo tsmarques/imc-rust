@@ -24,39 +24,35 @@ pub struct DesiredZ {
 }
 
 impl Message for DesiredZ {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = DesiredZ {
-            header: hdr,
-
-            _value: Default::default(),
-            _z_units: 0_u8,
-        };
-
-        msg.get_header()._mgid = 401;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = DesiredZ {
+        let msg = DesiredZ {
             header: Header::new(401),
 
             _value: Default::default(),
             _z_units: 0_u8,
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = DesiredZ {
+            header: hdr,
+
+            _value: Default::default(),
+            _z_units: 0_u8,
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -64,6 +60,7 @@ impl Message for DesiredZ {
         401
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         401
     }
@@ -80,6 +77,7 @@ impl Message for DesiredZ {
         self._z_units = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         5
     }
@@ -93,5 +91,9 @@ impl Message for DesiredZ {
         bfr.put_u8(self._z_units);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._value = bfr.get_f32_le();
+
+        self._z_units = bfr.get_u8();
+    }
 }

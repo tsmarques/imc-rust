@@ -12,31 +12,27 @@ pub struct Heartbeat {
 }
 
 impl Message for Heartbeat {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Heartbeat { header: hdr };
-
-        msg.get_header()._mgid = 150;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Heartbeat {
+        let msg = Heartbeat {
             header: Header::new(150),
         };
-
-        msg.set_size(msg.payload_serialization_size() as u16);
 
         msg
     }
 
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Heartbeat { header: hdr };
+
+        msg
+    }
+
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -44,6 +40,7 @@ impl Message for Heartbeat {
         150
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         150
     }
@@ -56,6 +53,7 @@ impl Message for Heartbeat {
         self.header.clear();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }

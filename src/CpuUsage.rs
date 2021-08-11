@@ -15,37 +15,33 @@ pub struct CpuUsage {
 }
 
 impl Message for CpuUsage {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = CpuUsage {
-            header: hdr,
-
-            _value: Default::default(),
-        };
-
-        msg.get_header()._mgid = 7;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = CpuUsage {
+        let msg = CpuUsage {
             header: Header::new(7),
 
             _value: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = CpuUsage {
+            header: hdr,
+
+            _value: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -53,6 +49,7 @@ impl Message for CpuUsage {
         7
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         7
     }
@@ -67,6 +64,7 @@ impl Message for CpuUsage {
         self._value = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -79,5 +77,7 @@ impl Message for CpuUsage {
         bfr.put_u8(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._value = bfr.get_u8();
+    }
 }

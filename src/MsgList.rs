@@ -15,37 +15,33 @@ pub struct MsgList {
 }
 
 impl Message for MsgList {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = MsgList {
-            header: hdr,
-
-            _msgs: vec![],
-        };
-
-        msg.get_header()._mgid = 20;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = MsgList {
+        let msg = MsgList {
             header: Header::new(20),
 
             _msgs: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = MsgList {
+            header: hdr,
+
+            _msgs: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -53,6 +49,7 @@ impl Message for MsgList {
         20
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         20
     }
@@ -75,6 +72,7 @@ impl Message for MsgList {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -106,5 +104,15 @@ impl Message for MsgList {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        for msg in self._msgs.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

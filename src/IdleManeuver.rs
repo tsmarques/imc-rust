@@ -25,39 +25,35 @@ pub struct IdleManeuver {
 }
 
 impl Message for IdleManeuver {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = IdleManeuver {
-            header: hdr,
-
-            _duration: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 454;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = IdleManeuver {
+        let msg = IdleManeuver {
             header: Header::new(454),
 
             _duration: Default::default(),
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = IdleManeuver {
+            header: hdr,
+
+            _duration: Default::default(),
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -65,6 +61,7 @@ impl Message for IdleManeuver {
         454
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         454
     }
@@ -81,6 +78,7 @@ impl Message for IdleManeuver {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         2
     }
@@ -98,5 +96,9 @@ impl Message for IdleManeuver {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._duration = bfr.get_u16_le();
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

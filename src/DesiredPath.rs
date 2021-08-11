@@ -102,39 +102,11 @@ pub struct DesiredPath {
 }
 
 impl Message for DesiredPath {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = DesiredPath {
-            header: hdr,
-
-            _path_ref: Default::default(),
-            _start_lat: Default::default(),
-            _start_lon: Default::default(),
-            _start_z: Default::default(),
-            _start_z_units: 0_u8,
-            _end_lat: Default::default(),
-            _end_lon: Default::default(),
-            _end_z: Default::default(),
-            _end_z_units: 0_u8,
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _lradius: Default::default(),
-            _flags: Default::default(),
-        };
-
-        msg.get_header()._mgid = 406;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = DesiredPath {
+        let msg = DesiredPath {
             header: Header::new(406),
 
             _path_ref: Default::default(),
@@ -152,11 +124,35 @@ impl Message for DesiredPath {
             _flags: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = DesiredPath {
+            header: hdr,
+
+            _path_ref: Default::default(),
+            _start_lat: Default::default(),
+            _start_lon: Default::default(),
+            _start_z: Default::default(),
+            _start_z_units: 0_u8,
+            _end_lat: Default::default(),
+            _end_lon: Default::default(),
+            _end_z: Default::default(),
+            _end_z_units: 0_u8,
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _lradius: Default::default(),
+            _flags: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -164,6 +160,7 @@ impl Message for DesiredPath {
         406
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         406
     }
@@ -202,6 +199,7 @@ impl Message for DesiredPath {
         self._flags = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         56
     }
@@ -226,5 +224,31 @@ impl Message for DesiredPath {
         bfr.put_u8(self._flags);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._path_ref = bfr.get_u32_le();
+
+        self._start_lat = bfr.get_f64_le();
+
+        self._start_lon = bfr.get_f64_le();
+
+        self._start_z = bfr.get_f32_le();
+
+        self._start_z_units = bfr.get_u8();
+
+        self._end_lat = bfr.get_f64_le();
+
+        self._end_lon = bfr.get_f64_le();
+
+        self._end_z = bfr.get_f32_le();
+
+        self._end_z_units = bfr.get_u8();
+
+        self._speed = bfr.get_f32_le();
+
+        self._speed_units = bfr.get_u8();
+
+        self._lradius = bfr.get_f32_le();
+
+        self._flags = bfr.get_u8();
+    }
 }

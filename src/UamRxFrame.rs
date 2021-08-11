@@ -45,30 +45,11 @@ pub struct UamRxFrame {
 }
 
 impl Message for UamRxFrame {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = UamRxFrame {
-            header: hdr,
-
-            _sys_src: Default::default(),
-            _sys_dst: Default::default(),
-            _flags: Default::default(),
-            _data: Default::default(),
-        };
-
-        msg.get_header()._mgid = 815;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = UamRxFrame {
+        let msg = UamRxFrame {
             header: Header::new(815),
 
             _sys_src: Default::default(),
@@ -77,11 +58,26 @@ impl Message for UamRxFrame {
             _data: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = UamRxFrame {
+            header: hdr,
+
+            _sys_src: Default::default(),
+            _sys_dst: Default::default(),
+            _flags: Default::default(),
+            _data: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -89,6 +85,7 @@ impl Message for UamRxFrame {
         815
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         815
     }
@@ -109,6 +106,7 @@ impl Message for UamRxFrame {
         self._data = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -132,5 +130,13 @@ impl Message for UamRxFrame {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._sys_src);
+
+        deserialize_string!(bfr, self._sys_dst);
+
+        self._flags = bfr.get_u8();
+
+        deserialize_bytes!(bfr, self._data);
+    }
 }

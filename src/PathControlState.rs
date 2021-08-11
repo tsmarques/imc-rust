@@ -106,45 +106,11 @@ pub struct PathControlState {
 }
 
 impl Message for PathControlState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PathControlState {
-            header: hdr,
-
-            _path_ref: Default::default(),
-            _start_lat: Default::default(),
-            _start_lon: Default::default(),
-            _start_z: Default::default(),
-            _start_z_units: 0_u8,
-            _end_lat: Default::default(),
-            _end_lon: Default::default(),
-            _end_z: Default::default(),
-            _end_z_units: 0_u8,
-            _lradius: Default::default(),
-            _flags: Default::default(),
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _vx: Default::default(),
-            _vy: Default::default(),
-            _vz: Default::default(),
-            _course_error: Default::default(),
-            _eta: Default::default(),
-        };
-
-        msg.get_header()._mgid = 410;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PathControlState {
+        let msg = PathControlState {
             header: Header::new(410),
 
             _path_ref: Default::default(),
@@ -168,11 +134,41 @@ impl Message for PathControlState {
             _eta: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PathControlState {
+            header: hdr,
+
+            _path_ref: Default::default(),
+            _start_lat: Default::default(),
+            _start_lon: Default::default(),
+            _start_z: Default::default(),
+            _start_z_units: 0_u8,
+            _end_lat: Default::default(),
+            _end_lon: Default::default(),
+            _end_z: Default::default(),
+            _end_z_units: 0_u8,
+            _lradius: Default::default(),
+            _flags: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _vx: Default::default(),
+            _vy: Default::default(),
+            _vz: Default::default(),
+            _course_error: Default::default(),
+            _eta: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -180,6 +176,7 @@ impl Message for PathControlState {
         410
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         410
     }
@@ -230,6 +227,7 @@ impl Message for PathControlState {
         self._eta = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         81
     }
@@ -260,5 +258,43 @@ impl Message for PathControlState {
         bfr.put_u16_le(self._eta);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._path_ref = bfr.get_u32_le();
+
+        self._start_lat = bfr.get_f64_le();
+
+        self._start_lon = bfr.get_f64_le();
+
+        self._start_z = bfr.get_f32_le();
+
+        self._start_z_units = bfr.get_u8();
+
+        self._end_lat = bfr.get_f64_le();
+
+        self._end_lon = bfr.get_f64_le();
+
+        self._end_z = bfr.get_f32_le();
+
+        self._end_z_units = bfr.get_u8();
+
+        self._lradius = bfr.get_f32_le();
+
+        self._flags = bfr.get_u8();
+
+        self._x = bfr.get_f32_le();
+
+        self._y = bfr.get_f32_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._vx = bfr.get_f32_le();
+
+        self._vy = bfr.get_f32_le();
+
+        self._vz = bfr.get_f32_le();
+
+        self._course_error = bfr.get_f32_le();
+
+        self._eta = bfr.get_u16_le();
+    }
 }

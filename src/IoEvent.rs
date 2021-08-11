@@ -36,39 +36,35 @@ pub struct IoEvent {
 }
 
 impl Message for IoEvent {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = IoEvent {
-            header: hdr,
-
-            _type: Default::default(),
-            _error: Default::default(),
-        };
-
-        msg.get_header()._mgid = 813;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = IoEvent {
+        let msg = IoEvent {
             header: Header::new(813),
 
             _type: Default::default(),
             _error: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = IoEvent {
+            header: hdr,
+
+            _type: Default::default(),
+            _error: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -76,6 +72,7 @@ impl Message for IoEvent {
         813
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         813
     }
@@ -92,6 +89,7 @@ impl Message for IoEvent {
         self._error = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -109,5 +107,9 @@ impl Message for IoEvent {
         serialize_bytes!(bfr, self._error.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._type = bfr.get_u8();
+
+        deserialize_string!(bfr, self._error);
+    }
 }

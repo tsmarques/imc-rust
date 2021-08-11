@@ -24,30 +24,11 @@ pub struct SmsTx {
 }
 
 impl Message for SmsTx {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = SmsTx {
-            header: hdr,
-
-            _seq: Default::default(),
-            _destination: Default::default(),
-            _timeout: Default::default(),
-            _data: Default::default(),
-        };
-
-        msg.get_header()._mgid = 157;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = SmsTx {
+        let msg = SmsTx {
             header: Header::new(157),
 
             _seq: Default::default(),
@@ -56,11 +37,26 @@ impl Message for SmsTx {
             _data: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = SmsTx {
+            header: hdr,
+
+            _seq: Default::default(),
+            _destination: Default::default(),
+            _timeout: Default::default(),
+            _data: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -68,6 +64,7 @@ impl Message for SmsTx {
         157
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         157
     }
@@ -88,6 +85,7 @@ impl Message for SmsTx {
         self._data = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         6
     }
@@ -109,5 +107,13 @@ impl Message for SmsTx {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._seq = bfr.get_u32_le();
+
+        deserialize_string!(bfr, self._destination);
+
+        self._timeout = bfr.get_u16_le();
+
+        deserialize_bytes!(bfr, self._data);
+    }
 }

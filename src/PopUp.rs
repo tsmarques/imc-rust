@@ -80,37 +80,11 @@ pub struct PopUp {
 }
 
 impl Message for PopUp {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PopUp {
-            header: hdr,
-
-            _timeout: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _z: Default::default(),
-            _z_units: 0_u8,
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _duration: Default::default(),
-            _radius: Default::default(),
-            _flags: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 451;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PopUp {
+        let msg = PopUp {
             header: Header::new(451),
 
             _timeout: Default::default(),
@@ -126,11 +100,33 @@ impl Message for PopUp {
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PopUp {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z: Default::default(),
+            _z_units: 0_u8,
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _duration: Default::default(),
+            _radius: Default::default(),
+            _flags: Default::default(),
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -138,6 +134,7 @@ impl Message for PopUp {
         451
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         451
     }
@@ -172,6 +169,7 @@ impl Message for PopUp {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         35
     }
@@ -198,5 +196,27 @@ impl Message for PopUp {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timeout = bfr.get_u16_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._z_units = bfr.get_u8();
+
+        self._speed = bfr.get_f32_le();
+
+        self._speed_units = bfr.get_u8();
+
+        self._duration = bfr.get_u16_le();
+
+        self._radius = bfr.get_f32_le();
+
+        self._flags = bfr.get_u8();
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

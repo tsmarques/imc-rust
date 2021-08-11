@@ -34,32 +34,11 @@ pub struct LblEstimate {
 }
 
 impl Message for LblEstimate {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = LblEstimate {
-            header: hdr,
-
-            _beacon: Default::default(),
-            _x: Default::default(),
-            _y: Default::default(),
-            _var_x: Default::default(),
-            _var_y: Default::default(),
-            _distance: Default::default(),
-        };
-
-        msg.get_header()._mgid = 360;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = LblEstimate {
+        let msg = LblEstimate {
             header: Header::new(360),
 
             _beacon: Default::default(),
@@ -70,11 +49,28 @@ impl Message for LblEstimate {
             _distance: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = LblEstimate {
+            header: hdr,
+
+            _beacon: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _var_x: Default::default(),
+            _var_y: Default::default(),
+            _distance: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -82,6 +78,7 @@ impl Message for LblEstimate {
         360
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         360
     }
@@ -110,6 +107,7 @@ impl Message for LblEstimate {
         self._distance = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         20
     }
@@ -140,5 +138,21 @@ impl Message for LblEstimate {
         bfr.put_f32_le(self._distance);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        match &mut self._beacon {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+
+        self._x = bfr.get_f32_le();
+
+        self._y = bfr.get_f32_le();
+
+        self._var_x = bfr.get_f32_le();
+
+        self._var_y = bfr.get_f32_le();
+
+        self._distance = bfr.get_f32_le();
+    }
 }

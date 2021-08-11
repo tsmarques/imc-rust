@@ -20,39 +20,35 @@ pub struct SetLedBrightness {
 }
 
 impl Message for SetLedBrightness {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = SetLedBrightness {
-            header: hdr,
-
-            _name: Default::default(),
-            _value: Default::default(),
-        };
-
-        msg.get_header()._mgid = 314;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = SetLedBrightness {
+        let msg = SetLedBrightness {
             header: Header::new(314),
 
             _name: Default::default(),
             _value: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = SetLedBrightness {
+            header: hdr,
+
+            _name: Default::default(),
+            _value: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -60,6 +56,7 @@ impl Message for SetLedBrightness {
         314
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         314
     }
@@ -76,6 +73,7 @@ impl Message for SetLedBrightness {
         self._value = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -93,5 +91,9 @@ impl Message for SetLedBrightness {
         bfr.put_u8(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._name);
+
+        self._value = bfr.get_u8();
+    }
 }

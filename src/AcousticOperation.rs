@@ -90,30 +90,11 @@ pub struct AcousticOperation {
 }
 
 impl Message for AcousticOperation {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = AcousticOperation {
-            header: hdr,
-
-            _op: Default::default(),
-            _system: Default::default(),
-            _range: Default::default(),
-            _msg: Default::default(),
-        };
-
-        msg.get_header()._mgid = 211;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = AcousticOperation {
+        let msg = AcousticOperation {
             header: Header::new(211),
 
             _op: Default::default(),
@@ -122,11 +103,26 @@ impl Message for AcousticOperation {
             _msg: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = AcousticOperation {
+            header: hdr,
+
+            _op: Default::default(),
+            _system: Default::default(),
+            _range: Default::default(),
+            _msg: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -134,6 +130,7 @@ impl Message for AcousticOperation {
         211
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         211
     }
@@ -158,6 +155,7 @@ impl Message for AcousticOperation {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         5
     }
@@ -188,5 +186,17 @@ impl Message for AcousticOperation {
         };
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+
+        deserialize_string!(bfr, self._system);
+
+        self._range = bfr.get_f32_le();
+
+        match &mut self._msg {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+    }
 }

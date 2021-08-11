@@ -16,37 +16,33 @@ pub struct QueryLedBrightness {
 }
 
 impl Message for QueryLedBrightness {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = QueryLedBrightness {
-            header: hdr,
-
-            _name: Default::default(),
-        };
-
-        msg.get_header()._mgid = 313;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = QueryLedBrightness {
+        let msg = QueryLedBrightness {
             header: Header::new(313),
 
             _name: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = QueryLedBrightness {
+            header: hdr,
+
+            _name: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -54,6 +50,7 @@ impl Message for QueryLedBrightness {
         313
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         313
     }
@@ -68,6 +65,7 @@ impl Message for QueryLedBrightness {
         self._name = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -84,5 +82,7 @@ impl Message for QueryLedBrightness {
         serialize_bytes!(bfr, self._name.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._name);
+    }
 }

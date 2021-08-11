@@ -16,37 +16,33 @@ pub struct Current {
 }
 
 impl Message for Current {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Current {
-            header: hdr,
-
-            _value: Default::default(),
-        };
-
-        msg.get_header()._mgid = 252;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Current {
+        let msg = Current {
             header: Header::new(252),
 
             _value: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Current {
+            header: hdr,
+
+            _value: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -54,6 +50,7 @@ impl Message for Current {
         252
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         252
     }
@@ -68,6 +65,7 @@ impl Message for Current {
         self._value = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         4
     }
@@ -80,5 +78,7 @@ impl Message for Current {
         bfr.put_f32_le(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._value = bfr.get_f32_le();
+    }
 }

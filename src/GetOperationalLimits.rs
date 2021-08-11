@@ -10,31 +10,27 @@ pub struct GetOperationalLimits {
 }
 
 impl Message for GetOperationalLimits {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = GetOperationalLimits { header: hdr };
-
-        msg.get_header()._mgid = 505;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = GetOperationalLimits {
+        let msg = GetOperationalLimits {
             header: Header::new(505),
         };
-
-        msg.set_size(msg.payload_serialization_size() as u16);
 
         msg
     }
 
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = GetOperationalLimits { header: hdr };
+
+        msg
+    }
+
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -42,6 +38,7 @@ impl Message for GetOperationalLimits {
         505
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         505
     }
@@ -54,6 +51,7 @@ impl Message for GetOperationalLimits {
         self.header.clear();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }

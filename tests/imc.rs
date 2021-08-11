@@ -1,11 +1,11 @@
-use bytes::{IntoBuf, BufMut};
+use bytes::{BufMut, IntoBuf};
+use crc16::{State, ARC};
+use imc::packet::{crc, deserializeHeader};
 use imc::EstimatedState::EstimatedState;
+use imc::Header::Header;
 use imc::LoggingControl::{ControlOperationEnum, LoggingControl};
 use imc::Message::Message;
-use imc::Header::Header;
-use imc::{IMC_CONST_HEADER_SIZE, IMC_CONST_FOOTER_SIZE};
-use imc::packet::{deserializeHeader, crc};
-use crc16::{State, ARC};
+use imc::{IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE};
 
 #[test]
 fn buffer_write() {
@@ -39,16 +39,18 @@ fn imc_crc() {
     assert!(ret.is_ok());
     assert_eq!(ret.ok().unwrap(), lc.serialization_size());
 
-    let crc = crc::compute_from_range(0,
-                            lc.serialization_size() - IMC_CONST_FOOTER_SIZE as usize,
-                            &mut bfr);
+    let crc = crc::compute_from_range(
+        0,
+        lc.serialization_size() - IMC_CONST_FOOTER_SIZE as usize,
+        &mut bfr,
+    );
 
     assert_eq!(crc.get(), 1427_u16);
 }
 
 #[test]
 fn header_serialization() {
-    let mut hdr :Header = Header::new(1_u16);
+    let mut hdr: Header = Header::new(1_u16);
     hdr._timestamp = 0.143432;
     hdr._size = 42;
     hdr._src = 205;
@@ -59,7 +61,7 @@ fn header_serialization() {
     let mut bfr: bytes::BytesMut = bytes::BytesMut::with_capacity(IMC_CONST_HEADER_SIZE as usize);
     hdr.serialize(&mut bfr);
 
-    let mut hdr2 :Header = Header::new(0);
+    let mut hdr2: Header = Header::new(0);
     let inbfr = bytes::Bytes::from(bfr);
     let ret = deserializeHeader(&mut hdr2, &mut inbfr.into_buf());
 

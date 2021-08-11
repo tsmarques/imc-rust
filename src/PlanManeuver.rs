@@ -30,30 +30,11 @@ pub struct PlanManeuver {
 }
 
 impl Message for PlanManeuver {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PlanManeuver {
-            header: hdr,
-
-            _maneuver_id: Default::default(),
-            _data: Default::default(),
-            _start_actions: vec![],
-            _end_actions: vec![],
-        };
-
-        msg.get_header()._mgid = 552;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PlanManeuver {
+        let msg = PlanManeuver {
             header: Header::new(552),
 
             _maneuver_id: Default::default(),
@@ -62,11 +43,26 @@ impl Message for PlanManeuver {
             _end_actions: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PlanManeuver {
+            header: hdr,
+
+            _maneuver_id: Default::default(),
+            _data: Default::default(),
+            _start_actions: vec![],
+            _end_actions: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -74,6 +70,7 @@ impl Message for PlanManeuver {
         552
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         552
     }
@@ -114,6 +111,7 @@ impl Message for PlanManeuver {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -178,5 +176,33 @@ impl Message for PlanManeuver {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._maneuver_id);
+
+        match &mut self._data {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+
+        for msg in self._start_actions.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+
+        for msg in self._end_actions.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

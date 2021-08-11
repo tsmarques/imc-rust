@@ -63,42 +63,11 @@ pub struct Tachograph {
 }
 
 impl Message for Tachograph {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Tachograph {
-            header: hdr,
-
-            _timestamp_last_service: Default::default(),
-            _time_next_service: Default::default(),
-            _time_motor_next_service: Default::default(),
-            _time_idle_ground: Default::default(),
-            _time_idle_air: Default::default(),
-            _time_idle_water: Default::default(),
-            _time_idle_underwater: Default::default(),
-            _time_idle_unknown: Default::default(),
-            _time_motor_ground: Default::default(),
-            _time_motor_air: Default::default(),
-            _time_motor_water: Default::default(),
-            _time_motor_underwater: Default::default(),
-            _time_motor_unknown: Default::default(),
-            _rpm_min: Default::default(),
-            _rpm_max: Default::default(),
-            _depth_max: Default::default(),
-        };
-
-        msg.get_header()._mgid = 905;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Tachograph {
+        let msg = Tachograph {
             header: Header::new(905),
 
             _timestamp_last_service: Default::default(),
@@ -119,11 +88,38 @@ impl Message for Tachograph {
             _depth_max: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Tachograph {
+            header: hdr,
+
+            _timestamp_last_service: Default::default(),
+            _time_next_service: Default::default(),
+            _time_motor_next_service: Default::default(),
+            _time_idle_ground: Default::default(),
+            _time_idle_air: Default::default(),
+            _time_idle_water: Default::default(),
+            _time_idle_underwater: Default::default(),
+            _time_idle_unknown: Default::default(),
+            _time_motor_ground: Default::default(),
+            _time_motor_air: Default::default(),
+            _time_motor_water: Default::default(),
+            _time_motor_underwater: Default::default(),
+            _time_motor_unknown: Default::default(),
+            _rpm_min: Default::default(),
+            _rpm_max: Default::default(),
+            _depth_max: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -131,6 +127,7 @@ impl Message for Tachograph {
         905
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         905
     }
@@ -175,6 +172,7 @@ impl Message for Tachograph {
         self._depth_max = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         64
     }
@@ -202,5 +200,37 @@ impl Message for Tachograph {
         bfr.put_f32_le(self._depth_max);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timestamp_last_service = bfr.get_f64_le();
+
+        self._time_next_service = bfr.get_f32_le();
+
+        self._time_motor_next_service = bfr.get_f32_le();
+
+        self._time_idle_ground = bfr.get_f32_le();
+
+        self._time_idle_air = bfr.get_f32_le();
+
+        self._time_idle_water = bfr.get_f32_le();
+
+        self._time_idle_underwater = bfr.get_f32_le();
+
+        self._time_idle_unknown = bfr.get_f32_le();
+
+        self._time_motor_ground = bfr.get_f32_le();
+
+        self._time_motor_air = bfr.get_f32_le();
+
+        self._time_motor_water = bfr.get_f32_le();
+
+        self._time_motor_underwater = bfr.get_f32_le();
+
+        self._time_motor_unknown = bfr.get_f32_le();
+
+        self._rpm_min = bfr.get_i16_le();
+
+        self._rpm_max = bfr.get_i16_le();
+
+        self._depth_max = bfr.get_f32_le();
+    }
 }

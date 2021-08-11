@@ -4,8 +4,8 @@
 pub mod Header;
 pub mod Message;
 pub mod MessageGroup;
-pub mod packet;
 pub mod factory;
+pub mod packet;
 
 pub type MessageList<T> = Vec<Option<Box<T>>>;
 

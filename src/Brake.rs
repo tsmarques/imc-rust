@@ -36,37 +36,33 @@ pub struct Brake {
 }
 
 impl Message for Brake {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Brake {
-            header: hdr,
-
-            _op: Default::default(),
-        };
-
-        msg.get_header()._mgid = 413;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Brake {
+        let msg = Brake {
             header: Header::new(413),
 
             _op: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Brake {
+            header: hdr,
+
+            _op: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -74,6 +70,7 @@ impl Message for Brake {
         413
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         413
     }
@@ -88,6 +85,7 @@ impl Message for Brake {
         self._op = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -100,5 +98,7 @@ impl Message for Brake {
         bfr.put_u8(self._op);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+    }
 }

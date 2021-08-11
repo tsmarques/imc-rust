@@ -49,29 +49,11 @@ pub struct LblRangeAcceptance {
 }
 
 impl Message for LblRangeAcceptance {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = LblRangeAcceptance {
-            header: hdr,
-
-            _id: Default::default(),
-            _range: Default::default(),
-            _acceptance: Default::default(),
-        };
-
-        msg.get_header()._mgid = 357;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = LblRangeAcceptance {
+        let msg = LblRangeAcceptance {
             header: Header::new(357),
 
             _id: Default::default(),
@@ -79,11 +61,25 @@ impl Message for LblRangeAcceptance {
             _acceptance: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = LblRangeAcceptance {
+            header: hdr,
+
+            _id: Default::default(),
+            _range: Default::default(),
+            _acceptance: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -91,6 +87,7 @@ impl Message for LblRangeAcceptance {
         357
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         357
     }
@@ -109,6 +106,7 @@ impl Message for LblRangeAcceptance {
         self._acceptance = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         6
     }
@@ -123,5 +121,11 @@ impl Message for LblRangeAcceptance {
         bfr.put_u8(self._acceptance);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._id = bfr.get_u8();
+
+        self._range = bfr.get_f32_le();
+
+        self._acceptance = bfr.get_u8();
+    }
 }

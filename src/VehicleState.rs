@@ -91,36 +91,11 @@ pub struct VehicleState {
 }
 
 impl Message for VehicleState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = VehicleState {
-            header: hdr,
-
-            _op_mode: Default::default(),
-            _error_count: Default::default(),
-            _error_ents: Default::default(),
-            _maneuver_type: Default::default(),
-            _maneuver_stime: Default::default(),
-            _maneuver_eta: Default::default(),
-            _control_loops: Default::default(),
-            _flags: Default::default(),
-            _last_error: Default::default(),
-            _last_error_time: Default::default(),
-        };
-
-        msg.get_header()._mgid = 500;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = VehicleState {
+        let msg = VehicleState {
             header: Header::new(500),
 
             _op_mode: Default::default(),
@@ -135,11 +110,32 @@ impl Message for VehicleState {
             _last_error_time: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = VehicleState {
+            header: hdr,
+
+            _op_mode: Default::default(),
+            _error_count: Default::default(),
+            _error_ents: Default::default(),
+            _maneuver_type: Default::default(),
+            _maneuver_stime: Default::default(),
+            _maneuver_eta: Default::default(),
+            _control_loops: Default::default(),
+            _flags: Default::default(),
+            _last_error: Default::default(),
+            _last_error_time: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -147,6 +143,7 @@ impl Message for VehicleState {
         500
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         500
     }
@@ -179,6 +176,7 @@ impl Message for VehicleState {
         self._last_error_time = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         27
     }
@@ -206,5 +204,25 @@ impl Message for VehicleState {
         bfr.put_f64_le(self._last_error_time);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op_mode = bfr.get_u8();
+
+        self._error_count = bfr.get_u8();
+
+        deserialize_string!(bfr, self._error_ents);
+
+        self._maneuver_type = bfr.get_u16_le();
+
+        self._maneuver_stime = bfr.get_f64_le();
+
+        self._maneuver_eta = bfr.get_u16_le();
+
+        self._control_loops = bfr.get_u32_le();
+
+        self._flags = bfr.get_u8();
+
+        deserialize_string!(bfr, self._last_error);
+
+        self._last_error_time = bfr.get_f64_le();
+    }
 }

@@ -22,39 +22,35 @@ pub struct VehicleLinks {
 }
 
 impl Message for VehicleLinks {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = VehicleLinks {
-            header: hdr,
-
-            _localname: Default::default(),
-            _links: vec![],
-        };
-
-        msg.get_header()._mgid = 650;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = VehicleLinks {
+        let msg = VehicleLinks {
             header: Header::new(650),
 
             _localname: Default::default(),
             _links: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = VehicleLinks {
+            header: hdr,
+
+            _localname: Default::default(),
+            _links: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -62,6 +58,7 @@ impl Message for VehicleLinks {
         650
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         650
     }
@@ -86,6 +83,7 @@ impl Message for VehicleLinks {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -120,5 +118,17 @@ impl Message for VehicleLinks {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._localname);
+
+        for msg in self._links.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

@@ -85,39 +85,11 @@ pub struct CompassCalibration {
 }
 
 impl Message for CompassCalibration {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = CompassCalibration {
-            header: hdr,
-
-            _timeout: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _z: Default::default(),
-            _z_units: 0_u8,
-            _pitch: Default::default(),
-            _amplitude: Default::default(),
-            _duration: Default::default(),
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _radius: Default::default(),
-            _direction: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 475;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = CompassCalibration {
+        let msg = CompassCalibration {
             header: Header::new(475),
 
             _timeout: Default::default(),
@@ -135,11 +107,35 @@ impl Message for CompassCalibration {
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = CompassCalibration {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z: Default::default(),
+            _z_units: 0_u8,
+            _pitch: Default::default(),
+            _amplitude: Default::default(),
+            _duration: Default::default(),
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _radius: Default::default(),
+            _direction: Default::default(),
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -147,6 +143,7 @@ impl Message for CompassCalibration {
         475
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         475
     }
@@ -185,6 +182,7 @@ impl Message for CompassCalibration {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         43
     }
@@ -213,5 +211,31 @@ impl Message for CompassCalibration {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timeout = bfr.get_u16_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._z_units = bfr.get_u8();
+
+        self._pitch = bfr.get_f32_le();
+
+        self._amplitude = bfr.get_f32_le();
+
+        self._duration = bfr.get_u16_le();
+
+        self._speed = bfr.get_f32_le();
+
+        self._speed_units = bfr.get_u8();
+
+        self._radius = bfr.get_f32_le();
+
+        self._direction = bfr.get_u8();
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

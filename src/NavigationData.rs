@@ -42,35 +42,11 @@ pub struct NavigationData {
 }
 
 impl Message for NavigationData {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = NavigationData {
-            header: hdr,
-
-            _bias_psi: Default::default(),
-            _bias_r: Default::default(),
-            _cog: Default::default(),
-            _cyaw: Default::default(),
-            _lbl_rej_level: Default::default(),
-            _gps_rej_level: Default::default(),
-            _custom_x: Default::default(),
-            _custom_y: Default::default(),
-            _custom_z: Default::default(),
-        };
-
-        msg.get_header()._mgid = 355;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = NavigationData {
+        let msg = NavigationData {
             header: Header::new(355),
 
             _bias_psi: Default::default(),
@@ -84,11 +60,31 @@ impl Message for NavigationData {
             _custom_z: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = NavigationData {
+            header: hdr,
+
+            _bias_psi: Default::default(),
+            _bias_r: Default::default(),
+            _cog: Default::default(),
+            _cyaw: Default::default(),
+            _lbl_rej_level: Default::default(),
+            _gps_rej_level: Default::default(),
+            _custom_x: Default::default(),
+            _custom_y: Default::default(),
+            _custom_z: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -96,6 +92,7 @@ impl Message for NavigationData {
         355
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         355
     }
@@ -126,6 +123,7 @@ impl Message for NavigationData {
         self._custom_z = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         36
     }
@@ -146,5 +144,23 @@ impl Message for NavigationData {
         bfr.put_f32_le(self._custom_z);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._bias_psi = bfr.get_f32_le();
+
+        self._bias_r = bfr.get_f32_le();
+
+        self._cog = bfr.get_f32_le();
+
+        self._cyaw = bfr.get_f32_le();
+
+        self._lbl_rej_level = bfr.get_f32_le();
+
+        self._gps_rej_level = bfr.get_f32_le();
+
+        self._custom_x = bfr.get_f32_le();
+
+        self._custom_y = bfr.get_f32_le();
+
+        self._custom_z = bfr.get_f32_le();
+    }
 }

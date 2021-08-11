@@ -40,33 +40,11 @@ pub struct PlanDBState {
 }
 
 impl Message for PlanDBState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PlanDBState {
-            header: hdr,
-
-            _plan_count: Default::default(),
-            _plan_size: Default::default(),
-            _change_time: Default::default(),
-            _change_sid: Default::default(),
-            _change_sname: Default::default(),
-            _md5: Default::default(),
-            _plans_info: vec![],
-        };
-
-        msg.get_header()._mgid = 557;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PlanDBState {
+        let msg = PlanDBState {
             header: Header::new(557),
 
             _plan_count: Default::default(),
@@ -78,11 +56,29 @@ impl Message for PlanDBState {
             _plans_info: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PlanDBState {
+            header: hdr,
+
+            _plan_count: Default::default(),
+            _plan_size: Default::default(),
+            _change_time: Default::default(),
+            _change_sid: Default::default(),
+            _change_sname: Default::default(),
+            _md5: Default::default(),
+            _plans_info: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -90,6 +86,7 @@ impl Message for PlanDBState {
         557
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         557
     }
@@ -124,6 +121,7 @@ impl Message for PlanDBState {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         16
     }
@@ -165,5 +163,27 @@ impl Message for PlanDBState {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._plan_count = bfr.get_u16_le();
+
+        self._plan_size = bfr.get_u32_le();
+
+        self._change_time = bfr.get_f64_le();
+
+        self._change_sid = bfr.get_u16_le();
+
+        deserialize_string!(bfr, self._change_sname);
+
+        deserialize_bytes!(bfr, self._md5);
+
+        for msg in self._plans_info.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

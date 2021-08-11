@@ -21,29 +21,11 @@ pub struct UamRxRange {
 }
 
 impl Message for UamRxRange {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = UamRxRange {
-            header: hdr,
-
-            _seq: Default::default(),
-            _sys: Default::default(),
-            _value: Default::default(),
-        };
-
-        msg.get_header()._mgid = 817;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = UamRxRange {
+        let msg = UamRxRange {
             header: Header::new(817),
 
             _seq: Default::default(),
@@ -51,11 +33,25 @@ impl Message for UamRxRange {
             _value: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = UamRxRange {
+            header: hdr,
+
+            _seq: Default::default(),
+            _sys: Default::default(),
+            _value: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -63,6 +59,7 @@ impl Message for UamRxRange {
         817
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         817
     }
@@ -81,6 +78,7 @@ impl Message for UamRxRange {
         self._value = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         6
     }
@@ -99,5 +97,11 @@ impl Message for UamRxRange {
         bfr.put_f32_le(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._seq = bfr.get_u16_le();
+
+        deserialize_string!(bfr, self._sys);
+
+        self._value = bfr.get_f32_le();
+    }
 }

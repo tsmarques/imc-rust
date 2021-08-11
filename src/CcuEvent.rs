@@ -57,29 +57,11 @@ pub struct CcuEvent {
 }
 
 impl Message for CcuEvent {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = CcuEvent {
-            header: hdr,
-
-            _type: Default::default(),
-            _id: Default::default(),
-            _arg: Default::default(),
-        };
-
-        msg.get_header()._mgid = 606;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = CcuEvent {
+        let msg = CcuEvent {
             header: Header::new(606),
 
             _type: Default::default(),
@@ -87,11 +69,25 @@ impl Message for CcuEvent {
             _arg: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = CcuEvent {
+            header: hdr,
+
+            _type: Default::default(),
+            _id: Default::default(),
+            _arg: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -99,6 +95,7 @@ impl Message for CcuEvent {
         606
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         606
     }
@@ -121,6 +118,7 @@ impl Message for CcuEvent {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -150,5 +148,15 @@ impl Message for CcuEvent {
         };
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._type = bfr.get_u8();
+
+        deserialize_string!(bfr, self._id);
+
+        match &mut self._arg {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+    }
 }

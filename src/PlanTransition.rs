@@ -37,30 +37,11 @@ pub struct PlanTransition {
 }
 
 impl Message for PlanTransition {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PlanTransition {
-            header: hdr,
-
-            _source_man: Default::default(),
-            _dest_man: Default::default(),
-            _conditions: Default::default(),
-            _actions: vec![],
-        };
-
-        msg.get_header()._mgid = 553;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PlanTransition {
+        let msg = PlanTransition {
             header: Header::new(553),
 
             _source_man: Default::default(),
@@ -69,11 +50,26 @@ impl Message for PlanTransition {
             _actions: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PlanTransition {
+            header: hdr,
+
+            _source_man: Default::default(),
+            _dest_man: Default::default(),
+            _conditions: Default::default(),
+            _actions: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -81,6 +77,7 @@ impl Message for PlanTransition {
         553
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         553
     }
@@ -109,6 +106,7 @@ impl Message for PlanTransition {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -149,5 +147,21 @@ impl Message for PlanTransition {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._source_man);
+
+        deserialize_string!(bfr, self._dest_man);
+
+        deserialize_string!(bfr, self._conditions);
+
+        for msg in self._actions.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

@@ -59,40 +59,11 @@ pub struct NavigationUncertainty {
 }
 
 impl Message for NavigationUncertainty {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = NavigationUncertainty {
-            header: hdr,
-
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _phi: Default::default(),
-            _theta: Default::default(),
-            _psi: Default::default(),
-            _p: Default::default(),
-            _q: Default::default(),
-            _r: Default::default(),
-            _u: Default::default(),
-            _v: Default::default(),
-            _w: Default::default(),
-            _bias_psi: Default::default(),
-            _bias_r: Default::default(),
-        };
-
-        msg.get_header()._mgid = 354;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = NavigationUncertainty {
+        let msg = NavigationUncertainty {
             header: Header::new(354),
 
             _x: Default::default(),
@@ -111,11 +82,36 @@ impl Message for NavigationUncertainty {
             _bias_r: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = NavigationUncertainty {
+            header: hdr,
+
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+            _p: Default::default(),
+            _q: Default::default(),
+            _r: Default::default(),
+            _u: Default::default(),
+            _v: Default::default(),
+            _w: Default::default(),
+            _bias_psi: Default::default(),
+            _bias_r: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -123,6 +119,7 @@ impl Message for NavigationUncertainty {
         354
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         354
     }
@@ -163,6 +160,7 @@ impl Message for NavigationUncertainty {
         self._bias_r = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         56
     }
@@ -188,5 +186,33 @@ impl Message for NavigationUncertainty {
         bfr.put_f32_le(self._bias_r);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._x = bfr.get_f32_le();
+
+        self._y = bfr.get_f32_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._phi = bfr.get_f32_le();
+
+        self._theta = bfr.get_f32_le();
+
+        self._psi = bfr.get_f32_le();
+
+        self._p = bfr.get_f32_le();
+
+        self._q = bfr.get_f32_le();
+
+        self._r = bfr.get_f32_le();
+
+        self._u = bfr.get_f32_le();
+
+        self._v = bfr.get_f32_le();
+
+        self._w = bfr.get_f32_le();
+
+        self._bias_psi = bfr.get_f32_le();
+
+        self._bias_r = bfr.get_f32_le();
+    }
 }

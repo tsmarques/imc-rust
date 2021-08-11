@@ -29,31 +29,11 @@ pub struct UsblFix {
 }
 
 impl Message for UsblFix {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = UsblFix {
-            header: hdr,
-
-            _target: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _z_units: 0_u8,
-            _z: Default::default(),
-        };
-
-        msg.get_header()._mgid = 892;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = UsblFix {
+        let msg = UsblFix {
             header: Header::new(892),
 
             _target: Default::default(),
@@ -63,11 +43,27 @@ impl Message for UsblFix {
             _z: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = UsblFix {
+            header: hdr,
+
+            _target: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z_units: 0_u8,
+            _z: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -75,6 +71,7 @@ impl Message for UsblFix {
         892
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         892
     }
@@ -97,6 +94,7 @@ impl Message for UsblFix {
         self._z = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         23
     }
@@ -113,5 +111,15 @@ impl Message for UsblFix {
         bfr.put_f32_le(self._z);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._target = bfr.get_u16_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._z_units = bfr.get_u8();
+
+        self._z = bfr.get_f32_le();
+    }
 }

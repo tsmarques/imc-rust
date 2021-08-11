@@ -31,29 +31,11 @@ pub struct FollowCommand {
 }
 
 impl Message for FollowCommand {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = FollowCommand {
-            header: hdr,
-
-            _control_src: Default::default(),
-            _control_ent: Default::default(),
-            _timeout: Default::default(),
-        };
-
-        msg.get_header()._mgid = 496;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = FollowCommand {
+        let msg = FollowCommand {
             header: Header::new(496),
 
             _control_src: Default::default(),
@@ -61,11 +43,25 @@ impl Message for FollowCommand {
             _timeout: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = FollowCommand {
+            header: hdr,
+
+            _control_src: Default::default(),
+            _control_ent: Default::default(),
+            _timeout: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -73,6 +69,7 @@ impl Message for FollowCommand {
         496
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         496
     }
@@ -91,6 +88,7 @@ impl Message for FollowCommand {
         self._timeout = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         7
     }
@@ -105,5 +103,11 @@ impl Message for FollowCommand {
         bfr.put_f32_le(self._timeout);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._control_src = bfr.get_u16_le();
+
+        self._control_ent = bfr.get_u8();
+
+        self._timeout = bfr.get_f32_le();
+    }
 }

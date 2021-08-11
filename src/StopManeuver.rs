@@ -10,31 +10,27 @@ pub struct StopManeuver {
 }
 
 impl Message for StopManeuver {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = StopManeuver { header: hdr };
-
-        msg.get_header()._mgid = 468;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = StopManeuver {
+        let msg = StopManeuver {
             header: Header::new(468),
         };
-
-        msg.set_size(msg.payload_serialization_size() as u16);
 
         msg
     }
 
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = StopManeuver { header: hdr };
+
+        msg
+    }
+
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -42,6 +38,7 @@ impl Message for StopManeuver {
         468
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         468
     }
@@ -54,6 +51,7 @@ impl Message for StopManeuver {
         self.header.clear();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }

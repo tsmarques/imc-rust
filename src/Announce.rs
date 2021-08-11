@@ -37,33 +37,11 @@ pub struct Announce {
 }
 
 impl Message for Announce {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Announce {
-            header: hdr,
-
-            _sys_name: Default::default(),
-            _sys_type: Default::default(),
-            _owner: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _height: Default::default(),
-            _services: Default::default(),
-        };
-
-        msg.get_header()._mgid = 151;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Announce {
+        let msg = Announce {
             header: Header::new(151),
 
             _sys_name: Default::default(),
@@ -75,11 +53,29 @@ impl Message for Announce {
             _services: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Announce {
+            header: hdr,
+
+            _sys_name: Default::default(),
+            _sys_type: Default::default(),
+            _owner: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _height: Default::default(),
+            _services: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -87,6 +83,7 @@ impl Message for Announce {
         151
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         151
     }
@@ -113,6 +110,7 @@ impl Message for Announce {
         self._services = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         23
     }
@@ -137,5 +135,19 @@ impl Message for Announce {
         serialize_bytes!(bfr, self._services.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._sys_name);
+
+        self._sys_type = bfr.get_u8();
+
+        self._owner = bfr.get_u16_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._height = bfr.get_f32_le();
+
+        deserialize_string!(bfr, self._services);
+    }
 }

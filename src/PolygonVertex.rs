@@ -19,39 +19,35 @@ pub struct PolygonVertex {
 }
 
 impl Message for PolygonVertex {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PolygonVertex {
-            header: hdr,
-
-            _lat: Default::default(),
-            _lon: Default::default(),
-        };
-
-        msg.get_header()._mgid = 474;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PolygonVertex {
+        let msg = PolygonVertex {
             header: Header::new(474),
 
             _lat: Default::default(),
             _lon: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PolygonVertex {
+            header: hdr,
+
+            _lat: Default::default(),
+            _lon: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -59,6 +55,7 @@ impl Message for PolygonVertex {
         474
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         474
     }
@@ -75,6 +72,7 @@ impl Message for PolygonVertex {
         self._lon = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         16
     }
@@ -88,5 +86,9 @@ impl Message for PolygonVertex {
         bfr.put_f64_le(self._lon);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+    }
 }

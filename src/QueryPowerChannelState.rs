@@ -10,31 +10,27 @@ pub struct QueryPowerChannelState {
 }
 
 impl Message for QueryPowerChannelState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = QueryPowerChannelState { header: hdr };
-
-        msg.get_header()._mgid = 310;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = QueryPowerChannelState {
+        let msg = QueryPowerChannelState {
             header: Header::new(310),
         };
-
-        msg.set_size(msg.payload_serialization_size() as u16);
 
         msg
     }
 
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = QueryPowerChannelState { header: hdr };
+
+        msg
+    }
+
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -42,6 +38,7 @@ impl Message for QueryPowerChannelState {
         310
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         310
     }
@@ -54,6 +51,7 @@ impl Message for QueryPowerChannelState {
         self.header.clear();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }

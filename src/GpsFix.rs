@@ -127,42 +127,11 @@ pub struct GpsFix {
 }
 
 impl Message for GpsFix {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = GpsFix {
-            header: hdr,
-
-            _validity: Default::default(),
-            _type: Default::default(),
-            _utc_year: Default::default(),
-            _utc_month: Default::default(),
-            _utc_day: Default::default(),
-            _utc_time: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _height: Default::default(),
-            _satellites: Default::default(),
-            _cog: Default::default(),
-            _sog: Default::default(),
-            _hdop: Default::default(),
-            _vdop: Default::default(),
-            _hacc: Default::default(),
-            _vacc: Default::default(),
-        };
-
-        msg.get_header()._mgid = 253;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = GpsFix {
+        let msg = GpsFix {
             header: Header::new(253),
 
             _validity: Default::default(),
@@ -183,11 +152,38 @@ impl Message for GpsFix {
             _vacc: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = GpsFix {
+            header: hdr,
+
+            _validity: Default::default(),
+            _type: Default::default(),
+            _utc_year: Default::default(),
+            _utc_month: Default::default(),
+            _utc_day: Default::default(),
+            _utc_time: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _height: Default::default(),
+            _satellites: Default::default(),
+            _cog: Default::default(),
+            _sog: Default::default(),
+            _hdop: Default::default(),
+            _vdop: Default::default(),
+            _hacc: Default::default(),
+            _vacc: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -195,6 +191,7 @@ impl Message for GpsFix {
         253
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         253
     }
@@ -239,6 +236,7 @@ impl Message for GpsFix {
         self._vacc = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         56
     }
@@ -266,5 +264,37 @@ impl Message for GpsFix {
         bfr.put_f32_le(self._vacc);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._validity = bfr.get_u16_le();
+
+        self._type = bfr.get_u8();
+
+        self._utc_year = bfr.get_u16_le();
+
+        self._utc_month = bfr.get_u8();
+
+        self._utc_day = bfr.get_u8();
+
+        self._utc_time = bfr.get_f32_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._height = bfr.get_f32_le();
+
+        self._satellites = bfr.get_u8();
+
+        self._cog = bfr.get_f32_le();
+
+        self._sog = bfr.get_f32_le();
+
+        self._hdop = bfr.get_f32_le();
+
+        self._vdop = bfr.get_f32_le();
+
+        self._hacc = bfr.get_f32_le();
+
+        self._vacc = bfr.get_f32_le();
+    }
 }

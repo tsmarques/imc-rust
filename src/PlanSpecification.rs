@@ -6,11 +6,11 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::PlanManeuver::PlanManeuver;
+
 use crate::PlanTransition::PlanTransition;
 
 use crate::PlanVariable::PlanVariable;
-
-use crate::PlanManeuver::PlanManeuver;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in
@@ -57,35 +57,11 @@ pub struct PlanSpecification {
 }
 
 impl Message for PlanSpecification {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PlanSpecification {
-            header: hdr,
-
-            _plan_id: Default::default(),
-            _description: Default::default(),
-            _vnamespace: Default::default(),
-            _variables: vec![],
-            _start_man_id: Default::default(),
-            _maneuvers: vec![],
-            _transitions: vec![],
-            _start_actions: vec![],
-            _end_actions: vec![],
-        };
-
-        msg.get_header()._mgid = 551;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PlanSpecification {
+        let msg = PlanSpecification {
             header: Header::new(551),
 
             _plan_id: Default::default(),
@@ -99,11 +75,31 @@ impl Message for PlanSpecification {
             _end_actions: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PlanSpecification {
+            header: hdr,
+
+            _plan_id: Default::default(),
+            _description: Default::default(),
+            _vnamespace: Default::default(),
+            _variables: vec![],
+            _start_man_id: Default::default(),
+            _maneuvers: vec![],
+            _transitions: vec![],
+            _start_actions: vec![],
+            _end_actions: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -111,6 +107,7 @@ impl Message for PlanSpecification {
         551
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         551
     }
@@ -181,6 +178,7 @@ impl Message for PlanSpecification {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -296,5 +294,63 @@ impl Message for PlanSpecification {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._plan_id);
+
+        deserialize_string!(bfr, self._description);
+
+        deserialize_string!(bfr, self._vnamespace);
+
+        for msg in self._variables.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+
+        deserialize_string!(bfr, self._start_man_id);
+
+        for msg in self._maneuvers.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+
+        for msg in self._transitions.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+
+        for msg in self._start_actions.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+
+        for msg in self._end_actions.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

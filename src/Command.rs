@@ -59,30 +59,11 @@ pub struct Command {
 }
 
 impl Message for Command {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Command {
-            header: hdr,
-
-            _flags: Default::default(),
-            _speed: Default::default(),
-            _z: Default::default(),
-            _heading: Default::default(),
-        };
-
-        msg.get_header()._mgid = 497;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Command {
+        let msg = Command {
             header: Header::new(497),
 
             _flags: Default::default(),
@@ -91,11 +72,26 @@ impl Message for Command {
             _heading: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Command {
+            header: hdr,
+
+            _flags: Default::default(),
+            _speed: Default::default(),
+            _z: Default::default(),
+            _heading: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -103,6 +99,7 @@ impl Message for Command {
         497
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         497
     }
@@ -123,6 +120,7 @@ impl Message for Command {
         self._heading = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         13
     }
@@ -138,5 +136,13 @@ impl Message for Command {
         bfr.put_f32_le(self._heading);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._flags = bfr.get_u8();
+
+        self._speed = bfr.get_f32_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._heading = bfr.get_f32_le();
+    }
 }

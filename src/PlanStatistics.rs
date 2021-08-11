@@ -81,33 +81,11 @@ pub struct PlanStatistics {
 }
 
 impl Message for PlanStatistics {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PlanStatistics {
-            header: hdr,
-
-            _plan_id: Default::default(),
-            _type: Default::default(),
-            _properties: Default::default(),
-            _durations: Default::default(),
-            _distances: Default::default(),
-            _actions: Default::default(),
-            _fuel: Default::default(),
-        };
-
-        msg.get_header()._mgid = 564;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PlanStatistics {
+        let msg = PlanStatistics {
             header: Header::new(564),
 
             _plan_id: Default::default(),
@@ -119,11 +97,29 @@ impl Message for PlanStatistics {
             _fuel: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PlanStatistics {
+            header: hdr,
+
+            _plan_id: Default::default(),
+            _type: Default::default(),
+            _properties: Default::default(),
+            _durations: Default::default(),
+            _distances: Default::default(),
+            _actions: Default::default(),
+            _fuel: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -131,6 +127,7 @@ impl Message for PlanStatistics {
         564
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         564
     }
@@ -157,6 +154,7 @@ impl Message for PlanStatistics {
         self._fuel = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         2
     }
@@ -187,5 +185,19 @@ impl Message for PlanStatistics {
         serialize_bytes!(bfr, self._fuel.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._plan_id);
+
+        self._type = bfr.get_u8();
+
+        self._properties = bfr.get_u8();
+
+        deserialize_string!(bfr, self._durations);
+
+        deserialize_string!(bfr, self._distances);
+
+        deserialize_string!(bfr, self._actions);
+
+        deserialize_string!(bfr, self._fuel);
+    }
 }

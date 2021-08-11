@@ -50,29 +50,11 @@ pub struct LogBookControl {
 }
 
 impl Message for LogBookControl {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = LogBookControl {
-            header: hdr,
-
-            _command: Default::default(),
-            _htime: Default::default(),
-            _msg: vec![],
-        };
-
-        msg.get_header()._mgid = 104;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = LogBookControl {
+        let msg = LogBookControl {
             header: Header::new(104),
 
             _command: Default::default(),
@@ -80,11 +62,25 @@ impl Message for LogBookControl {
             _msg: vec![],
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = LogBookControl {
+            header: hdr,
+
+            _command: Default::default(),
+            _htime: Default::default(),
+            _msg: vec![],
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -92,6 +88,7 @@ impl Message for LogBookControl {
         104
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         104
     }
@@ -118,6 +115,7 @@ impl Message for LogBookControl {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         9
     }
@@ -151,5 +149,19 @@ impl Message for LogBookControl {
         }
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._command = bfr.get_u8();
+
+        self._htime = bfr.get_f64_le();
+
+        for msg in self._msg.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+    }
 }

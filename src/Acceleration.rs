@@ -25,30 +25,11 @@ pub struct Acceleration {
 }
 
 impl Message for Acceleration {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Acceleration {
-            header: hdr,
-
-            _time: Default::default(),
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-        };
-
-        msg.get_header()._mgid = 257;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Acceleration {
+        let msg = Acceleration {
             header: Header::new(257),
 
             _time: Default::default(),
@@ -57,11 +38,26 @@ impl Message for Acceleration {
             _z: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Acceleration {
+            header: hdr,
+
+            _time: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -69,6 +65,7 @@ impl Message for Acceleration {
         257
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         257
     }
@@ -89,6 +86,7 @@ impl Message for Acceleration {
         self._z = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         32
     }
@@ -104,5 +102,13 @@ impl Message for Acceleration {
         bfr.put_f64_le(self._z);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._time = bfr.get_f64_le();
+
+        self._x = bfr.get_f64_le();
+
+        self._y = bfr.get_f64_le();
+
+        self._z = bfr.get_f64_le();
+    }
 }

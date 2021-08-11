@@ -17,37 +17,33 @@ pub struct RemoteActions {
 }
 
 impl Message for RemoteActions {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = RemoteActions {
-            header: hdr,
-
-            _actions: Default::default(),
-        };
-
-        msg.get_header()._mgid = 305;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = RemoteActions {
+        let msg = RemoteActions {
             header: Header::new(305),
 
             _actions: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = RemoteActions {
+            header: hdr,
+
+            _actions: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -55,6 +51,7 @@ impl Message for RemoteActions {
         305
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         305
     }
@@ -69,6 +66,7 @@ impl Message for RemoteActions {
         self._actions = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -85,5 +83,7 @@ impl Message for RemoteActions {
         serialize_bytes!(bfr, self._actions.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._actions);
+    }
 }

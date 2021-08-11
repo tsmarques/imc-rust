@@ -42,39 +42,35 @@ pub struct ReplayControl {
 }
 
 impl Message for ReplayControl {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = ReplayControl {
-            header: hdr,
-
-            _op: Default::default(),
-            _file: Default::default(),
-        };
-
-        msg.get_header()._mgid = 105;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = ReplayControl {
+        let msg = ReplayControl {
             header: Header::new(105),
 
             _op: Default::default(),
             _file: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = ReplayControl {
+            header: hdr,
+
+            _op: Default::default(),
+            _file: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -82,6 +78,7 @@ impl Message for ReplayControl {
         105
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         105
     }
@@ -98,6 +95,7 @@ impl Message for ReplayControl {
         self._file = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -115,5 +113,9 @@ impl Message for ReplayControl {
         serialize_bytes!(bfr, self._file.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+
+        deserialize_string!(bfr, self._file);
+    }
 }

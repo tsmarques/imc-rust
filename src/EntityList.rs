@@ -37,39 +37,35 @@ pub struct EntityList {
 }
 
 impl Message for EntityList {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = EntityList {
-            header: hdr,
-
-            _op: Default::default(),
-            _list: Default::default(),
-        };
-
-        msg.get_header()._mgid = 5;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = EntityList {
+        let msg = EntityList {
             header: Header::new(5),
 
             _op: Default::default(),
             _list: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = EntityList {
+            header: hdr,
+
+            _op: Default::default(),
+            _list: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -77,6 +73,7 @@ impl Message for EntityList {
         5
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         5
     }
@@ -93,6 +90,7 @@ impl Message for EntityList {
         self._list = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -110,5 +108,9 @@ impl Message for EntityList {
         serialize_bytes!(bfr, self._list.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+
+        deserialize_string!(bfr, self._list);
+    }
 }

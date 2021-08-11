@@ -85,42 +85,11 @@ pub struct Rows {
 }
 
 impl Message for Rows {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Rows {
-            header: hdr,
-
-            _timeout: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _z: Default::default(),
-            _z_units: 0_u8,
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _bearing: Default::default(),
-            _cross_angle: Default::default(),
-            _width: Default::default(),
-            _length: Default::default(),
-            _hstep: 30_f32,
-            _coff: Default::default(),
-            _alternation: 50_u8,
-            _flags: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 456;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Rows {
+        let msg = Rows {
             header: Header::new(456),
 
             _timeout: Default::default(),
@@ -141,11 +110,38 @@ impl Message for Rows {
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Rows {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _z: Default::default(),
+            _z_units: 0_u8,
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _bearing: Default::default(),
+            _cross_angle: Default::default(),
+            _width: Default::default(),
+            _length: Default::default(),
+            _hstep: 30_f32,
+            _coff: Default::default(),
+            _alternation: 50_u8,
+            _flags: Default::default(),
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -153,6 +149,7 @@ impl Message for Rows {
         456
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         456
     }
@@ -197,6 +194,7 @@ impl Message for Rows {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         59
     }
@@ -228,5 +226,37 @@ impl Message for Rows {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timeout = bfr.get_u16_le();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._z_units = bfr.get_u8();
+
+        self._speed = bfr.get_f32_le();
+
+        self._speed_units = bfr.get_u8();
+
+        self._bearing = bfr.get_f64_le();
+
+        self._cross_angle = bfr.get_f64_le();
+
+        self._width = bfr.get_f32_le();
+
+        self._length = bfr.get_f32_le();
+
+        self._hstep = bfr.get_f32_le();
+
+        self._coff = bfr.get_u8();
+
+        self._alternation = bfr.get_u8();
+
+        self._flags = bfr.get_u8();
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

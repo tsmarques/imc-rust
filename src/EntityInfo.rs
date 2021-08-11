@@ -28,31 +28,11 @@ pub struct EntityInfo {
 }
 
 impl Message for EntityInfo {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = EntityInfo {
-            header: hdr,
-
-            _id: Default::default(),
-            _label: Default::default(),
-            _component: Default::default(),
-            _act_time: Default::default(),
-            _deact_time: Default::default(),
-        };
-
-        msg.get_header()._mgid = 3;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = EntityInfo {
+        let msg = EntityInfo {
             header: Header::new(3),
 
             _id: Default::default(),
@@ -62,11 +42,27 @@ impl Message for EntityInfo {
             _deact_time: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = EntityInfo {
+            header: hdr,
+
+            _id: Default::default(),
+            _label: Default::default(),
+            _component: Default::default(),
+            _act_time: Default::default(),
+            _deact_time: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -74,6 +70,7 @@ impl Message for EntityInfo {
         3
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         3
     }
@@ -96,6 +93,7 @@ impl Message for EntityInfo {
         self._deact_time = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         5
     }
@@ -118,5 +116,15 @@ impl Message for EntityInfo {
         bfr.put_u16_le(self._deact_time);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._id = bfr.get_u8();
+
+        deserialize_string!(bfr, self._label);
+
+        deserialize_string!(bfr, self._component);
+
+        self._act_time = bfr.get_u16_le();
+
+        self._deact_time = bfr.get_u16_le();
+    }
 }

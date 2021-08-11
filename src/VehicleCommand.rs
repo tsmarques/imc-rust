@@ -79,32 +79,11 @@ pub struct VehicleCommand {
 }
 
 impl Message for VehicleCommand {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = VehicleCommand {
-            header: hdr,
-
-            _type: Default::default(),
-            _request_id: Default::default(),
-            _command: Default::default(),
-            _maneuver: Default::default(),
-            _calib_time: Default::default(),
-            _info: Default::default(),
-        };
-
-        msg.get_header()._mgid = 501;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = VehicleCommand {
+        let msg = VehicleCommand {
             header: Header::new(501),
 
             _type: Default::default(),
@@ -115,11 +94,28 @@ impl Message for VehicleCommand {
             _info: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = VehicleCommand {
+            header: hdr,
+
+            _type: Default::default(),
+            _request_id: Default::default(),
+            _command: Default::default(),
+            _maneuver: Default::default(),
+            _calib_time: Default::default(),
+            _info: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -127,6 +123,7 @@ impl Message for VehicleCommand {
         501
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         501
     }
@@ -155,6 +152,7 @@ impl Message for VehicleCommand {
         self._info = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         6
     }
@@ -187,5 +185,21 @@ impl Message for VehicleCommand {
         serialize_bytes!(bfr, self._info.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._type = bfr.get_u8();
+
+        self._request_id = bfr.get_u16_le();
+
+        self._command = bfr.get_u8();
+
+        match &mut self._maneuver {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+
+        self._calib_time = bfr.get_u16_le();
+
+        deserialize_string!(bfr, self._info);
+    }
 }

@@ -85,34 +85,11 @@ pub struct PlanControlState {
 }
 
 impl Message for PlanControlState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = PlanControlState {
-            header: hdr,
-
-            _state: Default::default(),
-            _plan_id: Default::default(),
-            _plan_eta: Default::default(),
-            _plan_progress: Default::default(),
-            _man_id: Default::default(),
-            _man_type: Default::default(),
-            _man_eta: Default::default(),
-            _last_outcome: Default::default(),
-        };
-
-        msg.get_header()._mgid = 560;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = PlanControlState {
+        let msg = PlanControlState {
             header: Header::new(560),
 
             _state: Default::default(),
@@ -125,11 +102,30 @@ impl Message for PlanControlState {
             _last_outcome: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = PlanControlState {
+            header: hdr,
+
+            _state: Default::default(),
+            _plan_id: Default::default(),
+            _plan_eta: Default::default(),
+            _plan_progress: Default::default(),
+            _man_id: Default::default(),
+            _man_type: Default::default(),
+            _man_eta: Default::default(),
+            _last_outcome: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -137,6 +133,7 @@ impl Message for PlanControlState {
         560
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         560
     }
@@ -165,6 +162,7 @@ impl Message for PlanControlState {
         self._last_outcome = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         16
     }
@@ -190,5 +188,21 @@ impl Message for PlanControlState {
         bfr.put_u8(self._last_outcome);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._state = bfr.get_u8();
+
+        deserialize_string!(bfr, self._plan_id);
+
+        self._plan_eta = bfr.get_i32_le();
+
+        self._plan_progress = bfr.get_f32_le();
+
+        deserialize_string!(bfr, self._man_id);
+
+        self._man_type = bfr.get_u16_le();
+
+        self._man_eta = bfr.get_i32_le();
+
+        self._last_outcome = bfr.get_u8();
+    }
 }

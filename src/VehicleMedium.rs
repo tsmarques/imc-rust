@@ -42,37 +42,33 @@ pub struct VehicleMedium {
 }
 
 impl Message for VehicleMedium {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = VehicleMedium {
-            header: hdr,
-
-            _medium: Default::default(),
-        };
-
-        msg.get_header()._mgid = 508;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = VehicleMedium {
+        let msg = VehicleMedium {
             header: Header::new(508),
 
             _medium: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = VehicleMedium {
+            header: hdr,
+
+            _medium: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -80,6 +76,7 @@ impl Message for VehicleMedium {
         508
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         508
     }
@@ -94,6 +91,7 @@ impl Message for VehicleMedium {
         self._medium = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -106,5 +104,7 @@ impl Message for VehicleMedium {
         bfr.put_u8(self._medium);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._medium = bfr.get_u8();
+    }
 }

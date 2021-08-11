@@ -27,30 +27,11 @@ pub struct TrajectoryPoint {
 }
 
 impl Message for TrajectoryPoint {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = TrajectoryPoint {
-            header: hdr,
-
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _t: Default::default(),
-        };
-
-        msg.get_header()._mgid = 464;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = TrajectoryPoint {
+        let msg = TrajectoryPoint {
             header: Header::new(464),
 
             _x: Default::default(),
@@ -59,11 +40,26 @@ impl Message for TrajectoryPoint {
             _t: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = TrajectoryPoint {
+            header: hdr,
+
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _t: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -71,6 +67,7 @@ impl Message for TrajectoryPoint {
         464
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         464
     }
@@ -91,6 +88,7 @@ impl Message for TrajectoryPoint {
         self._t = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         16
     }
@@ -106,5 +104,13 @@ impl Message for TrajectoryPoint {
         bfr.put_f32_le(self._t);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._x = bfr.get_f32_le();
+
+        self._y = bfr.get_f32_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._t = bfr.get_f32_le();
+    }
 }

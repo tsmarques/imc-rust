@@ -18,39 +18,35 @@ pub struct SmsRx {
 }
 
 impl Message for SmsRx {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = SmsRx {
-            header: hdr,
-
-            _source: Default::default(),
-            _data: Default::default(),
-        };
-
-        msg.get_header()._mgid = 158;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = SmsRx {
+        let msg = SmsRx {
             header: Header::new(158),
 
             _source: Default::default(),
             _data: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = SmsRx {
+            header: hdr,
+
+            _source: Default::default(),
+            _data: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -58,6 +54,7 @@ impl Message for SmsRx {
         158
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         158
     }
@@ -74,6 +71,7 @@ impl Message for SmsRx {
         self._data = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -93,5 +91,9 @@ impl Message for SmsRx {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._source);
+
+        deserialize_bytes!(bfr, self._data);
+    }
 }

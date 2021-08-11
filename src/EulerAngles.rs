@@ -34,31 +34,11 @@ pub struct EulerAngles {
 }
 
 impl Message for EulerAngles {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = EulerAngles {
-            header: hdr,
-
-            _time: Default::default(),
-            _phi: Default::default(),
-            _theta: Default::default(),
-            _psi: Default::default(),
-            _psi_magnetic: Default::default(),
-        };
-
-        msg.get_header()._mgid = 254;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = EulerAngles {
+        let msg = EulerAngles {
             header: Header::new(254),
 
             _time: Default::default(),
@@ -68,11 +48,27 @@ impl Message for EulerAngles {
             _psi_magnetic: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = EulerAngles {
+            header: hdr,
+
+            _time: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+            _psi_magnetic: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -80,6 +76,7 @@ impl Message for EulerAngles {
         254
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         254
     }
@@ -102,6 +99,7 @@ impl Message for EulerAngles {
         self._psi_magnetic = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         40
     }
@@ -118,5 +116,15 @@ impl Message for EulerAngles {
         bfr.put_f64_le(self._psi_magnetic);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._time = bfr.get_f64_le();
+
+        self._phi = bfr.get_f64_le();
+
+        self._theta = bfr.get_f64_le();
+
+        self._psi = bfr.get_f64_le();
+
+        self._psi_magnetic = bfr.get_f64_le();
+    }
 }

@@ -1,7 +1,10 @@
 use crate::packet::ImcError::{BufferTooShort, InvalidCrc, InvalidMessageId, InvalidSync};
 use crate::Header::Header;
 use crate::Message::Message;
-use crate::{factory, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_SYNC, IMC_CONST_HEADER_SIZE, IMC_CONST_FOOTER_SIZE};
+use crate::{
+    factory, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_SYNC, IMC_CONST_FOOTER_SIZE,
+    IMC_CONST_HEADER_SIZE,
+};
 use bytes::{Buf, BufMut, IntoBuf};
 use crc16::{State, ARC};
 use std::borrow::Borrow;
@@ -114,7 +117,10 @@ pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, Im
     Ok(msg)
 }
 
-pub fn deserializeHeader(hdr: &mut Header, bfr: &mut dyn bytes::Buf) -> Result<State<ARC>, ImcError> {
+pub fn deserializeHeader(
+    hdr: &mut Header,
+    bfr: &mut dyn bytes::Buf,
+) -> Result<State<ARC>, ImcError> {
     let remaining = bfr.remaining();
     if remaining < (IMC_CONST_HEADER_SIZE as usize) {
         return Err(BufferTooShort);

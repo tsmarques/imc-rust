@@ -18,39 +18,35 @@ pub struct ServoPosition {
 }
 
 impl Message for ServoPosition {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = ServoPosition {
-            header: hdr,
-
-            _id: Default::default(),
-            _value: Default::default(),
-        };
-
-        msg.get_header()._mgid = 281;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = ServoPosition {
+        let msg = ServoPosition {
             header: Header::new(281),
 
             _id: Default::default(),
             _value: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = ServoPosition {
+            header: hdr,
+
+            _id: Default::default(),
+            _value: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -58,6 +54,7 @@ impl Message for ServoPosition {
         281
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         281
     }
@@ -74,6 +71,7 @@ impl Message for ServoPosition {
         self._value = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         5
     }
@@ -87,5 +85,9 @@ impl Message for ServoPosition {
         bfr.put_f32_le(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._id = bfr.get_u8();
+
+        self._value = bfr.get_f32_le();
+    }
 }

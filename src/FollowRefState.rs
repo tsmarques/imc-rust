@@ -85,31 +85,11 @@ pub struct FollowRefState {
 }
 
 impl Message for FollowRefState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = FollowRefState {
-            header: hdr,
-
-            _control_src: Default::default(),
-            _control_ent: Default::default(),
-            _reference: Default::default(),
-            _state: Default::default(),
-            _proximity: Default::default(),
-        };
-
-        msg.get_header()._mgid = 480;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = FollowRefState {
+        let msg = FollowRefState {
             header: Header::new(480),
 
             _control_src: Default::default(),
@@ -119,11 +99,27 @@ impl Message for FollowRefState {
             _proximity: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = FollowRefState {
+            header: hdr,
+
+            _control_src: Default::default(),
+            _control_ent: Default::default(),
+            _reference: Default::default(),
+            _state: Default::default(),
+            _proximity: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -131,6 +127,7 @@ impl Message for FollowRefState {
         480
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         480
     }
@@ -157,6 +154,7 @@ impl Message for FollowRefState {
         self._proximity = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         5
     }
@@ -186,5 +184,19 @@ impl Message for FollowRefState {
         bfr.put_u8(self._proximity);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._control_src = bfr.get_u16_le();
+
+        self._control_ent = bfr.get_u8();
+
+        match &mut self._reference {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+
+        self._state = bfr.get_u8();
+
+        self._proximity = bfr.get_u8();
+    }
 }

@@ -81,30 +81,11 @@ pub struct ReportControl {
 }
 
 impl Message for ReportControl {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = ReportControl {
-            header: hdr,
-
-            _op: Default::default(),
-            _comm_interface: Default::default(),
-            _period: Default::default(),
-            _sys_dst: Default::default(),
-        };
-
-        msg.get_header()._mgid = 513;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = ReportControl {
+        let msg = ReportControl {
             header: Header::new(513),
 
             _op: Default::default(),
@@ -113,11 +94,26 @@ impl Message for ReportControl {
             _sys_dst: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = ReportControl {
+            header: hdr,
+
+            _op: Default::default(),
+            _comm_interface: Default::default(),
+            _period: Default::default(),
+            _sys_dst: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -125,6 +121,7 @@ impl Message for ReportControl {
         513
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         513
     }
@@ -145,6 +142,7 @@ impl Message for ReportControl {
         self._sys_dst = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         4
     }
@@ -164,5 +162,13 @@ impl Message for ReportControl {
         serialize_bytes!(bfr, self._sys_dst.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+
+        self._comm_interface = bfr.get_u8();
+
+        self._period = bfr.get_u16_le();
+
+        deserialize_string!(bfr, self._sys_dst);
+    }
 }

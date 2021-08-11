@@ -24,30 +24,11 @@ pub struct ControlParcel {
 }
 
 impl Message for ControlParcel {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = ControlParcel {
-            header: hdr,
-
-            _p: Default::default(),
-            _i: Default::default(),
-            _d: Default::default(),
-            _a: Default::default(),
-        };
-
-        msg.get_header()._mgid = 412;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = ControlParcel {
+        let msg = ControlParcel {
             header: Header::new(412),
 
             _p: Default::default(),
@@ -56,11 +37,26 @@ impl Message for ControlParcel {
             _a: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = ControlParcel {
+            header: hdr,
+
+            _p: Default::default(),
+            _i: Default::default(),
+            _d: Default::default(),
+            _a: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -68,6 +64,7 @@ impl Message for ControlParcel {
         412
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         412
     }
@@ -88,6 +85,7 @@ impl Message for ControlParcel {
         self._a = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         16
     }
@@ -103,5 +101,13 @@ impl Message for ControlParcel {
         bfr.put_f32_le(self._a);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._p = bfr.get_f32_le();
+
+        self._i = bfr.get_f32_le();
+
+        self._d = bfr.get_f32_le();
+
+        self._a = bfr.get_f32_le();
+    }
 }

@@ -24,30 +24,11 @@ pub struct SonarPulse {
 }
 
 impl Message for SonarPulse {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = SonarPulse {
-            header: hdr,
-
-            _frequency: Default::default(),
-            _pulse_length: Default::default(),
-            _time_delay: Default::default(),
-            _simulated_speed: Default::default(),
-        };
-
-        msg.get_header()._mgid = 2006;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = SonarPulse {
+        let msg = SonarPulse {
             header: Header::new(2006),
 
             _frequency: Default::default(),
@@ -56,11 +37,26 @@ impl Message for SonarPulse {
             _simulated_speed: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = SonarPulse {
+            header: hdr,
+
+            _frequency: Default::default(),
+            _pulse_length: Default::default(),
+            _time_delay: Default::default(),
+            _simulated_speed: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -68,6 +64,7 @@ impl Message for SonarPulse {
         2006
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         2006
     }
@@ -88,6 +85,7 @@ impl Message for SonarPulse {
         self._simulated_speed = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         16
     }
@@ -103,5 +101,13 @@ impl Message for SonarPulse {
         bfr.put_i32_le(self._simulated_speed);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._frequency = bfr.get_i32_le();
+
+        self._pulse_length = bfr.get_i32_le();
+
+        self._time_delay = bfr.get_i32_le();
+
+        self._simulated_speed = bfr.get_i32_le();
+    }
 }

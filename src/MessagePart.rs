@@ -19,30 +19,11 @@ pub struct MessagePart {
 }
 
 impl Message for MessagePart {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = MessagePart {
-            header: hdr,
-
-            _uid: Default::default(),
-            _frag_number: Default::default(),
-            _num_frags: Default::default(),
-            _data: Default::default(),
-        };
-
-        msg.get_header()._mgid = 877;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = MessagePart {
+        let msg = MessagePart {
             header: Header::new(877),
 
             _uid: Default::default(),
@@ -51,11 +32,26 @@ impl Message for MessagePart {
             _data: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = MessagePart {
+            header: hdr,
+
+            _uid: Default::default(),
+            _frag_number: Default::default(),
+            _num_frags: Default::default(),
+            _data: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -63,6 +59,7 @@ impl Message for MessagePart {
         877
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         877
     }
@@ -83,6 +80,7 @@ impl Message for MessagePart {
         self._data = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         3
     }
@@ -102,5 +100,13 @@ impl Message for MessagePart {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._uid = bfr.get_u8();
+
+        self._frag_number = bfr.get_u8();
+
+        self._num_frags = bfr.get_u8();
+
+        deserialize_bytes!(bfr, self._data);
+    }
 }

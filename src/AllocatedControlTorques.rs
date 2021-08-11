@@ -21,29 +21,11 @@ pub struct AllocatedControlTorques {
 }
 
 impl Message for AllocatedControlTorques {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = AllocatedControlTorques {
-            header: hdr,
-
-            _k: Default::default(),
-            _m: Default::default(),
-            _n: Default::default(),
-        };
-
-        msg.get_header()._mgid = 411;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = AllocatedControlTorques {
+        let msg = AllocatedControlTorques {
             header: Header::new(411),
 
             _k: Default::default(),
@@ -51,11 +33,25 @@ impl Message for AllocatedControlTorques {
             _n: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = AllocatedControlTorques {
+            header: hdr,
+
+            _k: Default::default(),
+            _m: Default::default(),
+            _n: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -63,6 +59,7 @@ impl Message for AllocatedControlTorques {
         411
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         411
     }
@@ -81,6 +78,7 @@ impl Message for AllocatedControlTorques {
         self._n = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         24
     }
@@ -95,5 +93,11 @@ impl Message for AllocatedControlTorques {
         bfr.put_f64_le(self._n);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._k = bfr.get_f64_le();
+
+        self._m = bfr.get_f64_le();
+
+        self._n = bfr.get_f64_le();
+    }
 }

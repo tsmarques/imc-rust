@@ -23,29 +23,11 @@ pub struct FuelLevel {
 }
 
 impl Message for FuelLevel {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = FuelLevel {
-            header: hdr,
-
-            _value: Default::default(),
-            _confidence: Default::default(),
-            _opmodes: Default::default(),
-        };
-
-        msg.get_header()._mgid = 279;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = FuelLevel {
+        let msg = FuelLevel {
             header: Header::new(279),
 
             _value: Default::default(),
@@ -53,11 +35,25 @@ impl Message for FuelLevel {
             _opmodes: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = FuelLevel {
+            header: hdr,
+
+            _value: Default::default(),
+            _confidence: Default::default(),
+            _opmodes: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -65,6 +61,7 @@ impl Message for FuelLevel {
         279
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         279
     }
@@ -83,6 +80,7 @@ impl Message for FuelLevel {
         self._opmodes = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         8
     }
@@ -101,5 +99,11 @@ impl Message for FuelLevel {
         serialize_bytes!(bfr, self._opmodes.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._value = bfr.get_f32_le();
+
+        self._confidence = bfr.get_f32_le();
+
+        deserialize_string!(bfr, self._opmodes);
+    }
 }

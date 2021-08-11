@@ -77,38 +77,11 @@ pub struct Elevator {
 }
 
 impl Message for Elevator {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Elevator {
-            header: hdr,
-
-            _timeout: Default::default(),
-            _flags: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _start_z: Default::default(),
-            _start_z_units: 0_u8,
-            _end_z: Default::default(),
-            _end_z_units: 0_u8,
-            _radius: Default::default(),
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 462;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Elevator {
+        let msg = Elevator {
             header: Header::new(462),
 
             _timeout: Default::default(),
@@ -125,11 +98,34 @@ impl Message for Elevator {
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Elevator {
+            header: hdr,
+
+            _timeout: Default::default(),
+            _flags: Default::default(),
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _start_z: Default::default(),
+            _start_z_units: 0_u8,
+            _end_z: Default::default(),
+            _end_z_units: 0_u8,
+            _radius: Default::default(),
+            _speed: Default::default(),
+            _speed_units: 0_u8,
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -137,6 +133,7 @@ impl Message for Elevator {
         462
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         462
     }
@@ -173,6 +170,7 @@ impl Message for Elevator {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         38
     }
@@ -200,5 +198,29 @@ impl Message for Elevator {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._timeout = bfr.get_u16_le();
+
+        self._flags = bfr.get_u8();
+
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._start_z = bfr.get_f32_le();
+
+        self._start_z_units = bfr.get_u8();
+
+        self._end_z = bfr.get_f32_le();
+
+        self._end_z_units = bfr.get_u8();
+
+        self._radius = bfr.get_f32_le();
+
+        self._speed = bfr.get_f32_le();
+
+        self._speed_units = bfr.get_u8();
+
+        deserialize_string!(bfr, self._custom);
+    }
 }

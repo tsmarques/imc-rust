@@ -15,37 +15,33 @@ pub struct DevDataBinary {
 }
 
 impl Message for DevDataBinary {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = DevDataBinary {
-            header: hdr,
-
-            _value: Default::default(),
-        };
-
-        msg.get_header()._mgid = 274;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = DevDataBinary {
+        let msg = DevDataBinary {
             header: Header::new(274),
 
             _value: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = DevDataBinary {
+            header: hdr,
+
+            _value: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -53,6 +49,7 @@ impl Message for DevDataBinary {
         274
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         274
     }
@@ -67,6 +64,7 @@ impl Message for DevDataBinary {
         self._value = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -83,5 +81,7 @@ impl Message for DevDataBinary {
         serialize_bytes!(bfr, self._value.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_bytes!(bfr, self._value);
+    }
 }

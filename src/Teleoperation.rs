@@ -22,37 +22,33 @@ pub struct Teleoperation {
 }
 
 impl Message for Teleoperation {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = Teleoperation {
-            header: hdr,
-
-            _custom: Default::default(),
-        };
-
-        msg.get_header()._mgid = 452;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = Teleoperation {
+        let msg = Teleoperation {
             header: Header::new(452),
 
             _custom: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = Teleoperation {
+            header: hdr,
+
+            _custom: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -60,6 +56,7 @@ impl Message for Teleoperation {
         452
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         452
     }
@@ -74,6 +71,7 @@ impl Message for Teleoperation {
         self._custom = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         0
     }
@@ -90,5 +88,7 @@ impl Message for Teleoperation {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._custom);
+    }
 }

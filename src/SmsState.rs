@@ -52,29 +52,11 @@ pub struct SmsState {
 }
 
 impl Message for SmsState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = SmsState {
-            header: hdr,
-
-            _seq: Default::default(),
-            _state: Default::default(),
-            _error: Default::default(),
-        };
-
-        msg.get_header()._mgid = 159;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = SmsState {
+        let msg = SmsState {
             header: Header::new(159),
 
             _seq: Default::default(),
@@ -82,11 +64,25 @@ impl Message for SmsState {
             _error: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = SmsState {
+            header: hdr,
+
+            _seq: Default::default(),
+            _state: Default::default(),
+            _error: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -94,6 +90,7 @@ impl Message for SmsState {
         159
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         159
     }
@@ -112,6 +109,7 @@ impl Message for SmsState {
         self._error = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         5
     }
@@ -130,5 +128,11 @@ impl Message for SmsState {
         serialize_bytes!(bfr, self._error.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._seq = bfr.get_u32_le();
+
+        self._state = bfr.get_u8();
+
+        deserialize_string!(bfr, self._error);
+    }
 }

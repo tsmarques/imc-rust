@@ -48,29 +48,11 @@ pub struct CacheControl {
 }
 
 impl Message for CacheControl {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = CacheControl {
-            header: hdr,
-
-            _op: Default::default(),
-            _snapshot: Default::default(),
-            _message: Default::default(),
-        };
-
-        msg.get_header()._mgid = 101;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = CacheControl {
+        let msg = CacheControl {
             header: Header::new(101),
 
             _op: Default::default(),
@@ -78,11 +60,25 @@ impl Message for CacheControl {
             _message: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = CacheControl {
+            header: hdr,
+
+            _op: Default::default(),
+            _snapshot: Default::default(),
+            _message: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -90,6 +86,7 @@ impl Message for CacheControl {
         101
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         101
     }
@@ -112,6 +109,7 @@ impl Message for CacheControl {
         }
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         1
     }
@@ -141,5 +139,15 @@ impl Message for CacheControl {
         };
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._op = bfr.get_u8();
+
+        deserialize_string!(bfr, self._snapshot);
+
+        match &mut self._message {
+            None => {}
+
+            Some(m) => m.deserialize_fields(bfr),
+        };
+    }
 }

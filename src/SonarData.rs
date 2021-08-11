@@ -63,34 +63,11 @@ pub struct SonarData {
 }
 
 impl Message for SonarData {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = SonarData {
-            header: hdr,
-
-            _type: Default::default(),
-            _frequency: Default::default(),
-            _min_range: Default::default(),
-            _max_range: Default::default(),
-            _bits_per_point: Default::default(),
-            _scale_factor: Default::default(),
-            _beam_config: vec![],
-            _data: Default::default(),
-        };
-
-        msg.get_header()._mgid = 276;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = SonarData {
+        let msg = SonarData {
             header: Header::new(276),
 
             _type: Default::default(),
@@ -103,11 +80,30 @@ impl Message for SonarData {
             _data: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = SonarData {
+            header: hdr,
+
+            _type: Default::default(),
+            _frequency: Default::default(),
+            _min_range: Default::default(),
+            _max_range: Default::default(),
+            _bits_per_point: Default::default(),
+            _scale_factor: Default::default(),
+            _beam_config: vec![],
+            _data: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -115,6 +111,7 @@ impl Message for SonarData {
         276
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         276
     }
@@ -151,6 +148,7 @@ impl Message for SonarData {
         self._data = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         14
     }
@@ -191,5 +189,29 @@ impl Message for SonarData {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._type = bfr.get_u8();
+
+        self._frequency = bfr.get_u32_le();
+
+        self._min_range = bfr.get_u16_le();
+
+        self._max_range = bfr.get_u16_le();
+
+        self._bits_per_point = bfr.get_u8();
+
+        self._scale_factor = bfr.get_f32_le();
+
+        for msg in self._beam_config.iter_mut() {
+            match msg {
+                None => {}
+
+                Some(m) => {
+                    m.deserialize_fields(bfr);
+                }
+            }
+        }
+
+        deserialize_bytes!(bfr, self._data);
+    }
 }

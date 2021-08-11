@@ -68,44 +68,11 @@ pub struct SimulatedState {
 }
 
 impl Message for SimulatedState {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = SimulatedState {
-            header: hdr,
-
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _height: Default::default(),
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _phi: Default::default(),
-            _theta: Default::default(),
-            _psi: Default::default(),
-            _u: Default::default(),
-            _v: Default::default(),
-            _w: Default::default(),
-            _p: Default::default(),
-            _q: Default::default(),
-            _r: Default::default(),
-            _svx: Default::default(),
-            _svy: Default::default(),
-            _svz: Default::default(),
-        };
-
-        msg.get_header()._mgid = 50;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = SimulatedState {
+        let msg = SimulatedState {
             header: Header::new(50),
 
             _lat: Default::default(),
@@ -128,11 +95,40 @@ impl Message for SimulatedState {
             _svz: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = SimulatedState {
+            header: hdr,
+
+            _lat: Default::default(),
+            _lon: Default::default(),
+            _height: Default::default(),
+            _x: Default::default(),
+            _y: Default::default(),
+            _z: Default::default(),
+            _phi: Default::default(),
+            _theta: Default::default(),
+            _psi: Default::default(),
+            _u: Default::default(),
+            _v: Default::default(),
+            _w: Default::default(),
+            _p: Default::default(),
+            _q: Default::default(),
+            _r: Default::default(),
+            _svx: Default::default(),
+            _svy: Default::default(),
+            _svz: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -140,6 +136,7 @@ impl Message for SimulatedState {
         50
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         50
     }
@@ -188,6 +185,7 @@ impl Message for SimulatedState {
         self._svz = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         80
     }
@@ -217,5 +215,41 @@ impl Message for SimulatedState {
         bfr.put_f32_le(self._svz);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        self._lat = bfr.get_f64_le();
+
+        self._lon = bfr.get_f64_le();
+
+        self._height = bfr.get_f32_le();
+
+        self._x = bfr.get_f32_le();
+
+        self._y = bfr.get_f32_le();
+
+        self._z = bfr.get_f32_le();
+
+        self._phi = bfr.get_f32_le();
+
+        self._theta = bfr.get_f32_le();
+
+        self._psi = bfr.get_f32_le();
+
+        self._u = bfr.get_f32_le();
+
+        self._v = bfr.get_f32_le();
+
+        self._w = bfr.get_f32_le();
+
+        self._p = bfr.get_f32_le();
+
+        self._q = bfr.get_f32_le();
+
+        self._r = bfr.get_f32_le();
+
+        self._svx = bfr.get_f32_le();
+
+        self._svy = bfr.get_f32_le();
+
+        self._svz = bfr.get_f32_le();
+    }
 }

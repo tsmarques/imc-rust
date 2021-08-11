@@ -30,29 +30,11 @@ pub struct AcousticLink {
 }
 
 impl Message for AcousticLink {
-    fn from(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let mut msg = AcousticLink {
-            header: hdr,
-
-            _peer: Default::default(),
-            _rssi: Default::default(),
-            _integrity: Default::default(),
-        };
-
-        msg.get_header()._mgid = 214;
-        msg.set_size(msg.payload_serialization_size() as u16);
-
-        msg
-    }
-
     fn new() -> Self
     where
         Self: Sized,
     {
-        let mut msg = AcousticLink {
+        let msg = AcousticLink {
             header: Header::new(214),
 
             _peer: Default::default(),
@@ -60,11 +42,25 @@ impl Message for AcousticLink {
             _integrity: Default::default(),
         };
 
-        msg.set_size(msg.payload_serialization_size() as u16);
+        msg
+    }
+
+    fn fromHeader(hdr: Header) -> Self
+    where
+        Self: Sized,
+    {
+        let msg = AcousticLink {
+            header: hdr,
+
+            _peer: Default::default(),
+            _rssi: Default::default(),
+            _integrity: Default::default(),
+        };
 
         msg
     }
 
+    #[inline(always)]
     fn static_id() -> u16
     where
         Self: Sized,
@@ -72,6 +68,7 @@ impl Message for AcousticLink {
         214
     }
 
+    #[inline(always)]
     fn id(&self) -> u16 {
         214
     }
@@ -90,6 +87,7 @@ impl Message for AcousticLink {
         self._integrity = Default::default();
     }
 
+    #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
         6
     }
@@ -108,5 +106,11 @@ impl Message for AcousticLink {
         bfr.put_u16_le(self._integrity);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+        deserialize_string!(bfr, self._peer);
+
+        self._rssi = bfr.get_f32_le();
+
+        self._integrity = bfr.get_u16_le();
+    }
 }
