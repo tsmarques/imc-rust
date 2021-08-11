@@ -90,4 +90,6 @@ fn deserialize_as() {
 
     let mut lc2 = ret.ok().unwrap();
     assert_eq!(lc.get_header(), lc2.get_header());
+    assert_eq!(lc._op, lc2._op);
+    assert_eq!(lc._name, lc2._name);
 }
