@@ -50,6 +50,38 @@ pub fn serialize(msg: &mut dyn Message, bfr: &mut bytes::BytesMut) -> Result<usi
     Result::Ok(bfr.len())
 }
 
+pub fn deserialize(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, ImcError> {
+    // deserialize header
+    let mut hdr: Header = Header::new(0);
+    let mut ret = deserializeHeader(&mut hdr, bfr);
+    if ret.is_err() {
+        return Err(ret.err().unwrap());
+    }
+
+    // get header's crc
+    let mut crc = ret.ok().unwrap();
+
+    let ser_size = hdr._size as usize;
+    let ret = factory::build(hdr);
+    if ret.is_none() {
+        return Err(InvalidMessageId);
+    }
+
+    let mut msg = ret.unwrap();
+
+    // update crc with payload
+    crc::update_from_range(&mut crc, 0, ser_size, bfr.bytes());
+
+    msg.deserialize_fields(bfr);
+
+    let read_crc = bfr.get_u16_le();
+    if crc.get() != read_crc {
+        return Err(InvalidCrc);
+    }
+
+    Ok(msg)
+}
+
 pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, ImcError> {
     // deserialize header
     let mut hdr: Header = Header::new(0);

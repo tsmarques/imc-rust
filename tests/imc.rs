@@ -93,3 +93,28 @@ fn deserialize_as() {
     assert_eq!(lc._op, lc2._op);
     assert_eq!(lc._name, lc2._name);
 }
+
+#[test]
+fn generic_deserialize() {
+    let mut lc = LoggingControl::new();
+    lc.set_timestamp_secs(0.23424);
+    lc.set_source(765);
+    lc.set_source_ent(230);
+    lc.set_destination(57);
+    lc.set_destination_ent(32);
+    lc._name = String::from("20210707_IMC_RUST_TEST");
+    lc._op = ControlOperationEnum::COP_REQUEST_START.value();
+
+    let mut bfr: bytes::BytesMut = bytes::BytesMut::with_capacity(lc.serialization_size());
+
+    let ret = imc::packet::serialize(&mut lc, &mut bfr);
+    assert!(ret.is_ok());
+    assert_eq!(ret.ok().unwrap(), lc.serialization_size());
+
+    let inbfr = bytes::Bytes::from(bfr);
+    let ret = imc::packet::deserialize(&mut inbfr.into_buf());
+    assert!(ret.is_ok());
+
+    let mut lc2 = ret.ok().unwrap();
+    assert_eq!(lc.get_header(), lc2.get_header());
+}
