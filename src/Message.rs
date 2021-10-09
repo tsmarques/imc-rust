@@ -12,6 +12,58 @@ macro_rules! serialize_bytes {
     };
 }
 
+macro_rules! message_list_serialization_size {
+    ($size:expr, $target_var:expr) => {
+        // list size
+        $size += 2;
+        for m in $target_var.iter() {
+            // message id
+            $size += 2;
+            // message payload
+            $size += m.payload_serialization_size();
+        }
+    };
+}
+
+macro_rules! inline_message_serialization_size {
+    ($size:expr, $target_var:expr) => {
+        $size += 2;
+        match &$target_var {
+            None => {}
+            Some(msg) => {
+                $size += msg.payload_serialization_size();
+            }
+        }
+    };
+}
+
+macro_rules! serialize_inline_message {
+    ($bfr:expr, $target_var:expr) => {
+        // inline message
+        match &$target_var {
+            None => {
+                $bfr.put_u16_le(DUNE_IMC_CONST_NULL_ID);
+            }
+
+            Some(m) => {
+                $bfr.put_u16_le(m.id());
+                m.serialize_fields($bfr)
+            }
+        };
+    };
+}
+
+macro_rules! serialize_message_list {
+    ($bfr:expr, $target_var:expr) => {
+        $bfr.put_u16_le($target_var.len() as u16);
+        for m in $target_var.iter() {
+            // @todo serialize null inline message?
+            $bfr.put_u16_le(DUNE_IMC_CONST_NULL_ID);
+            m.serialize_fields($bfr);
+        }
+    };
+}
+
 macro_rules! deserialize_string {
     ($bfr:expr, $target_var:expr) => {
         let size = $bfr.get_u16_le();
