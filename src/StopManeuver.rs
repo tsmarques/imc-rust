@@ -1,5 +1,7 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use crate::Header::Header;
 
 /// Command used to stop currently executing maneuver.

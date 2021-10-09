@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -93,15 +95,7 @@ impl Message for LblConfig {
 
         self._op = Default::default();
 
-        for msg in self._beacons.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._beacons = Default::default();
     }
 
     #[inline(always)]
@@ -112,42 +106,21 @@ impl Message for LblConfig {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in self._beacons.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._beacons);
 
         dyn_size
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
-        for msg in self._beacons.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._beacons);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
         self._op = bfr.get_u8();
 
-        for msg in self._beacons.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._beacons.iter_mut() {
+            m.deserialize_fields(bfr);
         }
     }
 }

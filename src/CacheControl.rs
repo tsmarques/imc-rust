@@ -1,5 +1,7 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -102,11 +104,7 @@ impl Message for CacheControl {
 
         self._snapshot = Default::default();
 
-        match &mut self._message {
-            Some(field) => field.clear(),
-
-            None => {}
-        }
+        self._message = Default::default();
     }
 
     #[inline(always)]
@@ -119,12 +117,7 @@ impl Message for CacheControl {
 
         dyn_size += self._snapshot.len() + 2;
 
-        match &self._message {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._message);
 
         dyn_size
     }
@@ -132,11 +125,7 @@ impl Message for CacheControl {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._snapshot.as_bytes());
-        match &self._message {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
+        serialize_inline_message!(bfr, self._message);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {

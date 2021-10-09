@@ -1,5 +1,7 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -148,11 +150,7 @@ impl Message for AcousticOperation {
 
         self._range = Default::default();
 
-        match &mut self._msg {
-            Some(field) => field.clear(),
-
-            None => {}
-        }
+        self._msg = Default::default();
     }
 
     #[inline(always)]
@@ -165,12 +163,7 @@ impl Message for AcousticOperation {
 
         dyn_size += self._system.len() + 2;
 
-        match &self._msg {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._msg);
 
         dyn_size
     }
@@ -179,11 +172,7 @@ impl Message for AcousticOperation {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._system.as_bytes());
         bfr.put_f32_le(self._range);
-        match &self._msg {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
+        serialize_inline_message!(bfr, self._msg);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {

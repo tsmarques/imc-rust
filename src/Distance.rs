@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -102,25 +104,9 @@ impl Message for Distance {
 
         self._validity = Default::default();
 
-        for msg in self._location.iter_mut() {
-            match msg {
-                None => {}
+        self._location = Default::default();
 
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
-
-        for msg in self._beam_config.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._beam_config = Default::default();
 
         self._value = Default::default();
     }
@@ -133,71 +119,29 @@ impl Message for Distance {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in self._location.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._location);
 
-        for msg in self._beam_config.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._beam_config);
 
         dyn_size
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._validity);
-        for msg in self._location.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
-        for msg in self._beam_config.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._location);
+        serialize_message_list!(bfr, self._beam_config);
         bfr.put_f32_le(self._value);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
         self._validity = bfr.get_u8();
 
-        for msg in self._location.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._location.iter_mut() {
+            m.deserialize_fields(bfr);
         }
 
-        for msg in self._beam_config.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._beam_config.iter_mut() {
+            m.deserialize_fields(bfr);
         }
 
         self._value = bfr.get_f32_le();

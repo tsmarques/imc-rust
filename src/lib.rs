@@ -7,7 +7,7 @@ pub mod MessageGroup;
 pub mod factory;
 pub mod packet;
 
-pub type MessageList<T> = Vec<Option<Box<T>>>;
+pub type MessageList<T> = Vec<T>;
 
 pub mod Abort;
 pub mod Aborted;
@@ -182,6 +182,9 @@ pub mod SonarPulse;
 pub mod SoundSpeed;
 pub mod StationKeeping;
 pub mod StopManeuver;
+pub mod StorageControl;
+pub mod StorageDevice;
+pub mod StoragePartition;
 pub mod StorageUsage;
 pub mod Tachograph;
 pub mod Teleoperation;

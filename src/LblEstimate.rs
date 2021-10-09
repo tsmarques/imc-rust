@@ -1,5 +1,7 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -90,11 +92,7 @@ impl Message for LblEstimate {
     fn clear(&mut self) {
         self.header.clear();
 
-        match &mut self._beacon {
-            Some(field) => field.clear(),
-
-            None => {}
-        }
+        self._beacon = Default::default();
 
         self._x = Default::default();
 
@@ -115,22 +113,13 @@ impl Message for LblEstimate {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        match &self._beacon {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._beacon);
 
         dyn_size
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
-        match &self._beacon {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
+        serialize_inline_message!(bfr, self._beacon);
         bfr.put_f32_le(self._x);
         bfr.put_f32_le(self._y);
         bfr.put_f32_le(self._var_x);

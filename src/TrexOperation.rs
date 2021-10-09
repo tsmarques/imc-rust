@@ -1,5 +1,7 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -103,11 +105,7 @@ impl Message for TrexOperation {
 
         self._goal_id = Default::default();
 
-        match &mut self._token {
-            Some(field) => field.clear(),
-
-            None => {}
-        }
+        self._token = Default::default();
     }
 
     #[inline(always)]
@@ -120,12 +118,7 @@ impl Message for TrexOperation {
 
         dyn_size += self._goal_id.len() + 2;
 
-        match &self._token {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._token);
 
         dyn_size
     }
@@ -133,11 +126,7 @@ impl Message for TrexOperation {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._op);
         serialize_bytes!(bfr, self._goal_id.as_bytes());
-        match &self._token {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
+        serialize_inline_message!(bfr, self._token);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {

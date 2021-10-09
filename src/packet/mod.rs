@@ -46,7 +46,8 @@ pub fn serialize(msg: &mut dyn Message, bfr: &mut bytes::BytesMut) -> Result<usi
     // payload
     msg.serialize_fields(bfr);
     // footer
-    let end = cursor + msg.serialization_size() - IMC_CONST_FOOTER_SIZE as usize;
+    let sersize = msg.serialization_size();
+    let end = cursor + sersize - IMC_CONST_FOOTER_SIZE as usize;
     let mut crc = crc::compute_from_range(cursor, end, bfr);
     bfr.put_u16_le(crc.get());
 

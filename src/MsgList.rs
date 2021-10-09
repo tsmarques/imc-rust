@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -11,7 +13,7 @@ pub struct MsgList {
     /// IMC Header
     pub header: Header,
 
-    pub _msgs: MessageList<dyn Message>,
+    pub _msgs: MessageList<Box<dyn Message>>,
 }
 
 impl Message for MsgList {
@@ -61,15 +63,7 @@ impl Message for MsgList {
     fn clear(&mut self) {
         self.header.clear();
 
-        for msg in self._msgs.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._msgs = Default::default();
     }
 
     #[inline(always)]
@@ -80,39 +74,18 @@ impl Message for MsgList {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in self._msgs.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._msgs);
 
         dyn_size
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
-        for msg in self._msgs.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._msgs);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
-        for msg in self._msgs.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._msgs.iter_mut() {
+            m.deserialize_fields(bfr);
         }
     }
 }

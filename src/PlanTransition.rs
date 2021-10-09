@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -33,7 +35,7 @@ pub struct PlanTransition {
     pub _conditions: String,
 
     /// Messages processed when the transition is triggered.
-    pub _actions: MessageList<dyn Message>,
+    pub _actions: MessageList<Box<dyn Message>>,
 }
 
 impl Message for PlanTransition {
@@ -95,15 +97,7 @@ impl Message for PlanTransition {
 
         self._conditions = Default::default();
 
-        for msg in self._actions.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._actions = Default::default();
     }
 
     #[inline(always)]
@@ -120,14 +114,7 @@ impl Message for PlanTransition {
 
         dyn_size += self._conditions.len() + 2;
 
-        for msg in self._actions.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._actions);
 
         dyn_size
     }
@@ -136,15 +123,7 @@ impl Message for PlanTransition {
         serialize_bytes!(bfr, self._source_man.as_bytes());
         serialize_bytes!(bfr, self._dest_man.as_bytes());
         serialize_bytes!(bfr, self._conditions.as_bytes());
-        for msg in self._actions.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._actions);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
@@ -154,14 +133,8 @@ impl Message for PlanTransition {
 
         deserialize_string!(bfr, self._conditions);
 
-        for msg in self._actions.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._actions.iter_mut() {
+            m.deserialize_fields(bfr);
         }
     }
 }

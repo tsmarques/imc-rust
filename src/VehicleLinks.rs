@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -72,15 +74,7 @@ impl Message for VehicleLinks {
 
         self._localname = Default::default();
 
-        for msg in self._links.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._links = Default::default();
     }
 
     #[inline(always)]
@@ -93,42 +87,21 @@ impl Message for VehicleLinks {
 
         dyn_size += self._localname.len() + 2;
 
-        for msg in self._links.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._links);
 
         dyn_size
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._localname.as_bytes());
-        for msg in self._links.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._links);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
         deserialize_string!(bfr, self._localname);
 
-        for msg in self._links.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._links.iter_mut() {
+            m.deserialize_fields(bfr);
         }
     }
 }

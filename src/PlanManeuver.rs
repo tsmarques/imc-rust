@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -22,11 +24,11 @@ pub struct PlanManeuver {
 
     /// Contains an optionally defined 'MessageList' for actions fired
     /// on plan activation.
-    pub _start_actions: MessageList<dyn Message>,
+    pub _start_actions: MessageList<Box<dyn Message>>,
 
     /// Contains an optionally defined 'MessageList' for actions fired
     /// on plan termination.
-    pub _end_actions: MessageList<dyn Message>,
+    pub _end_actions: MessageList<Box<dyn Message>>,
 }
 
 impl Message for PlanManeuver {
@@ -84,31 +86,11 @@ impl Message for PlanManeuver {
 
         self._maneuver_id = Default::default();
 
-        match &mut self._data {
-            Some(field) => field.clear(),
+        self._data = Default::default();
 
-            None => {}
-        }
+        self._start_actions = Default::default();
 
-        for msg in self._start_actions.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
-
-        for msg in self._end_actions.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._end_actions = Default::default();
     }
 
     #[inline(always)]
@@ -121,59 +103,20 @@ impl Message for PlanManeuver {
 
         dyn_size += self._maneuver_id.len() + 2;
 
-        match &self._data {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._data);
 
-        for msg in self._start_actions.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._start_actions);
 
-        for msg in self._end_actions.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._end_actions);
 
         dyn_size
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._maneuver_id.as_bytes());
-        match &self._data {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
-        for msg in self._start_actions.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
-        for msg in self._end_actions.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_inline_message!(bfr, self._data);
+        serialize_message_list!(bfr, self._start_actions);
+        serialize_message_list!(bfr, self._end_actions);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
@@ -185,24 +128,12 @@ impl Message for PlanManeuver {
             Some(m) => m.deserialize_fields(bfr),
         };
 
-        for msg in self._start_actions.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._start_actions.iter_mut() {
+            m.deserialize_fields(bfr);
         }
 
-        for msg in self._end_actions.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._end_actions.iter_mut() {
+            m.deserialize_fields(bfr);
         }
     }
 }

@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -110,15 +112,7 @@ impl Message for PlanDBState {
 
         self._md5 = Default::default();
 
-        for msg in self._plans_info.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._plans_info = Default::default();
     }
 
     #[inline(always)]
@@ -133,14 +127,7 @@ impl Message for PlanDBState {
 
         dyn_size += self._md5.len() + 2;
 
-        for msg in self._plans_info.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._plans_info);
 
         dyn_size
     }
@@ -152,15 +139,7 @@ impl Message for PlanDBState {
         bfr.put_u16_le(self._change_sid);
         serialize_bytes!(bfr, self._change_sname.as_bytes());
         serialize_bytes!(bfr, self._md5.as_slice());
-        for msg in self._plans_info.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._plans_info);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
@@ -176,14 +155,8 @@ impl Message for PlanDBState {
 
         deserialize_bytes!(bfr, self._md5);
 
-        for msg in self._plans_info.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._plans_info.iter_mut() {
+            m.deserialize_fields(bfr);
         }
     }
 }

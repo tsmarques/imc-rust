@@ -1,5 +1,7 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -176,11 +178,7 @@ impl Message for PlanControl {
 
         self._flags = Default::default();
 
-        match &mut self._arg {
-            Some(field) => field.clear(),
-
-            None => {}
-        }
+        self._arg = Default::default();
 
         self._info = Default::default();
     }
@@ -195,12 +193,7 @@ impl Message for PlanControl {
 
         dyn_size += self._plan_id.len() + 2;
 
-        match &self._arg {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._arg);
 
         dyn_size += self._info.len() + 2;
 
@@ -213,11 +206,7 @@ impl Message for PlanControl {
         bfr.put_u16_le(self._request_id);
         serialize_bytes!(bfr, self._plan_id.as_bytes());
         bfr.put_u16_le(self._flags);
-        match &self._arg {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
+        serialize_inline_message!(bfr, self._arg);
         serialize_bytes!(bfr, self._info.as_bytes());
     }
 

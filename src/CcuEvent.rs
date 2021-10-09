@@ -1,5 +1,7 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -111,11 +113,7 @@ impl Message for CcuEvent {
 
         self._id = Default::default();
 
-        match &mut self._arg {
-            Some(field) => field.clear(),
-
-            None => {}
-        }
+        self._arg = Default::default();
     }
 
     #[inline(always)]
@@ -128,12 +126,7 @@ impl Message for CcuEvent {
 
         dyn_size += self._id.len() + 2;
 
-        match &self._arg {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._arg);
 
         dyn_size
     }
@@ -141,11 +134,7 @@ impl Message for CcuEvent {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._type);
         serialize_bytes!(bfr, self._id.as_bytes());
-        match &self._arg {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
+        serialize_inline_message!(bfr, self._arg);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {

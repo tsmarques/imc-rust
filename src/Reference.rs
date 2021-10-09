@@ -1,12 +1,14 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DesiredSpeed::DesiredSpeed;
-
 use crate::DesiredZ::DesiredZ;
+
+use crate::DesiredSpeed::DesiredSpeed;
 
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
@@ -118,17 +120,9 @@ impl Message for Reference {
 
         self._flags = Default::default();
 
-        match &mut self._speed {
-            Some(field) => field.clear(),
+        self._speed = Default::default();
 
-            None => {}
-        }
-
-        match &mut self._z {
-            Some(field) => field.clear(),
-
-            None => {}
-        }
+        self._z = Default::default();
 
         self._lat = Default::default();
 
@@ -145,35 +139,17 @@ impl Message for Reference {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        match &self._speed {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._speed);
 
-        match &self._z {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._z);
 
         dyn_size
     }
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._flags);
-        match &self._speed {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
-        match &self._z {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
+        serialize_inline_message!(bfr, self._speed);
+        serialize_inline_message!(bfr, self._z);
         bfr.put_f64_le(self._lat);
         bfr.put_f64_le(self._lon);
         bfr.put_f32_le(self._radius);

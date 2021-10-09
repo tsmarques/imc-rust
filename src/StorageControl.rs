@@ -9,69 +9,54 @@ use crate::Header::Header;
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
     // Request
-    DBT_REQUEST = 0,
+    SCTR_REQUEST = 0,
     // Reply -- Success
-    DBT_SUCCESS = 1,
+    SCTR_SUCCESS = 1,
     // Reply -- Failure
-    DBT_FAILURE = 2,
+    SCTR_FAILURE = 2,
     // Reply -- In Progress
-    DBT_IN_PROGRESS = 3,
+    SCTR_IN_PROGRESS = 3,
 }
 
 impl TypeEnum {
     /// Match an enum value to its primitive type
     pub fn value(&self) -> u8 {
         match self {
-            DBT_REQUEST => 0,
-            DBT_SUCCESS => 1,
-            DBT_FAILURE => 2,
-            DBT_IN_PROGRESS => 3,
+            SCTR_REQUEST => 0,
+            SCTR_SUCCESS => 1,
+            SCTR_FAILURE => 2,
+            SCTR_IN_PROGRESS => 3,
         }
     }
 }
 
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    // Set Plan
-    DBOP_SET = 0,
-    // Delete Plan
-    DBOP_DEL = 1,
-    // Get Plan
-    DBOP_GET = 2,
-    // Get Plan Info
-    DBOP_GET_INFO = 3,
-    // Clear Database
-    DBOP_CLEAR = 4,
-    // Get Database State (Simple)
-    DBOP_GET_STATE = 5,
-    // Get Database State (Detailed)
-    DBOP_GET_DSTATE = 6,
-    // Boot Notification
-    DBOP_BOOT = 7,
+    // List
+    SOP_LIST = 0,
+    // Mount
+    SOP_MOUNT = 1,
+    // Unmount
+    SOP_UMOUNT = 2,
+    // Format
+    SOP_FORMAT = 3,
 }
 
 impl OperationEnum {
     /// Match an enum value to its primitive type
     pub fn value(&self) -> u8 {
         match self {
-            DBOP_SET => 0,
-            DBOP_DEL => 1,
-            DBOP_GET => 2,
-            DBOP_GET_INFO => 3,
-            DBOP_CLEAR => 4,
-            DBOP_GET_STATE => 5,
-            DBOP_GET_DSTATE => 6,
-            DBOP_BOOT => 7,
+            SOP_LIST => 0,
+            SOP_MOUNT => 1,
+            SOP_UMOUNT => 2,
+            SOP_FORMAT => 3,
         }
     }
 }
 
-/// Get detailed state of the entire DB. Successful replies
-/// will yield a 'PlanDBState' message in the 'arg' field with
-/// individual plan information (in the 'plans_info' field of
-/// 'PlanDBState').
+/// Unmount the selected storage device
 #[derive(Default)]
-pub struct PlanDB {
+pub struct StorageControl {
     /// IMC Header
     pub header: Header,
 
@@ -79,8 +64,7 @@ pub struct PlanDB {
     /// previous request.
     pub _type: u8,
 
-    /// PlanDB replies of this type are sent automatically during
-    /// bootstrap.
+    /// Format the selected storage device
     pub _op: u8,
 
     /// Request ID. This may be used by interfacing modules,
@@ -88,11 +72,8 @@ pub struct PlanDB {
     /// appropriately identify replies
     pub _request_id: u16,
 
-    /// Plan identifier for the operation, if one is required.
-    pub _plan_id: String,
-
-    /// Request or reply argument.
-    pub _arg: Option<Box<dyn Message>>,
+    /// Identifier for the storage device to operate on
+    pub _device_id: String,
 
     /// Human-readable complementary information. For example this
     /// may be used to detail reasons for failure, or to report
@@ -100,19 +81,18 @@ pub struct PlanDB {
     pub _info: String,
 }
 
-impl Message for PlanDB {
+impl Message for StorageControl {
     fn new() -> Self
     where
         Self: Sized,
     {
-        let msg = PlanDB {
-            header: Header::new(556),
+        let msg = StorageControl {
+            header: Header::new(107),
 
             _type: Default::default(),
             _op: Default::default(),
             _request_id: Default::default(),
-            _plan_id: Default::default(),
-            _arg: Default::default(),
+            _device_id: Default::default(),
             _info: Default::default(),
         };
 
@@ -123,14 +103,13 @@ impl Message for PlanDB {
     where
         Self: Sized,
     {
-        let msg = PlanDB {
+        let msg = StorageControl {
             header: hdr,
 
             _type: Default::default(),
             _op: Default::default(),
             _request_id: Default::default(),
-            _plan_id: Default::default(),
-            _arg: Default::default(),
+            _device_id: Default::default(),
             _info: Default::default(),
         };
 
@@ -142,12 +121,12 @@ impl Message for PlanDB {
     where
         Self: Sized,
     {
-        556
+        107
     }
 
     #[inline(always)]
     fn id(&self) -> u16 {
-        556
+        107
     }
 
     fn get_header(&mut self) -> &mut Header {
@@ -163,9 +142,7 @@ impl Message for PlanDB {
 
         self._request_id = Default::default();
 
-        self._plan_id = Default::default();
-
-        self._arg = Default::default();
+        self._device_id = Default::default();
 
         self._info = Default::default();
     }
@@ -178,9 +155,7 @@ impl Message for PlanDB {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        dyn_size += self._plan_id.len() + 2;
-
-        inline_message_serialization_size!(dyn_size, self._arg);
+        dyn_size += self._device_id.len() + 2;
 
         dyn_size += self._info.len() + 2;
 
@@ -191,8 +166,7 @@ impl Message for PlanDB {
         bfr.put_u8(self._type);
         bfr.put_u8(self._op);
         bfr.put_u16_le(self._request_id);
-        serialize_bytes!(bfr, self._plan_id.as_bytes());
-        serialize_inline_message!(bfr, self._arg);
+        serialize_bytes!(bfr, self._device_id.as_bytes());
         serialize_bytes!(bfr, self._info.as_bytes());
     }
 
@@ -203,13 +177,7 @@ impl Message for PlanDB {
 
         self._request_id = bfr.get_u16_le();
 
-        deserialize_string!(bfr, self._plan_id);
-
-        match &mut self._arg {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        deserialize_string!(bfr, self._device_id);
 
         deserialize_string!(bfr, self._info);
     }

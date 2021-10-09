@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -104,15 +106,7 @@ impl Message for LogBookControl {
 
         self._htime = Default::default();
 
-        for msg in self._msg.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._msg = Default::default();
     }
 
     #[inline(always)]
@@ -123,14 +117,7 @@ impl Message for LogBookControl {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in self._msg.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._msg);
 
         dyn_size
     }
@@ -138,15 +125,7 @@ impl Message for LogBookControl {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u8(self._command);
         bfr.put_f64_le(self._htime);
-        for msg in self._msg.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._msg);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
@@ -154,14 +133,8 @@ impl Message for LogBookControl {
 
         self._htime = bfr.get_f64_le();
 
-        for msg in self._msg.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._msg.iter_mut() {
+            m.deserialize_fields(bfr);
         }
     }
 }

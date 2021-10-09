@@ -1,5 +1,7 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -111,11 +113,7 @@ impl Message for FollowCommandState {
 
         self._control_ent = Default::default();
 
-        match &mut self._command {
-            Some(field) => field.clear(),
-
-            None => {}
-        }
+        self._command = Default::default();
 
         self._state = Default::default();
     }
@@ -128,12 +126,7 @@ impl Message for FollowCommandState {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        match &self._command {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._command);
 
         dyn_size
     }
@@ -141,11 +134,7 @@ impl Message for FollowCommandState {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._control_src);
         bfr.put_u8(self._control_ent);
-        match &self._command {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
+        serialize_inline_message!(bfr, self._command);
         bfr.put_u8(self._state);
     }
 

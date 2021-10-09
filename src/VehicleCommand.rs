@@ -1,5 +1,7 @@
 use crate::Message::*;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -141,11 +143,7 @@ impl Message for VehicleCommand {
 
         self._command = Default::default();
 
-        match &mut self._maneuver {
-            Some(field) => field.clear(),
-
-            None => {}
-        }
+        self._maneuver = Default::default();
 
         self._calib_time = Default::default();
 
@@ -160,12 +158,7 @@ impl Message for VehicleCommand {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        match &self._maneuver {
-            None => {}
-            Some(msg) => {
-                dyn_size += msg.dynamic_serialization_size();
-            }
-        }
+        inline_message_serialization_size!(dyn_size, self._maneuver);
 
         dyn_size += self._info.len() + 2;
 
@@ -176,11 +169,7 @@ impl Message for VehicleCommand {
         bfr.put_u8(self._type);
         bfr.put_u16_le(self._request_id);
         bfr.put_u8(self._command);
-        match &self._maneuver {
-            None => {}
-
-            Some(m) => m.serialize_fields(bfr),
-        };
+        serialize_inline_message!(bfr, self._maneuver);
         bfr.put_u16_le(self._calib_time);
         serialize_bytes!(bfr, self._info.as_bytes());
     }

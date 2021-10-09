@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -126,15 +128,7 @@ impl Message for FollowTrajectory {
 
         self._speed_units = Default::default();
 
-        for msg in self._points.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._points = Default::default();
 
         self._custom = Default::default();
     }
@@ -147,14 +141,7 @@ impl Message for FollowTrajectory {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in self._points.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._points);
 
         dyn_size += self._custom.len() + 2;
 
@@ -169,15 +156,7 @@ impl Message for FollowTrajectory {
         bfr.put_u8(self._z_units);
         bfr.put_f32_le(self._speed);
         bfr.put_u8(self._speed_units);
-        for msg in self._points.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._points);
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
@@ -196,14 +175,8 @@ impl Message for FollowTrajectory {
 
         self._speed_units = bfr.get_u8();
 
-        for msg in self._points.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._points.iter_mut() {
+            m.deserialize_fields(bfr);
         }
 
         deserialize_string!(bfr, self._custom);

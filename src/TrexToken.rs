@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -75,15 +77,7 @@ impl Message for TrexToken {
 
         self._predicate = Default::default();
 
-        for msg in self._attributes.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._attributes = Default::default();
     }
 
     #[inline(always)]
@@ -98,14 +92,7 @@ impl Message for TrexToken {
 
         dyn_size += self._predicate.len() + 2;
 
-        for msg in self._attributes.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._attributes);
 
         dyn_size
     }
@@ -113,15 +100,7 @@ impl Message for TrexToken {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
         serialize_bytes!(bfr, self._timeline.as_bytes());
         serialize_bytes!(bfr, self._predicate.as_bytes());
-        for msg in self._attributes.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._attributes);
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
@@ -129,14 +108,8 @@ impl Message for TrexToken {
 
         deserialize_string!(bfr, self._predicate);
 
-        for msg in self._attributes.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._attributes.iter_mut() {
+            m.deserialize_fields(bfr);
         }
     }
 }

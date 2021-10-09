@@ -37,6 +37,25 @@ macro_rules! inline_message_serialization_size {
     };
 }
 
+macro_rules! clear_message {
+    ($target_var:expr) => {
+        match &mut $target_var {
+            None => {}
+            Some(m) => {
+                m.clear();
+            }
+        }
+    };
+}
+
+macro_rules! clear_message_list {
+    ($target_var:expr) => {
+        for m in $target_var.iter_mut() {
+            m.clear();
+        }
+    };
+}
+
 macro_rules! serialize_inline_message {
     ($bfr:expr, $target_var:expr) => {
         // inline message

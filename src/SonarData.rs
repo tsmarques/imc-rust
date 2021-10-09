@@ -2,6 +2,8 @@ use crate::Message::*;
 
 use crate::MessageList;
 
+use crate::DUNE_IMC_CONST_NULL_ID;
+
 use bytes::BufMut;
 
 use crate::Header::Header;
@@ -135,15 +137,7 @@ impl Message for SonarData {
 
         self._scale_factor = Default::default();
 
-        for msg in self._beam_config.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.clear();
-                }
-            }
-        }
+        self._beam_config = Default::default();
 
         self._data = Default::default();
     }
@@ -156,14 +150,7 @@ impl Message for SonarData {
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
 
-        for msg in self._beam_config.iter() {
-            match msg {
-                None => {}
-                Some(m) => {
-                    dyn_size += m.dynamic_serialization_size();
-                }
-            }
-        }
+        message_list_serialization_size!(dyn_size, self._beam_config);
 
         dyn_size += self._data.len() + 2;
 
@@ -177,15 +164,7 @@ impl Message for SonarData {
         bfr.put_u16_le(self._max_range);
         bfr.put_u8(self._bits_per_point);
         bfr.put_f32_le(self._scale_factor);
-        for msg in self._beam_config.iter() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.serialize_fields(bfr);
-                }
-            }
-        }
+        serialize_message_list!(bfr, self._beam_config);
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
@@ -202,14 +181,8 @@ impl Message for SonarData {
 
         self._scale_factor = bfr.get_f32_le();
 
-        for msg in self._beam_config.iter_mut() {
-            match msg {
-                None => {}
-
-                Some(m) => {
-                    m.deserialize_fields(bfr);
-                }
-            }
+        for m in self._beam_config.iter_mut() {
+            m.deserialize_fields(bfr);
         }
 
         deserialize_bytes!(bfr, self._data);
