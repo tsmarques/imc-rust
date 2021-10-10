@@ -1,10 +1,7 @@
-use crate::packet::ImcError::{BufferTooShort, InvalidCrc, InvalidMessageId, InvalidSync};
+use crate::packet::ImcError::{BufferTooShort, InvalidCrc, InvalidMessageId, InvalidSync, NullMessage};
 use crate::Header::Header;
 use crate::Message::Message;
-use crate::{
-    factory, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_SYNC, IMC_CONST_FOOTER_SIZE,
-    IMC_CONST_HEADER_SIZE,
-};
+use crate::{factory, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_SYNC, IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE, DUNE_IMC_CONST_NULL_ID};
 use bytes::{Buf, BufMut, IntoBuf};
 use crc16::{State, ARC};
 use std::borrow::Borrow;
@@ -21,6 +18,8 @@ pub enum ImcError {
     /// Invalid CRC16
     InvalidCrc,
     InvalidMessageId,
+    /// Null message found
+    NullMessage
 }
 
 /// Serialize complete message
@@ -86,6 +85,49 @@ pub fn deserialize(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, ImcErro
     Ok(msg)
 }
 
+/// Deserialize inline message without knowing à priori its type
+pub fn deserialize_inline(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, ImcError> {
+    let id :u16 = bfr.get_u16_le();
+
+    if id == DUNE_IMC_CONST_NULL_ID {
+        return Err(NullMessage);
+    }
+
+    let ret = factory::buildFromId(id);
+    if ret.is_none() {
+        return Err(ImcError::InvalidMessageId);
+    }
+
+    let mut msg = ret.unwrap();
+    msg.deserialize_fields(bfr);
+
+    Ok(msg)
+}
+
+/// Deserialize inline message assuming it is from type T
+pub fn deserialize_inline_as<T :Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, ImcError> {
+    let id :u16 = bfr.get_u16_le();
+
+    if id == DUNE_IMC_CONST_NULL_ID {
+        return Err(NullMessage);
+    }
+
+    if id != T::static_id() {
+        return Err(InvalidMessageId);
+    }
+
+    let hdr = Header::new(id);
+    let ret = factory::buildFrom::<T>(hdr);
+    if ret.is_none() {
+        return Err(InvalidMessageId);
+    }
+
+    let mut msg = ret.unwrap();
+    msg.deserialize_fields(bfr);
+
+    Ok(msg)
+}
+
 pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, ImcError> {
     // deserialize header
     let mut hdr: Header = Header::new(0);
@@ -111,7 +153,8 @@ pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, Im
     msg.deserialize_fields(bfr);
 
     let read_crc = bfr.get_u16_le();
-    if crc.get() != read_crc {
+    let crc_value = crc.get();
+    if crc_value != read_crc {
         return Err(InvalidCrc);
     }
 
