@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Entity parameter.
 #[derive(Default)]
 pub struct EntityParameter {

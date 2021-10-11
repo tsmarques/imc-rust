@@ -4,6 +4,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Command to obtain the operational limits in use by the vehicle.
 #[derive(Default)]
 pub struct GetOperationalLimits {

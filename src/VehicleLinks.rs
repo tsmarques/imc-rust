@@ -10,6 +10,8 @@ use crate::Header::Header;
 
 use crate::Announce::Announce;
 
+use crate::packet::*;
+
 /// This message is sent by the TREX task which gives further information to a TREX instance about connected IMC nodes
 #[derive(Default)]
 pub struct VehicleLinks {

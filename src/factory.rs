@@ -40,7 +40,7 @@ pub(crate) fn build(hdr: Header) -> Option<Box<dyn Message>> {
     return Option::from(msg);
 }
 
-pub(crate) fn buildFromId(id: u16) -> Option<Box<dyn Message>>{
+pub(crate) fn buildFromId(id: u16) -> Option<Box<dyn Message>> {
     match id {
         102 => Option::Some(Box::new(LoggingControl::new())),
         656 => Option::Some(Box::new(TrexAttribute::new())),

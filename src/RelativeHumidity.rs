@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Measurement of relative humidity.
 #[derive(Default)]
 pub struct RelativeHumidity {

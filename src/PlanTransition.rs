@@ -8,6 +8,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Describes a plan transition within a plan specification. A
 /// transition states the vehicle conditions that must be met to
 /// signal the transition, the maneuver that should be started as a

@@ -10,6 +10,8 @@ use crate::Header::Header;
 
 use crate::LblBeacon::LblBeacon;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Set LBL Configuration

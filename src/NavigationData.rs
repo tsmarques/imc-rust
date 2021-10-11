@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Report of navigation data.
 /// This is constituted by data which is not
 /// part of the vehicle estimated state but

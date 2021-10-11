@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Component of incremetal orientation vector over a period of time.
 #[derive(Default)]
 pub struct EulerAnglesDelta {

@@ -4,6 +4,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Request a list of known underwater acoustic systems. The
 /// recipient of this message shall reply with an AcousticSystems
 /// message.

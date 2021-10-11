@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum ControlOperationEnum {
     // Store
@@ -133,10 +135,6 @@ impl Message for CacheControl {
 
         deserialize_string!(bfr, self._snapshot);
 
-        match &mut self._message {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._message = deserialize_inline(bfr).ok();
     }
 }

@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Location of a specific device in the system infrastructure.
 #[derive(Default)]
 pub struct DeviceState {

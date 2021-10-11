@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Fluorescent Dissolved Organic Matter measurement.
 #[derive(Default)]
 pub struct FluorescentDissolvedOrganicMatter {

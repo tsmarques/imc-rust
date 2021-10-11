@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::Reference::Reference;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
     // Waiting for first reference
@@ -178,11 +180,7 @@ impl Message for FollowRefState {
 
         self._control_ent = bfr.get_u8();
 
-        match &mut self._reference {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._reference = deserialize_inline_as::<Reference>(bfr).ok();
 
         self._state = bfr.get_u8();
 

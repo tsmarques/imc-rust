@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::ControlCommand;
 
+use crate::packet::*;
+
 /// message-group: ControlCommand
-impl ControlCommand for DesiredZ {}
+// impl ControlCommand for DesiredZ { }
 
 /// Desired Z reference value for the control layer.
 /// message-group: ControlCommand

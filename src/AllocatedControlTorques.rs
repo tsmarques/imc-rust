@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Control torques allocated to the actuators.
 #[derive(Default)]
 pub struct AllocatedControlTorques {

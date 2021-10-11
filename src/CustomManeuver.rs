@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for CustomManeuver {}
+// impl Maneuver for CustomManeuver { }
 
 /// The Custom Maneuver message may be used as specification of a
 /// very specific maneuver not covered by the IMC scope. The

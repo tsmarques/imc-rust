@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message is used to store the various polygon vertices for
 /// CoverArea maneuvers.
 #[derive(Default)]

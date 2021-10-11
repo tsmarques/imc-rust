@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Position and configuration of an Ultra-Short Base Line modem.
 #[derive(Default)]
 pub struct UsblModem {

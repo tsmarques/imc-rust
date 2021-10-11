@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::ControlCommand;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Start Point
@@ -45,7 +47,7 @@ impl FlagsEnum {
 }
 
 /// message-group: ControlCommand
-impl ControlCommand for DesiredPath {}
+// impl ControlCommand for DesiredPath { }
 
 /// Indicates that takeoff should be done before going to the end position.
 /// message-group: ControlCommand

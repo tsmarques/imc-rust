@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Use Speed Reference in meters per second

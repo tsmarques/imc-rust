@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message contains the WGS-84 position of a target computed using
 /// USBL.
 #[derive(Default)]

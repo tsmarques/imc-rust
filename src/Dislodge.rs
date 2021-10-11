@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum DirectionEnum {
     // Let the vehicle decide
@@ -30,7 +32,7 @@ impl DirectionEnum {
 }
 
 /// message-group: Maneuver
-impl Maneuver for Dislodge {}
+// impl Maneuver for Dislodge { }
 
 /// A &quot;Dislodge&quot; is a maneuver ordering the vehicle to attempt a
 /// series of thruster operations that will hopefully get it

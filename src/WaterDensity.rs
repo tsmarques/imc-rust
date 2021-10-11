@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Water Density report.
 #[derive(Default)]
 pub struct WaterDensity {

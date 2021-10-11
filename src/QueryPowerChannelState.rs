@@ -4,6 +4,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Request the state of power channels.
 #[derive(Default)]
 pub struct QueryPowerChannelState {

@@ -12,8 +12,10 @@ use crate::PathPoint::PathPoint;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for FollowPath {}
+// impl Maneuver for FollowPath { }
 
 /// Maneuver constituted by a list of Path Points.
 /// message-group: Maneuver

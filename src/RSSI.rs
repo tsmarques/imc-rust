@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Measure of the RSSI by a networking device.
 /// Indicates the gain or loss in the signal strength due to the transmission and reception equipment and the transmission medium and distance.
 #[derive(Default)]

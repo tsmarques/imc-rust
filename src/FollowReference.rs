@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for FollowReference {}
+// impl Maneuver for FollowReference { }
 
 /// This maneuver follows a reference given by an external entity.
 /// message-group: Maneuver

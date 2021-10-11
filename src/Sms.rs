@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Send a SMS message.
 #[derive(Default)]
 pub struct Sms {

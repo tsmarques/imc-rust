@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
     // Request
@@ -71,7 +73,7 @@ pub struct VehicleCommand {
     pub _command: u8,
 
     /// Maneuver to be executed (for 'EXEC_MANEUVER' command)
-    pub _maneuver: Option<Box<dyn Maneuver>>,
+    pub _maneuver: Option<Box<dyn Message>>,
 
     /// Amount of time to calibrate
     pub _calib_time: u16,
@@ -181,11 +183,7 @@ impl Message for VehicleCommand {
 
         self._command = bfr.get_u8();
 
-        match &mut self._maneuver {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._maneuver = deserialize_inline(bfr).ok();
 
         self._calib_time = bfr.get_u16_le();
 

@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// When the vehicle uses Long Base Line navigation, this message
 /// notifies that a new range was received from one of the acoustics
 /// transponders. The message fields are used to identify the range

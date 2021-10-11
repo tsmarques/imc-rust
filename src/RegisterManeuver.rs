@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Command used to indicate maneuver can be executed in the
 /// vehicle.
 #[derive(Default)]

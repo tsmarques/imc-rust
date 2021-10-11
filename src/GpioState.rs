@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Current state of a GPIO.
 #[derive(Default)]
 pub struct GpioState {

@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// A text message has been received.
 #[derive(Default)]
 pub struct TextMessage {

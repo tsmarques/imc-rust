@@ -4,6 +4,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Query the activation/deactivation state of an entity. The
 /// recipient shall reply with an EntityActivationState message.
 #[derive(Default)]

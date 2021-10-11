@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message describes an entity.
 #[derive(Default)]
 pub struct EntityInfo {

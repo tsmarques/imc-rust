@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Square Curve
@@ -27,7 +29,7 @@ impl FlagsEnum {
 }
 
 /// message-group: Maneuver
-impl Maneuver for Rows {}
+// impl Maneuver for Rows { }
 
 /// Rows maneuver (i.e: lawn mower type maneuver)
 /// message-group: Maneuver

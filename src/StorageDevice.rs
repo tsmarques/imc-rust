@@ -10,6 +10,8 @@ use crate::Header::Header;
 
 use crate::StoragePartition::StoragePartition;
 
+use crate::packet::*;
+
 /// Storage device information (e.g disk, usb flash, etc). NOTE: This is different from a partition
 #[derive(Default)]
 pub struct StorageDevice {

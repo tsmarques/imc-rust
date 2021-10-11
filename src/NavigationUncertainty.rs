@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Report of navigation uncertainty.
 /// This is usually given by the output of the state
 /// covariance matrix of an Extended Kalman Filter.

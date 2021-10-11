@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for FollowCommand {}
+// impl Maneuver for FollowCommand { }
 
 /// This maneuver follows a direct command given by an external entity.
 /// message-group: Maneuver

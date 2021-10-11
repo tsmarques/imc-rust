@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message is used to send a periodic update of values for
 /// each remote action. If the action is not on the list the assumed
 /// value is 0.

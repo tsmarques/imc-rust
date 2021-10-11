@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Number of revolutions per minute.
 #[derive(Default)]
 pub struct Rpm {

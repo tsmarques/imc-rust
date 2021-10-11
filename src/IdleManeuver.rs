@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for IdleManeuver {}
+// impl Maneuver for IdleManeuver { }
 
 /// Causes the vehicle to stay idle for some time.
 /// message-group: Maneuver

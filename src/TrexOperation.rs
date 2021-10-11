@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::TrexToken::TrexToken;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Post Token
@@ -134,10 +136,6 @@ impl Message for TrexOperation {
 
         deserialize_string!(bfr, self._goal_id);
 
-        match &mut self._token {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._token = deserialize_inline_as::<TrexToken>(bfr).ok();
     }
 }

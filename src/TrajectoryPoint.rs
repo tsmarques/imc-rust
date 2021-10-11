@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Waypoint coordinate of a Follow Trajectory maneuver.
 #[derive(Default)]
 pub struct TrajectoryPoint {

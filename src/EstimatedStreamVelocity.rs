@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// The estimated stream velocity, typically for water or air
 /// streams.
 #[derive(Default)]

@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Event of a specific hardware button.
 #[derive(Default)]
 pub struct ButtonEvent {

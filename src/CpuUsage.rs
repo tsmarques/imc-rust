@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Report of software CPU usage.
 #[derive(Default)]
 pub struct CpuUsage {

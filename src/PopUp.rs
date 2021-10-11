@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Start from current position
@@ -30,7 +32,7 @@ impl FlagsEnum {
 }
 
 /// message-group: Maneuver
-impl Maneuver for PopUp {}
+// impl Maneuver for PopUp { }
 
 /// This flag will only make sense if WAIT_AT_SURFACE is also set.
 /// While holding position at surface the vehicle will assume a

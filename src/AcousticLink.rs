@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message is used to report the perceived link quality to other
 /// acoustic peers.
 #[derive(Default)]

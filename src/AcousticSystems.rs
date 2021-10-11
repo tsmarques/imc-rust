@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message is sent in reply to an AcousticSystemsQuery message
 /// and lists all known underwater acoustic systems (modems, narrow
 /// band transponders, etc).

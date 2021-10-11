@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Report of Redox Potential.
 #[derive(Default)]
 pub struct Redox {

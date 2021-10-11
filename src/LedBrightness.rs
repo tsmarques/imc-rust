@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Brightness value of an LED (Light-Emitting Diode).
 #[derive(Default)]
 pub struct LedBrightness {

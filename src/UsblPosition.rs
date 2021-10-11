@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message contains information, collected using USBL, about a
 /// target's position.
 #[derive(Default)]

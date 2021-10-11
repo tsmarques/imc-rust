@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for Alignment {}
+// impl Maneuver for Alignment { }
 
 /// An &quot;Alignment&quot; is a maneuver specifying a movement of the vehicle to a
 /// target waypoint intended to control activation of an IMU/INS in order

@@ -12,8 +12,10 @@ use crate::TrajectoryPoint::TrajectoryPoint;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for FollowTrajectory {}
+// impl Maneuver for FollowTrajectory { }
 
 /// Maneuver constituted by a list of Trajectory Points.
 /// message-group: Maneuver

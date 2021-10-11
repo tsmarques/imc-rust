@@ -6,9 +6,11 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::DesiredSpeed::DesiredSpeed;
+
 use crate::DesiredZ::DesiredZ;
 
-use crate::DesiredSpeed::DesiredSpeed;
+use crate::packet::*;
 
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
@@ -158,17 +160,9 @@ impl Message for Reference {
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
         self._flags = bfr.get_u8();
 
-        match &mut self._speed {
-            None => {}
+        self._speed = deserialize_inline_as::<DesiredSpeed>(bfr).ok();
 
-            Some(m) => m.deserialize_fields(bfr),
-        };
-
-        match &mut self._z {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._z = deserialize_inline_as::<DesiredZ>(bfr).ok();
 
         self._lat = bfr.get_f64_le();
 

@@ -10,6 +10,8 @@ use crate::Header::Header;
 
 use crate::BeamConfig::BeamConfig;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
     // Sidescan

@@ -10,6 +10,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// Named plan maneuver.
 #[derive(Default)]
 pub struct PlanManeuver {
@@ -20,7 +22,7 @@ pub struct PlanManeuver {
     pub _maneuver_id: String,
 
     /// The maneuver specification.
-    pub _data: Option<Box<Maneuver>>,
+    pub _data: Option<Box<dyn Message>>,
 
     /// Contains an optionally defined 'MessageList' for actions fired
     /// on plan activation.
@@ -122,11 +124,7 @@ impl Message for PlanManeuver {
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
         deserialize_string!(bfr, self._maneuver_id);
 
-        match &mut self._data {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._data = deserialize_inline(bfr).ok();
 
         for m in self._start_actions.iter_mut() {
             m.deserialize_fields(bfr);

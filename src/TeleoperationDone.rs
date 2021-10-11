@@ -4,6 +4,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Notification of completion of a Teleoperation maneuver.
 #[derive(Default)]
 pub struct TeleoperationDone {

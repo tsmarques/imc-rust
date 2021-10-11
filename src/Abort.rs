@@ -4,6 +4,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Stops any executing actions and put the system in a standby mode.
 #[derive(Default)]
 pub struct Abort {

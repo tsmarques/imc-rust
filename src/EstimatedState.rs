@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message presents the estimated state of the vehicle.
 ///  
 /// EstimatedState is a complete description of the system

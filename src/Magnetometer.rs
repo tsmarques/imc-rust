@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum DirectionEnum {
     // Clockwise First
@@ -27,7 +29,7 @@ impl DirectionEnum {
 }
 
 /// message-group: Maneuver
-impl Maneuver for Magnetometer {}
+// impl Maneuver for Magnetometer { }
 
 /// Magnetometer calibration maneuver (i.e: one square pattern
 /// in one direction, a second square in the opposite direction)

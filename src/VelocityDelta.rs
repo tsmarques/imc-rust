@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Component of incremetal velocity vector.
 #[derive(Default)]
 pub struct VelocityDelta {

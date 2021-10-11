@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Fluorescein measurement.
 #[derive(Default)]
 pub struct Fluorescein {

@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::LblBeacon::LblBeacon;
 
+use crate::packet::*;
+
 /// LBL Beacon position estimate.
 #[derive(Default)]
 pub struct LblEstimate {
@@ -128,11 +130,7 @@ impl Message for LblEstimate {
     }
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
-        match &mut self._beacon {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._beacon = deserialize_inline_as::<LblBeacon>(bfr).ok();
 
         self._x = bfr.get_f32_le();
 

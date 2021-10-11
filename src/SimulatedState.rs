@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message presents the simulated state of the vehicle. The simulated
 /// state attempts to provide a realistic state interpretation of operating
 /// various kinds of vehicles.

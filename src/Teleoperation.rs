@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for Teleoperation {}
+// impl Maneuver for Teleoperation { }
 
 /// The Teleoperation Maneuver lets the vehicle be controlled by an
 /// external human operator.

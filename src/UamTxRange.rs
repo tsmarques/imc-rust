@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Request an acoustic modem driver to measure the distance to another system.
 #[derive(Default)]
 pub struct UamTxRange {

@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for Launch {}
+// impl Maneuver for Launch { }
 
 /// A &quot;Launch&quot; is a maneuver specifying a movement of the vehicle to a
 /// target waypoint after being launched from a ship or pier.

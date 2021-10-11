@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Abort
@@ -182,10 +184,6 @@ impl Message for AcousticOperation {
 
         self._range = bfr.get_f32_le();
 
-        match &mut self._msg {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._msg = deserialize_inline(bfr).ok();
     }
 }

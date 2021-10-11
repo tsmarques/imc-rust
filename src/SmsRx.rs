@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Received SMS data.
 #[derive(Default)]
 pub struct SmsRx {

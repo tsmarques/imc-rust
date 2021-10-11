@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Position and configuration of an LBL transponder (beacon).
 #[derive(Default)]
 pub struct LblBeacon {

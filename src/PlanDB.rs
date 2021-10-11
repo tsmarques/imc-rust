@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
     // Request
@@ -205,11 +207,7 @@ impl Message for PlanDB {
 
         deserialize_string!(bfr, self._plan_id);
 
-        match &mut self._arg {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._arg = deserialize_inline(bfr).ok();
 
         deserialize_string!(bfr, self._info);
     }

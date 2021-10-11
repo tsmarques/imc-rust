@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This messages is used to record system activity parameters. These
 /// parameters are mainly used for used for maintenance purposes.
 #[derive(Default)]

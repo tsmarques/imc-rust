@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Control the brightness of an LED (Light-Emitting Diode). The
 /// recipient of this message shall set the intensity of the LED to
 /// the desired 'value' and reply with 'LedBrightness'.

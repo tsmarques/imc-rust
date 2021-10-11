@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Report of storage usage.
 #[derive(Default)]
 pub struct StorageUsage {

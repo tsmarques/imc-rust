@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Information regarding a sent/received Sonar pulse.
 #[derive(Default)]
 pub struct SonarPulse {

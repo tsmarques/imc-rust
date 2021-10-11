@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for YoYo {}
+// impl Maneuver for YoYo { }
 
 /// A &quot;yo-yo&quot; is a maneuver specifying a vehicle movement to a
 /// target waypoint in which depth/altitude varies along the way

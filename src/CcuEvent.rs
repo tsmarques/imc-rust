@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum EventTypeEnum {
     // Log Book Entry Added
@@ -142,10 +144,6 @@ impl Message for CcuEvent {
 
         deserialize_string!(bfr, self._id);
 
-        match &mut self._arg {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._arg = deserialize_inline(bfr).ok();
     }
 }

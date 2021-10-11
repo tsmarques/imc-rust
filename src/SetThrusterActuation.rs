@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Actuate directly on a thruster.
 #[derive(Default)]
 pub struct SetThrusterActuation {

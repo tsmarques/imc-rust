@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Definition of operational limits.
 #[derive(Default)]
 pub struct OperationalLimits {

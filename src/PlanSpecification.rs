@@ -10,9 +10,11 @@ use crate::Header::Header;
 
 use crate::PlanManeuver::PlanManeuver;
 
+use crate::PlanVariable::PlanVariable;
+
 use crate::PlanTransition::PlanTransition;
 
-use crate::PlanVariable::PlanVariable;
+use crate::packet::*;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in

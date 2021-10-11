@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum DirectionEnum {
     // Vehicle Dependent
@@ -33,7 +35,7 @@ impl DirectionEnum {
 }
 
 /// message-group: Maneuver
-impl Maneuver for CompassCalibration {}
+// impl Maneuver for CompassCalibration { }
 
 /// This maneuver is a mix between the Loiter maneuver and the YoYo maneuver.
 /// The vehicle cirlcles around a specific waypoint with a variable Z

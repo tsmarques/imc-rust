@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for Goto {}
+// impl Maneuver for Goto { }
 
 /// A &quot;Goto&quot; is a maneuver specifying a movement of the vehicle to a
 /// target waypoint. The waypoint is described by the WGS-84

@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::Command::Command;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
     // Waiting for first command
@@ -143,11 +145,7 @@ impl Message for FollowCommandState {
 
         self._control_ent = bfr.get_u8();
 
-        match &mut self._command {
-            None => {}
-
-            Some(m) => m.deserialize_fields(bfr),
-        };
+        self._command = deserialize_inline_as::<Command>(bfr).ok();
 
         self._state = bfr.get_u8();
     }

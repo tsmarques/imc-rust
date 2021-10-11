@@ -1,7 +1,12 @@
-use crate::packet::ImcError::{BufferTooShort, InvalidCrc, InvalidMessageId, InvalidSync, NullMessage};
+use crate::packet::ImcError::{
+    BufferTooShort, InvalidCrc, InvalidMessageId, InvalidSync, NullMessage,
+};
 use crate::Header::Header;
 use crate::Message::Message;
-use crate::{factory, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_SYNC, IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE, DUNE_IMC_CONST_NULL_ID};
+use crate::{
+    factory, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_NULL_ID, DUNE_IMC_CONST_SYNC,
+    IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE,
+};
 use bytes::{Buf, BufMut, IntoBuf};
 use crc16::{State, ARC};
 use std::borrow::Borrow;
@@ -19,7 +24,7 @@ pub enum ImcError {
     InvalidCrc,
     InvalidMessageId,
     /// Null message found
-    NullMessage
+    NullMessage,
 }
 
 /// Serialize complete message
@@ -87,7 +92,7 @@ pub fn deserialize(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, ImcErro
 
 /// Deserialize inline message without knowing à priori its type
 pub fn deserialize_inline(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, ImcError> {
-    let id :u16 = bfr.get_u16_le();
+    let id: u16 = bfr.get_u16_le();
 
     if id == DUNE_IMC_CONST_NULL_ID {
         return Err(NullMessage);
@@ -105,8 +110,8 @@ pub fn deserialize_inline(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, 
 }
 
 /// Deserialize inline message assuming it is from type T
-pub fn deserialize_inline_as<T :Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, ImcError> {
-    let id :u16 = bfr.get_u16_le();
+pub fn deserialize_inline_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, ImcError> {
+    let id: u16 = bfr.get_u16_le();
 
     if id == DUNE_IMC_CONST_NULL_ID {
         return Err(NullMessage);

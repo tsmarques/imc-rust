@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Start from current position
@@ -24,7 +26,7 @@ impl FlagsEnum {
 }
 
 /// message-group: Maneuver
-impl Maneuver for Elevator {}
+// impl Maneuver for Elevator { }
 
 /// If this flag is set, lat/lon/start_z fields should be
 /// ignored and current vehicle position should be considered as

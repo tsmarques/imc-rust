@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Report of spatial orientation according to SNAME's notation
 /// (1950).
 #[derive(Default)]

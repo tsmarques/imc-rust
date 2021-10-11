@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Beam configuration of the device.
 #[derive(Default)]
 pub struct BeamConfig {

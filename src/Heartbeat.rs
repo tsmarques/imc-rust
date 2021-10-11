@@ -4,6 +4,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// The Heartbeat message is used to inform other modules that the
 /// sending entity's system is running normally and communications
 /// are alive.

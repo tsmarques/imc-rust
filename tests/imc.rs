@@ -1,6 +1,7 @@
 use bytes::{BufMut, IntoBuf};
 use crc16::{State, ARC};
 use imc::packet::{crc, deserializeHeader};
+use imc::Alignment::Alignment;
 use imc::EstimatedState::EstimatedState;
 use imc::EstimatedStreamVelocity::EstimatedStreamVelocity;
 use imc::FollowReference::FollowReference;
@@ -14,6 +15,7 @@ use imc::PlanManeuver::PlanManeuver;
 use imc::PlanSpecification::PlanSpecification;
 use imc::PlanTransition::PlanTransition;
 use imc::PlanVariable::PlanVariable;
+use imc::VehicleCommand::VehicleCommand;
 use imc::{IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE};
 
 #[test]
@@ -269,4 +271,51 @@ fn test_PlanTransition() {
     let ret = imc::packet::serialize(&mut msg, &mut bfr);
     assert!(ret.is_ok());
     assert_eq!(ret.ok().unwrap(), msg.serialization_size());
+}
+
+#[test]
+fn test_VehicleCommand() {
+    let mut msg: VehicleCommand = VehicleCommand::new();
+    msg.set_timestamp_secs(0.3256085741897383);
+    msg.set_source(55716);
+    msg.set_source_ent(122);
+    msg.set_destination(36257);
+    msg.set_destination_ent(166);
+    msg._type = 27;
+    msg._request_id = 31451;
+    msg._command = 91;
+
+    assert_eq!(msg.dynamic_serialization_size(), 4);
+    assert_eq!(msg.serialization_size(), 32);
+
+    let mut tmp_msg_0: Alignment = Alignment::new();
+    tmp_msg_0._timeout = 49484;
+    tmp_msg_0._lat = 0.6773872429275245;
+    tmp_msg_0._lon = 0.9711109462825693;
+    tmp_msg_0._speed = 0.9415963179494303;
+    tmp_msg_0._speed_units = 127;
+    tmp_msg_0._custom = String::from("AXPZXRJRIRYJDOTDHPKSNOXZJTYCUHIMUPKIXGBGUWSOGRGLUFTLPWPIR");
+
+    assert_eq!(tmp_msg_0.dynamic_serialization_size(), 59);
+    assert_eq!(tmp_msg_0.serialization_size(), 104);
+
+    msg._maneuver = Option::Some(Box::new(tmp_msg_0));
+    msg._calib_time = 61097;
+    msg._info = String::from("PYOMQYPTDKBVVXAKSFWGBURXTJNDVXJFVRFOSDXJBIDOFGRSSTAIEBWSMMJPZJGZVFOHIHITMDUZGKQWTYZCACVMPCOLBHLCEUHBODRQAXGRYUNBXDGQGWHZMSQJMNIJZCNHVVQEBPBLKWIARKLLHAYSVSEFYRKJNNCXKQEITXNZAHLMVMUCPPEYFONF");
+
+    assert_eq!(msg.dynamic_serialization_size(), 274);
+    assert_eq!(msg.serialization_size(), 302);
+
+    let mut bfr: bytes::BytesMut = bytes::BytesMut::with_capacity(msg.serialization_size());
+
+    let ret = imc::packet::serialize(&mut msg, &mut bfr);
+    assert!(ret.is_ok());
+    assert_eq!(ret.ok().unwrap(), msg.serialization_size());
+
+    let inbfr = bytes::Bytes::from(bfr);
+    let ret = imc::packet::deserialize(&mut inbfr.into_buf());
+    assert!(ret.is_ok());
+
+    let mut msg2 = ret.ok().unwrap();
+    assert_eq!(msg.get_header(), msg2.get_header());
 }

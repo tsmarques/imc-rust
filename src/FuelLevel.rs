@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Report of fuel level.
 #[derive(Default)]
 pub struct FuelLevel {

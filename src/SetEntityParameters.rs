@@ -10,6 +10,8 @@ use crate::Header::Header;
 
 use crate::EntityParameter::EntityParameter;
 
+use crate::packet::*;
+
 #[derive(Default)]
 pub struct SetEntityParameters {
     /// IMC Header

@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Query the brightness of an LED (Light-Emitting Diode). The
 /// recipient of this message shall reply with 'LedBrightness'.
 #[derive(Default)]

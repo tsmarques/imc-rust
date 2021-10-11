@@ -8,6 +8,8 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 #[allow(non_camel_case_types)]
 pub enum LoiterTypeEnum {
     // Default
@@ -60,7 +62,7 @@ impl DirectionEnum {
 }
 
 /// message-group: Maneuver
-impl Maneuver for Loiter {}
+// impl Maneuver for Loiter { }
 
 /// The Loiter maneuver makes the vehicle circle around a specific
 /// waypoint with fixed depth reference.

@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Vector quantifying the direction and magnitude of the measured
 /// acceleration that a device is exposed to.
 #[derive(Default)]

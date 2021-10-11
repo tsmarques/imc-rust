@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Request information about an entity identifier. The receiving
 /// system shall reply with an EntityInfo message with the details
 /// of that entity.

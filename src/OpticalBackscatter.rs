@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// The optical backscattering coefficient refers to all the photons that have been redirected in the backward directions
 /// when a photon of light propagates in water and interacts with a &quot;particle&quot; (varying from water molecules to fish).
 #[derive(Default)]

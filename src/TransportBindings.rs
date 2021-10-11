@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Message generated when tasks bind to messages.
 #[derive(Default)]
 pub struct TransportBindings {

@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Set the position of a servo.
 #[derive(Default)]
 pub struct SetServoPosition {

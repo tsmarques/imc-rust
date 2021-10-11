@@ -10,6 +10,8 @@ use crate::Header::Header;
 
 use crate::PlanDBInformation::PlanDBInformation;
 
+use crate::packet::*;
+
 /// Characterizes the state of the entire plan database.
 #[derive(Default)]
 pub struct PlanDBState {

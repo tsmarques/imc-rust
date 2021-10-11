@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Desired Heading Rate speed reference value for the control layer.
 #[derive(Default)]
 pub struct DesiredHeadingRate {

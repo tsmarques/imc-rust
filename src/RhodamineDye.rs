@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Rhodamine Dye measurement.
 #[derive(Default)]
 pub struct RhodamineDye {

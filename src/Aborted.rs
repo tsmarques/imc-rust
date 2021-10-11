@@ -4,6 +4,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message signals that an :ref:`Abort` message was received and acted upon.
 #[derive(Default)]
 pub struct Aborted {

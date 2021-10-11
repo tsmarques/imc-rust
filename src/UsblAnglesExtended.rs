@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// This message contains information, collected using USBL, about the
 /// bearing and elevation of a target.
 #[derive(Default)]

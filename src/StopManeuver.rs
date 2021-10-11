@@ -4,6 +4,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Command used to stop currently executing maneuver.
 #[derive(Default)]
 pub struct StopManeuver {

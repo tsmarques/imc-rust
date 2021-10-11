@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::*;
+
 /// message-group: Maneuver
-impl Maneuver for StationKeeping {}
+// impl Maneuver for StationKeeping { }
 
 /// The Station Keeping maneuver makes the vehicle come to the surface
 /// and then enter a given circular perimeter around a waypoint coordinate

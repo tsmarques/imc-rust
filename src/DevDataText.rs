@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Verbatim representation of device data in plain text format.
 #[derive(Default)]
 pub struct DevDataText {

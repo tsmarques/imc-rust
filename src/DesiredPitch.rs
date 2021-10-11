@@ -8,8 +8,10 @@ use crate::Header::Header;
 
 use crate::MessageGroup::ControlCommand;
 
+use crate::packet::*;
+
 /// message-group: ControlCommand
-impl ControlCommand for DesiredPitch {}
+// impl ControlCommand for DesiredPitch { }
 
 /// Desired Pitch angle reference value for the control layer.
 /// message-group: ControlCommand

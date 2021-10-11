@@ -10,6 +10,8 @@ use crate::Header::Header;
 
 use crate::TrexAttribute::TrexAttribute;
 
+use crate::packet::*;
+
 #[derive(Default)]
 pub struct TrexToken {
     /// IMC Header

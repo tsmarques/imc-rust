@@ -10,6 +10,8 @@ use crate::Header::Header;
 
 use crate::EntityParameter::EntityParameter;
 
+use crate::packet::*;
+
 /// List of entity parameters.
 #[derive(Default)]
 pub struct EntityParameters {

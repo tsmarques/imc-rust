@@ -6,6 +6,8 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::*;
+
 /// Request the state of a given GPIO. The receiving entity shall reply
 /// with a GpioState message.
 #[derive(Default)]
