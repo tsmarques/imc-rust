@@ -148,11 +148,8 @@ impl Message for AcousticOperation {
         self.header.clear();
 
         self._op = Default::default();
-
         self._system = Default::default();
-
         self._range = Default::default();
-
         self._msg = Default::default();
     }
 
@@ -180,11 +177,8 @@ impl Message for AcousticOperation {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         deserialize_string!(bfr, self._system);
-
         self._range = bfr.get_f32_le();
-
         self._msg = deserialize_inline(bfr).ok();
 
         Ok(())

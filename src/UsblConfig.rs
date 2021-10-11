@@ -97,7 +97,6 @@ impl Message for UsblConfig {
         self.header.clear();
 
         self._op = Default::default();
-
         self._modems = Default::default();
     }
 
@@ -121,7 +120,6 @@ impl Message for UsblConfig {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         self._modems = deserialize_message_list_as::<UsblModem>(bfr)?;
 
         Ok(())

@@ -77,11 +77,8 @@ impl Message for MessagePart {
         self.header.clear();
 
         self._uid = Default::default();
-
         self._frag_number = Default::default();
-
         self._num_frags = Default::default();
-
         self._data = Default::default();
     }
 
@@ -107,11 +104,8 @@ impl Message for MessagePart {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._uid = bfr.get_u8();
-
         self._frag_number = bfr.get_u8();
-
         self._num_frags = bfr.get_u8();
-
         deserialize_bytes!(bfr, self._data);
 
         Ok(())

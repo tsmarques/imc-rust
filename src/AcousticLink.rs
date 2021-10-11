@@ -86,9 +86,7 @@ impl Message for AcousticLink {
         self.header.clear();
 
         self._peer = Default::default();
-
         self._rssi = Default::default();
-
         self._integrity = Default::default();
     }
 
@@ -113,9 +111,7 @@ impl Message for AcousticLink {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._peer);
-
         self._rssi = bfr.get_f32_le();
-
         self._integrity = bfr.get_u16_le();
 
         Ok(())

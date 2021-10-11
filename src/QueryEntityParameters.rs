@@ -73,9 +73,7 @@ impl Message for QueryEntityParameters {
         self.header.clear();
 
         self._name = Default::default();
-
         self._visibility = Default::default();
-
         self._scope = Default::default();
     }
 
@@ -104,9 +102,7 @@ impl Message for QueryEntityParameters {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
-
         deserialize_string!(bfr, self._visibility);
-
         deserialize_string!(bfr, self._scope);
 
         Ok(())

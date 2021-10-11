@@ -107,9 +107,7 @@ impl Message for ClockControl {
         self.header.clear();
 
         self._op = Default::default();
-
         self._clock = Default::default();
-
         self._tz = Default::default();
     }
 
@@ -130,9 +128,7 @@ impl Message for ClockControl {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         self._clock = bfr.get_f64_le();
-
         self._tz = bfr.get_i8();
 
         Ok(())

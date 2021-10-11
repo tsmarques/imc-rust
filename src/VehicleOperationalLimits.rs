@@ -179,39 +179,22 @@ impl Message for VehicleOperationalLimits {
         self.header.clear();
 
         self._op = Default::default();
-
         self._speed_min = Default::default();
-
         self._speed_max = Default::default();
-
         self._long_accel = Default::default();
-
         self._alt_max_msl = Default::default();
-
         self._dive_fraction_max = Default::default();
-
         self._climb_fraction_max = Default::default();
-
         self._bank_max = Default::default();
-
         self._p_max = Default::default();
-
         self._pitch_min = Default::default();
-
         self._pitch_max = Default::default();
-
         self._q_max = Default::default();
-
         self._g_min = Default::default();
-
         self._g_max = Default::default();
-
         self._g_lat_max = Default::default();
-
         self._rpm_min = Default::default();
-
         self._rpm_max = Default::default();
-
         self._rpm_rate_max = Default::default();
     }
 
@@ -247,39 +230,22 @@ impl Message for VehicleOperationalLimits {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         self._speed_min = bfr.get_f32_le();
-
         self._speed_max = bfr.get_f32_le();
-
         self._long_accel = bfr.get_f32_le();
-
         self._alt_max_msl = bfr.get_f32_le();
-
         self._dive_fraction_max = bfr.get_f32_le();
-
         self._climb_fraction_max = bfr.get_f32_le();
-
         self._bank_max = bfr.get_f32_le();
-
         self._p_max = bfr.get_f32_le();
-
         self._pitch_min = bfr.get_f32_le();
-
         self._pitch_max = bfr.get_f32_le();
-
         self._q_max = bfr.get_f32_le();
-
         self._g_min = bfr.get_f32_le();
-
         self._g_max = bfr.get_f32_le();
-
         self._g_lat_max = bfr.get_f32_le();
-
         self._rpm_min = bfr.get_f32_le();
-
         self._rpm_max = bfr.get_f32_le();
-
         self._rpm_rate_max = bfr.get_f32_le();
 
         Ok(())

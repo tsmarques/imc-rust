@@ -76,7 +76,6 @@ impl Message for VehicleLinks {
         self.header.clear();
 
         self._localname = Default::default();
-
         self._links = Default::default();
     }
 
@@ -102,7 +101,6 @@ impl Message for VehicleLinks {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._localname);
-
         self._links = deserialize_message_list_as::<Announce>(bfr)?;
 
         Ok(())

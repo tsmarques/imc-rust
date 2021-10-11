@@ -91,7 +91,6 @@ impl Message for AnnounceService {
         self.header.clear();
 
         self._service = Default::default();
-
         self._service_type = Default::default();
     }
 
@@ -115,7 +114,6 @@ impl Message for AnnounceService {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._service);
-
         self._service_type = bfr.get_u8();
 
         Ok(())

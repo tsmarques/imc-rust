@@ -96,15 +96,10 @@ impl Message for LblEstimate {
         self.header.clear();
 
         self._beacon = Default::default();
-
         self._x = Default::default();
-
         self._y = Default::default();
-
         self._var_x = Default::default();
-
         self._var_y = Default::default();
-
         self._distance = Default::default();
     }
 
@@ -132,15 +127,10 @@ impl Message for LblEstimate {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._beacon = deserialize_inline_as::<LblBeacon>(bfr).ok();
-
         self._x = bfr.get_f32_le();
-
         self._y = bfr.get_f32_le();
-
         self._var_x = bfr.get_f32_le();
-
         self._var_y = bfr.get_f32_le();
-
         self._distance = bfr.get_f32_le();
 
         Ok(())

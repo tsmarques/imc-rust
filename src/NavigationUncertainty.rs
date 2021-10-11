@@ -137,31 +137,18 @@ impl Message for NavigationUncertainty {
         self.header.clear();
 
         self._x = Default::default();
-
         self._y = Default::default();
-
         self._z = Default::default();
-
         self._phi = Default::default();
-
         self._theta = Default::default();
-
         self._psi = Default::default();
-
         self._p = Default::default();
-
         self._q = Default::default();
-
         self._r = Default::default();
-
         self._u = Default::default();
-
         self._v = Default::default();
-
         self._w = Default::default();
-
         self._bias_psi = Default::default();
-
         self._bias_r = Default::default();
     }
 
@@ -193,31 +180,18 @@ impl Message for NavigationUncertainty {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._x = bfr.get_f32_le();
-
         self._y = bfr.get_f32_le();
-
         self._z = bfr.get_f32_le();
-
         self._phi = bfr.get_f32_le();
-
         self._theta = bfr.get_f32_le();
-
         self._psi = bfr.get_f32_le();
-
         self._p = bfr.get_f32_le();
-
         self._q = bfr.get_f32_le();
-
         self._r = bfr.get_f32_le();
-
         self._u = bfr.get_f32_le();
-
         self._v = bfr.get_f32_le();
-
         self._w = bfr.get_f32_le();
-
         self._bias_psi = bfr.get_f32_le();
-
         self._bias_r = bfr.get_f32_le();
 
         Ok(())

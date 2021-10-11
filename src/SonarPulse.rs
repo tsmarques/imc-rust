@@ -82,11 +82,8 @@ impl Message for SonarPulse {
         self.header.clear();
 
         self._frequency = Default::default();
-
         self._pulse_length = Default::default();
-
         self._time_delay = Default::default();
-
         self._simulated_speed = Default::default();
     }
 
@@ -108,11 +105,8 @@ impl Message for SonarPulse {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._frequency = bfr.get_i32_le();
-
         self._pulse_length = bfr.get_i32_le();
-
         self._time_delay = bfr.get_i32_le();
-
         self._simulated_speed = bfr.get_i32_le();
 
         Ok(())

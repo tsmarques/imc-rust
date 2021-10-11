@@ -101,9 +101,7 @@ impl Message for IridiumTxStatus {
         self.header.clear();
 
         self._req_id = Default::default();
-
         self._status = Default::default();
-
         self._text = Default::default();
     }
 
@@ -128,9 +126,7 @@ impl Message for IridiumTxStatus {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._req_id = bfr.get_u16_le();
-
         self._status = bfr.get_u8();
-
         deserialize_string!(bfr, self._text);
 
         Ok(())

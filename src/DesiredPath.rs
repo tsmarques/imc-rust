@@ -178,29 +178,17 @@ impl Message for DesiredPath {
         self.header.clear();
 
         self._path_ref = Default::default();
-
         self._start_lat = Default::default();
-
         self._start_lon = Default::default();
-
         self._start_z = Default::default();
-
         self._start_z_units = Default::default();
-
         self._end_lat = Default::default();
-
         self._end_lon = Default::default();
-
         self._end_z = Default::default();
-
         self._end_z_units = Default::default();
-
         self._speed = Default::default();
-
         self._speed_units = Default::default();
-
         self._lradius = Default::default();
-
         self._flags = Default::default();
     }
 
@@ -231,29 +219,17 @@ impl Message for DesiredPath {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._path_ref = bfr.get_u32_le();
-
         self._start_lat = bfr.get_f64_le();
-
         self._start_lon = bfr.get_f64_le();
-
         self._start_z = bfr.get_f32_le();
-
         self._start_z_units = bfr.get_u8();
-
         self._end_lat = bfr.get_f64_le();
-
         self._end_lon = bfr.get_f64_le();
-
         self._end_z = bfr.get_f32_le();
-
         self._end_z_units = bfr.get_u8();
-
         self._speed = bfr.get_f32_le();
-
         self._speed_units = bfr.get_u8();
-
         self._lradius = bfr.get_f32_le();
-
         self._flags = bfr.get_u8();
 
         Ok(())

@@ -145,13 +145,9 @@ impl Message for FollowRefState {
         self.header.clear();
 
         self._control_src = Default::default();
-
         self._control_ent = Default::default();
-
         self._reference = Default::default();
-
         self._state = Default::default();
-
         self._proximity = Default::default();
     }
 
@@ -178,13 +174,9 @@ impl Message for FollowRefState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._control_src = bfr.get_u16_le();
-
         self._control_ent = bfr.get_u8();
-
         self._reference = deserialize_inline_as::<Reference>(bfr).ok();
-
         self._state = bfr.get_u8();
-
         self._proximity = bfr.get_u8();
 
         Ok(())

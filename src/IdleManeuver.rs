@@ -79,7 +79,6 @@ impl Message for IdleManeuver {
         self.header.clear();
 
         self._duration = Default::default();
-
         self._custom = Default::default();
     }
 
@@ -103,7 +102,6 @@ impl Message for IdleManeuver {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._duration = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._custom);
 
         Ok(())

@@ -72,7 +72,6 @@ impl Message for TextMessage {
         self.header.clear();
 
         self._origin = Default::default();
-
         self._text = Default::default();
     }
 
@@ -98,7 +97,6 @@ impl Message for TextMessage {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._origin);
-
         deserialize_string!(bfr, self._text);
 
         Ok(())

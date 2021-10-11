@@ -106,9 +106,7 @@ impl Message for LogBookControl {
         self.header.clear();
 
         self._command = Default::default();
-
         self._htime = Default::default();
-
         self._msg = Default::default();
     }
 
@@ -133,9 +131,7 @@ impl Message for LogBookControl {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._command = bfr.get_u8();
-
         self._htime = bfr.get_f64_le();
-
         self._msg = deserialize_message_list_as::<LogBookEntry>(bfr)?;
 
         Ok(())

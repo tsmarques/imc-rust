@@ -79,7 +79,6 @@ impl Message for DesiredSpeed {
         self.header.clear();
 
         self._value = Default::default();
-
         self._speed_units = Default::default();
     }
 
@@ -99,7 +98,6 @@ impl Message for DesiredSpeed {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f64_le();
-
         self._speed_units = bfr.get_u8();
 
         Ok(())

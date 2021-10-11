@@ -91,7 +91,6 @@ impl Message for EntityList {
         self.header.clear();
 
         self._op = Default::default();
-
         self._list = Default::default();
     }
 
@@ -115,7 +114,6 @@ impl Message for EntityList {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         deserialize_string!(bfr, self._list);
 
         Ok(())

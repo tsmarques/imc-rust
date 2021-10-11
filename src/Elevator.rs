@@ -151,27 +151,16 @@ impl Message for Elevator {
         self.header.clear();
 
         self._timeout = Default::default();
-
         self._flags = Default::default();
-
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._start_z = Default::default();
-
         self._start_z_units = Default::default();
-
         self._end_z = Default::default();
-
         self._end_z_units = Default::default();
-
         self._radius = Default::default();
-
         self._speed = Default::default();
-
         self._speed_units = Default::default();
-
         self._custom = Default::default();
     }
 
@@ -205,27 +194,16 @@ impl Message for Elevator {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._timeout = bfr.get_u16_le();
-
         self._flags = bfr.get_u8();
-
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         self._start_z = bfr.get_f32_le();
-
         self._start_z_units = bfr.get_u8();
-
         self._end_z = bfr.get_f32_le();
-
         self._end_z_units = bfr.get_u8();
-
         self._radius = bfr.get_f32_le();
-
         self._speed = bfr.get_f32_le();
-
         self._speed_units = bfr.get_u8();
-
         deserialize_string!(bfr, self._custom);
 
         Ok(())

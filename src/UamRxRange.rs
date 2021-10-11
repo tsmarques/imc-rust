@@ -77,9 +77,7 @@ impl Message for UamRxRange {
         self.header.clear();
 
         self._seq = Default::default();
-
         self._sys = Default::default();
-
         self._value = Default::default();
     }
 
@@ -104,9 +102,7 @@ impl Message for UamRxRange {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._sys);
-
         self._value = bfr.get_f32_le();
 
         Ok(())

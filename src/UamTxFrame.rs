@@ -108,11 +108,8 @@ impl Message for UamTxFrame {
         self.header.clear();
 
         self._seq = Default::default();
-
         self._sys_dst = Default::default();
-
         self._flags = Default::default();
-
         self._data = Default::default();
     }
 
@@ -140,11 +137,8 @@ impl Message for UamTxFrame {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._sys_dst);
-
         self._flags = bfr.get_u8();
-
         deserialize_bytes!(bfr, self._data);
 
         Ok(())

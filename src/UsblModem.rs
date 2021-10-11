@@ -88,13 +88,9 @@ impl Message for UsblModem {
         self.header.clear();
 
         self._name = Default::default();
-
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._z = Default::default();
-
         self._z_units = Default::default();
     }
 
@@ -121,13 +117,9 @@ impl Message for UsblModem {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
-
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         self._z = bfr.get_f32_le();
-
         self._z_units = bfr.get_u8();
 
         Ok(())

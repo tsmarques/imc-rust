@@ -138,11 +138,8 @@ impl Message for DvlRejection {
         self.header.clear();
 
         self._type = Default::default();
-
         self._reason = Default::default();
-
         self._value = Default::default();
-
         self._timestep = Default::default();
     }
 
@@ -164,11 +161,8 @@ impl Message for DvlRejection {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
-
         self._reason = bfr.get_u8();
-
         self._value = bfr.get_f32_le();
-
         self._timestep = bfr.get_f32_le();
 
         Ok(())

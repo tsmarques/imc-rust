@@ -117,11 +117,8 @@ impl Message for Command {
         self.header.clear();
 
         self._flags = Default::default();
-
         self._speed = Default::default();
-
         self._z = Default::default();
-
         self._heading = Default::default();
     }
 
@@ -143,11 +140,8 @@ impl Message for Command {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._flags = bfr.get_u8();
-
         self._speed = bfr.get_f32_le();
-
         self._z = bfr.get_f32_le();
-
         self._heading = bfr.get_f32_le();
 
         Ok(())

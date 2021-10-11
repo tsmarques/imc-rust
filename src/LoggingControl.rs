@@ -108,7 +108,6 @@ impl Message for LoggingControl {
         self.header.clear();
 
         self._op = Default::default();
-
         self._name = Default::default();
     }
 
@@ -132,7 +131,6 @@ impl Message for LoggingControl {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         deserialize_string!(bfr, self._name);
 
         Ok(())

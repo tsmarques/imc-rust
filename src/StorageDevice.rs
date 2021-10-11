@@ -96,15 +96,10 @@ impl Message for StorageDevice {
         self.header.clear();
 
         self._device_model = Default::default();
-
         self._size = Default::default();
-
         self._path = Default::default();
-
         self._ptype = Default::default();
-
         self._partitions = Default::default();
-
         self._is_main_device = Default::default();
     }
 
@@ -138,15 +133,10 @@ impl Message for StorageDevice {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._device_model);
-
         self._size = bfr.get_u32_le();
-
         deserialize_string!(bfr, self._path);
-
         deserialize_string!(bfr, self._ptype);
-
         self._partitions = deserialize_message_list_as::<StoragePartition>(bfr)?;
-
         self._is_main_device = bfr.get_u8();
 
         Ok(())

@@ -77,9 +77,7 @@ impl Message for Sms {
         self.header.clear();
 
         self._number = Default::default();
-
         self._timeout = Default::default();
-
         self._contents = Default::default();
     }
 
@@ -106,9 +104,7 @@ impl Message for Sms {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._number);
-
         self._timeout = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._contents);
 
         Ok(())

@@ -123,11 +123,8 @@ impl Message for PlanVariable {
         self.header.clear();
 
         self._name = Default::default();
-
         self._value = Default::default();
-
         self._type = Default::default();
-
         self._access = Default::default();
     }
 
@@ -155,11 +152,8 @@ impl Message for PlanVariable {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
-
         deserialize_string!(bfr, self._value);
-
         self._type = bfr.get_u8();
-
         self._access = bfr.get_u8();
 
         Ok(())

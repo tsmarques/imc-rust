@@ -72,7 +72,6 @@ impl Message for StorageUsage {
         self.header.clear();
 
         self._available = Default::default();
-
         self._value = Default::default();
     }
 
@@ -92,7 +91,6 @@ impl Message for StorageUsage {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._available = bfr.get_u32_le();
-
         self._value = bfr.get_u8();
 
         Ok(())

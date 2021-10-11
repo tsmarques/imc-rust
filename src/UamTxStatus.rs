@@ -118,9 +118,7 @@ impl Message for UamTxStatus {
         self.header.clear();
 
         self._seq = Default::default();
-
         self._value = Default::default();
-
         self._error = Default::default();
     }
 
@@ -145,9 +143,7 @@ impl Message for UamTxStatus {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u16_le();
-
         self._value = bfr.get_u8();
-
         deserialize_string!(bfr, self._error);
 
         Ok(())

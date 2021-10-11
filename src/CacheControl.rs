@@ -104,9 +104,7 @@ impl Message for CacheControl {
         self.header.clear();
 
         self._op = Default::default();
-
         self._snapshot = Default::default();
-
         self._message = Default::default();
     }
 
@@ -133,9 +131,7 @@ impl Message for CacheControl {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         deserialize_string!(bfr, self._snapshot);
-
         self._message = deserialize_inline(bfr).ok();
 
         Ok(())

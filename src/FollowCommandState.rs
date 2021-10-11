@@ -113,11 +113,8 @@ impl Message for FollowCommandState {
         self.header.clear();
 
         self._control_src = Default::default();
-
         self._control_ent = Default::default();
-
         self._command = Default::default();
-
         self._state = Default::default();
     }
 
@@ -143,11 +140,8 @@ impl Message for FollowCommandState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._control_src = bfr.get_u16_le();
-
         self._control_ent = bfr.get_u8();
-
         self._command = deserialize_inline_as::<Command>(bfr).ok();
-
         self._state = bfr.get_u8();
 
         Ok(())

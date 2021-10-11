@@ -102,9 +102,7 @@ impl Message for ManeuverControlState {
         self.header.clear();
 
         self._state = Default::default();
-
         self._eta = Default::default();
-
         self._info = Default::default();
     }
 
@@ -129,9 +127,7 @@ impl Message for ManeuverControlState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._state = bfr.get_u8();
-
         self._eta = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._info);
 
         Ok(())

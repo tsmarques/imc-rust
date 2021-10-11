@@ -97,7 +97,6 @@ impl Message for LblConfig {
         self.header.clear();
 
         self._op = Default::default();
-
         self._beacons = Default::default();
     }
 
@@ -121,7 +120,6 @@ impl Message for LblConfig {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         self._beacons = deserialize_message_list_as::<LblBeacon>(bfr)?;
 
         Ok(())

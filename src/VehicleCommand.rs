@@ -141,15 +141,10 @@ impl Message for VehicleCommand {
         self.header.clear();
 
         self._type = Default::default();
-
         self._request_id = Default::default();
-
         self._command = Default::default();
-
         self._maneuver = Default::default();
-
         self._calib_time = Default::default();
-
         self._info = Default::default();
     }
 
@@ -179,15 +174,10 @@ impl Message for VehicleCommand {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
-
         self._request_id = bfr.get_u16_le();
-
         self._command = bfr.get_u8();
-
         self._maneuver = deserialize_inline(bfr).ok();
-
         self._calib_time = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._info);
 
         Ok(())

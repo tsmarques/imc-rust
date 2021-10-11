@@ -73,7 +73,6 @@ impl Message for GpioStateSet {
         self.header.clear();
 
         self._name = Default::default();
-
         self._value = Default::default();
     }
 
@@ -97,7 +96,6 @@ impl Message for GpioStateSet {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
-
         self._value = bfr.get_u8();
 
         Ok(())

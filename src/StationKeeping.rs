@@ -117,21 +117,13 @@ impl Message for StationKeeping {
         self.header.clear();
 
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._z = Default::default();
-
         self._z_units = Default::default();
-
         self._radius = Default::default();
-
         self._duration = Default::default();
-
         self._speed = Default::default();
-
         self._speed_units = Default::default();
-
         self._custom = Default::default();
     }
 
@@ -162,21 +154,13 @@ impl Message for StationKeeping {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         self._z = bfr.get_f32_le();
-
         self._z_units = bfr.get_u8();
-
         self._radius = bfr.get_f32_le();
-
         self._duration = bfr.get_u16_le();
-
         self._speed = bfr.get_f32_le();
-
         self._speed_units = bfr.get_u8();
-
         deserialize_string!(bfr, self._custom);
 
         Ok(())

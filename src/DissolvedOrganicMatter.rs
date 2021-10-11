@@ -90,7 +90,6 @@ impl Message for DissolvedOrganicMatter {
         self.header.clear();
 
         self._value = Default::default();
-
         self._type = Default::default();
     }
 
@@ -110,7 +109,6 @@ impl Message for DissolvedOrganicMatter {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f32_le();
-
         self._type = bfr.get_u8();
 
         Ok(())

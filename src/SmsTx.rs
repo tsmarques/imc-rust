@@ -82,11 +82,8 @@ impl Message for SmsTx {
         self.header.clear();
 
         self._seq = Default::default();
-
         self._destination = Default::default();
-
         self._timeout = Default::default();
-
         self._data = Default::default();
     }
 
@@ -114,11 +111,8 @@ impl Message for SmsTx {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u32_le();
-
         deserialize_string!(bfr, self._destination);
-
         self._timeout = bfr.get_u16_le();
-
         deserialize_bytes!(bfr, self._data);
 
         Ok(())

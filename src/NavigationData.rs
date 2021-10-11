@@ -110,21 +110,13 @@ impl Message for NavigationData {
         self.header.clear();
 
         self._bias_psi = Default::default();
-
         self._bias_r = Default::default();
-
         self._cog = Default::default();
-
         self._cyaw = Default::default();
-
         self._lbl_rej_level = Default::default();
-
         self._gps_rej_level = Default::default();
-
         self._custom_x = Default::default();
-
         self._custom_y = Default::default();
-
         self._custom_z = Default::default();
     }
 
@@ -151,21 +143,13 @@ impl Message for NavigationData {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._bias_psi = bfr.get_f32_le();
-
         self._bias_r = bfr.get_f32_le();
-
         self._cog = bfr.get_f32_le();
-
         self._cyaw = bfr.get_f32_le();
-
         self._lbl_rej_level = bfr.get_f32_le();
-
         self._gps_rej_level = bfr.get_f32_le();
-
         self._custom_x = bfr.get_f32_le();
-
         self._custom_y = bfr.get_f32_le();
-
         self._custom_z = bfr.get_f32_le();
 
         Ok(())

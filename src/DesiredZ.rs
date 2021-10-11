@@ -78,7 +78,6 @@ impl Message for DesiredZ {
         self.header.clear();
 
         self._value = Default::default();
-
         self._z_units = Default::default();
     }
 
@@ -98,7 +97,6 @@ impl Message for DesiredZ {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f32_le();
-
         self._z_units = bfr.get_u8();
 
         Ok(())

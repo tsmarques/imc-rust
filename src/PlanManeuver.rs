@@ -88,11 +88,8 @@ impl Message for PlanManeuver {
         self.header.clear();
 
         self._maneuver_id = Default::default();
-
         self._data = Default::default();
-
         self._start_actions = Default::default();
-
         self._end_actions = Default::default();
     }
 
@@ -124,11 +121,8 @@ impl Message for PlanManeuver {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._maneuver_id);
-
         self._data = deserialize_inline(bfr).ok();
-
         self._start_actions = deserialize_message_list(bfr)?;
-
         self._end_actions = deserialize_message_list(bfr)?;
 
         Ok(())

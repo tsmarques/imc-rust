@@ -76,7 +76,6 @@ impl Message for LblRange {
         self.header.clear();
 
         self._id = Default::default();
-
         self._range = Default::default();
     }
 
@@ -96,7 +95,6 @@ impl Message for LblRange {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._id = bfr.get_u8();
-
         self._range = bfr.get_f32_le();
 
         Ok(())

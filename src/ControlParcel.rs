@@ -82,11 +82,8 @@ impl Message for ControlParcel {
         self.header.clear();
 
         self._p = Default::default();
-
         self._i = Default::default();
-
         self._d = Default::default();
-
         self._a = Default::default();
     }
 
@@ -108,11 +105,8 @@ impl Message for ControlParcel {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._p = bfr.get_f32_le();
-
         self._i = bfr.get_f32_le();
-
         self._d = bfr.get_f32_le();
-
         self._a = bfr.get_f32_le();
 
         Ok(())

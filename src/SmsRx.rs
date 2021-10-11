@@ -72,7 +72,6 @@ impl Message for SmsRx {
         self.header.clear();
 
         self._source = Default::default();
-
         self._data = Default::default();
     }
 
@@ -98,7 +97,6 @@ impl Message for SmsRx {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._source);
-
         deserialize_bytes!(bfr, self._data);
 
         Ok(())

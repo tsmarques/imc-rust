@@ -127,17 +127,11 @@ impl Message for DesiredControl {
         self.header.clear();
 
         self._x = Default::default();
-
         self._y = Default::default();
-
         self._z = Default::default();
-
         self._k = Default::default();
-
         self._m = Default::default();
-
         self._n = Default::default();
-
         self._flags = Default::default();
     }
 
@@ -162,17 +156,11 @@ impl Message for DesiredControl {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._x = bfr.get_f64_le();
-
         self._y = bfr.get_f64_le();
-
         self._z = bfr.get_f64_le();
-
         self._k = bfr.get_f64_le();
-
         self._m = bfr.get_f64_le();
-
         self._n = bfr.get_f64_le();
-
         self._flags = bfr.get_u8();
 
         Ok(())

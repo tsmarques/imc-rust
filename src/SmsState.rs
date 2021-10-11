@@ -108,9 +108,7 @@ impl Message for SmsState {
         self.header.clear();
 
         self._seq = Default::default();
-
         self._state = Default::default();
-
         self._error = Default::default();
     }
 
@@ -135,9 +133,7 @@ impl Message for SmsState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u32_le();
-
         self._state = bfr.get_u8();
-
         deserialize_string!(bfr, self._error);
 
         Ok(())

@@ -95,11 +95,8 @@ impl Message for PlanTransition {
         self.header.clear();
 
         self._source_man = Default::default();
-
         self._dest_man = Default::default();
-
         self._conditions = Default::default();
-
         self._actions = Default::default();
     }
 
@@ -131,11 +128,8 @@ impl Message for PlanTransition {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._source_man);
-
         deserialize_string!(bfr, self._dest_man);
-
         deserialize_string!(bfr, self._conditions);
-
         self._actions = deserialize_message_list(bfr)?;
 
         Ok(())

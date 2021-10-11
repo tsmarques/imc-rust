@@ -79,9 +79,7 @@ impl Message for FuelLevel {
         self.header.clear();
 
         self._value = Default::default();
-
         self._confidence = Default::default();
-
         self._opmodes = Default::default();
     }
 
@@ -106,9 +104,7 @@ impl Message for FuelLevel {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f32_le();
-
         self._confidence = bfr.get_f32_le();
-
         deserialize_string!(bfr, self._opmodes);
 
         Ok(())

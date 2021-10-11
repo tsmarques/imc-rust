@@ -109,11 +109,8 @@ impl Message for LogBookEntry {
         self.header.clear();
 
         self._type = Default::default();
-
         self._htime = Default::default();
-
         self._context = Default::default();
-
         self._text = Default::default();
     }
 
@@ -141,11 +138,8 @@ impl Message for LogBookEntry {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
-
         self._htime = bfr.get_f64_le();
-
         deserialize_string!(bfr, self._context);
-
         deserialize_string!(bfr, self._text);
 
         Ok(())

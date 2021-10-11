@@ -94,15 +94,10 @@ impl Message for PlanDBInformation {
         self.header.clear();
 
         self._plan_id = Default::default();
-
         self._plan_size = Default::default();
-
         self._change_time = Default::default();
-
         self._change_sid = Default::default();
-
         self._change_sname = Default::default();
-
         self._md5 = Default::default();
     }
 
@@ -134,15 +129,10 @@ impl Message for PlanDBInformation {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._plan_id);
-
         self._plan_size = bfr.get_u16_le();
-
         self._change_time = bfr.get_f64_le();
-
         self._change_sid = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._change_sname);
-
         deserialize_bytes!(bfr, self._md5);
 
         Ok(())

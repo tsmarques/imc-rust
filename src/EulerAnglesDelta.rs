@@ -87,13 +87,9 @@ impl Message for EulerAnglesDelta {
         self.header.clear();
 
         self._time = Default::default();
-
         self._x = Default::default();
-
         self._y = Default::default();
-
         self._z = Default::default();
-
         self._timestep = Default::default();
     }
 
@@ -116,13 +112,9 @@ impl Message for EulerAnglesDelta {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._time = bfr.get_f64_le();
-
         self._x = bfr.get_f64_le();
-
         self._y = bfr.get_f64_le();
-
         self._z = bfr.get_f64_le();
-
         self._timestep = bfr.get_f32_le();
 
         Ok(())

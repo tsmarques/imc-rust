@@ -107,11 +107,8 @@ impl Message for TrexAttribute {
         self.header.clear();
 
         self._name = Default::default();
-
         self._attr_type = Default::default();
-
         self._min = Default::default();
-
         self._max = Default::default();
     }
 
@@ -141,11 +138,8 @@ impl Message for TrexAttribute {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
-
         self._attr_type = bfr.get_u8();
-
         deserialize_string!(bfr, self._min);
-
         deserialize_string!(bfr, self._max);
 
         Ok(())

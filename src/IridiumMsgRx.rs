@@ -84,13 +84,9 @@ impl Message for IridiumMsgRx {
         self.header.clear();
 
         self._origin = Default::default();
-
         self._htime = Default::default();
-
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._data = Default::default();
     }
 
@@ -119,13 +115,9 @@ impl Message for IridiumMsgRx {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._origin);
-
         self._htime = bfr.get_f64_le();
-
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         deserialize_bytes!(bfr, self._data);
 
         Ok(())

@@ -105,11 +105,8 @@ impl Message for GroundVelocity {
         self.header.clear();
 
         self._validity = Default::default();
-
         self._x = Default::default();
-
         self._y = Default::default();
-
         self._z = Default::default();
     }
 
@@ -131,11 +128,8 @@ impl Message for GroundVelocity {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._validity = bfr.get_u8();
-
         self._x = bfr.get_f64_le();
-
         self._y = bfr.get_f64_le();
-
         self._z = bfr.get_f64_le();
 
         Ok(())

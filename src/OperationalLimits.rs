@@ -110,27 +110,16 @@ impl Message for OperationalLimits {
         self.header.clear();
 
         self._mask = Default::default();
-
         self._max_depth = Default::default();
-
         self._min_altitude = Default::default();
-
         self._max_altitude = Default::default();
-
         self._min_speed = Default::default();
-
         self._max_speed = Default::default();
-
         self._max_vrate = Default::default();
-
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._orientation = Default::default();
-
         self._width = Default::default();
-
         self._length = Default::default();
     }
 
@@ -160,27 +149,16 @@ impl Message for OperationalLimits {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._mask = bfr.get_u8();
-
         self._max_depth = bfr.get_f32_le();
-
         self._min_altitude = bfr.get_f32_le();
-
         self._max_altitude = bfr.get_f32_le();
-
         self._min_speed = bfr.get_f32_le();
-
         self._max_speed = bfr.get_f32_le();
-
         self._max_vrate = bfr.get_f32_le();
-
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         self._orientation = bfr.get_f32_le();
-
         self._width = bfr.get_f32_le();
-
         self._length = bfr.get_f32_le();
 
         Ok(())

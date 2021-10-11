@@ -101,17 +101,11 @@ impl Message for Announce {
         self.header.clear();
 
         self._sys_name = Default::default();
-
         self._sys_type = Default::default();
-
         self._owner = Default::default();
-
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._height = Default::default();
-
         self._services = Default::default();
     }
 
@@ -142,17 +136,11 @@ impl Message for Announce {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._sys_name);
-
         self._sys_type = bfr.get_u8();
-
         self._owner = bfr.get_u16_le();
-
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         self._height = bfr.get_f32_le();
-
         deserialize_string!(bfr, self._services);
 
         Ok(())

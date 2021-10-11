@@ -129,19 +129,12 @@ impl Message for SonarData {
         self.header.clear();
 
         self._type = Default::default();
-
         self._frequency = Default::default();
-
         self._min_range = Default::default();
-
         self._max_range = Default::default();
-
         self._bits_per_point = Default::default();
-
         self._scale_factor = Default::default();
-
         self._beam_config = Default::default();
-
         self._data = Default::default();
     }
 
@@ -173,19 +166,12 @@ impl Message for SonarData {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
-
         self._frequency = bfr.get_u32_le();
-
         self._min_range = bfr.get_u16_le();
-
         self._max_range = bfr.get_u16_le();
-
         self._bits_per_point = bfr.get_u8();
-
         self._scale_factor = bfr.get_f32_le();
-
         self._beam_config = deserialize_message_list_as::<BeamConfig>(bfr)?;
-
         deserialize_bytes!(bfr, self._data);
 
         Ok(())

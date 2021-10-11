@@ -108,7 +108,6 @@ impl Message for EntityActivationState {
         self.header.clear();
 
         self._state = Default::default();
-
         self._error = Default::default();
     }
 
@@ -132,7 +131,6 @@ impl Message for EntityActivationState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._state = bfr.get_u8();
-
         deserialize_string!(bfr, self._error);
 
         Ok(())

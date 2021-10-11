@@ -114,15 +114,10 @@ impl Message for StoragePartition {
         self.header.clear();
 
         self._part_path = Default::default();
-
         self._label = Default::default();
-
         self._size = Default::default();
-
         self._used_size = Default::default();
-
         self._fstype = Default::default();
-
         self._status = Default::default();
     }
 
@@ -154,15 +149,10 @@ impl Message for StoragePartition {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._part_path);
-
         deserialize_string!(bfr, self._label);
-
         self._size = bfr.get_u32_le();
-
         self._used_size = bfr.get_f32_le();
-
         deserialize_string!(bfr, self._fstype);
-
         self._status = bfr.get_u8();
 
         Ok(())

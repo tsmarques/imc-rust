@@ -154,39 +154,22 @@ impl Message for SimulatedState {
         self.header.clear();
 
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._height = Default::default();
-
         self._x = Default::default();
-
         self._y = Default::default();
-
         self._z = Default::default();
-
         self._phi = Default::default();
-
         self._theta = Default::default();
-
         self._psi = Default::default();
-
         self._u = Default::default();
-
         self._v = Default::default();
-
         self._w = Default::default();
-
         self._p = Default::default();
-
         self._q = Default::default();
-
         self._r = Default::default();
-
         self._svx = Default::default();
-
         self._svy = Default::default();
-
         self._svz = Default::default();
     }
 
@@ -222,39 +205,22 @@ impl Message for SimulatedState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         self._height = bfr.get_f32_le();
-
         self._x = bfr.get_f32_le();
-
         self._y = bfr.get_f32_le();
-
         self._z = bfr.get_f32_le();
-
         self._phi = bfr.get_f32_le();
-
         self._theta = bfr.get_f32_le();
-
         self._psi = bfr.get_f32_le();
-
         self._u = bfr.get_f32_le();
-
         self._v = bfr.get_f32_le();
-
         self._w = bfr.get_f32_le();
-
         self._p = bfr.get_f32_le();
-
         self._q = bfr.get_f32_le();
-
         self._r = bfr.get_f32_le();
-
         self._svx = bfr.get_f32_le();
-
         self._svy = bfr.get_f32_le();
-
         self._svz = bfr.get_f32_le();
 
         Ok(())

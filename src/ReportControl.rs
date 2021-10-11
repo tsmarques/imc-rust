@@ -139,11 +139,8 @@ impl Message for ReportControl {
         self.header.clear();
 
         self._op = Default::default();
-
         self._comm_interface = Default::default();
-
         self._period = Default::default();
-
         self._sys_dst = Default::default();
     }
 
@@ -169,11 +166,8 @@ impl Message for ReportControl {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         self._comm_interface = bfr.get_u8();
-
         self._period = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._sys_dst);
 
         Ok(())

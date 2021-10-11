@@ -73,7 +73,6 @@ impl Message for PolygonVertex {
         self.header.clear();
 
         self._lat = Default::default();
-
         self._lon = Default::default();
     }
 
@@ -93,7 +92,6 @@ impl Message for PolygonVertex {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
 
         Ok(())

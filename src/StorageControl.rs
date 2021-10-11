@@ -140,13 +140,9 @@ impl Message for StorageControl {
         self.header.clear();
 
         self._type = Default::default();
-
         self._op = Default::default();
-
         self._request_id = Default::default();
-
         self._device_id = Default::default();
-
         self._info = Default::default();
     }
 
@@ -175,13 +171,9 @@ impl Message for StorageControl {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
-
         self._op = bfr.get_u8();
-
         self._request_id = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._device_id);
-
         deserialize_string!(bfr, self._info);
 
         Ok(())

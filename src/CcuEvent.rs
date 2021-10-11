@@ -113,9 +113,7 @@ impl Message for CcuEvent {
         self.header.clear();
 
         self._type = Default::default();
-
         self._id = Default::default();
-
         self._arg = Default::default();
     }
 
@@ -142,9 +140,7 @@ impl Message for CcuEvent {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
-
         deserialize_string!(bfr, self._id);
-
         self._arg = deserialize_inline(bfr).ok();
 
         Ok(())

@@ -77,9 +77,7 @@ impl Message for TrexToken {
         self.header.clear();
 
         self._timeline = Default::default();
-
         self._predicate = Default::default();
-
         self._attributes = Default::default();
     }
 
@@ -108,9 +106,7 @@ impl Message for TrexToken {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._timeline);
-
         deserialize_string!(bfr, self._predicate);
-
         self._attributes = deserialize_message_list_as::<TrexAttribute>(bfr)?;
 
         Ok(())

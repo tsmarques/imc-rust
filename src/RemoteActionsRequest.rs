@@ -95,7 +95,6 @@ impl Message for RemoteActionsRequest {
         self.header.clear();
 
         self._op = Default::default();
-
         self._actions = Default::default();
     }
 
@@ -119,7 +118,6 @@ impl Message for RemoteActionsRequest {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         deserialize_string!(bfr, self._actions);
 
         Ok(())

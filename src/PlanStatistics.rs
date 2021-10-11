@@ -145,17 +145,11 @@ impl Message for PlanStatistics {
         self.header.clear();
 
         self._plan_id = Default::default();
-
         self._type = Default::default();
-
         self._properties = Default::default();
-
         self._durations = Default::default();
-
         self._distances = Default::default();
-
         self._actions = Default::default();
-
         self._fuel = Default::default();
     }
 
@@ -192,17 +186,11 @@ impl Message for PlanStatistics {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._plan_id);
-
         self._type = bfr.get_u8();
-
         self._properties = bfr.get_u8();
-
         deserialize_string!(bfr, self._durations);
-
         deserialize_string!(bfr, self._distances);
-
         deserialize_string!(bfr, self._actions);
-
         deserialize_string!(bfr, self._fuel);
 
         Ok(())

@@ -124,11 +124,8 @@ impl Message for PlanGeneration {
         self.header.clear();
 
         self._cmd = Default::default();
-
         self._op = Default::default();
-
         self._plan_id = Default::default();
-
         self._params = Default::default();
     }
 
@@ -156,11 +153,8 @@ impl Message for PlanGeneration {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._cmd = bfr.get_u8();
-
         self._op = bfr.get_u8();
-
         deserialize_string!(bfr, self._plan_id);
-
         deserialize_string!(bfr, self._params);
 
         Ok(())

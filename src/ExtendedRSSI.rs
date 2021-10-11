@@ -74,7 +74,6 @@ impl Message for ExtendedRSSI {
         self.header.clear();
 
         self._value = Default::default();
-
         self._units = Default::default();
     }
 
@@ -94,7 +93,6 @@ impl Message for ExtendedRSSI {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f32_le();
-
         self._units = bfr.get_u8();
 
         Ok(())

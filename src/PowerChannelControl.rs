@@ -112,9 +112,7 @@ impl Message for PowerChannelControl {
         self.header.clear();
 
         self._name = Default::default();
-
         self._op = Default::default();
-
         self._sched_time = Default::default();
     }
 
@@ -139,9 +137,7 @@ impl Message for PowerChannelControl {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
-
         self._op = bfr.get_u8();
-
         self._sched_time = bfr.get_f64_le();
 
         Ok(())

@@ -118,25 +118,15 @@ impl Message for UsblPositionExtended {
         self.header.clear();
 
         self._target = Default::default();
-
         self._x = Default::default();
-
         self._y = Default::default();
-
         self._z = Default::default();
-
         self._n = Default::default();
-
         self._e = Default::default();
-
         self._d = Default::default();
-
         self._phi = Default::default();
-
         self._theta = Default::default();
-
         self._psi = Default::default();
-
         self._accuracy = Default::default();
     }
 
@@ -169,25 +159,15 @@ impl Message for UsblPositionExtended {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._target);
-
         self._x = bfr.get_f32_le();
-
         self._y = bfr.get_f32_le();
-
         self._z = bfr.get_f32_le();
-
         self._n = bfr.get_f32_le();
-
         self._e = bfr.get_f32_le();
-
         self._d = bfr.get_f32_le();
-
         self._phi = bfr.get_f32_le();
-
         self._theta = bfr.get_f32_le();
-
         self._psi = bfr.get_f32_le();
-
         self._accuracy = bfr.get_f32_le();
 
         Ok(())

@@ -194,41 +194,23 @@ impl Message for PathControlState {
         self.header.clear();
 
         self._path_ref = Default::default();
-
         self._start_lat = Default::default();
-
         self._start_lon = Default::default();
-
         self._start_z = Default::default();
-
         self._start_z_units = Default::default();
-
         self._end_lat = Default::default();
-
         self._end_lon = Default::default();
-
         self._end_z = Default::default();
-
         self._end_z_units = Default::default();
-
         self._lradius = Default::default();
-
         self._flags = Default::default();
-
         self._x = Default::default();
-
         self._y = Default::default();
-
         self._z = Default::default();
-
         self._vx = Default::default();
-
         self._vy = Default::default();
-
         self._vz = Default::default();
-
         self._course_error = Default::default();
-
         self._eta = Default::default();
     }
 
@@ -265,41 +247,23 @@ impl Message for PathControlState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._path_ref = bfr.get_u32_le();
-
         self._start_lat = bfr.get_f64_le();
-
         self._start_lon = bfr.get_f64_le();
-
         self._start_z = bfr.get_f32_le();
-
         self._start_z_units = bfr.get_u8();
-
         self._end_lat = bfr.get_f64_le();
-
         self._end_lon = bfr.get_f64_le();
-
         self._end_z = bfr.get_f32_le();
-
         self._end_z_units = bfr.get_u8();
-
         self._lradius = bfr.get_f32_le();
-
         self._flags = bfr.get_u8();
-
         self._x = bfr.get_f32_le();
-
         self._y = bfr.get_f32_le();
-
         self._z = bfr.get_f32_le();
-
         self._vx = bfr.get_f32_le();
-
         self._vy = bfr.get_f32_le();
-
         self._vz = bfr.get_f32_le();
-
         self._course_error = bfr.get_f32_le();
-
         self._eta = bfr.get_u16_le();
 
         Ok(())

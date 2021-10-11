@@ -151,19 +151,12 @@ impl Message for PlanControlState {
         self.header.clear();
 
         self._state = Default::default();
-
         self._plan_id = Default::default();
-
         self._plan_eta = Default::default();
-
         self._plan_progress = Default::default();
-
         self._man_id = Default::default();
-
         self._man_type = Default::default();
-
         self._man_eta = Default::default();
-
         self._last_outcome = Default::default();
     }
 
@@ -195,19 +188,12 @@ impl Message for PlanControlState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._state = bfr.get_u8();
-
         deserialize_string!(bfr, self._plan_id);
-
         self._plan_eta = bfr.get_i32_le();
-
         self._plan_progress = bfr.get_f32_le();
-
         deserialize_string!(bfr, self._man_id);
-
         self._man_type = bfr.get_u16_le();
-
         self._man_eta = bfr.get_i32_le();
-
         self._last_outcome = bfr.get_u8();
 
         Ok(())

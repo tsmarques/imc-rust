@@ -72,7 +72,6 @@ impl Message for TransportBindings {
         self.header.clear();
 
         self._consumer = Default::default();
-
         self._message_id = Default::default();
     }
 
@@ -96,7 +95,6 @@ impl Message for TransportBindings {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._consumer);
-
         self._message_id = bfr.get_u16_le();
 
         Ok(())

@@ -115,11 +115,8 @@ impl Message for Dislodge {
         self.header.clear();
 
         self._timeout = Default::default();
-
         self._rpm = Default::default();
-
         self._direction = Default::default();
-
         self._custom = Default::default();
     }
 
@@ -145,11 +142,8 @@ impl Message for Dislodge {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._timeout = bfr.get_u16_le();
-
         self._rpm = bfr.get_f32_le();
-
         self._direction = bfr.get_u8();
-
         deserialize_string!(bfr, self._custom);
 
         Ok(())

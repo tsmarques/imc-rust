@@ -90,7 +90,6 @@ impl Message for PowerChannelState {
         self.header.clear();
 
         self._name = Default::default();
-
         self._state = Default::default();
     }
 
@@ -114,7 +113,6 @@ impl Message for PowerChannelState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
-
         self._state = bfr.get_u8();
 
         Ok(())

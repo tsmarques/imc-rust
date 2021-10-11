@@ -8,9 +8,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DeviceState::DeviceState;
-
 use crate::BeamConfig::BeamConfig;
+
+use crate::DeviceState::DeviceState;
 
 use crate::packet::ImcError;
 use crate::packet::*;
@@ -106,11 +106,8 @@ impl Message for Distance {
         self.header.clear();
 
         self._validity = Default::default();
-
         self._location = Default::default();
-
         self._beam_config = Default::default();
-
         self._value = Default::default();
     }
 
@@ -138,11 +135,8 @@ impl Message for Distance {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._validity = bfr.get_u8();
-
         self._location = deserialize_message_list_as::<DeviceState>(bfr)?;
-
         self._beam_config = deserialize_message_list_as::<BeamConfig>(bfr)?;
-
         self._value = bfr.get_f32_le();
 
         Ok(())

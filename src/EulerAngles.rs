@@ -94,13 +94,9 @@ impl Message for EulerAngles {
         self.header.clear();
 
         self._time = Default::default();
-
         self._phi = Default::default();
-
         self._theta = Default::default();
-
         self._psi = Default::default();
-
         self._psi_magnetic = Default::default();
     }
 
@@ -123,13 +119,9 @@ impl Message for EulerAngles {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._time = bfr.get_f64_le();
-
         self._phi = bfr.get_f64_le();
-
         self._theta = bfr.get_f64_le();
-
         self._psi = bfr.get_f64_le();
-
         self._psi_magnetic = bfr.get_f64_le();
 
         Ok(())

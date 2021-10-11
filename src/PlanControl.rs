@@ -172,17 +172,11 @@ impl Message for PlanControl {
         self.header.clear();
 
         self._type = Default::default();
-
         self._op = Default::default();
-
         self._request_id = Default::default();
-
         self._plan_id = Default::default();
-
         self._flags = Default::default();
-
         self._arg = Default::default();
-
         self._info = Default::default();
     }
 
@@ -215,17 +209,11 @@ impl Message for PlanControl {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
-
         self._op = bfr.get_u8();
-
         self._request_id = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._plan_id);
-
         self._flags = bfr.get_u16_le();
-
         self._arg = deserialize_inline(bfr).ok();
-
         deserialize_string!(bfr, self._info);
 
         Ok(())

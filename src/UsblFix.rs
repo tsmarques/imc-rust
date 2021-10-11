@@ -89,13 +89,9 @@ impl Message for UsblFix {
         self.header.clear();
 
         self._target = Default::default();
-
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._z_units = Default::default();
-
         self._z = Default::default();
     }
 
@@ -118,13 +114,9 @@ impl Message for UsblFix {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._target = bfr.get_u16_le();
-
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         self._z_units = bfr.get_u8();
-
         self._z = bfr.get_f32_le();
 
         Ok(())

@@ -77,9 +77,7 @@ impl Message for AllocatedControlTorques {
         self.header.clear();
 
         self._k = Default::default();
-
         self._m = Default::default();
-
         self._n = Default::default();
     }
 
@@ -100,9 +98,7 @@ impl Message for AllocatedControlTorques {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._k = bfr.get_f64_le();
-
         self._m = bfr.get_f64_le();
-
         self._n = bfr.get_f64_le();
 
         Ok(())

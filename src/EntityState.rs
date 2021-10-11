@@ -120,9 +120,7 @@ impl Message for EntityState {
         self.header.clear();
 
         self._state = Default::default();
-
         self._flags = Default::default();
-
         self._description = Default::default();
     }
 
@@ -147,9 +145,7 @@ impl Message for EntityState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._state = bfr.get_u8();
-
         self._flags = bfr.get_u8();
-
         deserialize_string!(bfr, self._description);
 
         Ok(())

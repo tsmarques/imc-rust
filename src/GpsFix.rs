@@ -209,35 +209,20 @@ impl Message for GpsFix {
         self.header.clear();
 
         self._validity = Default::default();
-
         self._type = Default::default();
-
         self._utc_year = Default::default();
-
         self._utc_month = Default::default();
-
         self._utc_day = Default::default();
-
         self._utc_time = Default::default();
-
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._height = Default::default();
-
         self._satellites = Default::default();
-
         self._cog = Default::default();
-
         self._sog = Default::default();
-
         self._hdop = Default::default();
-
         self._vdop = Default::default();
-
         self._hacc = Default::default();
-
         self._vacc = Default::default();
     }
 
@@ -271,35 +256,20 @@ impl Message for GpsFix {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._validity = bfr.get_u16_le();
-
         self._type = bfr.get_u8();
-
         self._utc_year = bfr.get_u16_le();
-
         self._utc_month = bfr.get_u8();
-
         self._utc_day = bfr.get_u8();
-
         self._utc_time = bfr.get_f32_le();
-
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         self._height = bfr.get_f32_le();
-
         self._satellites = bfr.get_u8();
-
         self._cog = bfr.get_f32_le();
-
         self._sog = bfr.get_f32_le();
-
         self._hdop = bfr.get_f32_le();
-
         self._vdop = bfr.get_f32_le();
-
         self._hacc = bfr.get_f32_le();
-
         self._vacc = bfr.get_f32_le();
 
         Ok(())

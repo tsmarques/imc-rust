@@ -73,7 +73,6 @@ impl Message for SetEntityParameters {
         self.header.clear();
 
         self._name = Default::default();
-
         self._params = Default::default();
     }
 
@@ -99,7 +98,6 @@ impl Message for SetEntityParameters {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
-
         self._params = deserialize_message_list_as::<EntityParameter>(bfr)?;
 
         Ok(())

@@ -89,9 +89,7 @@ impl Message for CustomManeuver {
         self.header.clear();
 
         self._timeout = Default::default();
-
         self._name = Default::default();
-
         self._custom = Default::default();
     }
 
@@ -118,9 +116,7 @@ impl Message for CustomManeuver {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._timeout = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._name);
-
         deserialize_string!(bfr, self._custom);
 
         Ok(())

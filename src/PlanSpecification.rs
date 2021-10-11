@@ -125,21 +125,13 @@ impl Message for PlanSpecification {
         self.header.clear();
 
         self._plan_id = Default::default();
-
         self._description = Default::default();
-
         self._vnamespace = Default::default();
-
         self._variables = Default::default();
-
         self._start_man_id = Default::default();
-
         self._maneuvers = Default::default();
-
         self._transitions = Default::default();
-
         self._start_actions = Default::default();
-
         self._end_actions = Default::default();
     }
 
@@ -186,21 +178,13 @@ impl Message for PlanSpecification {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._plan_id);
-
         deserialize_string!(bfr, self._description);
-
         deserialize_string!(bfr, self._vnamespace);
-
         self._variables = deserialize_message_list_as::<PlanVariable>(bfr)?;
-
         deserialize_string!(bfr, self._start_man_id);
-
         self._maneuvers = deserialize_message_list_as::<PlanManeuver>(bfr)?;
-
         self._transitions = deserialize_message_list_as::<PlanTransition>(bfr)?;
-
         self._start_actions = deserialize_message_list(bfr)?;
-
         self._end_actions = deserialize_message_list(bfr)?;
 
         Ok(())

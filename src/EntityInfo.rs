@@ -88,13 +88,9 @@ impl Message for EntityInfo {
         self.header.clear();
 
         self._id = Default::default();
-
         self._label = Default::default();
-
         self._component = Default::default();
-
         self._act_time = Default::default();
-
         self._deact_time = Default::default();
     }
 
@@ -123,13 +119,9 @@ impl Message for EntityInfo {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._id = bfr.get_u8();
-
         deserialize_string!(bfr, self._label);
-
         deserialize_string!(bfr, self._component);
-
         self._act_time = bfr.get_u16_le();
-
         self._deact_time = bfr.get_u16_le();
 
         Ok(())

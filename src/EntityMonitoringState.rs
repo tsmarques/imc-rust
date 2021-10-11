@@ -102,19 +102,12 @@ impl Message for EntityMonitoringState {
         self.header.clear();
 
         self._mcount = Default::default();
-
         self._mnames = Default::default();
-
         self._ecount = Default::default();
-
         self._enames = Default::default();
-
         self._ccount = Default::default();
-
         self._cnames = Default::default();
-
         self._last_error = Default::default();
-
         self._last_error_time = Default::default();
     }
 
@@ -150,19 +143,12 @@ impl Message for EntityMonitoringState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._mcount = bfr.get_u8();
-
         deserialize_string!(bfr, self._mnames);
-
         self._ecount = bfr.get_u8();
-
         deserialize_string!(bfr, self._enames);
-
         self._ccount = bfr.get_u8();
-
         deserialize_string!(bfr, self._cnames);
-
         deserialize_string!(bfr, self._last_error);
-
         self._last_error_time = bfr.get_f64_le();
 
         Ok(())

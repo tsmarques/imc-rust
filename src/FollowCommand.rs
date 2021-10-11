@@ -87,9 +87,7 @@ impl Message for FollowCommand {
         self.header.clear();
 
         self._control_src = Default::default();
-
         self._control_ent = Default::default();
-
         self._timeout = Default::default();
     }
 
@@ -110,9 +108,7 @@ impl Message for FollowCommand {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._control_src = bfr.get_u16_le();
-
         self._control_ent = bfr.get_u8();
-
         self._timeout = bfr.get_f32_le();
 
         Ok(())

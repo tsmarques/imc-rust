@@ -105,9 +105,7 @@ impl Message for TrexOperation {
         self.header.clear();
 
         self._op = Default::default();
-
         self._goal_id = Default::default();
-
         self._token = Default::default();
     }
 
@@ -134,9 +132,7 @@ impl Message for TrexOperation {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         deserialize_string!(bfr, self._goal_id);
-
         self._token = deserialize_inline_as::<TrexToken>(bfr).ok();
 
         Ok(())

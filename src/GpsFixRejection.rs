@@ -100,7 +100,6 @@ impl Message for GpsFixRejection {
         self.header.clear();
 
         self._utc_time = Default::default();
-
         self._reason = Default::default();
     }
 
@@ -120,7 +119,6 @@ impl Message for GpsFixRejection {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._utc_time = bfr.get_f32_le();
-
         self._reason = bfr.get_u8();
 
         Ok(())

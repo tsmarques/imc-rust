@@ -97,17 +97,11 @@ impl Message for LblBeacon {
         self.header.clear();
 
         self._beacon = Default::default();
-
         self._lat = Default::default();
-
         self._lon = Default::default();
-
         self._depth = Default::default();
-
         self._query_channel = Default::default();
-
         self._reply_channel = Default::default();
-
         self._transponder_delay = Default::default();
     }
 
@@ -136,17 +130,11 @@ impl Message for LblBeacon {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._beacon);
-
         self._lat = bfr.get_f64_le();
-
         self._lon = bfr.get_f64_le();
-
         self._depth = bfr.get_f32_le();
-
         self._query_channel = bfr.get_u8();
-
         self._reply_channel = bfr.get_u8();
-
         self._transponder_delay = bfr.get_u8();
 
         Ok(())

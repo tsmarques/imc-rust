@@ -99,7 +99,6 @@ impl Message for MonitorEntityState {
         self.header.clear();
 
         self._command = Default::default();
-
         self._entities = Default::default();
     }
 
@@ -123,7 +122,6 @@ impl Message for MonitorEntityState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._command = bfr.get_u8();
-
         deserialize_string!(bfr, self._entities);
 
         Ok(())

@@ -113,9 +113,7 @@ impl Message for PowerOperation {
         self.header.clear();
 
         self._op = Default::default();
-
         self._time_remain = Default::default();
-
         self._sched_time = Default::default();
     }
 
@@ -136,9 +134,7 @@ impl Message for PowerOperation {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
-
         self._time_remain = bfr.get_f32_le();
-
         self._sched_time = bfr.get_f64_le();
 
         Ok(())

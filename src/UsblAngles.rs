@@ -78,9 +78,7 @@ impl Message for UsblAngles {
         self.header.clear();
 
         self._target = Default::default();
-
         self._bearing = Default::default();
-
         self._elevation = Default::default();
     }
 
@@ -101,9 +99,7 @@ impl Message for UsblAngles {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._target = bfr.get_u16_le();
-
         self._bearing = bfr.get_f32_le();
-
         self._elevation = bfr.get_f32_le();
 
         Ok(())

@@ -161,23 +161,14 @@ impl Message for VehicleState {
         self.header.clear();
 
         self._op_mode = Default::default();
-
         self._error_count = Default::default();
-
         self._error_ents = Default::default();
-
         self._maneuver_type = Default::default();
-
         self._maneuver_stime = Default::default();
-
         self._maneuver_eta = Default::default();
-
         self._control_loops = Default::default();
-
         self._flags = Default::default();
-
         self._last_error = Default::default();
-
         self._last_error_time = Default::default();
     }
 
@@ -211,23 +202,14 @@ impl Message for VehicleState {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op_mode = bfr.get_u8();
-
         self._error_count = bfr.get_u8();
-
         deserialize_string!(bfr, self._error_ents);
-
         self._maneuver_type = bfr.get_u16_le();
-
         self._maneuver_stime = bfr.get_f64_le();
-
         self._maneuver_eta = bfr.get_u16_le();
-
         self._control_loops = bfr.get_u32_le();
-
         self._flags = bfr.get_u8();
-
         deserialize_string!(bfr, self._last_error);
-
         self._last_error_time = bfr.get_f64_le();
 
         Ok(())

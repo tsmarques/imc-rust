@@ -103,11 +103,8 @@ impl Message for UamRxFrame {
         self.header.clear();
 
         self._sys_src = Default::default();
-
         self._sys_dst = Default::default();
-
         self._flags = Default::default();
-
         self._data = Default::default();
     }
 
@@ -137,11 +134,8 @@ impl Message for UamRxFrame {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._sys_src);
-
         deserialize_string!(bfr, self._sys_dst);
-
         self._flags = bfr.get_u8();
-
         deserialize_bytes!(bfr, self._data);
 
         Ok(())

@@ -74,7 +74,6 @@ impl Message for BeamConfig {
         self.header.clear();
 
         self._beam_width = Default::default();
-
         self._beam_height = Default::default();
     }
 
@@ -94,7 +93,6 @@ impl Message for BeamConfig {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._beam_width = bfr.get_f32_le();
-
         self._beam_height = bfr.get_f32_le();
 
         Ok(())

@@ -145,35 +145,20 @@ impl Message for Tachograph {
         self.header.clear();
 
         self._timestamp_last_service = Default::default();
-
         self._time_next_service = Default::default();
-
         self._time_motor_next_service = Default::default();
-
         self._time_idle_ground = Default::default();
-
         self._time_idle_air = Default::default();
-
         self._time_idle_water = Default::default();
-
         self._time_idle_underwater = Default::default();
-
         self._time_idle_unknown = Default::default();
-
         self._time_motor_ground = Default::default();
-
         self._time_motor_air = Default::default();
-
         self._time_motor_water = Default::default();
-
         self._time_motor_underwater = Default::default();
-
         self._time_motor_unknown = Default::default();
-
         self._rpm_min = Default::default();
-
         self._rpm_max = Default::default();
-
         self._depth_max = Default::default();
     }
 
@@ -207,35 +192,20 @@ impl Message for Tachograph {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._timestamp_last_service = bfr.get_f64_le();
-
         self._time_next_service = bfr.get_f32_le();
-
         self._time_motor_next_service = bfr.get_f32_le();
-
         self._time_idle_ground = bfr.get_f32_le();
-
         self._time_idle_air = bfr.get_f32_le();
-
         self._time_idle_water = bfr.get_f32_le();
-
         self._time_idle_underwater = bfr.get_f32_le();
-
         self._time_idle_unknown = bfr.get_f32_le();
-
         self._time_motor_ground = bfr.get_f32_le();
-
         self._time_motor_air = bfr.get_f32_le();
-
         self._time_motor_water = bfr.get_f32_le();
-
         self._time_motor_underwater = bfr.get_f32_le();
-
         self._time_motor_unknown = bfr.get_f32_le();
-
         self._rpm_min = bfr.get_i16_le();
-
         self._rpm_max = bfr.get_i16_le();
-
         self._depth_max = bfr.get_f32_le();
 
         Ok(())

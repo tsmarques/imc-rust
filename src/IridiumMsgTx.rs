@@ -81,11 +81,8 @@ impl Message for IridiumMsgTx {
         self.header.clear();
 
         self._req_id = Default::default();
-
         self._ttl = Default::default();
-
         self._destination = Default::default();
-
         self._data = Default::default();
     }
 
@@ -113,11 +110,8 @@ impl Message for IridiumMsgTx {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._req_id = bfr.get_u16_le();
-
         self._ttl = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._destination);
-
         deserialize_bytes!(bfr, self._data);
 
         Ok(())

@@ -108,21 +108,13 @@ impl Message for UsblAnglesExtended {
         self.header.clear();
 
         self._target = Default::default();
-
         self._lbearing = Default::default();
-
         self._lelevation = Default::default();
-
         self._bearing = Default::default();
-
         self._elevation = Default::default();
-
         self._phi = Default::default();
-
         self._theta = Default::default();
-
         self._psi = Default::default();
-
         self._accuracy = Default::default();
     }
 
@@ -153,21 +145,13 @@ impl Message for UsblAnglesExtended {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._target);
-
         self._lbearing = bfr.get_f32_le();
-
         self._lelevation = bfr.get_f32_le();
-
         self._bearing = bfr.get_f32_le();
-
         self._elevation = bfr.get_f32_le();
-
         self._phi = bfr.get_f32_le();
-
         self._theta = bfr.get_f32_le();
-
         self._psi = bfr.get_f32_le();
-
         self._accuracy = bfr.get_f32_le();
 
         Ok(())

@@ -79,9 +79,7 @@ impl Message for UamTxRange {
         self.header.clear();
 
         self._seq = Default::default();
-
         self._sys_dst = Default::default();
-
         self._timeout = Default::default();
     }
 
@@ -106,9 +104,7 @@ impl Message for UamTxRange {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u16_le();
-
         deserialize_string!(bfr, self._sys_dst);
-
         self._timeout = bfr.get_f32_le();
 
         Ok(())
