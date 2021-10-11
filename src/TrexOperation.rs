@@ -49,7 +49,7 @@ pub struct TrexOperation {
     pub _goal_id: String,
 
     /// Goal / observation to post, if applicable (OP == POST_GOAL || OP == POST_TOKEN)
-    pub _token: Option<Box<TrexToken>>,
+    pub _token: Option<TrexToken>,
 }
 
 impl Message for TrexOperation {

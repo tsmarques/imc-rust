@@ -81,7 +81,7 @@ pub struct FollowRefState {
     pub _control_ent: u8,
 
     /// Reference currently being followed.
-    pub _reference: Option<Box<Reference>>,
+    pub _reference: Option<Reference>,
 
     pub _state: u8,
 

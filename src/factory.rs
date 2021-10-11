@@ -2,8 +2,9 @@ use crate::Header::Header;
 use crate::LoggingControl::LoggingControl;
 use crate::Message::Message;
 use crate::TrexAttribute::TrexAttribute;
+use crate::VehicleCommand::VehicleCommand;
 
-pub(crate) fn buildFrom<T: Message>(hdr: Header) -> Option<Box<T>> {
+pub(crate) fn buildFrom<T: Message>(hdr: Header) -> Option<T> {
     let mut msg: T = T::new();
 
     if msg.id() != hdr._mgid {
@@ -19,7 +20,7 @@ pub(crate) fn buildFrom<T: Message>(hdr: Header) -> Option<Box<T>> {
     msg.get_header()._dst = hdr._dst;
     msg.get_header()._dst_ent = hdr._dst_ent;
 
-    Option::Some(Box::new(msg))
+    Option::Some(msg)
 }
 
 pub(crate) fn build(hdr: Header) -> Option<Box<dyn Message>> {
@@ -44,6 +45,7 @@ pub(crate) fn buildFromId(id: u16) -> Option<Box<dyn Message>> {
     match id {
         102 => Option::Some(Box::new(LoggingControl::new())),
         656 => Option::Some(Box::new(TrexAttribute::new())),
+        501 => Option::Some(Box::new(VehicleCommand::new())),
         _ => Option::None,
     }
 }

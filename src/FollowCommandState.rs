@@ -52,7 +52,7 @@ pub struct FollowCommandState {
     pub _control_ent: u8,
 
     /// Command currently being followed.
-    pub _command: Option<Box<Command>>,
+    pub _command: Option<Command>,
 
     /// Command provided breaks system's physical limitations.
     pub _state: u8,

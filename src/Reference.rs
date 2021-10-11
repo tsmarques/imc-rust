@@ -6,9 +6,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DesiredSpeed::DesiredSpeed;
-
 use crate::DesiredZ::DesiredZ;
+
+use crate::DesiredSpeed::DesiredSpeed;
 
 use crate::packet::*;
 
@@ -52,9 +52,9 @@ pub struct Reference {
 
     pub _flags: u8,
 
-    pub _speed: Option<Box<DesiredSpeed>>,
+    pub _speed: Option<DesiredSpeed>,
 
-    pub _z: Option<Box<DesiredZ>>,
+    pub _z: Option<DesiredZ>,
 
     pub _lat: f64,
 

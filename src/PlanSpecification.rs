@@ -8,11 +8,11 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::PlanTransition::PlanTransition;
+
 use crate::PlanManeuver::PlanManeuver;
 
 use crate::PlanVariable::PlanVariable;
-
-use crate::PlanTransition::PlanTransition;
 
 use crate::packet::*;
 

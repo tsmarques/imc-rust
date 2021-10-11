@@ -8,9 +8,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::BeamConfig::BeamConfig;
-
 use crate::DeviceState::DeviceState;
+
+use crate::BeamConfig::BeamConfig;
 
 use crate::packet::*;
 

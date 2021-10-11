@@ -110,7 +110,7 @@ pub fn deserialize_inline(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, 
 }
 
 /// Deserialize inline message assuming it is from type T
-pub fn deserialize_inline_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, ImcError> {
+pub fn deserialize_inline_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<T, ImcError> {
     let id: u16 = bfr.get_u16_le();
 
     if id == DUNE_IMC_CONST_NULL_ID {
@@ -133,7 +133,7 @@ pub fn deserialize_inline_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<Box
     Ok(msg)
 }
 
-pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, ImcError> {
+pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<T, ImcError> {
     // deserialize header
     let mut hdr: Header = Header::new(0);
     let mut ret = deserializeHeader(&mut hdr, bfr);
@@ -150,7 +150,7 @@ pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<Box<T>, Im
         return Err(InvalidMessageId);
     }
 
-    let mut msg: Box<T> = ret.unwrap();
+    let mut msg: T = ret.unwrap();
 
     // update crc with payload
     crc::update_from_range(&mut crc, 0, ser_size, bfr.bytes());

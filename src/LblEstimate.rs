@@ -17,7 +17,7 @@ pub struct LblEstimate {
     pub header: Header,
 
     /// LBL Beacon configuration estimate.
-    pub _beacon: Option<Box<LblBeacon>>,
+    pub _beacon: Option<LblBeacon>,
 
     /// The North position offset of the NED field with respect to origin.
     pub _x: f32,
