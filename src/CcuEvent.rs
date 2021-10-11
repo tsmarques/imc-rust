@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -139,11 +140,13 @@ impl Message for CcuEvent {
         serialize_inline_message!(bfr, self._arg);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
 
         deserialize_string!(bfr, self._id);
 
         self._arg = deserialize_inline(bfr).ok();
+
+        Ok(())
     }
 }

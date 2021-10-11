@@ -10,6 +10,7 @@ use crate::Header::Header;
 
 use crate::EntityParameter::EntityParameter;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[derive(Default)]
@@ -96,11 +97,11 @@ impl Message for SetEntityParameters {
         serialize_message_list!(bfr, self._params);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
 
-        for m in self._params.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._params = deserialize_message_list_as::<EntityParameter>(bfr)?;
+
+        Ok(())
     }
 }

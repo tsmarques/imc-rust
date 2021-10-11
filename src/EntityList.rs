@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -112,9 +113,11 @@ impl Message for EntityList {
         serialize_bytes!(bfr, self._list.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
 
         deserialize_string!(bfr, self._list);
+
+        Ok(())
     }
 }

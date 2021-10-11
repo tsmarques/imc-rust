@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Position and configuration of an LBL transponder (beacon).
@@ -133,7 +134,7 @@ impl Message for LblBeacon {
         bfr.put_u8(self._transponder_delay);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._beacon);
 
         self._lat = bfr.get_f64_le();
@@ -147,5 +148,7 @@ impl Message for LblBeacon {
         self._reply_channel = bfr.get_u8();
 
         self._transponder_delay = bfr.get_u8();
+
+        Ok(())
     }
 }

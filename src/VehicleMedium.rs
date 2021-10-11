@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -108,7 +109,9 @@ impl Message for VehicleMedium {
         bfr.put_u8(self._medium);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._medium = bfr.get_u8();
+
+        Ok(())
     }
 }

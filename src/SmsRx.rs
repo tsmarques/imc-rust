@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Received SMS data.
@@ -95,9 +96,11 @@ impl Message for SmsRx {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._source);
 
         deserialize_bytes!(bfr, self._data);
+
+        Ok(())
     }
 }

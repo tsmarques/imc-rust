@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message contains the WGS-84 position of a target computed using
@@ -127,7 +128,7 @@ impl Message for UsblFixExtended {
         bfr.put_f32_le(self._accuracy);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._target);
 
         self._lat = bfr.get_f64_le();
@@ -139,5 +140,7 @@ impl Message for UsblFixExtended {
         self._z = bfr.get_f32_le();
 
         self._accuracy = bfr.get_f32_le();
+
+        Ok(())
     }
 }

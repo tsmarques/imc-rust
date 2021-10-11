@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Component of incremetal orientation vector over a period of time.
@@ -113,7 +114,7 @@ impl Message for EulerAnglesDelta {
         bfr.put_f32_le(self._timestep);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._time = bfr.get_f64_le();
 
         self._x = bfr.get_f64_le();
@@ -123,5 +124,7 @@ impl Message for EulerAnglesDelta {
         self._z = bfr.get_f64_le();
 
         self._timestep = bfr.get_f32_le();
+
+        Ok(())
     }
 }

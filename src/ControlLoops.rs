@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -118,11 +119,13 @@ impl Message for ControlLoops {
         bfr.put_u32_le(self._scope_ref);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._enable = bfr.get_u8();
 
         self._mask = bfr.get_u32_le();
 
         self._scope_ref = bfr.get_u32_le();
+
+        Ok(())
     }
 }

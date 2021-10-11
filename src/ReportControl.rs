@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -166,7 +167,7 @@ impl Message for ReportControl {
         serialize_bytes!(bfr, self._sys_dst.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
 
         self._comm_interface = bfr.get_u8();
@@ -174,5 +175,7 @@ impl Message for ReportControl {
         self._period = bfr.get_u16_le();
 
         deserialize_string!(bfr, self._sys_dst);
+
+        Ok(())
     }
 }

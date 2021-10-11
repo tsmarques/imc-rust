@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Report of navigation uncertainty.
@@ -190,7 +191,7 @@ impl Message for NavigationUncertainty {
         bfr.put_f32_le(self._bias_r);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._x = bfr.get_f32_le();
 
         self._y = bfr.get_f32_le();
@@ -218,5 +219,7 @@ impl Message for NavigationUncertainty {
         self._bias_psi = bfr.get_f32_le();
 
         self._bias_r = bfr.get_f32_le();
+
+        Ok(())
     }
 }

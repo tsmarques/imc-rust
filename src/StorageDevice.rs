@@ -10,6 +10,7 @@ use crate::Header::Header;
 
 use crate::StoragePartition::StoragePartition;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Storage device information (e.g disk, usb flash, etc). NOTE: This is different from a partition
@@ -135,7 +136,7 @@ impl Message for StorageDevice {
         bfr.put_u8(self._is_main_device);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._device_model);
 
         self._size = bfr.get_u32_le();
@@ -144,10 +145,10 @@ impl Message for StorageDevice {
 
         deserialize_string!(bfr, self._ptype);
 
-        for m in self._partitions.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._partitions = deserialize_message_list_as::<StoragePartition>(bfr)?;
 
         self._is_main_device = bfr.get_u8();
+
+        Ok(())
     }
 }

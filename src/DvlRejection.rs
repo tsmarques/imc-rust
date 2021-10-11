@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -161,7 +162,7 @@ impl Message for DvlRejection {
         bfr.put_f32_le(self._timestep);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
 
         self._reason = bfr.get_u8();
@@ -169,5 +170,7 @@ impl Message for DvlRejection {
         self._value = bfr.get_f32_le();
 
         self._timestep = bfr.get_f32_le();
+
+        Ok(())
     }
 }

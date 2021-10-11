@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -152,7 +153,7 @@ impl Message for PlanVariable {
         bfr.put_u8(self._access);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
 
         deserialize_string!(bfr, self._value);
@@ -160,5 +161,7 @@ impl Message for PlanVariable {
         self._type = bfr.get_u8();
 
         self._access = bfr.get_u8();
+
+        Ok(())
     }
 }

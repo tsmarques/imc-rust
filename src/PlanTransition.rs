@@ -8,6 +8,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Describes a plan transition within a plan specification. A
@@ -128,15 +129,15 @@ impl Message for PlanTransition {
         serialize_message_list!(bfr, self._actions);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._source_man);
 
         deserialize_string!(bfr, self._dest_man);
 
         deserialize_string!(bfr, self._conditions);
 
-        for m in self._actions.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._actions = deserialize_message_list(bfr)?;
+
+        Ok(())
     }
 }

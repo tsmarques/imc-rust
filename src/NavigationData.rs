@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Report of navigation data.
@@ -148,7 +149,7 @@ impl Message for NavigationData {
         bfr.put_f32_le(self._custom_z);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._bias_psi = bfr.get_f32_le();
 
         self._bias_r = bfr.get_f32_le();
@@ -166,5 +167,7 @@ impl Message for NavigationData {
         self._custom_y = bfr.get_f32_le();
 
         self._custom_z = bfr.get_f32_le();
+
+        Ok(())
     }
 }

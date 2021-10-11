@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[derive(Default)]
@@ -104,7 +105,7 @@ impl Message for MessagePart {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._uid = bfr.get_u8();
 
         self._frag_number = bfr.get_u8();
@@ -112,5 +113,7 @@ impl Message for MessagePart {
         self._num_frags = bfr.get_u8();
 
         deserialize_bytes!(bfr, self._data);
+
+        Ok(())
     }
 }

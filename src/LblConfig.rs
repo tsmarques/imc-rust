@@ -10,6 +10,7 @@ use crate::Header::Header;
 
 use crate::LblBeacon::LblBeacon;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -118,11 +119,11 @@ impl Message for LblConfig {
         serialize_message_list!(bfr, self._beacons);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
 
-        for m in self._beacons.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._beacons = deserialize_message_list_as::<LblBeacon>(bfr)?;
+
+        Ok(())
     }
 }

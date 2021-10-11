@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// message-group: Maneuver
@@ -100,9 +101,11 @@ impl Message for IdleManeuver {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._duration = bfr.get_u16_le();
 
         deserialize_string!(bfr, self._custom);
+
+        Ok(())
     }
 }

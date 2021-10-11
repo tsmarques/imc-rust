@@ -10,6 +10,7 @@ use crate::DesiredZ::DesiredZ;
 
 use crate::DesiredSpeed::DesiredSpeed;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -157,7 +158,7 @@ impl Message for Reference {
         bfr.put_f32_le(self._radius);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._flags = bfr.get_u8();
 
         self._speed = deserialize_inline_as::<DesiredSpeed>(bfr).ok();
@@ -169,5 +170,7 @@ impl Message for Reference {
         self._lon = bfr.get_f64_le();
 
         self._radius = bfr.get_f32_le();
+
+        Ok(())
     }
 }

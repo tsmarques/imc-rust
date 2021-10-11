@@ -10,6 +10,7 @@ use crate::Header::Header;
 
 use crate::PlanDBInformation::PlanDBInformation;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Characterizes the state of the entire plan database.
@@ -144,7 +145,7 @@ impl Message for PlanDBState {
         serialize_message_list!(bfr, self._plans_info);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._plan_count = bfr.get_u16_le();
 
         self._plan_size = bfr.get_u32_le();
@@ -157,8 +158,8 @@ impl Message for PlanDBState {
 
         deserialize_bytes!(bfr, self._md5);
 
-        for m in self._plans_info.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._plans_info = deserialize_message_list_as::<PlanDBInformation>(bfr)?;
+
+        Ok(())
     }
 }

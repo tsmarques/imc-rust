@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Measure of the RSSI by a networking device.
@@ -91,9 +92,11 @@ impl Message for ExtendedRSSI {
         bfr.put_u8(self._units);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f32_le();
 
         self._units = bfr.get_u8();
+
+        Ok(())
     }
 }

@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Request information about an entity identifier. The receiving
@@ -83,7 +84,9 @@ impl Message for QueryEntityInfo {
         bfr.put_u8(self._id);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._id = bfr.get_u8();
+
+        Ok(())
     }
 }

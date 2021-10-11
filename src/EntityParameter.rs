@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Entity parameter.
@@ -95,9 +96,11 @@ impl Message for EntityParameter {
         serialize_bytes!(bfr, self._value.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
 
         deserialize_string!(bfr, self._value);
+
+        Ok(())
     }
 }

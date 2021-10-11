@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -200,7 +201,7 @@ impl Message for PopUp {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._timeout = bfr.get_u16_le();
 
         self._lat = bfr.get_f64_le();
@@ -222,5 +223,7 @@ impl Message for PopUp {
         self._flags = bfr.get_u8();
 
         deserialize_string!(bfr, self._custom);
+
+        Ok(())
     }
 }

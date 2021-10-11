@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Desired Heading Rate speed reference value for the control layer.
@@ -82,7 +83,9 @@ impl Message for DesiredHeadingRate {
         bfr.put_f64_le(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f64_le();
+
+        Ok(())
     }
 }

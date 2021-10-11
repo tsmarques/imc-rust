@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -177,7 +178,7 @@ impl Message for AcousticOperation {
         serialize_inline_message!(bfr, self._msg);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
 
         deserialize_string!(bfr, self._system);
@@ -185,5 +186,7 @@ impl Message for AcousticOperation {
         self._range = bfr.get_f32_le();
 
         self._msg = deserialize_inline(bfr).ok();
+
+        Ok(())
     }
 }

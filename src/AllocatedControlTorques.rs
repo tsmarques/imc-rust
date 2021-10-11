@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Control torques allocated to the actuators.
@@ -97,11 +98,13 @@ impl Message for AllocatedControlTorques {
         bfr.put_f64_le(self._n);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._k = bfr.get_f64_le();
 
         self._m = bfr.get_f64_le();
 
         self._n = bfr.get_f64_le();
+
+        Ok(())
     }
 }

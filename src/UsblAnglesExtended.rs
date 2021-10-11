@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message contains information, collected using USBL, about the
@@ -150,7 +151,7 @@ impl Message for UsblAnglesExtended {
         bfr.put_f32_le(self._accuracy);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._target);
 
         self._lbearing = bfr.get_f32_le();
@@ -168,5 +169,7 @@ impl Message for UsblAnglesExtended {
         self._psi = bfr.get_f32_le();
 
         self._accuracy = bfr.get_f32_le();
+
+        Ok(())
     }
 }

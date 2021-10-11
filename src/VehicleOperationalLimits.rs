@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -244,7 +245,7 @@ impl Message for VehicleOperationalLimits {
         bfr.put_f32_le(self._rpm_rate_max);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
 
         self._speed_min = bfr.get_f32_le();
@@ -280,5 +281,7 @@ impl Message for VehicleOperationalLimits {
         self._rpm_max = bfr.get_f32_le();
 
         self._rpm_rate_max = bfr.get_f32_le();
+
+        Ok(())
     }
 }

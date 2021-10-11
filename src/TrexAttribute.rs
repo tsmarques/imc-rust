@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -138,7 +139,7 @@ impl Message for TrexAttribute {
         serialize_bytes!(bfr, self._max.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
 
         self._attr_type = bfr.get_u8();
@@ -146,5 +147,7 @@ impl Message for TrexAttribute {
         deserialize_string!(bfr, self._min);
 
         deserialize_string!(bfr, self._max);
+
+        Ok(())
     }
 }

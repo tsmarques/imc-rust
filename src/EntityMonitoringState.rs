@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[derive(Default)]
@@ -147,7 +148,7 @@ impl Message for EntityMonitoringState {
         bfr.put_f64_le(self._last_error_time);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._mcount = bfr.get_u8();
 
         deserialize_string!(bfr, self._mnames);
@@ -163,5 +164,7 @@ impl Message for EntityMonitoringState {
         deserialize_string!(bfr, self._last_error);
 
         self._last_error_time = bfr.get_f64_le();
+
+        Ok(())
     }
 }

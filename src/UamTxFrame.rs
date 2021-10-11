@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -137,7 +138,7 @@ impl Message for UamTxFrame {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u16_le();
 
         deserialize_string!(bfr, self._sys_dst);
@@ -145,5 +146,7 @@ impl Message for UamTxFrame {
         self._flags = bfr.get_u8();
 
         deserialize_bytes!(bfr, self._data);
+
+        Ok(())
     }
 }

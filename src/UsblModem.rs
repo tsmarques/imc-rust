@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Position and configuration of an Ultra-Short Base Line modem.
@@ -118,7 +119,7 @@ impl Message for UsblModem {
         bfr.put_u8(self._z_units);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
 
         self._lat = bfr.get_f64_le();
@@ -128,5 +129,7 @@ impl Message for UsblModem {
         self._z = bfr.get_f32_le();
 
         self._z_units = bfr.get_u8();
+
+        Ok(())
     }
 }

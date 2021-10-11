@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message is sent in reply to an AcousticSystemsQuery message
@@ -87,7 +88,9 @@ impl Message for AcousticSystems {
         serialize_bytes!(bfr, self._list.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._list);
+
+        Ok(())
     }
 }

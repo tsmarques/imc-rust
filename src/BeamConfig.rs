@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Beam configuration of the device.
@@ -91,9 +92,11 @@ impl Message for BeamConfig {
         bfr.put_f32_le(self._beam_height);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._beam_width = bfr.get_f32_le();
 
         self._beam_height = bfr.get_f32_le();
+
+        Ok(())
     }
 }

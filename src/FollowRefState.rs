@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::Reference::Reference;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -175,7 +176,7 @@ impl Message for FollowRefState {
         bfr.put_u8(self._proximity);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._control_src = bfr.get_u16_le();
 
         self._control_ent = bfr.get_u8();
@@ -185,5 +186,7 @@ impl Message for FollowRefState {
         self._state = bfr.get_u8();
 
         self._proximity = bfr.get_u8();
+
+        Ok(())
     }
 }

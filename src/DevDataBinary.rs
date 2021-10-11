@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Verbatim representation of device data in binary format.
@@ -85,7 +86,9 @@ impl Message for DevDataBinary {
         serialize_bytes!(bfr, self._value.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_bytes!(bfr, self._value);
+
+        Ok(())
     }
 }

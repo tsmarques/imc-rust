@@ -4,7 +4,7 @@ use crate::packet::ImcError::{
 use crate::Header::Header;
 use crate::Message::Message;
 use crate::{
-    factory, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_NULL_ID, DUNE_IMC_CONST_SYNC,
+    factory, MessageList, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_NULL_ID, DUNE_IMC_CONST_SYNC,
     IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE,
 };
 use bytes::{Buf, BufMut, IntoBuf};
@@ -131,6 +131,34 @@ pub fn deserialize_inline_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<T, 
     msg.deserialize_fields(bfr);
 
     Ok(msg)
+}
+
+pub fn deserialize_message_list(
+    bfr: &mut dyn bytes::Buf,
+) -> Result<MessageList<Box<dyn Message>>, ImcError> {
+    let msg_count = bfr.get_u16_le();
+    let mut msg_list: MessageList<Box<dyn Message>> = vec![];
+
+    for _ in 0..msg_count {
+        let ret = deserialize_inline(bfr)?;
+        msg_list.push(ret);
+    }
+
+    return Ok(msg_list);
+}
+
+pub fn deserialize_message_list_as<T: Message>(
+    bfr: &mut dyn bytes::Buf,
+) -> Result<MessageList<T>, ImcError> {
+    let msg_count = bfr.get_u16_le();
+    let mut msg_list: MessageList<T> = vec![];
+
+    for _ in 0..msg_count {
+        let ret = deserialize_inline_as::<T>(bfr)?;
+        msg_list.push(ret);
+    }
+
+    return Ok(msg_list);
 }
 
 pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<T, ImcError> {

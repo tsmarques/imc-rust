@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -138,7 +139,7 @@ impl Message for LogBookEntry {
         serialize_bytes!(bfr, self._text.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
 
         self._htime = bfr.get_f64_le();
@@ -146,5 +147,7 @@ impl Message for LogBookEntry {
         deserialize_string!(bfr, self._context);
 
         deserialize_string!(bfr, self._text);
+
+        Ok(())
     }
 }

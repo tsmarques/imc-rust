@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -142,7 +143,7 @@ impl Message for Dislodge {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._timeout = bfr.get_u16_le();
 
         self._rpm = bfr.get_f32_le();
@@ -150,5 +151,7 @@ impl Message for Dislodge {
         self._direction = bfr.get_u8();
 
         deserialize_string!(bfr, self._custom);
+
+        Ok(())
     }
 }

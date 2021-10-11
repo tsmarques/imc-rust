@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -127,11 +128,13 @@ impl Message for ClockControl {
         bfr.put_i8(self._tz);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
 
         self._clock = bfr.get_f64_le();
 
         self._tz = bfr.get_i8();
+
+        Ok(())
     }
 }

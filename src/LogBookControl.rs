@@ -10,6 +10,7 @@ use crate::Header::Header;
 
 use crate::LogBookEntry::LogBookEntry;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -130,13 +131,13 @@ impl Message for LogBookControl {
         serialize_message_list!(bfr, self._msg);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._command = bfr.get_u8();
 
         self._htime = bfr.get_f64_le();
 
-        for m in self._msg.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._msg = deserialize_message_list_as::<LogBookEntry>(bfr)?;
+
+        Ok(())
     }
 }

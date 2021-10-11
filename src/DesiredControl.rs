@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -159,7 +160,7 @@ impl Message for DesiredControl {
         bfr.put_u8(self._flags);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._x = bfr.get_f64_le();
 
         self._y = bfr.get_f64_le();
@@ -173,5 +174,7 @@ impl Message for DesiredControl {
         self._n = bfr.get_f64_le();
 
         self._flags = bfr.get_u8();
+
+        Ok(())
     }
 }

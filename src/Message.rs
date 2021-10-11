@@ -1,5 +1,6 @@
 #![macro_use]
 
+use crate::packet::ImcError;
 use crate::Header::Header;
 use crate::{IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE};
 use bytes::BufMut;
@@ -164,7 +165,7 @@ pub trait Message {
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut);
 
     /// Deserialize this message's fields
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf);
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError>;
 
     /// Get message fields' serialization size
     /// Fixed + dynamic

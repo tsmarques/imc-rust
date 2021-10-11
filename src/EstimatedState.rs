@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message presents the estimated state of the vehicle.
@@ -256,7 +257,7 @@ impl Message for EstimatedState {
         bfr.put_f32_le(self._alt);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._lat = bfr.get_f64_le();
 
         self._lon = bfr.get_f64_le();
@@ -296,5 +297,7 @@ impl Message for EstimatedState {
         self._depth = bfr.get_f32_le();
 
         self._alt = bfr.get_f32_le();
+
+        Ok(())
     }
 }

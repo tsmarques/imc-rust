@@ -10,6 +10,7 @@ use crate::Header::Header;
 
 use crate::BeamConfig::BeamConfig;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -170,7 +171,7 @@ impl Message for SonarData {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
 
         self._frequency = bfr.get_u32_le();
@@ -183,10 +184,10 @@ impl Message for SonarData {
 
         self._scale_factor = bfr.get_f32_le();
 
-        for m in self._beam_config.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._beam_config = deserialize_message_list_as::<BeamConfig>(bfr)?;
 
         deserialize_bytes!(bfr, self._data);
+
+        Ok(())
     }
 }

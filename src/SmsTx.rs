@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Request to send SMS.
@@ -111,7 +112,7 @@ impl Message for SmsTx {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u32_le();
 
         deserialize_string!(bfr, self._destination);
@@ -119,5 +120,7 @@ impl Message for SmsTx {
         self._timeout = bfr.get_u16_le();
 
         deserialize_bytes!(bfr, self._data);
+
+        Ok(())
     }
 }

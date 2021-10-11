@@ -10,6 +10,7 @@ use crate::Header::Header;
 
 use crate::Announce::Announce;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message is sent by the TREX task which gives further information to a TREX instance about connected IMC nodes
@@ -99,11 +100,11 @@ impl Message for VehicleLinks {
         serialize_message_list!(bfr, self._links);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._localname);
 
-        for m in self._links.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._links = deserialize_message_list_as::<Announce>(bfr)?;
+
+        Ok(())
     }
 }

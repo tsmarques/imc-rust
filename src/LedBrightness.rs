@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Brightness value of an LED (Light-Emitting Diode).
@@ -93,9 +94,11 @@ impl Message for LedBrightness {
         bfr.put_u8(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
 
         self._value = bfr.get_u8();
+
+        Ok(())
     }
 }

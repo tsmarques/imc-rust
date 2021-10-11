@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Message generated when tasks bind to messages.
@@ -93,9 +94,11 @@ impl Message for TransportBindings {
         bfr.put_u16_le(self._message_id);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._consumer);
 
         self._message_id = bfr.get_u16_le();
+
+        Ok(())
     }
 }

@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -140,7 +141,7 @@ impl Message for Command {
         bfr.put_f32_le(self._heading);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._flags = bfr.get_u8();
 
         self._speed = bfr.get_f32_le();
@@ -148,5 +149,7 @@ impl Message for Command {
         self._z = bfr.get_f32_le();
 
         self._heading = bfr.get_f32_le();
+
+        Ok(())
     }
 }

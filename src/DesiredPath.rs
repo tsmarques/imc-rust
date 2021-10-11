@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::ControlCommand;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -228,7 +229,7 @@ impl Message for DesiredPath {
         bfr.put_u8(self._flags);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._path_ref = bfr.get_u32_le();
 
         self._start_lat = bfr.get_f64_le();
@@ -254,5 +255,7 @@ impl Message for DesiredPath {
         self._lradius = bfr.get_f32_le();
 
         self._flags = bfr.get_u8();
+
+        Ok(())
     }
 }

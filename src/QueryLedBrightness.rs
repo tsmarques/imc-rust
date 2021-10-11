@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Query the brightness of an LED (Light-Emitting Diode). The
@@ -86,7 +87,9 @@ impl Message for QueryLedBrightness {
         serialize_bytes!(bfr, self._name.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
+
+        Ok(())
     }
 }

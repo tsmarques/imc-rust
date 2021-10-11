@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Report of spatial orientation according to SNAME's notation
@@ -120,7 +121,7 @@ impl Message for EulerAngles {
         bfr.put_f64_le(self._psi_magnetic);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._time = bfr.get_f64_le();
 
         self._phi = bfr.get_f64_le();
@@ -130,5 +131,7 @@ impl Message for EulerAngles {
         self._psi = bfr.get_f64_le();
 
         self._psi_magnetic = bfr.get_f64_le();
+
+        Ok(())
     }
 }

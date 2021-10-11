@@ -8,6 +8,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[derive(Default)]
@@ -85,9 +86,9 @@ impl Message for MsgList {
         serialize_message_list!(bfr, self._msgs);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
-        for m in self._msgs.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
+        self._msgs = deserialize_message_list(bfr)?;
+
+        Ok(())
     }
 }

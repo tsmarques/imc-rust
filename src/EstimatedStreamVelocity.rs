@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// The estimated stream velocity, typically for water or air
@@ -98,11 +99,13 @@ impl Message for EstimatedStreamVelocity {
         bfr.put_f64_le(self._z);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._x = bfr.get_f64_le();
 
         self._y = bfr.get_f64_le();
 
         self._z = bfr.get_f64_le();
+
+        Ok(())
     }
 }

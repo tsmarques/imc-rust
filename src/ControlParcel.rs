@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Report of PID control parcels.
@@ -105,7 +106,7 @@ impl Message for ControlParcel {
         bfr.put_f32_le(self._a);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._p = bfr.get_f32_le();
 
         self._i = bfr.get_f32_le();
@@ -113,5 +114,7 @@ impl Message for ControlParcel {
         self._d = bfr.get_f32_le();
 
         self._a = bfr.get_f32_le();
+
+        Ok(())
     }
 }

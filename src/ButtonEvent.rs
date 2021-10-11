@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Event of a specific hardware button.
@@ -89,9 +90,11 @@ impl Message for ButtonEvent {
         bfr.put_u8(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._button = bfr.get_u8();
 
         self._value = bfr.get_u8();
+
+        Ok(())
     }
 }

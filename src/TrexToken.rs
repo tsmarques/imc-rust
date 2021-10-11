@@ -10,6 +10,7 @@ use crate::Header::Header;
 
 use crate::TrexAttribute::TrexAttribute;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[derive(Default)]
@@ -105,13 +106,13 @@ impl Message for TrexToken {
         serialize_message_list!(bfr, self._attributes);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._timeline);
 
         deserialize_string!(bfr, self._predicate);
 
-        for m in self._attributes.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._attributes = deserialize_message_list_as::<TrexAttribute>(bfr)?;
+
+        Ok(())
     }
 }

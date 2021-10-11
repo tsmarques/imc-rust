@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Request an acoustic modem driver to measure the distance to another system.
@@ -103,11 +104,13 @@ impl Message for UamTxRange {
         bfr.put_f32_le(self._timeout);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u16_le();
 
         deserialize_string!(bfr, self._sys_dst);
 
         self._timeout = bfr.get_f32_le();
+
+        Ok(())
     }
 }

@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -142,11 +143,13 @@ impl Message for UamTxStatus {
         serialize_bytes!(bfr, self._error.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._seq = bfr.get_u16_le();
 
         self._value = bfr.get_u8();
 
         deserialize_string!(bfr, self._error);
+
+        Ok(())
     }
 }

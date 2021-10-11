@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::ControlCommand;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// message-group: ControlCommand
@@ -87,7 +88,9 @@ impl Message for DesiredPitch {
         bfr.put_f64_le(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f64_le();
+
+        Ok(())
     }
 }

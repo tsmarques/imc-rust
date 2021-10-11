@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// message-group: Maneuver
@@ -126,7 +127,7 @@ impl Message for FollowReference {
         bfr.put_f32_le(self._altitude_interval);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._control_src = bfr.get_u16_le();
 
         self._control_ent = bfr.get_u8();
@@ -136,5 +137,7 @@ impl Message for FollowReference {
         self._loiter_radius = bfr.get_f32_le();
 
         self._altitude_interval = bfr.get_f32_le();
+
+        Ok(())
     }
 }

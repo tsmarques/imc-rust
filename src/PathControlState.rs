@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -262,7 +263,7 @@ impl Message for PathControlState {
         bfr.put_u16_le(self._eta);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._path_ref = bfr.get_u32_le();
 
         self._start_lat = bfr.get_f64_le();
@@ -300,5 +301,7 @@ impl Message for PathControlState {
         self._course_error = bfr.get_f32_le();
 
         self._eta = bfr.get_u16_le();
+
+        Ok(())
     }
 }

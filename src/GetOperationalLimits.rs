@@ -4,6 +4,7 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Command to obtain the operational limits in use by the vehicle.
@@ -66,5 +67,7 @@ impl Message for GetOperationalLimits {
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
+        Ok(())
+    }
 }

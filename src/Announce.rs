@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// A system description that is to be broadcasted to other systems.
@@ -139,7 +140,7 @@ impl Message for Announce {
         serialize_bytes!(bfr, self._services.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._sys_name);
 
         self._sys_type = bfr.get_u8();
@@ -153,5 +154,7 @@ impl Message for Announce {
         self._height = bfr.get_f32_le();
 
         deserialize_string!(bfr, self._services);
+
+        Ok(())
     }
 }

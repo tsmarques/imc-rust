@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -120,9 +121,11 @@ impl Message for MonitorEntityState {
         serialize_bytes!(bfr, self._entities.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._command = bfr.get_u8();
 
         deserialize_string!(bfr, self._entities);
+
+        Ok(())
     }
 }

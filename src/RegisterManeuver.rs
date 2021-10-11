@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Command used to indicate maneuver can be executed in the
@@ -82,7 +83,9 @@ impl Message for RegisterManeuver {
         bfr.put_u16_le(self._mid);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._mid = bfr.get_u16_le();
+
+        Ok(())
     }
 }

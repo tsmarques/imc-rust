@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// message-group: Maneuver
@@ -107,11 +108,13 @@ impl Message for FollowCommand {
         bfr.put_f32_le(self._timeout);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._control_src = bfr.get_u16_le();
 
         self._control_ent = bfr.get_u8();
 
         self._timeout = bfr.get_f32_le();
+
+        Ok(())
     }
 }

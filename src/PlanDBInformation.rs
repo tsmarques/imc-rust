@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[derive(Default)]
@@ -131,7 +132,7 @@ impl Message for PlanDBInformation {
         serialize_bytes!(bfr, self._md5.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._plan_id);
 
         self._plan_size = bfr.get_u16_le();
@@ -143,5 +144,7 @@ impl Message for PlanDBInformation {
         deserialize_string!(bfr, self._change_sname);
 
         deserialize_bytes!(bfr, self._md5);
+
+        Ok(())
     }
 }

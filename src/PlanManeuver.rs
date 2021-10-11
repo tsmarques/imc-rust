@@ -10,6 +10,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Named plan maneuver.
@@ -121,17 +122,15 @@ impl Message for PlanManeuver {
         serialize_message_list!(bfr, self._end_actions);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._maneuver_id);
 
         self._data = deserialize_inline(bfr).ok();
 
-        for m in self._start_actions.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._start_actions = deserialize_message_list(bfr)?;
 
-        for m in self._end_actions.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._end_actions = deserialize_message_list(bfr)?;
+
+        Ok(())
     }
 }

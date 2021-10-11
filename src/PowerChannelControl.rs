@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -136,11 +137,13 @@ impl Message for PowerChannelControl {
         bfr.put_f64_le(self._sched_time);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._name);
 
         self._op = bfr.get_u8();
 
         self._sched_time = bfr.get_f64_le();
+
+        Ok(())
     }
 }

@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This messages is used to record system activity parameters. These
@@ -204,7 +205,7 @@ impl Message for Tachograph {
         bfr.put_f32_le(self._depth_max);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._timestamp_last_service = bfr.get_f64_le();
 
         self._time_next_service = bfr.get_f32_le();
@@ -236,5 +237,7 @@ impl Message for Tachograph {
         self._rpm_max = bfr.get_i16_le();
 
         self._depth_max = bfr.get_f32_le();
+
+        Ok(())
     }
 }

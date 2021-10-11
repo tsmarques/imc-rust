@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::ControlCommand;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// message-group: ControlCommand
@@ -95,9 +96,11 @@ impl Message for DesiredZ {
         bfr.put_u8(self._z_units);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f32_le();
 
         self._z_units = bfr.get_u8();
+
+        Ok(())
     }
 }

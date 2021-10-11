@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -208,7 +209,7 @@ impl Message for VehicleState {
         bfr.put_f64_le(self._last_error_time);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op_mode = bfr.get_u8();
 
         self._error_count = bfr.get_u8();
@@ -228,5 +229,7 @@ impl Message for VehicleState {
         deserialize_string!(bfr, self._last_error);
 
         self._last_error_time = bfr.get_f64_le();
+
+        Ok(())
     }
 }

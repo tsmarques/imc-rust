@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message presents the simulated state of the vehicle. The simulated
@@ -219,7 +220,7 @@ impl Message for SimulatedState {
         bfr.put_f32_le(self._svz);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._lat = bfr.get_f64_le();
 
         self._lon = bfr.get_f64_le();
@@ -255,5 +256,7 @@ impl Message for SimulatedState {
         self._svy = bfr.get_f32_le();
 
         self._svz = bfr.get_f32_le();
+
+        Ok(())
     }
 }

@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[derive(Default)]
@@ -110,7 +111,7 @@ impl Message for IridiumMsgTx {
         serialize_bytes!(bfr, self._data.as_slice());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._req_id = bfr.get_u16_le();
 
         self._ttl = bfr.get_u16_le();
@@ -118,5 +119,7 @@ impl Message for IridiumMsgTx {
         deserialize_string!(bfr, self._destination);
 
         deserialize_bytes!(bfr, self._data);
+
+        Ok(())
     }
 }

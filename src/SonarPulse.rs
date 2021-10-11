@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Information regarding a sent/received Sonar pulse.
@@ -105,7 +106,7 @@ impl Message for SonarPulse {
         bfr.put_i32_le(self._simulated_speed);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._frequency = bfr.get_i32_le();
 
         self._pulse_length = bfr.get_i32_le();
@@ -113,5 +114,7 @@ impl Message for SonarPulse {
         self._time_delay = bfr.get_i32_le();
 
         self._simulated_speed = bfr.get_i32_le();
+
+        Ok(())
     }
 }

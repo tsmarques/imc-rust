@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message is used to store the various polygon vertices for
@@ -90,9 +91,11 @@ impl Message for PolygonVertex {
         bfr.put_f64_le(self._lon);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._lat = bfr.get_f64_le();
 
         self._lon = bfr.get_f64_le();
+
+        Ok(())
     }
 }

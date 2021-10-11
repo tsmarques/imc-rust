@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// message-group: Maneuver
@@ -159,7 +160,7 @@ impl Message for StationKeeping {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._lat = bfr.get_f64_le();
 
         self._lon = bfr.get_f64_le();
@@ -177,5 +178,7 @@ impl Message for StationKeeping {
         self._speed_units = bfr.get_u8();
 
         deserialize_string!(bfr, self._custom);
+
+        Ok(())
     }
 }

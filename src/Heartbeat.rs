@@ -4,6 +4,7 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// The Heartbeat message is used to inform other modules that the
@@ -68,5 +69,7 @@ impl Message for Heartbeat {
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
+        Ok(())
+    }
 }

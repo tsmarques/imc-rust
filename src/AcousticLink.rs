@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message is used to report the perceived link quality to other
@@ -110,11 +111,13 @@ impl Message for AcousticLink {
         bfr.put_u16_le(self._integrity);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._peer);
 
         self._rssi = bfr.get_f32_le();
 
         self._integrity = bfr.get_u16_le();
+
+        Ok(())
     }
 }

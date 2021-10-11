@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message contains information, collected using USBL, about a
@@ -166,7 +167,7 @@ impl Message for UsblPositionExtended {
         bfr.put_f32_le(self._accuracy);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._target);
 
         self._x = bfr.get_f32_le();
@@ -188,5 +189,7 @@ impl Message for UsblPositionExtended {
         self._psi = bfr.get_f32_le();
 
         self._accuracy = bfr.get_f32_le();
+
+        Ok(())
     }
 }

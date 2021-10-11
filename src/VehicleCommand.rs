@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -176,7 +177,7 @@ impl Message for VehicleCommand {
         serialize_bytes!(bfr, self._info.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._type = bfr.get_u8();
 
         self._request_id = bfr.get_u16_le();
@@ -188,5 +189,7 @@ impl Message for VehicleCommand {
         self._calib_time = bfr.get_u16_le();
 
         deserialize_string!(bfr, self._info);
+
+        Ok(())
     }
 }

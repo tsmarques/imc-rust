@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Waypoint coordinate of a Follow Trajectory maneuver.
@@ -108,7 +109,7 @@ impl Message for TrajectoryPoint {
         bfr.put_f32_le(self._t);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._x = bfr.get_f32_le();
 
         self._y = bfr.get_f32_le();
@@ -116,5 +117,7 @@ impl Message for TrajectoryPoint {
         self._z = bfr.get_f32_le();
 
         self._t = bfr.get_f32_le();
+
+        Ok(())
     }
 }

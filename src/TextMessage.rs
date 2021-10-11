@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// A text message has been received.
@@ -95,9 +96,11 @@ impl Message for TextMessage {
         serialize_bytes!(bfr, self._text.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._origin);
 
         deserialize_string!(bfr, self._text);
+
+        Ok(())
     }
 }

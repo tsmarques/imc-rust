@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::LblBeacon::LblBeacon;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// LBL Beacon position estimate.
@@ -129,7 +130,7 @@ impl Message for LblEstimate {
         bfr.put_f32_le(self._distance);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._beacon = deserialize_inline_as::<LblBeacon>(bfr).ok();
 
         self._x = bfr.get_f32_le();
@@ -141,5 +142,7 @@ impl Message for LblEstimate {
         self._var_y = bfr.get_f32_le();
 
         self._distance = bfr.get_f32_le();
+
+        Ok(())
     }
 }

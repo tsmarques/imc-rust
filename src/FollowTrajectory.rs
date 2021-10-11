@@ -12,6 +12,7 @@ use crate::TrajectoryPoint::TrajectoryPoint;
 
 use crate::MessageGroup::Maneuver;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// message-group: Maneuver
@@ -162,7 +163,7 @@ impl Message for FollowTrajectory {
         serialize_bytes!(bfr, self._custom.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._timeout = bfr.get_u16_le();
 
         self._lat = bfr.get_f64_le();
@@ -177,10 +178,10 @@ impl Message for FollowTrajectory {
 
         self._speed_units = bfr.get_u8();
 
-        for m in self._points.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._points = deserialize_message_list_as::<TrajectoryPoint>(bfr)?;
 
         deserialize_string!(bfr, self._custom);
+
+        Ok(())
     }
 }

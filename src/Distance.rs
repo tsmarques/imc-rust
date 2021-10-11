@@ -12,6 +12,7 @@ use crate::DeviceState::DeviceState;
 
 use crate::BeamConfig::BeamConfig;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -135,17 +136,15 @@ impl Message for Distance {
         bfr.put_f32_le(self._value);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._validity = bfr.get_u8();
 
-        for m in self._location.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._location = deserialize_message_list_as::<DeviceState>(bfr)?;
 
-        for m in self._beam_config.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._beam_config = deserialize_message_list_as::<BeamConfig>(bfr)?;
 
         self._value = bfr.get_f32_le();
+
+        Ok(())
     }
 }

@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message describes an entity.
@@ -120,7 +121,7 @@ impl Message for EntityInfo {
         bfr.put_u16_le(self._deact_time);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._id = bfr.get_u8();
 
         deserialize_string!(bfr, self._label);
@@ -130,5 +131,7 @@ impl Message for EntityInfo {
         self._act_time = bfr.get_u16_le();
 
         self._deact_time = bfr.get_u16_le();
+
+        Ok(())
     }
 }

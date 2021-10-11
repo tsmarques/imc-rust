@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message contains information, collected using USBL, about the
@@ -98,11 +99,13 @@ impl Message for UsblAngles {
         bfr.put_f32_le(self._elevation);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._target = bfr.get_u16_le();
 
         self._bearing = bfr.get_f32_le();
 
         self._elevation = bfr.get_f32_le();
+
+        Ok(())
     }
 }

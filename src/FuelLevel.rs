@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Report of fuel level.
@@ -103,11 +104,13 @@ impl Message for FuelLevel {
         serialize_bytes!(bfr, self._opmodes.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f32_le();
 
         self._confidence = bfr.get_f32_le();
 
         deserialize_string!(bfr, self._opmodes);
+
+        Ok(())
     }
 }

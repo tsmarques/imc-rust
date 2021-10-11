@@ -8,12 +8,13 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::PlanTransition::PlanTransition;
+use crate::PlanVariable::PlanVariable;
 
 use crate::PlanManeuver::PlanManeuver;
 
-use crate::PlanVariable::PlanVariable;
+use crate::PlanTransition::PlanTransition;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Identity and description of a plan's general parameters,
@@ -183,33 +184,25 @@ impl Message for PlanSpecification {
         serialize_message_list!(bfr, self._end_actions);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._plan_id);
 
         deserialize_string!(bfr, self._description);
 
         deserialize_string!(bfr, self._vnamespace);
 
-        for m in self._variables.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._variables = deserialize_message_list_as::<PlanVariable>(bfr)?;
 
         deserialize_string!(bfr, self._start_man_id);
 
-        for m in self._maneuvers.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._maneuvers = deserialize_message_list_as::<PlanManeuver>(bfr)?;
 
-        for m in self._transitions.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._transitions = deserialize_message_list_as::<PlanTransition>(bfr)?;
 
-        for m in self._start_actions.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._start_actions = deserialize_message_list(bfr)?;
 
-        for m in self._end_actions.iter_mut() {
-            m.deserialize_fields(bfr);
-        }
+        self._end_actions = deserialize_message_list(bfr)?;
+
+        Ok(())
     }
 }

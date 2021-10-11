@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -125,11 +126,13 @@ impl Message for IridiumTxStatus {
         serialize_bytes!(bfr, self._text.as_bytes());
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._req_id = bfr.get_u16_le();
 
         self._status = bfr.get_u8();
 
         deserialize_string!(bfr, self._text);
+
+        Ok(())
     }
 }

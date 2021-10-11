@@ -8,6 +8,7 @@ use crate::Header::Header;
 
 use crate::TrexToken::TrexToken;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
@@ -131,11 +132,13 @@ impl Message for TrexOperation {
         serialize_inline_message!(bfr, self._token);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._op = bfr.get_u8();
 
         deserialize_string!(bfr, self._goal_id);
 
         self._token = deserialize_inline_as::<TrexToken>(bfr).ok();
+
+        Ok(())
     }
 }

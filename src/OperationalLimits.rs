@@ -6,6 +6,7 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// Definition of operational limits.
@@ -157,7 +158,7 @@ impl Message for OperationalLimits {
         bfr.put_f32_le(self._length);
     }
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._mask = bfr.get_u8();
 
         self._max_depth = bfr.get_f32_le();
@@ -181,5 +182,7 @@ impl Message for OperationalLimits {
         self._width = bfr.get_f32_le();
 
         self._length = bfr.get_f32_le();
+
+        Ok(())
     }
 }

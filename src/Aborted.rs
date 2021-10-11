@@ -4,6 +4,7 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 use crate::Header::Header;
 
+use crate::packet::ImcError;
 use crate::packet::*;
 
 /// This message signals that an :ref:`Abort` message was received and acted upon.
@@ -66,5 +67,7 @@ impl Message for Aborted {
 
     fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) {}
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
+        Ok(())
+    }
 }
