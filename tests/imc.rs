@@ -17,6 +17,7 @@ use imc::PlanTransition::PlanTransition;
 use imc::PlanVariable::PlanVariable;
 use imc::VehicleCommand::VehicleCommand;
 use imc::{IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE};
+use imc::GpsFix::{GpsFix, ValidityEnum};
 
 #[test]
 fn buffer_write() {
@@ -318,4 +319,15 @@ fn test_VehicleCommand() {
 
     let mut msg2 = ret.ok().unwrap();
     assert_eq!(msg.get_header(), msg2.get_header());
+}
+
+#[test]
+pub fn test_GpsFix() {
+    let mut fix :GpsFix = GpsFix::new();
+    fix._validity = (ValidityEnum::GFV_VALID_COG as u16) | (ValidityEnum::GFV_VALID_HACC as u16);
+
+    let mut ret = 0;
+    ret = fix._validity & (ValidityEnum::GFV_VALID_COG as u16);
+
+    assert_ne!(ret, 0);
 }
