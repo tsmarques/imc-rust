@@ -23,17 +23,18 @@ pub enum TypeEnum {
     LBET_DEBUG = 4,
 }
 
-impl TypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            LBET_INFO => 0,
-            LBET_WARNING => 1,
-            LBET_ERROR => 2,
-            LBET_CRITICAL => 3,
-            LBET_DEBUG => 4,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Type {
+    // Information
+    pub const LBET_INFO: u32 = 0;
+    // Warning
+    pub const LBET_WARNING: u32 = 1;
+    // Error
+    pub const LBET_ERROR: u32 = 2;
+    // Critical
+    pub const LBET_CRITICAL: u32 = 3;
+    // Debug
+    pub const LBET_DEBUG: u32 = 4;
 }
 
 /// Human readable message reporting an event of interest.

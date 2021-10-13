@@ -31,21 +31,26 @@ pub enum EventTypeEnum {
     EVT_TELEOPERATION_ENDED = 9,
 }
 
-impl EventTypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            EVT_LOG_ENTRY => 1,
-            EVT_PLAN_ADDED => 2,
-            EVT_PLAN_REMOVED => 3,
-            EVT_PLAN_CHANGED => 4,
-            EVT_MAP_FEATURE_ADDED => 5,
-            EVT_MAP_FEATURE_REMOVED => 6,
-            EVT_MAP_FEATURE_CHANGED => 7,
-            EVT_TELEOPERATION_STARTED => 8,
-            EVT_TELEOPERATION_ENDED => 9,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod EventType {
+    // Log Book Entry Added
+    pub const EVT_LOG_ENTRY: u32 = 1;
+    // Plan Added
+    pub const EVT_PLAN_ADDED: u32 = 2;
+    // Plan Removed
+    pub const EVT_PLAN_REMOVED: u32 = 3;
+    // Plan Changed
+    pub const EVT_PLAN_CHANGED: u32 = 4;
+    // Map feature added
+    pub const EVT_MAP_FEATURE_ADDED: u32 = 5;
+    // Map feature removed
+    pub const EVT_MAP_FEATURE_REMOVED: u32 = 6;
+    // Map feature changed
+    pub const EVT_MAP_FEATURE_CHANGED: u32 = 7;
+    // The sender is now teleoperating the vehicle
+    pub const EVT_TELEOPERATION_STARTED: u32 = 8;
+    // The sender stopped teleoperating the vehicle
+    pub const EVT_TELEOPERATION_ENDED: u32 = 9;
 }
 
 /// This message is used to signal events among running CCUs.

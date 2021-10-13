@@ -25,20 +25,6 @@ pub enum OperationEnum {
     OP_REPORT_SENT = 5,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            OP_REQUEST_START => 0,
-            OP_STARTED => 1,
-            OP_REQUEST_STOP => 2,
-            OP_STOPPED => 3,
-            OP_REQUEST_REPORT => 4,
-            OP_REPORT_SENT => 5,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum CommunicationInterfaceEnum {
     // Acoustic
@@ -51,16 +37,32 @@ pub enum CommunicationInterfaceEnum {
     CI_MOBILE = 0x08,
 }
 
-impl CommunicationInterfaceEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            CI_ACOUSTIC => 0x01,
-            CI_SATELLITE => 0x02,
-            CI_GSM => 0x04,
-            CI_MOBILE => 0x08,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Request Start of Reports
+    pub const OP_REQUEST_START: u32 = 0;
+    // Report Started
+    pub const OP_STARTED: u32 = 1;
+    // Request Stop of Reports
+    pub const OP_REQUEST_STOP: u32 = 2;
+    // Report Stopped
+    pub const OP_STOPPED: u32 = 3;
+    // Request Single Reports
+    pub const OP_REQUEST_REPORT: u32 = 4;
+    // Single Report Sent
+    pub const OP_REPORT_SENT: u32 = 5;
+}
+
+#[allow(non_camel_case_types)]
+pub mod CommunicationInterface {
+    // Acoustic
+    pub const CI_ACOUSTIC: u32 = 0x01;
+    // Satellite
+    pub const CI_SATELLITE: u32 = 0x02;
+    // GSM
+    pub const CI_GSM: u32 = 0x04;
+    // Mobile
+    pub const CI_MOBILE: u32 = 0x08;
 }
 
 /// Use Global System for Mobile Communications

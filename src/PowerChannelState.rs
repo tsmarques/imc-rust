@@ -17,14 +17,12 @@ pub enum StateEnum {
     PCS_ON = 1,
 }
 
-impl StateEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            PCS_OFF => 0,
-            PCS_ON => 1,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod State {
+    // Off
+    pub const PCS_OFF: u32 = 0;
+    // On
+    pub const PCS_ON: u32 = 1;
 }
 
 /// Power channel is off.

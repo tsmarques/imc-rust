@@ -5,6 +5,7 @@ use imc::Alignment::Alignment;
 use imc::EstimatedState::EstimatedState;
 use imc::EstimatedStreamVelocity::EstimatedStreamVelocity;
 use imc::FollowReference::FollowReference;
+use imc::GpsFix::{GpsFix, ValidityEnum};
 use imc::Header::Header;
 use imc::Heartbeat::Heartbeat;
 use imc::LoggingControl::{ControlOperationEnum, LoggingControl};
@@ -17,7 +18,6 @@ use imc::PlanTransition::PlanTransition;
 use imc::PlanVariable::PlanVariable;
 use imc::VehicleCommand::VehicleCommand;
 use imc::{IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE};
-use imc::GpsFix::{GpsFix, ValidityEnum};
 
 #[test]
 fn buffer_write() {
@@ -323,7 +323,7 @@ fn test_VehicleCommand() {
 
 #[test]
 pub fn test_GpsFix() {
-    let mut fix :GpsFix = GpsFix::new();
+    let mut fix: GpsFix = GpsFix::new();
     fix._validity = (ValidityEnum::GFV_VALID_COG as u16) | (ValidityEnum::GFV_VALID_HACC as u16);
 
     let mut ret = 0;

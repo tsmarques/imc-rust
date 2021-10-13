@@ -21,18 +21,6 @@ pub enum TypeEnum {
     PC_IN_PROGRESS = 3,
 }
 
-impl TypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            PC_REQUEST => 0,
-            PC_SUCCESS => 1,
-            PC_FAILURE => 2,
-            PC_IN_PROGRESS => 3,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Start Plan
@@ -45,18 +33,6 @@ pub enum OperationEnum {
     PC_GET = 3,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            PC_START => 0,
-            PC_STOP => 1,
-            PC_LOAD => 2,
-            PC_GET => 3,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Calibrate Vehicle
@@ -65,14 +41,36 @@ pub enum FlagsEnum {
     FLG_IGNORE_ERRORS = 0x0002,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u16 {
-        match self {
-            FLG_CALIBRATE => 0x0001,
-            FLG_IGNORE_ERRORS => 0x0002,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Type {
+    // Request
+    pub const PC_REQUEST: u32 = 0;
+    // Reply -- Success
+    pub const PC_SUCCESS: u32 = 1;
+    // Reply -- Failure
+    pub const PC_FAILURE: u32 = 2;
+    // Reply -- In Progress
+    pub const PC_IN_PROGRESS: u32 = 3;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Start Plan
+    pub const PC_START: u32 = 0;
+    // Stop Plan
+    pub const PC_STOP: u32 = 1;
+    // Load Plan
+    pub const PC_LOAD: u32 = 2;
+    // Get Plan
+    pub const PC_GET: u32 = 3;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Calibrate Vehicle
+    pub const FLG_CALIBRATE: u32 = 0x0001;
+    // Ignore Errors
+    pub const FLG_IGNORE_ERRORS: u32 = 0x0002;
 }
 
 /// Execute current plan while ignoring some errors that might be active.

@@ -17,16 +17,6 @@ pub enum TypeofvelocityEnum {
     TYPE_WV = 0x02,
 }
 
-impl TypeofvelocityEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            TYPE_GV => 0x01,
-            TYPE_WV => 0x02,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum ReasonEnum {
     // Innovation Threshold - X
@@ -39,16 +29,24 @@ pub enum ReasonEnum {
     RR_ABS_THRESHOLD_Y = 3,
 }
 
-impl ReasonEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            RR_INNOV_THRESHOLD_X => 0,
-            RR_INNOV_THRESHOLD_Y => 1,
-            RR_ABS_THRESHOLD_X => 2,
-            RR_ABS_THRESHOLD_Y => 3,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Typeofvelocity {
+    // Ground velocity
+    pub const TYPE_GV: u32 = 0x01;
+    // Water velocity
+    pub const TYPE_WV: u32 = 0x02;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Reason {
+    // Innovation Threshold - X
+    pub const RR_INNOV_THRESHOLD_X: u32 = 0;
+    // Innovation Threshold - Y
+    pub const RR_INNOV_THRESHOLD_Y: u32 = 1;
+    // Absolute Threshold - X
+    pub const RR_ABS_THRESHOLD_X: u32 = 2;
+    // Absolute Threshold - Y
+    pub const RR_ABS_THRESHOLD_Y: u32 = 3;
 }
 
 /// The current DVL x-axis measurement is discarded

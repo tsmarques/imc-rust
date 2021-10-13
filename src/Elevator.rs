@@ -17,13 +17,10 @@ pub enum FlagsEnum {
     FLG_CURR_POS = 0x01,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            FLG_CURR_POS => 0x01,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Start from current position
+    pub const FLG_CURR_POS: u32 = 0x01;
 }
 
 /// message-group: Maneuver

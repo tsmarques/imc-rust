@@ -25,17 +25,18 @@ pub enum StateEnum {
     FC_TIMEOUT = 5,
 }
 
-impl StateEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            FC_WAIT => 1,
-            FC_MOVING => 2,
-            FC_STOPPED => 3,
-            FC_BAD_COMMAND => 4,
-            FC_TIMEOUT => 5,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod State {
+    // Waiting for first command
+    pub const FC_WAIT: u32 = 1;
+    // Moving towards received command
+    pub const FC_MOVING: u32 = 2;
+    // Speed command is zero
+    pub const FC_STOPPED: u32 = 3;
+    // Command is out of safe bounds
+    pub const FC_BAD_COMMAND: u32 = 4;
+    // Controlling system timed out
+    pub const FC_TIMEOUT: u32 = 5;
 }
 
 /// Maneuver will be terminated since timeout was exceeded.

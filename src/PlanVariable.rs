@@ -21,18 +21,6 @@ pub enum TypeEnum {
     PVT_MESSAGE = 3,
 }
 
-impl TypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            PVT_BOOLEAN => 0,
-            PVT_NUMBER => 1,
-            PVT_TEXT => 2,
-            PVT_MESSAGE => 3,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum AccessTypeEnum {
     // Input
@@ -43,15 +31,26 @@ pub enum AccessTypeEnum {
     PVA_LOCAL = 2,
 }
 
-impl AccessTypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            PVA_INPUT => 0,
-            PVA_OUTPUT => 1,
-            PVA_LOCAL => 2,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Type {
+    // Boolean
+    pub const PVT_BOOLEAN: u32 = 0;
+    // Number
+    pub const PVT_NUMBER: u32 = 1;
+    // Text
+    pub const PVT_TEXT: u32 = 2;
+    // Message
+    pub const PVT_MESSAGE: u32 = 3;
+}
+
+#[allow(non_camel_case_types)]
+pub mod AccessType {
+    // Input
+    pub const PVA_INPUT: u32 = 0;
+    // Output
+    pub const PVA_OUTPUT: u32 = 1;
+    // Local
+    pub const PVA_LOCAL: u32 = 2;
 }
 
 /// A plan variable.

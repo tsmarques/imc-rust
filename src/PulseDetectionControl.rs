@@ -17,14 +17,12 @@ pub enum OperationEnum {
     POP_ON = 1,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            POP_OFF => 0,
-            POP_ON => 1,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Pulse Detection OFF
+    pub const POP_OFF: u32 = 0;
+    // Pulse Detection ON
+    pub const POP_ON: u32 = 1;
 }
 
 /// Control of hardware pulse detection.

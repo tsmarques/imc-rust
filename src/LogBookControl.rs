@@ -25,16 +25,16 @@ pub enum CommandEnum {
     LBC_REPLY = 3,
 }
 
-impl CommandEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            LBC_GET => 0,
-            LBC_CLEAR => 1,
-            LBC_GET_ERR => 2,
-            LBC_REPLY => 3,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Command {
+    // Get
+    pub const LBC_GET: u32 = 0;
+    // Clear
+    pub const LBC_CLEAR: u32 = 1;
+    // Get Errors
+    pub const LBC_GET_ERR: u32 = 2;
+    // Reply
+    pub const LBC_REPLY: u32 = 3;
 }
 
 /// Retrieve log book entries corresponding to errors.

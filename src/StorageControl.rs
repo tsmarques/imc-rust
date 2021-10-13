@@ -21,18 +21,6 @@ pub enum TypeEnum {
     SCTR_IN_PROGRESS = 3,
 }
 
-impl TypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            SCTR_REQUEST => 0,
-            SCTR_SUCCESS => 1,
-            SCTR_FAILURE => 2,
-            SCTR_IN_PROGRESS => 3,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // List
@@ -45,16 +33,28 @@ pub enum OperationEnum {
     SOP_FORMAT = 3,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            SOP_LIST => 0,
-            SOP_MOUNT => 1,
-            SOP_UMOUNT => 2,
-            SOP_FORMAT => 3,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Type {
+    // Request
+    pub const SCTR_REQUEST: u32 = 0;
+    // Reply -- Success
+    pub const SCTR_SUCCESS: u32 = 1;
+    // Reply -- Failure
+    pub const SCTR_FAILURE: u32 = 2;
+    // Reply -- In Progress
+    pub const SCTR_IN_PROGRESS: u32 = 3;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // List
+    pub const SOP_LIST: u32 = 0;
+    // Mount
+    pub const SOP_MOUNT: u32 = 1;
+    // Unmount
+    pub const SOP_UMOUNT: u32 = 2;
+    // Format
+    pub const SOP_FORMAT: u32 = 3;
 }
 
 /// Unmount the selected storage device

@@ -17,14 +17,12 @@ pub enum TypeEnum {
     IOV_TYPE_INPUT_ERROR = 2,
 }
 
-impl TypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            IOV_TYPE_INPUT => 1,
-            IOV_TYPE_INPUT_ERROR => 2,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Type {
+    // Input Available
+    pub const IOV_TYPE_INPUT: u32 = 1;
+    // Input Error
+    pub const IOV_TYPE_INPUT_ERROR: u32 = 2;
 }
 
 /// Notification of an I/O event.

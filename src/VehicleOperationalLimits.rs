@@ -19,15 +19,14 @@ pub enum ActiononthevehicleoperationallimitsEnum {
     OP_REPORT = 2,
 }
 
-impl ActiononthevehicleoperationallimitsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            OP_REQUEST => 0,
-            OP_SET => 1,
-            OP_REPORT => 2,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Actiononthevehicleoperationallimits {
+    // Request
+    pub const OP_REQUEST: u32 = 0;
+    // Set
+    pub const OP_SET: u32 = 1;
+    // Report
+    pub const OP_REPORT: u32 = 2;
 }
 
 /// Vehicle opertional limits.

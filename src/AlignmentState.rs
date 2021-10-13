@@ -29,20 +29,24 @@ pub enum StateEnum {
     AS_SYSTEM_READY = 7,
 }
 
-impl StateEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            AS_NOT_ALIGNED => 0,
-            AS_ALIGNED => 1,
-            AS_NOT_SUPPORTED => 2,
-            AS_ALIGNING => 3,
-            AS_WRONG_MEDIUM => 4,
-            AS_COARSE_ALIGNMENT => 5,
-            AS_FINE_ALIGNMENT => 6,
-            AS_SYSTEM_READY => 7,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod State {
+    // Not Aligned
+    pub const AS_NOT_ALIGNED: u32 = 0;
+    // Aligned
+    pub const AS_ALIGNED: u32 = 1;
+    // Not Supported
+    pub const AS_NOT_SUPPORTED: u32 = 2;
+    // Aligning
+    pub const AS_ALIGNING: u32 = 3;
+    // Wrong Medium
+    pub const AS_WRONG_MEDIUM: u32 = 4;
+    // Coarse Alignment
+    pub const AS_COARSE_ALIGNMENT: u32 = 5;
+    // Fine Alignment
+    pub const AS_FINE_ALIGNMENT: u32 = 6;
+    // System Ready
+    pub const AS_SYSTEM_READY: u32 = 7;
 }
 
 /// This message notifies the vehicle is ready for dead-reckoning missions.

@@ -21,18 +21,6 @@ pub enum StateEnum {
     PCS_EXECUTING = 3,
 }
 
-impl StateEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            PCS_BLOCKED => 0,
-            PCS_READY => 1,
-            PCS_INITIALIZING => 2,
-            PCS_EXECUTING => 3,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum LastPlanOutcomeEnum {
     // None
@@ -43,15 +31,26 @@ pub enum LastPlanOutcomeEnum {
     LPO_FAILURE = 2,
 }
 
-impl LastPlanOutcomeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            LPO_NONE => 0,
-            LPO_SUCCESS => 1,
-            LPO_FAILURE => 2,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod State {
+    // Blocked
+    pub const PCS_BLOCKED: u32 = 0;
+    // Ready
+    pub const PCS_READY: u32 = 1;
+    // Initializing
+    pub const PCS_INITIALIZING: u32 = 2;
+    // Executing
+    pub const PCS_EXECUTING: u32 = 3;
+}
+
+#[allow(non_camel_case_types)]
+pub mod LastPlanOutcome {
+    // None
+    pub const LPO_NONE: u32 = 0;
+    // Success
+    pub const LPO_SUCCESS: u32 = 1;
+    // Failure
+    pub const LPO_FAILURE: u32 = 2;
 }
 
 /// Last plan execution was a failure.

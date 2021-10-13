@@ -25,17 +25,18 @@ pub enum OperationEnum {
     OP_REPORT_PLAN = 5,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            OP_POST_TOKEN => 1,
-            OP_POST_GOAL => 2,
-            OP_RECALL_GOAL => 3,
-            OP_REQUEST_PLAN => 4,
-            OP_REPORT_PLAN => 5,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Post Token
+    pub const OP_POST_TOKEN: u32 = 1;
+    // Post Goal
+    pub const OP_POST_GOAL: u32 = 2;
+    // Recall Goal
+    pub const OP_RECALL_GOAL: u32 = 3;
+    // Request current plan
+    pub const OP_REQUEST_PLAN: u32 = 4;
+    // Report current plan
+    pub const OP_REPORT_PLAN: u32 = 5;
 }
 
 /// This message is used to control TREX execution

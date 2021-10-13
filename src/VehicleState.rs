@@ -25,33 +25,32 @@ pub enum OperationModeEnum {
     VS_BOOT = 5,
 }
 
-impl OperationModeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            VS_SERVICE => 0,
-            VS_CALIBRATION => 1,
-            VS_ERROR => 2,
-            VS_MANEUVER => 3,
-            VS_EXTERNAL => 4,
-            VS_BOOT => 5,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Maneuver Done
     VFLG_MANEUVER_DONE = 0x01,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            VFLG_MANEUVER_DONE => 0x01,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod OperationMode {
+    // Service
+    pub const VS_SERVICE: u32 = 0;
+    // Calibration
+    pub const VS_CALIBRATION: u32 = 1;
+    // Error
+    pub const VS_ERROR: u32 = 2;
+    // Maneuver
+    pub const VS_MANEUVER: u32 = 3;
+    // External Control
+    pub const VS_EXTERNAL: u32 = 4;
+    // Boot
+    pub const VS_BOOT: u32 = 5;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Maneuver Done
+    pub const VFLG_MANEUVER_DONE: u32 = 0x01;
 }
 
 /// External control is active.

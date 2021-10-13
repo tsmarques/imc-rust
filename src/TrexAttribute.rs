@@ -23,17 +23,18 @@ pub enum AttributetypeEnum {
     TYPE_ENUM = 5,
 }
 
-impl AttributetypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            TYPE_BOOL => 1,
-            TYPE_INT => 2,
-            TYPE_FLOAT => 3,
-            TYPE_STRING => 4,
-            TYPE_ENUM => 5,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Attributetype {
+    // Boolean Domain
+    pub const TYPE_BOOL: u32 = 1;
+    // Integer Domain
+    pub const TYPE_INT: u32 = 2;
+    // Float Domain
+    pub const TYPE_FLOAT: u32 = 3;
+    // String Domain
+    pub const TYPE_STRING: u32 = 4;
+    // Enumerated Domain
+    pub const TYPE_ENUM: u32 = 5;
 }
 
 #[derive(Default)]

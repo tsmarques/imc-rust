@@ -47,29 +47,42 @@ pub enum OperationEnum {
     AOP_MSG_SHORT = 16,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            AOP_ABORT => 0,
-            AOP_ABORT_IP => 1,
-            AOP_ABORT_TIMEOUT => 2,
-            AOP_ABORT_ACKED => 3,
-            AOP_RANGE => 4,
-            AOP_RANGE_IP => 5,
-            AOP_RANGE_TIMEOUT => 6,
-            AOP_RANGE_RECVED => 7,
-            AOP_BUSY => 8,
-            AOP_UNSUPPORTED => 9,
-            AOP_NO_TXD => 10,
-            AOP_MSG => 11,
-            AOP_MSG_QUEUED => 12,
-            AOP_MSG_IP => 13,
-            AOP_MSG_DONE => 14,
-            AOP_MSG_FAILURE => 15,
-            AOP_MSG_SHORT => 16,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Abort
+    pub const AOP_ABORT: u32 = 0;
+    // Abort in Progress
+    pub const AOP_ABORT_IP: u32 = 1;
+    // Abort Timeout
+    pub const AOP_ABORT_TIMEOUT: u32 = 2;
+    // Abort Acknowledged
+    pub const AOP_ABORT_ACKED: u32 = 3;
+    // Range Request
+    pub const AOP_RANGE: u32 = 4;
+    // Range in Progress
+    pub const AOP_RANGE_IP: u32 = 5;
+    // Range Timeout
+    pub const AOP_RANGE_TIMEOUT: u32 = 6;
+    // Range Received
+    pub const AOP_RANGE_RECVED: u32 = 7;
+    // Modem is Busy
+    pub const AOP_BUSY: u32 = 8;
+    // Unsupported operation
+    pub const AOP_UNSUPPORTED: u32 = 9;
+    // Transducer Not Detected
+    pub const AOP_NO_TXD: u32 = 10;
+    // Send Message
+    pub const AOP_MSG: u32 = 11;
+    // Message Send -- Queued
+    pub const AOP_MSG_QUEUED: u32 = 12;
+    // Message Send -- In progress
+    pub const AOP_MSG_IP: u32 = 13;
+    // Message Send -- Done
+    pub const AOP_MSG_DONE: u32 = 14;
+    // Message Send -- Failure
+    pub const AOP_MSG_FAILURE: u32 = 15;
+    // Send Short Message
+    pub const AOP_MSG_SHORT: u32 = 16;
 }
 
 /// Request message over acoustic channel. The message to send

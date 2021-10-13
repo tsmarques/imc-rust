@@ -23,16 +23,16 @@ pub enum DirectionEnum {
     LD_IWINDCURR = 3,
 }
 
-impl DirectionEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            LD_VDEP => 0,
-            LD_CLOCKW => 1,
-            LD_CCLOCKW => 2,
-            LD_IWINDCURR => 3,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Direction {
+    // Vehicle Dependent
+    pub const LD_VDEP: u32 = 0;
+    // Clockwise
+    pub const LD_CLOCKW: u32 = 1;
+    // Counter Clockwise
+    pub const LD_CCLOCKW: u32 = 2;
+    // Into the wind/current
+    pub const LD_IWINDCURR: u32 = 3;
 }
 
 /// message-group: Maneuver

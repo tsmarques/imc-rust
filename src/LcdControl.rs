@@ -23,17 +23,18 @@ pub enum OperationEnum {
     OP_WRITE1 = 4,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            OP_TURN_OFF => 0,
-            OP_TURN_ON => 1,
-            OP_CLEAR => 2,
-            OP_WRITE0 => 3,
-            OP_WRITE1 => 4,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Turn off display
+    pub const OP_TURN_OFF: u32 = 0;
+    // Turn on display
+    pub const OP_TURN_ON: u32 = 1;
+    // Clear display
+    pub const OP_CLEAR: u32 = 2;
+    // Write Line #0
+    pub const OP_WRITE0: u32 = 3;
+    // Write Line #1
+    pub const OP_WRITE1: u32 = 4;
 }
 
 /// Control LCD.

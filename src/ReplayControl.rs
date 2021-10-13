@@ -21,16 +21,16 @@ pub enum OperationEnum {
     ROP_RESUME = 3,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            ROP_START => 0,
-            ROP_STOP => 1,
-            ROP_PAUSE => 2,
-            ROP_RESUME => 3,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Start
+    pub const ROP_START: u32 = 0;
+    // Stop
+    pub const ROP_STOP: u32 = 1;
+    // Pause
+    pub const ROP_PAUSE: u32 = 2;
+    // Resume
+    pub const ROP_RESUME: u32 = 3;
 }
 
 /// Control replay of LSF logged data.

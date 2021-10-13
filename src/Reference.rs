@@ -31,19 +31,22 @@ pub enum FlagsEnum {
     FLAG_MANDONE = 0x80,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            FLAG_LOCATION => 0x01,
-            FLAG_SPEED => 0x02,
-            FLAG_Z => 0x04,
-            FLAG_RADIUS => 0x08,
-            FLAG_START_POINT => 0x10,
-            FLAG_DIRECT => 0x20,
-            FLAG_MANDONE => 0x80,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Use Location Reference
+    pub const FLAG_LOCATION: u32 = 0x01;
+    // Use Speed Reference
+    pub const FLAG_SPEED: u32 = 0x02;
+    // Use Z Reference
+    pub const FLAG_Z: u32 = 0x04;
+    // Use Radius Reference
+    pub const FLAG_RADIUS: u32 = 0x08;
+    // Use this Reference as Start Position for PathControler
+    pub const FLAG_START_POINT: u32 = 0x10;
+    // Use Current Position as Start Position for PathControler
+    pub const FLAG_DIRECT: u32 = 0x20;
+    // Flag Maneuver Completion
+    pub const FLAG_MANDONE: u32 = 0x80;
 }
 
 #[derive(Default)]

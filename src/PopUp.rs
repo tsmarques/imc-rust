@@ -21,15 +21,14 @@ pub enum FlagsEnum {
     FLG_STATION_KEEP = 0x04,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            FLG_CURR_POS => 0x01,
-            FLG_WAIT_AT_SURFACE => 0x02,
-            FLG_STATION_KEEP => 0x04,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Start from current position
+    pub const FLG_CURR_POS: u32 = 0x01;
+    // Wait at surface
+    pub const FLG_WAIT_AT_SURFACE: u32 = 0x02;
+    // Station keeping
+    pub const FLG_STATION_KEEP: u32 = 0x04;
 }
 
 /// message-group: Maneuver

@@ -23,17 +23,18 @@ pub enum ReasonEnum {
     RR_LOST_VAL_BIT = 4,
 }
 
-impl ReasonEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            RR_ABOVE_THRESHOLD => 0,
-            RR_INVALID => 1,
-            RR_ABOVE_MAX_HDOP => 2,
-            RR_ABOVE_MAX_HACC => 3,
-            RR_LOST_VAL_BIT => 4,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Reason {
+    // Above Threshold
+    pub const RR_ABOVE_THRESHOLD: u32 = 0;
+    // Invalid Fix
+    pub const RR_INVALID: u32 = 1;
+    // Above Maximum HDOP
+    pub const RR_ABOVE_MAX_HDOP: u32 = 2;
+    // Above Maximum HACC
+    pub const RR_ABOVE_MAX_HACC: u32 = 3;
+    // Lost Validity Bit
+    pub const RR_LOST_VAL_BIT: u32 = 4;
 }
 
 /// Lost one of the validity bits between consecutive GPS fixes.

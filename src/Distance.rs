@@ -8,9 +8,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::BeamConfig::BeamConfig;
-
 use crate::DeviceState::DeviceState;
+
+use crate::BeamConfig::BeamConfig;
 
 use crate::packet::ImcError;
 use crate::packet::*;
@@ -23,14 +23,12 @@ pub enum ValidityEnum {
     DV_VALID = 1,
 }
 
-impl ValidityEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            DV_INVALID => 0,
-            DV_VALID => 1,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Validity {
+    // Invalid
+    pub const DV_INVALID: u32 = 0;
+    // Valid
+    pub const DV_VALID: u32 = 1;
 }
 
 /// Measurement is invalid.

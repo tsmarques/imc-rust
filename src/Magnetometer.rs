@@ -19,14 +19,12 @@ pub enum DirectionEnum {
     MD_CCLOCKW_FIRST = 1,
 }
 
-impl DirectionEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            MD_CLOCKW_FIRST => 0,
-            MD_CCLOCKW_FIRST => 1,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Direction {
+    // Clockwise First
+    pub const MD_CLOCKW_FIRST: u32 = 0;
+    // Counter Clockwise First
+    pub const MD_CCLOCKW_FIRST: u32 = 1;
 }
 
 /// message-group: Maneuver

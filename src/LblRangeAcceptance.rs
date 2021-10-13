@@ -23,17 +23,18 @@ pub enum AcceptanceEnum {
     RR_AT_SURFACE = 4,
 }
 
-impl AcceptanceEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            RR_ACCEPTED => 0,
-            RR_ABOVE_THRESHOLD => 1,
-            RR_SINGULAR => 2,
-            RR_NO_INFO => 3,
-            RR_AT_SURFACE => 4,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Acceptance {
+    // Accepted
+    pub const RR_ACCEPTED: u32 = 0;
+    // Rejected - Above Threshold
+    pub const RR_ABOVE_THRESHOLD: u32 = 1;
+    // Rejected - Singular Point
+    pub const RR_SINGULAR: u32 = 2;
+    // Rejected - Not Enough Information
+    pub const RR_NO_INFO: u32 = 3;
+    // Rejected - Vehicle At Surface
+    pub const RR_AT_SURFACE: u32 = 4;
 }
 
 /// Vehicle is using only GPS fix when it is at surface.

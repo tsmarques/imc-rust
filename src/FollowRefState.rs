@@ -27,20 +27,6 @@ pub enum StateEnum {
     FR_TIMEOUT = 6,
 }
 
-impl StateEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            FR_WAIT => 1,
-            FR_GOTO => 2,
-            FR_LOITER => 3,
-            FR_HOVER => 4,
-            FR_ELEVATOR => 5,
-            FR_TIMEOUT => 6,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum ProximityEnum {
     // Far from the destination
@@ -55,17 +41,34 @@ pub enum ProximityEnum {
     PROX_Z_UNREACHABLE = 0x10,
 }
 
-impl ProximityEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            PROX_FAR => 0x01,
-            PROX_XY_NEAR => 0x02,
-            PROX_Z_NEAR => 0x04,
-            PROX_XY_UNREACHABLE => 0x08,
-            PROX_Z_UNREACHABLE => 0x10,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod State {
+    // Waiting for first reference
+    pub const FR_WAIT: u32 = 1;
+    // Going towards received reference
+    pub const FR_GOTO: u32 = 2;
+    // Loitering after arriving at the reference
+    pub const FR_LOITER: u32 = 3;
+    // Hovering after arriving at the reference
+    pub const FR_HOVER: u32 = 4;
+    // Moving in z after arriving at the target cylinder
+    pub const FR_ELEVATOR: u32 = 5;
+    // Controlling system timed out
+    pub const FR_TIMEOUT: u32 = 6;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Proximity {
+    // Far from the destination
+    pub const PROX_FAR: u32 = 0x01;
+    // Near in the horizontal plane
+    pub const PROX_XY_NEAR: u32 = 0x02;
+    // Near in the vertical plane
+    pub const PROX_Z_NEAR: u32 = 0x04;
+    // Unreachable in the horizontal plane
+    pub const PROX_XY_UNREACHABLE: u32 = 0x08;
+    // Unreachable in the vertical plane
+    pub const PROX_Z_UNREACHABLE: u32 = 0x10;
 }
 
 #[derive(Default)]

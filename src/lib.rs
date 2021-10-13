@@ -247,6 +247,112 @@ pub const DUNE_IMC_CONST_MAX_SIZE: usize = 65535;
 // System entity identifier.
 pub const DUNE_IMC_CONST_SYS_EID: u8 = 0;
 
+/// Global Enumerators
+
+#[allow(non_camel_case_types)]
+pub enum SpeedUnitsEnum {
+    // Meters per second
+    SUNITS_METERS_PS = 0,
+    // RPM
+    SUNITS_RPM = 1,
+    // Percentage
+    SUNITS_PERCENTAGE = 2,
+}
+
+#[allow(non_camel_case_types)]
+pub enum SystemTypeEnum {
+    // CCU
+    SYSTEMTYPE_CCU = 0,
+    // Human-portable Sensor
+    SYSTEMTYPE_HUMANSENSOR = 1,
+    // UUV
+    SYSTEMTYPE_UUV = 2,
+    // USV
+    SYSTEMTYPE_USV = 3,
+    // UAV
+    SYSTEMTYPE_UAV = 4,
+    // UGV
+    SYSTEMTYPE_UGV = 5,
+    // Static sensor
+    SYSTEMTYPE_STATICSENSOR = 6,
+    // Mobile sensor
+    SYSTEMTYPE_MOBILESENSOR = 7,
+    // Wireless Sensor Network
+    SYSTEMTYPE_WSN = 8,
+}
+
+#[allow(non_camel_case_types)]
+pub enum ZUnitsEnum {
+    // None
+    Z_NONE = 0,
+    // Depth
+    Z_DEPTH = 1,
+    // Altitude
+    Z_ALTITUDE = 2,
+    // Height
+    Z_HEIGHT = 3,
+}
+
+#[allow(non_camel_case_types)]
+pub enum RSSIUnitsEnum {
+    // Decibel
+    RSSIUNITS_dB = 0,
+    // Percentage
+    RSSIUNITS_PERCENTAGE = 1,
+}
+
+/// Global Bitfields
+
+#[allow(non_camel_case_types)]
+pub mod ControlLoopsMask {
+    // None
+    pub const CL_NONE: u32 = 0x00000000;
+    // Path Control
+    pub const CL_PATH: u32 = 0x00000001;
+    // Teleoperation Control
+    pub const CL_TELEOPERATION: u32 = 0x00000002;
+    // Altitude Control
+    pub const CL_ALTITUDE: u32 = 0x00000004;
+    // Depth Control
+    pub const CL_DEPTH: u32 = 0x00000008;
+    // Roll Control
+    pub const CL_ROLL: u32 = 0x00000010;
+    // Pitch Control
+    pub const CL_PITCH: u32 = 0x00000020;
+    // Yaw Control
+    pub const CL_YAW: u32 = 0x00000040;
+    // Speed Control
+    pub const CL_SPEED: u32 = 0x00000080;
+    // Yaw Rate Control
+    pub const CL_YAW_RATE: u32 = 0x00000100;
+    // Torque Control
+    pub const CL_TORQUE: u32 = 0x00000400;
+    // Force Control
+    pub const CL_FORCE: u32 = 0x00000800;
+    // Non-overridable control
+    pub const CL_NO_OVERRIDE: u32 = 0x80000000;
+    // All
+    pub const CL_ALL: u32 = 0xFFFFFFFF;
+}
+
+#[allow(non_camel_case_types)]
+pub mod OperationalLimitsMask {
+    // Maximum Depth
+    pub const OPL_MAX_DEPTH: u32 = 0x01;
+    // Minimum Altitude
+    pub const OPL_MIN_ALT: u32 = 0x02;
+    // Maximum Altitude
+    pub const OPL_MAX_ALT: u32 = 0x04;
+    // Minimum Speed
+    pub const OPL_MIN_SPEED: u32 = 0x08;
+    // Maximum Speed
+    pub const OPL_MAX_SPEED: u32 = 0x10;
+    // Maximum Vertical Rate
+    pub const OPL_MAX_VRATE: u32 = 0x20;
+    // Operation Area
+    pub const OPL_AREA: u32 = 0x40;
+}
+
 pub mod utils {
     use std::time::{SystemTime, UNIX_EPOCH};
 

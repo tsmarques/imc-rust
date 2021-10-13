@@ -29,20 +29,24 @@ pub enum StateEnum {
     EAS_DEACT_FAIL = 7,
 }
 
-impl StateEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            EAS_INACTIVE => 0,
-            EAS_ACTIVE => 1,
-            EAS_ACT_IP => 2,
-            EAS_ACT_DONE => 3,
-            EAS_ACT_FAIL => 4,
-            EAS_DEACT_IP => 5,
-            EAS_DEACT_DONE => 6,
-            EAS_DEACT_FAIL => 7,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod State {
+    // Entity is Inactive
+    pub const EAS_INACTIVE: u32 = 0;
+    // Entity is Active
+    pub const EAS_ACTIVE: u32 = 1;
+    // Activation in Progress
+    pub const EAS_ACT_IP: u32 = 2;
+    // Activation Completed
+    pub const EAS_ACT_DONE: u32 = 3;
+    // Activation Failed
+    pub const EAS_ACT_FAIL: u32 = 4;
+    // Deactivation In Progress
+    pub const EAS_DEACT_IP: u32 = 5;
+    // Deactivation Completed
+    pub const EAS_DEACT_DONE: u32 = 6;
+    // Deactivation Failed
+    pub const EAS_DEACT_FAIL: u32 = 7;
 }
 
 /// Deactivation is in progress.

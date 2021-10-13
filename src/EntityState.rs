@@ -23,32 +23,30 @@ pub enum StateEnum {
     ESTA_FAILURE = 4,
 }
 
-impl StateEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            ESTA_BOOT => 0,
-            ESTA_NORMAL => 1,
-            ESTA_FAULT => 2,
-            ESTA_ERROR => 3,
-            ESTA_FAILURE => 4,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum FlagsEnum {
     // Human Intervention Required
     EFLA_HUMAN_INTERVENTION = 0x01,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            EFLA_HUMAN_INTERVENTION => 0x01,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod State {
+    // Bootstrapping
+    pub const ESTA_BOOT: u32 = 0;
+    // Normal Operation
+    pub const ESTA_NORMAL: u32 = 1;
+    // Fault
+    pub const ESTA_FAULT: u32 = 2;
+    // Error
+    pub const ESTA_ERROR: u32 = 3;
+    // Failure
+    pub const ESTA_FAILURE: u32 = 4;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Human Intervention Required
+    pub const EFLA_HUMAN_INTERVENTION: u32 = 0x01;
 }
 
 /// State reported by an entity in the vehicle. The source entity is

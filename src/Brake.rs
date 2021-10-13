@@ -19,15 +19,14 @@ pub enum OperationEnum {
     OP_REVERT = 2,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            OP_STOP => 0,
-            OP_START => 1,
-            OP_REVERT => 2,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Stop Braking
+    pub const OP_STOP: u32 = 0;
+    // Start Braking
+    pub const OP_START: u32 = 1;
+    // Revert Actuation
+    pub const OP_REVERT: u32 = 2;
 }
 
 /// Revert Actuation.

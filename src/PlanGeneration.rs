@@ -17,16 +17,6 @@ pub enum CommandEnum {
     CMD_EXECUTE = 1,
 }
 
-impl CommandEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            CMD_GENERATE => 0,
-            CMD_EXECUTE => 1,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Request
@@ -37,15 +27,22 @@ pub enum OperationEnum {
     OP_SUCCESS = 2,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            OP_REQUEST => 0,
-            OP_ERROR => 1,
-            OP_SUCCESS => 2,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Command {
+    // Generate
+    pub const CMD_GENERATE: u32 = 0;
+    // Execute
+    pub const CMD_EXECUTE: u32 = 1;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Request
+    pub const OP_REQUEST: u32 = 0;
+    // Error
+    pub const OP_ERROR: u32 = 1;
+    // Success
+    pub const OP_SUCCESS: u32 = 2;
 }
 
 /// Some error has occurred while executing the command. The

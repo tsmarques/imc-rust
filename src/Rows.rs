@@ -19,14 +19,12 @@ pub enum FlagsEnum {
     FLG_CURVE_RIGHT = 0x0002,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            FLG_SQUARE_CURVE => 0x0001,
-            FLG_CURVE_RIGHT => 0x0002,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Square Curve
+    pub const FLG_SQUARE_CURVE: u32 = 0x0001;
+    // First Curve Right
+    pub const FLG_CURVE_RIGHT: u32 = 0x0002;
 }
 
 /// message-group: Maneuver

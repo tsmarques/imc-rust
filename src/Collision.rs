@@ -21,16 +21,16 @@ pub enum TypeEnum {
     CD_IMPACT = 0x08,
 }
 
-impl TypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            CD_X => 0x01,
-            CD_Y => 0x02,
-            CD_Z => 0x04,
-            CD_IMPACT => 0x08,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Type {
+    // X-axis
+    pub const CD_X: u32 = 0x01;
+    // Y-axis
+    pub const CD_Y: u32 = 0x02;
+    // Z-axis
+    pub const CD_Z: u32 = 0x04;
+    // Impact
+    pub const CD_IMPACT: u32 = 0x08;
 }
 
 /// Collision detected in the z-axis

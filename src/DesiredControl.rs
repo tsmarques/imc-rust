@@ -25,18 +25,20 @@ pub enum FlagsEnum {
     FL_N = 0x20,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            FL_X => 0x01,
-            FL_Y => 0x02,
-            FL_Z => 0x04,
-            FL_K => 0x08,
-            FL_M => 0x10,
-            FL_N => 0x20,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Value of X is meaningful
+    pub const FL_X: u32 = 0x01;
+    // Value of Y is meaningful
+    pub const FL_Y: u32 = 0x02;
+    // Value of Z is meaningful
+    pub const FL_Z: u32 = 0x04;
+    // Value of K is meaningful
+    pub const FL_K: u32 = 0x08;
+    // Value of M is meaningful
+    pub const FL_M: u32 = 0x10;
+    // Value of N is meaningful
+    pub const FL_N: u32 = 0x20;
 }
 
 /// If enabled then field M has a meaningful value.

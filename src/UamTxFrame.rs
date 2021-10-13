@@ -17,14 +17,12 @@ pub enum FlagsEnum {
     UTF_DELAYED = 0x02,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            UTF_ACK => 0x01,
-            UTF_DELAYED => 0x02,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Acknowledgement
+    pub const UTF_ACK: u32 = 0x01;
+    // Delayed
+    pub const UTF_DELAYED: u32 = 0x02;
 }
 
 /// On modems that support it, this flag shall be used to request an

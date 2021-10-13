@@ -21,18 +21,6 @@ pub enum TypeEnum {
     DBT_IN_PROGRESS = 3,
 }
 
-impl TypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            DBT_REQUEST => 0,
-            DBT_SUCCESS => 1,
-            DBT_FAILURE => 2,
-            DBT_IN_PROGRESS => 3,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
     // Set Plan
@@ -53,20 +41,36 @@ pub enum OperationEnum {
     DBOP_BOOT = 7,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            DBOP_SET => 0,
-            DBOP_DEL => 1,
-            DBOP_GET => 2,
-            DBOP_GET_INFO => 3,
-            DBOP_CLEAR => 4,
-            DBOP_GET_STATE => 5,
-            DBOP_GET_DSTATE => 6,
-            DBOP_BOOT => 7,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Type {
+    // Request
+    pub const DBT_REQUEST: u32 = 0;
+    // Reply -- Success
+    pub const DBT_SUCCESS: u32 = 1;
+    // Reply -- Failure
+    pub const DBT_FAILURE: u32 = 2;
+    // Reply -- In Progress
+    pub const DBT_IN_PROGRESS: u32 = 3;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Set Plan
+    pub const DBOP_SET: u32 = 0;
+    // Delete Plan
+    pub const DBOP_DEL: u32 = 1;
+    // Get Plan
+    pub const DBOP_GET: u32 = 2;
+    // Get Plan Info
+    pub const DBOP_GET_INFO: u32 = 3;
+    // Clear Database
+    pub const DBOP_CLEAR: u32 = 4;
+    // Get Database State (Simple)
+    pub const DBOP_GET_STATE: u32 = 5;
+    // Get Database State (Detailed)
+    pub const DBOP_GET_DSTATE: u32 = 6;
+    // Boot Notification
+    pub const DBOP_BOOT: u32 = 7;
 }
 
 /// Get detailed state of the entire DB. Successful replies

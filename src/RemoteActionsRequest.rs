@@ -17,14 +17,12 @@ pub enum operationEnum {
     OP_QUERY = 1,
 }
 
-impl operationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            OP_REPORT => 0,
-            OP_QUERY => 1,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod operation {
+    // Report
+    pub const OP_REPORT: u32 = 0;
+    // Query
+    pub const OP_QUERY: u32 = 1;
 }
 
 /// This message is used as query to request for the possible remote

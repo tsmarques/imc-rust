@@ -21,15 +21,14 @@ pub enum DirectionEnum {
     DIR_BACKWARD = 2,
 }
 
-impl DirectionEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            DIR_AUTO => 0,
-            DIR_FORWARD => 1,
-            DIR_BACKWARD => 2,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Direction {
+    // Let the vehicle decide
+    pub const DIR_AUTO: u32 = 0;
+    // Attempt to move forward
+    pub const DIR_FORWARD: u32 = 1;
+    // Attempt to move backward
+    pub const DIR_BACKWARD: u32 = 2;
 }
 
 /// message-group: Maneuver

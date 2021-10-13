@@ -19,15 +19,14 @@ pub enum ValidityEnum {
     VAL_VEL_Z = 0x04,
 }
 
-impl ValidityEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            VAL_VEL_X => 0x01,
-            VAL_VEL_Y => 0x02,
-            VAL_VEL_Z => 0x04,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Validity {
+    // X component is valid
+    pub const VAL_VEL_X: u32 = 0x01;
+    // Y component is valid
+    pub const VAL_VEL_Y: u32 = 0x02;
+    // Z component is valid
+    pub const VAL_VEL_Z: u32 = 0x04;
 }
 
 /// Vector quantifying the direction and magnitude of the measured

@@ -17,14 +17,12 @@ pub enum ServiceTypeEnum {
     SRV_TYPE_LOCAL = 0x02,
 }
 
-impl ServiceTypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            SRV_TYPE_EXTERNAL => 0x01,
-            SRV_TYPE_LOCAL => 0x02,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod ServiceType {
+    // External
+    pub const SRV_TYPE_EXTERNAL: u32 = 0x01;
+    // Local
+    pub const SRV_TYPE_LOCAL: u32 = 0x02;
 }
 
 /// Announcement about the existence of a service.

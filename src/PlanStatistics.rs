@@ -19,17 +19,6 @@ pub enum TypeEnum {
     TP_POSTPLAN = 2,
 }
 
-impl TypeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            TP_PREPLAN => 0,
-            TP_INPLAN => 1,
-            TP_POSTPLAN => 2,
-        }
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub enum PropertiesEnum {
     // Basic Plan
@@ -44,17 +33,28 @@ pub enum PropertiesEnum {
     PRP_ALL = 0x07,
 }
 
-impl PropertiesEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            PRP_BASIC => 0x00,
-            PRP_NONLINEAR => 0x01,
-            PRP_INFINITE => 0x02,
-            PRP_CYCLICAL => 0x04,
-            PRP_ALL => 0x07,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Type {
+    // Before Plan
+    pub const TP_PREPLAN: u32 = 0;
+    // During Plan
+    pub const TP_INPLAN: u32 = 1;
+    // After Plan
+    pub const TP_POSTPLAN: u32 = 2;
+}
+
+#[allow(non_camel_case_types)]
+pub mod Properties {
+    // Basic Plan
+    pub const PRP_BASIC: u32 = 0x00;
+    // Nonlinear
+    pub const PRP_NONLINEAR: u32 = 0x01;
+    // Infinite
+    pub const PRP_INFINITE: u32 = 0x02;
+    // Cyclical
+    pub const PRP_CYCLICAL: u32 = 0x04;
+    // All
+    pub const PRP_ALL: u32 = 0x07;
 }
 
 /// Plan is cyclical.

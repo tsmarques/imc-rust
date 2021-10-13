@@ -19,15 +19,14 @@ pub enum StatusEnum {
     SDST_UNKWN = 2,
 }
 
-impl StatusEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            SDST_MOUNTED => 0,
-            SDST_UNMOUNTED => 1,
-            SDST_UNKWN => 2,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Status {
+    // Mounted
+    pub const SDST_MOUNTED: u32 = 0;
+    // Unmounted
+    pub const SDST_UNMOUNTED: u32 = 1;
+    // Unknown
+    pub const SDST_UNKWN: u32 = 2;
 }
 
 /// Storage device is unmounted

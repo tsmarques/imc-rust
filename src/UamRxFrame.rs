@@ -17,14 +17,12 @@ pub enum FlagsEnum {
     URF_DELAYED = 0x02,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            URF_PROMISCUOUS => 0x01,
-            URF_DELAYED => 0x02,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Promiscuous
+    pub const URF_PROMISCUOUS: u32 = 0x01;
+    // Delayed
+    pub const URF_DELAYED: u32 = 0x02;
 }
 
 /// The data frame was transmitted to an acoustic modem other than

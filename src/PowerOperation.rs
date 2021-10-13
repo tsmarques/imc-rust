@@ -27,19 +27,22 @@ pub enum OperationEnum {
     POP_SCHED_PWR_UP = 6,
 }
 
-impl OperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            POP_PWR_DOWN => 0,
-            POP_PWR_DOWN_IP => 1,
-            POP_PWR_DOWN_ABORTED => 2,
-            POP_SCHED_PWR_DOWN => 3,
-            POP_PWR_UP => 4,
-            POP_PWR_UP_IP => 5,
-            POP_SCHED_PWR_UP => 6,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Operation {
+    // Power Down
+    pub const POP_PWR_DOWN: u32 = 0;
+    // Power Down in Progress
+    pub const POP_PWR_DOWN_IP: u32 = 1;
+    // Power Down Aborted
+    pub const POP_PWR_DOWN_ABORTED: u32 = 2;
+    // Schedule Power Down
+    pub const POP_SCHED_PWR_DOWN: u32 = 3;
+    // Power Up
+    pub const POP_PWR_UP: u32 = 4;
+    // Power Up in Progress
+    pub const POP_PWR_UP_IP: u32 = 5;
+    // Schedule Power Up
+    pub const POP_SCHED_PWR_UP: u32 = 6;
 }
 
 /// Request the destination entity of this message to power up

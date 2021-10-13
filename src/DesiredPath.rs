@@ -31,20 +31,24 @@ pub enum FlagsEnum {
     FL_LAND = 0x80,
 }
 
-impl FlagsEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            FL_START => 0x01,
-            FL_DIRECT => 0x02,
-            FL_NO_Z => 0x04,
-            FL_3DTRACK => 0x08,
-            FL_CCLOCKW => 0x10,
-            FL_LOITER_CURR => 0x20,
-            FL_TAKEOFF => 0x40,
-            FL_LAND => 0x80,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Flags {
+    // Start Point
+    pub const FL_START: u32 = 0x01;
+    // Direct
+    pub const FL_DIRECT: u32 = 0x02;
+    // No Altitude/Depth control
+    pub const FL_NO_Z: u32 = 0x04;
+    // 3D Tracking
+    pub const FL_3DTRACK: u32 = 0x08;
+    // Counter-Clockwise loiter
+    pub const FL_CCLOCKW: u32 = 0x10;
+    // Loiter from current position
+    pub const FL_LOITER_CURR: u32 = 0x20;
+    // Takeoff
+    pub const FL_TAKEOFF: u32 = 0x40;
+    // Land
+    pub const FL_LAND: u32 = 0x80;
 }
 
 /// message-group: ControlCommand

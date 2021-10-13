@@ -25,18 +25,20 @@ pub enum ControlOperationEnum {
     COP_CURRENT_NAME = 5,
 }
 
-impl ControlOperationEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            COP_REQUEST_START => 0,
-            COP_STARTED => 1,
-            COP_REQUEST_STOP => 2,
-            COP_STOPPED => 3,
-            COP_REQUEST_CURRENT_NAME => 4,
-            COP_CURRENT_NAME => 5,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod ControlOperation {
+    // Request Start of Logging
+    pub const COP_REQUEST_START: u32 = 0;
+    // Logging Started
+    pub const COP_STARTED: u32 = 1;
+    // Request Logging Stop
+    pub const COP_REQUEST_STOP: u32 = 2;
+    // Logging Stopped
+    pub const COP_STOPPED: u32 = 3;
+    // Request Current Log Name
+    pub const COP_REQUEST_CURRENT_NAME: u32 = 4;
+    // Current Log Name
+    pub const COP_CURRENT_NAME: u32 = 5;
 }
 
 /// This operation instructs the logging manager to send a

@@ -23,17 +23,18 @@ pub enum StatusCodeEnum {
     TXSTATUS_EXPIRED = 5,
 }
 
-impl StatusCodeEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            TXSTATUS_OK => 1,
-            TXSTATUS_ERROR => 2,
-            TXSTATUS_QUEUED => 3,
-            TXSTATUS_TRANSMIT => 4,
-            TXSTATUS_EXPIRED => 5,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod StatusCode {
+    // Successfull transmission
+    pub const TXSTATUS_OK: u32 = 1;
+    // Error while trying to transmit message
+    pub const TXSTATUS_ERROR: u32 = 2;
+    // Message has been queued for transmission
+    pub const TXSTATUS_QUEUED: u32 = 3;
+    // Message is currently being transmitted
+    pub const TXSTATUS_TRANSMIT: u32 = 4;
+    // Message's TTL has expired. Transmition cancelled.
+    pub const TXSTATUS_EXPIRED: u32 = 5;
 }
 
 #[derive(Default)]

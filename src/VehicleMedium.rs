@@ -23,17 +23,18 @@ pub enum MediumEnum {
     VM_UNKNOWN = 4,
 }
 
-impl MediumEnum {
-    /// Match an enum value to its primitive type
-    pub fn value(&self) -> u8 {
-        match self {
-            VM_GROUND => 0,
-            VM_AIR => 1,
-            VM_WATER => 2,
-            VM_UNDERWATER => 3,
-            VM_UNKNOWN => 4,
-        }
-    }
+#[allow(non_camel_case_types)]
+pub mod Medium {
+    // Ground
+    pub const VM_GROUND: u32 = 0;
+    // Air
+    pub const VM_AIR: u32 = 1;
+    // Water
+    pub const VM_WATER: u32 = 2;
+    // Underwater
+    pub const VM_UNDERWATER: u32 = 3;
+    // Unknown
+    pub const VM_UNKNOWN: u32 = 4;
 }
 
 /// Vehicle medium is unknown
