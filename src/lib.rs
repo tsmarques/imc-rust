@@ -306,51 +306,51 @@ pub enum RSSIUnitsEnum {
 #[allow(non_camel_case_types)]
 pub mod ControlLoopsMask {
     // None
-    pub const CL_NONE: u32 = 0x00000000;
+    pub const _NONE: u32 = 0x00000000;
     // Path Control
-    pub const CL_PATH: u32 = 0x00000001;
+    pub const _PATH: u32 = 0x00000001;
     // Teleoperation Control
-    pub const CL_TELEOPERATION: u32 = 0x00000002;
+    pub const _TELEOPERATION: u32 = 0x00000002;
     // Altitude Control
-    pub const CL_ALTITUDE: u32 = 0x00000004;
+    pub const _ALTITUDE: u32 = 0x00000004;
     // Depth Control
-    pub const CL_DEPTH: u32 = 0x00000008;
+    pub const _DEPTH: u32 = 0x00000008;
     // Roll Control
-    pub const CL_ROLL: u32 = 0x00000010;
+    pub const _ROLL: u32 = 0x00000010;
     // Pitch Control
-    pub const CL_PITCH: u32 = 0x00000020;
+    pub const _PITCH: u32 = 0x00000020;
     // Yaw Control
-    pub const CL_YAW: u32 = 0x00000040;
+    pub const _YAW: u32 = 0x00000040;
     // Speed Control
-    pub const CL_SPEED: u32 = 0x00000080;
+    pub const _SPEED: u32 = 0x00000080;
     // Yaw Rate Control
-    pub const CL_YAW_RATE: u32 = 0x00000100;
+    pub const _YAW_RATE: u32 = 0x00000100;
     // Torque Control
-    pub const CL_TORQUE: u32 = 0x00000400;
+    pub const _TORQUE: u32 = 0x00000400;
     // Force Control
-    pub const CL_FORCE: u32 = 0x00000800;
+    pub const _FORCE: u32 = 0x00000800;
     // Non-overridable control
-    pub const CL_NO_OVERRIDE: u32 = 0x80000000;
+    pub const _NO_OVERRIDE: u32 = 0x80000000;
     // All
-    pub const CL_ALL: u32 = 0xFFFFFFFF;
+    pub const _ALL: u32 = 0xFFFFFFFF;
 }
 
 #[allow(non_camel_case_types)]
 pub mod OperationalLimitsMask {
     // Maximum Depth
-    pub const OPL_MAX_DEPTH: u32 = 0x01;
+    pub const _MAX_DEPTH: u32 = 0x01;
     // Minimum Altitude
-    pub const OPL_MIN_ALT: u32 = 0x02;
+    pub const _MIN_ALT: u32 = 0x02;
     // Maximum Altitude
-    pub const OPL_MAX_ALT: u32 = 0x04;
+    pub const _MAX_ALT: u32 = 0x04;
     // Minimum Speed
-    pub const OPL_MIN_SPEED: u32 = 0x08;
+    pub const _MIN_SPEED: u32 = 0x08;
     // Maximum Speed
-    pub const OPL_MAX_SPEED: u32 = 0x10;
+    pub const _MAX_SPEED: u32 = 0x10;
     // Maximum Vertical Rate
-    pub const OPL_MAX_VRATE: u32 = 0x20;
+    pub const _MAX_VRATE: u32 = 0x20;
     // Operation Area
-    pub const OPL_AREA: u32 = 0x40;
+    pub const _AREA: u32 = 0x40;
 }
 
 pub mod utils {

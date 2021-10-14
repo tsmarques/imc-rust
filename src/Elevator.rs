@@ -12,15 +12,9 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Start from current position
-    FLG_CURR_POS = 0x01,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Start from current position
-    pub const FLG_CURR_POS: u32 = 0x01;
+    pub const _CURR_POS: u32 = 0x01;
 }
 
 /// message-group: Maneuver

@@ -2,10 +2,13 @@ use bytes::{BufMut, IntoBuf};
 use crc16::{State, ARC};
 use imc::packet::{crc, deserializeHeader};
 use imc::Alignment::Alignment;
+use imc::AlignmentState::AlignmentState;
+use imc::AlignmentState::StateEnum::{AS_NOT_ALIGNED, AS_WRONG_MEDIUM};
+use imc::DataSanity::DataSanity;
 use imc::EstimatedState::EstimatedState;
 use imc::EstimatedStreamVelocity::EstimatedStreamVelocity;
 use imc::FollowReference::FollowReference;
-use imc::GpsFix::{GpsFix, ValidityEnum};
+use imc::GpsFix::{GpsFix};
 use imc::Header::Header;
 use imc::Heartbeat::Heartbeat;
 use imc::LoggingControl::{ControlOperationEnum, LoggingControl};
@@ -319,15 +322,4 @@ fn test_VehicleCommand() {
 
     let mut msg2 = ret.ok().unwrap();
     assert_eq!(msg.get_header(), msg2.get_header());
-}
-
-#[test]
-pub fn test_GpsFix() {
-    let mut fix: GpsFix = GpsFix::new();
-    fix._validity = (ValidityEnum::GFV_VALID_COG as u16) | (ValidityEnum::GFV_VALID_HACC as u16);
-
-    let mut ret = 0;
-    ret = fix._validity & (ValidityEnum::GFV_VALID_COG as u16);
-
-    assert_ne!(ret, 0);
 }

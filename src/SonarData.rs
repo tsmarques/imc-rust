@@ -23,16 +23,6 @@ pub enum TypeEnum {
     ST_MULTIBEAM = 2,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Sidescan
-    pub const ST_SIDESCAN: u32 = 0;
-    // Echo Sounder
-    pub const ST_ECHOSOUNDER: u32 = 1;
-    // Multibeam
-    pub const ST_MULTIBEAM: u32 = 2;
-}
-
 /// This message contains the data acquired by a single sonar
 /// measurement.
 #[derive(Default)]

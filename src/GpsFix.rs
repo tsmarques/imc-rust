@@ -10,28 +10,6 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum ValidityEnum {
-    // Valid Date
-    GFV_VALID_DATE = 0x0001,
-    // Valid Time
-    GFV_VALID_TIME = 0x0002,
-    // Valid Position
-    GFV_VALID_POS = 0x0004,
-    // Valid Course Over Ground
-    GFV_VALID_COG = 0x0008,
-    // Valid Speed Over Ground
-    GFV_VALID_SOG = 0x0010,
-    // Valid Horizontal Accuracy Estimate
-    GFV_VALID_HACC = 0x0020,
-    // Valid Vertical Accuracy Estimate
-    GFV_VALID_VACC = 0x0040,
-    // Valid Horizontal Dilution of Precision
-    GFV_VALID_HDOP = 0x0080,
-    // Valid Vertical Dilution of Precision
-    GFV_VALID_VDOP = 0x0100,
-}
-
-#[allow(non_camel_case_types)]
 pub enum TypeEnum {
     // Stand Alone
     GFT_STANDALONE = 0x00,
@@ -48,37 +26,23 @@ pub enum TypeEnum {
 #[allow(non_camel_case_types)]
 pub mod Validity {
     // Valid Date
-    pub const GFV_VALID_DATE: u32 = 0x0001;
+    pub const _VALID_DATE: u32 = 0x0001;
     // Valid Time
-    pub const GFV_VALID_TIME: u32 = 0x0002;
+    pub const _VALID_TIME: u32 = 0x0002;
     // Valid Position
-    pub const GFV_VALID_POS: u32 = 0x0004;
+    pub const _VALID_POS: u32 = 0x0004;
     // Valid Course Over Ground
-    pub const GFV_VALID_COG: u32 = 0x0008;
+    pub const _VALID_COG: u32 = 0x0008;
     // Valid Speed Over Ground
-    pub const GFV_VALID_SOG: u32 = 0x0010;
+    pub const _VALID_SOG: u32 = 0x0010;
     // Valid Horizontal Accuracy Estimate
-    pub const GFV_VALID_HACC: u32 = 0x0020;
+    pub const _VALID_HACC: u32 = 0x0020;
     // Valid Vertical Accuracy Estimate
-    pub const GFV_VALID_VACC: u32 = 0x0040;
+    pub const _VALID_VACC: u32 = 0x0040;
     // Valid Horizontal Dilution of Precision
-    pub const GFV_VALID_HDOP: u32 = 0x0080;
+    pub const _VALID_HDOP: u32 = 0x0080;
     // Valid Vertical Dilution of Precision
-    pub const GFV_VALID_VDOP: u32 = 0x0100;
-}
-
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Stand Alone
-    pub const GFT_STANDALONE: u32 = 0x00;
-    // Differential
-    pub const GFT_DIFFERENTIAL: u32 = 0x01;
-    // Dead Reckoning
-    pub const GFT_DEAD_RECKONING: u32 = 0x02;
-    // Manual Input
-    pub const GFT_MANUAL_INPUT: u32 = 0x03;
-    // Simulation
-    pub const GFT_SIMULATION: u32 = 0x04;
+    pub const _VALID_VDOP: u32 = 0x0100;
 }
 
 /// Simulated solution.

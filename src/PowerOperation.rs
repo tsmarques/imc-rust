@@ -27,24 +27,6 @@ pub enum OperationEnum {
     POP_SCHED_PWR_UP = 6,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Power Down
-    pub const POP_PWR_DOWN: u32 = 0;
-    // Power Down in Progress
-    pub const POP_PWR_DOWN_IP: u32 = 1;
-    // Power Down Aborted
-    pub const POP_PWR_DOWN_ABORTED: u32 = 2;
-    // Schedule Power Down
-    pub const POP_SCHED_PWR_DOWN: u32 = 3;
-    // Power Up
-    pub const POP_PWR_UP: u32 = 4;
-    // Power Up in Progress
-    pub const POP_PWR_UP_IP: u32 = 5;
-    // Schedule Power Up
-    pub const POP_SCHED_PWR_UP: u32 = 6;
-}
-
 /// Request the destination entity of this message to power up
 /// it's devices at the time given in the field 'sched_time'. If
 /// the destination entity is the special entity '0' the whole

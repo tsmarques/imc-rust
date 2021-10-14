@@ -23,20 +23,6 @@ pub enum ControlOperationEnum {
     COP_COPY_COMPLETE = 4,
 }
 
-#[allow(non_camel_case_types)]
-pub mod ControlOperation {
-    // Store
-    pub const COP_STORE: u32 = 0;
-    // Load
-    pub const COP_LOAD: u32 = 1;
-    // Clear
-    pub const COP_CLEAR: u32 = 2;
-    // Copy Snapshot
-    pub const COP_COPY: u32 = 3;
-    // Snapshot Copy Complete
-    pub const COP_COPY_COMPLETE: u32 = 4;
-}
-
 /// Control caching of messages to persistent storage.
 #[derive(Default)]
 pub struct CacheControl {

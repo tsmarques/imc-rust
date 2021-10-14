@@ -31,28 +31,6 @@ pub enum AccessTypeEnum {
     PVA_LOCAL = 2,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Boolean
-    pub const PVT_BOOLEAN: u32 = 0;
-    // Number
-    pub const PVT_NUMBER: u32 = 1;
-    // Text
-    pub const PVT_TEXT: u32 = 2;
-    // Message
-    pub const PVT_MESSAGE: u32 = 3;
-}
-
-#[allow(non_camel_case_types)]
-pub mod AccessType {
-    // Input
-    pub const PVA_INPUT: u32 = 0;
-    // Output
-    pub const PVA_OUTPUT: u32 = 1;
-    // Local
-    pub const PVA_LOCAL: u32 = 2;
-}
-
 /// A plan variable.
 #[derive(Default)]
 pub struct PlanVariable {

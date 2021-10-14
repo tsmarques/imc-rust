@@ -10,19 +10,11 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Promiscuous
-    URF_PROMISCUOUS = 0x01,
-    // Delayed
-    URF_DELAYED = 0x02,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Promiscuous
-    pub const URF_PROMISCUOUS: u32 = 0x01;
+    pub const _PROMISCUOUS: u32 = 0x01;
     // Delayed
-    pub const URF_DELAYED: u32 = 0x02;
+    pub const _DELAYED: u32 = 0x02;
 }
 
 /// The data frame was transmitted to an acoustic modem other than

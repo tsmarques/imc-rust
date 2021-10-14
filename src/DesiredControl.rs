@@ -10,35 +10,19 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Value of X is meaningful
-    FL_X = 0x01,
-    // Value of Y is meaningful
-    FL_Y = 0x02,
-    // Value of Z is meaningful
-    FL_Z = 0x04,
-    // Value of K is meaningful
-    FL_K = 0x08,
-    // Value of M is meaningful
-    FL_M = 0x10,
-    // Value of N is meaningful
-    FL_N = 0x20,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Value of X is meaningful
-    pub const FL_X: u32 = 0x01;
+    pub const _X: u32 = 0x01;
     // Value of Y is meaningful
-    pub const FL_Y: u32 = 0x02;
+    pub const _Y: u32 = 0x02;
     // Value of Z is meaningful
-    pub const FL_Z: u32 = 0x04;
+    pub const _Z: u32 = 0x04;
     // Value of K is meaningful
-    pub const FL_K: u32 = 0x08;
+    pub const _K: u32 = 0x08;
     // Value of M is meaningful
-    pub const FL_M: u32 = 0x10;
+    pub const _M: u32 = 0x10;
     // Value of N is meaningful
-    pub const FL_N: u32 = 0x20;
+    pub const _N: u32 = 0x20;
 }
 
 /// If enabled then field M has a meaningful value.

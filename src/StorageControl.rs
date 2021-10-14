@@ -33,30 +33,6 @@ pub enum OperationEnum {
     SOP_FORMAT = 3,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Request
-    pub const SCTR_REQUEST: u32 = 0;
-    // Reply -- Success
-    pub const SCTR_SUCCESS: u32 = 1;
-    // Reply -- Failure
-    pub const SCTR_FAILURE: u32 = 2;
-    // Reply -- In Progress
-    pub const SCTR_IN_PROGRESS: u32 = 3;
-}
-
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // List
-    pub const SOP_LIST: u32 = 0;
-    // Mount
-    pub const SOP_MOUNT: u32 = 1;
-    // Unmount
-    pub const SOP_UMOUNT: u32 = 2;
-    // Format
-    pub const SOP_FORMAT: u32 = 3;
-}
-
 /// Unmount the selected storage device
 #[derive(Default)]
 pub struct StorageControl {

@@ -10,19 +10,11 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum ServiceTypeEnum {
-    // External
-    SRV_TYPE_EXTERNAL = 0x01,
-    // Local
-    SRV_TYPE_LOCAL = 0x02,
-}
-
-#[allow(non_camel_case_types)]
 pub mod ServiceType {
     // External
-    pub const SRV_TYPE_EXTERNAL: u32 = 0x01;
+    pub const _EXTERNAL: u32 = 0x01;
     // Local
-    pub const SRV_TYPE_LOCAL: u32 = 0x02;
+    pub const _LOCAL: u32 = 0x02;
 }
 
 /// Announcement about the existence of a service.

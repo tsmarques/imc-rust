@@ -10,14 +10,6 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum TypeofvelocityEnum {
-    // Ground velocity
-    TYPE_GV = 0x01,
-    // Water velocity
-    TYPE_WV = 0x02,
-}
-
-#[allow(non_camel_case_types)]
 pub enum ReasonEnum {
     // Innovation Threshold - X
     RR_INNOV_THRESHOLD_X = 0,
@@ -32,21 +24,9 @@ pub enum ReasonEnum {
 #[allow(non_camel_case_types)]
 pub mod Typeofvelocity {
     // Ground velocity
-    pub const TYPE_GV: u32 = 0x01;
+    pub const _GV: u32 = 0x01;
     // Water velocity
-    pub const TYPE_WV: u32 = 0x02;
-}
-
-#[allow(non_camel_case_types)]
-pub mod Reason {
-    // Innovation Threshold - X
-    pub const RR_INNOV_THRESHOLD_X: u32 = 0;
-    // Innovation Threshold - Y
-    pub const RR_INNOV_THRESHOLD_Y: u32 = 1;
-    // Absolute Threshold - X
-    pub const RR_ABS_THRESHOLD_X: u32 = 2;
-    // Absolute Threshold - Y
-    pub const RR_ABS_THRESHOLD_Y: u32 = 3;
+    pub const _WV: u32 = 0x02;
 }
 
 /// The current DVL x-axis measurement is discarded

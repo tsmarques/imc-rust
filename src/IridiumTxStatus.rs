@@ -23,20 +23,6 @@ pub enum StatusCodeEnum {
     TXSTATUS_EXPIRED = 5,
 }
 
-#[allow(non_camel_case_types)]
-pub mod StatusCode {
-    // Successfull transmission
-    pub const TXSTATUS_OK: u32 = 1;
-    // Error while trying to transmit message
-    pub const TXSTATUS_ERROR: u32 = 2;
-    // Message has been queued for transmission
-    pub const TXSTATUS_QUEUED: u32 = 3;
-    // Message is currently being transmitted
-    pub const TXSTATUS_TRANSMIT: u32 = 4;
-    // Message's TTL has expired. Transmition cancelled.
-    pub const TXSTATUS_EXPIRED: u32 = 5;
-}
-
 #[derive(Default)]
 pub struct IridiumTxStatus {
     /// IMC Header

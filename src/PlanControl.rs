@@ -34,43 +34,11 @@ pub enum OperationEnum {
 }
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Calibrate Vehicle
-    FLG_CALIBRATE = 0x0001,
-    // Ignore Errors
-    FLG_IGNORE_ERRORS = 0x0002,
-}
-
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Request
-    pub const PC_REQUEST: u32 = 0;
-    // Reply -- Success
-    pub const PC_SUCCESS: u32 = 1;
-    // Reply -- Failure
-    pub const PC_FAILURE: u32 = 2;
-    // Reply -- In Progress
-    pub const PC_IN_PROGRESS: u32 = 3;
-}
-
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Start Plan
-    pub const PC_START: u32 = 0;
-    // Stop Plan
-    pub const PC_STOP: u32 = 1;
-    // Load Plan
-    pub const PC_LOAD: u32 = 2;
-    // Get Plan
-    pub const PC_GET: u32 = 3;
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Calibrate Vehicle
-    pub const FLG_CALIBRATE: u32 = 0x0001;
+    pub const _CALIBRATE: u32 = 0x0001;
     // Ignore Errors
-    pub const FLG_IGNORE_ERRORS: u32 = 0x0002;
+    pub const _IGNORE_ERRORS: u32 = 0x0002;
 }
 
 /// Execute current plan while ignoring some errors that might be active.

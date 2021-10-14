@@ -21,18 +21,6 @@ pub enum OperationEnum {
     ROP_RESUME = 3,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Start
-    pub const ROP_START: u32 = 0;
-    // Stop
-    pub const ROP_STOP: u32 = 1;
-    // Pause
-    pub const ROP_PAUSE: u32 = 2;
-    // Resume
-    pub const ROP_RESUME: u32 = 3;
-}
-
 /// Control replay of LSF logged data.
 #[derive(Default)]
 pub struct ReplayControl {

@@ -8,9 +8,9 @@ use bytes::BufMut;
 
 use crate::Header::Header;
 
-use crate::DeviceState::DeviceState;
-
 use crate::BeamConfig::BeamConfig;
+
+use crate::DeviceState::DeviceState;
 
 use crate::packet::ImcError;
 use crate::packet::*;
@@ -21,14 +21,6 @@ pub enum ValidityEnum {
     DV_INVALID = 0,
     // Valid
     DV_VALID = 1,
-}
-
-#[allow(non_camel_case_types)]
-pub mod Validity {
-    // Invalid
-    pub const DV_INVALID: u32 = 0;
-    // Valid
-    pub const DV_VALID: u32 = 1;
 }
 
 /// Measurement is invalid.

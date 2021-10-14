@@ -27,24 +27,6 @@ pub enum StateEnum {
     SMS_RECEIVING = 6,
 }
 
-#[allow(non_camel_case_types)]
-pub mod State {
-    // Accepted
-    pub const SMS_ACCEPTED: u32 = 0;
-    // Rejected
-    pub const SMS_REJECTED: u32 = 1;
-    // Interrupted
-    pub const SMS_INTERRUPTED: u32 = 2;
-    // Completed
-    pub const SMS_COMPLETED: u32 = 3;
-    // Idle
-    pub const SMS_IDLE: u32 = 4;
-    // Transmitting
-    pub const SMS_TRANSMITTING: u32 = 5;
-    // Receiving
-    pub const SMS_RECEIVING: u32 = 6;
-}
-
 #[derive(Default)]
 pub struct SmsState {
     /// IMC Header

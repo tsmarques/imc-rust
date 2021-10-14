@@ -26,31 +26,9 @@ pub enum OperationModeEnum {
 }
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Maneuver Done
-    VFLG_MANEUVER_DONE = 0x01,
-}
-
-#[allow(non_camel_case_types)]
-pub mod OperationMode {
-    // Service
-    pub const VS_SERVICE: u32 = 0;
-    // Calibration
-    pub const VS_CALIBRATION: u32 = 1;
-    // Error
-    pub const VS_ERROR: u32 = 2;
-    // Maneuver
-    pub const VS_MANEUVER: u32 = 3;
-    // External Control
-    pub const VS_EXTERNAL: u32 = 4;
-    // Boot
-    pub const VS_BOOT: u32 = 5;
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Maneuver Done
-    pub const VFLG_MANEUVER_DONE: u32 = 0x01;
+    pub const _MANEUVER_DONE: u32 = 0x01;
 }
 
 /// External control is active.

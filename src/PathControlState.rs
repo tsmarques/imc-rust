@@ -10,31 +10,17 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Near Endpoint
-    FL_NEAR = 0x01,
-    // Loitering
-    FL_LOITERING = 0x02,
-    // No Altitude/Depth control
-    FL_NO_Z = 0x04,
-    // 3D Tracking
-    FL_3DTRACK = 0x08,
-    // Counter-Clockwise loiter
-    FL_CCLOCKW = 0x10,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Near Endpoint
-    pub const FL_NEAR: u32 = 0x01;
+    pub const _NEAR: u32 = 0x01;
     // Loitering
-    pub const FL_LOITERING: u32 = 0x02;
+    pub const _LOITERING: u32 = 0x02;
     // No Altitude/Depth control
-    pub const FL_NO_Z: u32 = 0x04;
+    pub const _NO_Z: u32 = 0x04;
     // 3D Tracking
-    pub const FL_3DTRACK: u32 = 0x08;
+    pub const _3DTRACK: u32 = 0x08;
     // Counter-Clockwise loiter
-    pub const FL_CCLOCKW: u32 = 0x10;
+    pub const _CCLOCKW: u32 = 0x10;
 }
 
 /// Indicates that loitering, if active, is being done

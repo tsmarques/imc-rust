@@ -27,24 +27,6 @@ pub enum OperationEnum {
     PCC_OP_SAVE = 6,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Turn Off
-    pub const PCC_OP_TURN_OFF: u32 = 0;
-    // Turn On
-    pub const PCC_OP_TURN_ON: u32 = 1;
-    // Toggle
-    pub const PCC_OP_TOGGLE: u32 = 2;
-    // Schedule Turn On
-    pub const PCC_OP_SCHED_ON: u32 = 3;
-    // Schedule Turn Off
-    pub const PCC_OP_SCHED_OFF: u32 = 4;
-    // Reset Schedules
-    pub const PCC_OP_SCHED_RESET: u32 = 5;
-    // Save Current State
-    pub const PCC_OP_SAVE: u32 = 6;
-}
-
 /// Save the current state of the channel 'id' to persistent
 /// storage.
 #[derive(Default)]

@@ -10,19 +10,11 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Acknowledgement
-    UTF_ACK = 0x01,
-    // Delayed
-    UTF_DELAYED = 0x02,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Acknowledgement
-    pub const UTF_ACK: u32 = 0x01;
+    pub const _ACK: u32 = 0x01;
     // Delayed
-    pub const UTF_DELAYED: u32 = 0x02;
+    pub const _DELAYED: u32 = 0x02;
 }
 
 /// On modems that support it, this flag shall be used to request an

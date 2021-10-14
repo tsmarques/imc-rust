@@ -17,14 +17,6 @@ pub enum EnableEnum {
     CL_ENABLE = 1,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Enable {
-    // Disable
-    pub const CL_DISABLE: u32 = 0;
-    // Enable
-    pub const CL_ENABLE: u32 = 1;
-}
-
 /// Enable or disable control loops.
 #[derive(Default)]
 pub struct ControlLoops {

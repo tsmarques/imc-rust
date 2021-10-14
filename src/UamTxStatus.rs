@@ -31,28 +31,6 @@ pub enum ValueEnum {
     UTS_NOT_TRANSDUCER = 8,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Value {
-    // Transmission Completed
-    pub const UTS_DONE: u32 = 0;
-    // Transmission Failed
-    pub const UTS_FAILED: u32 = 1;
-    // Transmission Canceled
-    pub const UTS_CANCELED: u32 = 2;
-    // Modem is busy
-    pub const UTS_BUSY: u32 = 3;
-    // Invalid address
-    pub const UTS_INV_ADDR: u32 = 4;
-    // In Progress
-    pub const UTS_IP: u32 = 5;
-    // Unsupported operation
-    pub const UTS_UNSUPPORTED: u32 = 6;
-    // Invalid transmission size
-    pub const UTS_INV_SIZE: u32 = 7;
-    // Not transducer
-    pub const UTS_NOT_TRANSDUCER: u32 = 8;
-}
-
 /// transducer not connected to the acoustic modem.
 #[derive(Default)]
 pub struct UamTxStatus {

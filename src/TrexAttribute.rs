@@ -23,20 +23,6 @@ pub enum AttributetypeEnum {
     TYPE_ENUM = 5,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Attributetype {
-    // Boolean Domain
-    pub const TYPE_BOOL: u32 = 1;
-    // Integer Domain
-    pub const TYPE_INT: u32 = 2;
-    // Float Domain
-    pub const TYPE_FLOAT: u32 = 3;
-    // String Domain
-    pub const TYPE_STRING: u32 = 4;
-    // Enumerated Domain
-    pub const TYPE_ENUM: u32 = 5;
-}
-
 #[derive(Default)]
 pub struct TrexAttribute {
     /// IMC Header

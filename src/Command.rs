@@ -10,39 +10,21 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Use Speed Reference in meters per second
-    FLAG_SPEED_METERS_PS = 0x01,
-    // Use Speed Reference in revolutions per minute
-    FLAG_SPEED_RPM = 0x02,
-    // Use Z Reference as depth
-    FLAG_DEPTH = 0x04,
-    // Use Z Reference as altitude
-    FLAG_ALTITUDE = 0x08,
-    // Use Heading Reference
-    FLAG_HEADING = 0x10,
-    // Use Heading Rate Reference
-    FLAG_HEADING_RATE = 0x20,
-    // Flag Maneuver Completion
-    FLAG_MANDONE = 0x80,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Use Speed Reference in meters per second
-    pub const FLAG_SPEED_METERS_PS: u32 = 0x01;
+    pub const _SPEED_METERS_PS: u32 = 0x01;
     // Use Speed Reference in revolutions per minute
-    pub const FLAG_SPEED_RPM: u32 = 0x02;
+    pub const _SPEED_RPM: u32 = 0x02;
     // Use Z Reference as depth
-    pub const FLAG_DEPTH: u32 = 0x04;
+    pub const _DEPTH: u32 = 0x04;
     // Use Z Reference as altitude
-    pub const FLAG_ALTITUDE: u32 = 0x08;
+    pub const _ALTITUDE: u32 = 0x08;
     // Use Heading Reference
-    pub const FLAG_HEADING: u32 = 0x10;
+    pub const _HEADING: u32 = 0x10;
     // Use Heading Rate Reference
-    pub const FLAG_HEADING_RATE: u32 = 0x20;
+    pub const _HEADING_RATE: u32 = 0x20;
     // Flag Maneuver Completion
-    pub const FLAG_MANDONE: u32 = 0x80;
+    pub const _MANDONE: u32 = 0x80;
 }
 
 /// Command system to move at a heading rate reference provided in &quot;heading&quot; field in radians/s.

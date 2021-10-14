@@ -23,16 +23,6 @@ pub enum OperationEnum {
     OP_CUR_CFG = 2,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Set LBL Configuration
-    pub const OP_SET_CFG: u32 = 0;
-    // Retrieve LBL Configuration
-    pub const OP_GET_CFG: u32 = 1;
-    // Reply to a GET command
-    pub const OP_CUR_CFG: u32 = 2;
-}
-
 /// Set the beacons configuration aboard the vehicle.
 #[derive(Default)]
 pub struct UsblConfig {

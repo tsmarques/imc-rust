@@ -21,16 +21,6 @@ pub enum DirectionEnum {
     DIR_BACKWARD = 2,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Direction {
-    // Let the vehicle decide
-    pub const DIR_AUTO: u32 = 0;
-    // Attempt to move forward
-    pub const DIR_FORWARD: u32 = 1;
-    // Attempt to move backward
-    pub const DIR_BACKWARD: u32 = 2;
-}
-
 /// message-group: Maneuver
 // impl Maneuver for Dislodge { }
 

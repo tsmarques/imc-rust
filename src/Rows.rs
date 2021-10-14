@@ -12,19 +12,11 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Square Curve
-    FLG_SQUARE_CURVE = 0x0001,
-    // First Curve Right
-    FLG_CURVE_RIGHT = 0x0002,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Square Curve
-    pub const FLG_SQUARE_CURVE: u32 = 0x0001;
+    pub const _SQUARE_CURVE: u32 = 0x0001;
     // First Curve Right
-    pub const FLG_CURVE_RIGHT: u32 = 0x0002;
+    pub const _CURVE_RIGHT: u32 = 0x0002;
 }
 
 /// message-group: Maneuver

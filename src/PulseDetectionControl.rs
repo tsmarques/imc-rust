@@ -17,14 +17,6 @@ pub enum OperationEnum {
     POP_ON = 1,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Pulse Detection OFF
-    pub const POP_OFF: u32 = 0;
-    // Pulse Detection ON
-    pub const POP_ON: u32 = 1;
-}
-
 /// Control of hardware pulse detection.
 #[derive(Default)]
 pub struct PulseDetectionControl {

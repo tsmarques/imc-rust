@@ -37,32 +37,6 @@ pub enum DirectionEnum {
     LD_IWINDCURR = 3,
 }
 
-#[allow(non_camel_case_types)]
-pub mod LoiterType {
-    // Default
-    pub const LT_DEFAULT: u32 = 0;
-    // Circular
-    pub const LT_CIRCULAR: u32 = 1;
-    // Race track
-    pub const LT_RACETRACK: u32 = 2;
-    // Figure 8
-    pub const LT_EIGHT: u32 = 3;
-    // Hover
-    pub const LT_HOVER: u32 = 4;
-}
-
-#[allow(non_camel_case_types)]
-pub mod Direction {
-    // Vehicle Dependent
-    pub const LD_VDEP: u32 = 0;
-    // Clockwise
-    pub const LD_CLOCKW: u32 = 1;
-    // Counter Clockwise
-    pub const LD_CCLOCKW: u32 = 2;
-    // Into the wind/current
-    pub const LD_IWINDCURR: u32 = 3;
-}
-
 /// message-group: Maneuver
 // impl Maneuver for Loiter { }
 

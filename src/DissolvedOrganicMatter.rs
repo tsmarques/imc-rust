@@ -17,14 +17,6 @@ pub enum TypeofmeasurementEnum {
     DT_FLUORESCENT = 1,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Typeofmeasurement {
-    // Colored
-    pub const DT_COLORED: u32 = 0;
-    // Fluorescent
-    pub const DT_FLUORESCENT: u32 = 1;
-}
-
 /// Dissolved Organic Matter measurement.
 #[derive(Default)]
 pub struct DissolvedOrganicMatter {

@@ -19,16 +19,6 @@ pub enum OperationEnum {
     OP_REVERT = 2,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Stop Braking
-    pub const OP_STOP: u32 = 0;
-    // Start Braking
-    pub const OP_START: u32 = 1;
-    // Revert Actuation
-    pub const OP_REVERT: u32 = 2;
-}
-
 /// Revert Actuation.
 #[derive(Default)]
 pub struct Brake {

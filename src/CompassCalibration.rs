@@ -23,18 +23,6 @@ pub enum DirectionEnum {
     LD_IWINDCURR = 3,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Direction {
-    // Vehicle Dependent
-    pub const LD_VDEP: u32 = 0;
-    // Clockwise
-    pub const LD_CLOCKW: u32 = 1;
-    // Counter Clockwise
-    pub const LD_CCLOCKW: u32 = 2;
-    // Into the wind/current
-    pub const LD_IWINDCURR: u32 = 3;
-}
-
 /// message-group: Maneuver
 // impl Maneuver for CompassCalibration { }
 

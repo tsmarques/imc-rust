@@ -29,26 +29,6 @@ pub enum StateEnum {
     EAS_DEACT_FAIL = 7,
 }
 
-#[allow(non_camel_case_types)]
-pub mod State {
-    // Entity is Inactive
-    pub const EAS_INACTIVE: u32 = 0;
-    // Entity is Active
-    pub const EAS_ACTIVE: u32 = 1;
-    // Activation in Progress
-    pub const EAS_ACT_IP: u32 = 2;
-    // Activation Completed
-    pub const EAS_ACT_DONE: u32 = 3;
-    // Activation Failed
-    pub const EAS_ACT_FAIL: u32 = 4;
-    // Deactivation In Progress
-    pub const EAS_DEACT_IP: u32 = 5;
-    // Deactivation Completed
-    pub const EAS_DEACT_DONE: u32 = 6;
-    // Deactivation Failed
-    pub const EAS_DEACT_FAIL: u32 = 7;
-}
-
 /// Deactivation is in progress.
 #[derive(Default)]
 pub struct EntityActivationState {

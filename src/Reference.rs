@@ -14,39 +14,21 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Use Location Reference
-    FLAG_LOCATION = 0x01,
-    // Use Speed Reference
-    FLAG_SPEED = 0x02,
-    // Use Z Reference
-    FLAG_Z = 0x04,
-    // Use Radius Reference
-    FLAG_RADIUS = 0x08,
-    // Use this Reference as Start Position for PathControler
-    FLAG_START_POINT = 0x10,
-    // Use Current Position as Start Position for PathControler
-    FLAG_DIRECT = 0x20,
-    // Flag Maneuver Completion
-    FLAG_MANDONE = 0x80,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Use Location Reference
-    pub const FLAG_LOCATION: u32 = 0x01;
+    pub const _LOCATION: u32 = 0x01;
     // Use Speed Reference
-    pub const FLAG_SPEED: u32 = 0x02;
+    pub const _SPEED: u32 = 0x02;
     // Use Z Reference
-    pub const FLAG_Z: u32 = 0x04;
+    pub const _Z: u32 = 0x04;
     // Use Radius Reference
-    pub const FLAG_RADIUS: u32 = 0x08;
+    pub const _RADIUS: u32 = 0x08;
     // Use this Reference as Start Position for PathControler
-    pub const FLAG_START_POINT: u32 = 0x10;
+    pub const _START_POINT: u32 = 0x10;
     // Use Current Position as Start Position for PathControler
-    pub const FLAG_DIRECT: u32 = 0x20;
+    pub const _DIRECT: u32 = 0x20;
     // Flag Maneuver Completion
-    pub const FLAG_MANDONE: u32 = 0x80;
+    pub const _MANDONE: u32 = 0x80;
 }
 
 #[derive(Default)]

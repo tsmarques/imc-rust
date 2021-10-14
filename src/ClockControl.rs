@@ -25,22 +25,6 @@ pub enum OperationEnum {
     COP_SET_TZ_DONE = 5,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Execute Sync.
-    pub const COP_SYNC_EXEC: u32 = 0;
-    // Request Sync.
-    pub const COP_SYNC_REQUEST: u32 = 1;
-    // Sync. Started
-    pub const COP_SYNC_STARTED: u32 = 2;
-    // Sync. done
-    pub const COP_SYNC_DONE: u32 = 3;
-    // Set Timezone
-    pub const COP_SET_TZ: u32 = 4;
-    // Timezone Setup
-    pub const COP_SET_TZ_DONE: u32 = 5;
-}
-
 /// Set timezone.
 #[derive(Default)]
 pub struct ClockControl {

@@ -17,14 +17,6 @@ pub enum SanityEnum {
     DS_NOT_SANE = 1,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Sanity {
-    // Sane
-    pub const DS_SANE: u32 = 0;
-    // Not Sane
-    pub const DS_NOT_SANE: u32 = 1;
-}
-
 /// Data is sane.
 #[derive(Default)]
 pub struct DataSanity {

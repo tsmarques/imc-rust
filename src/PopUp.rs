@@ -12,23 +12,13 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Start from current position
-    FLG_CURR_POS = 0x01,
-    // Wait at surface
-    FLG_WAIT_AT_SURFACE = 0x02,
-    // Station keeping
-    FLG_STATION_KEEP = 0x04,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Start from current position
-    pub const FLG_CURR_POS: u32 = 0x01;
+    pub const _CURR_POS: u32 = 0x01;
     // Wait at surface
-    pub const FLG_WAIT_AT_SURFACE: u32 = 0x02;
+    pub const _WAIT_AT_SURFACE: u32 = 0x02;
     // Station keeping
-    pub const FLG_STATION_KEEP: u32 = 0x04;
+    pub const _STATION_KEEP: u32 = 0x04;
 }
 
 /// message-group: Maneuver

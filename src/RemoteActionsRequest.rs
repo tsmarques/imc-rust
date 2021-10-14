@@ -17,14 +17,6 @@ pub enum operationEnum {
     OP_QUERY = 1,
 }
 
-#[allow(non_camel_case_types)]
-pub mod operation {
-    // Report
-    pub const OP_REPORT: u32 = 0;
-    // Query
-    pub const OP_QUERY: u32 = 1;
-}
-
 /// This message is used as query to request for the possible remote
 /// actions (operation=QUERY and the list is empty in this
 /// case). The vehicle responds using the same message type

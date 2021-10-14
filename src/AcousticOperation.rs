@@ -47,44 +47,6 @@ pub enum OperationEnum {
     AOP_MSG_SHORT = 16,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Abort
-    pub const AOP_ABORT: u32 = 0;
-    // Abort in Progress
-    pub const AOP_ABORT_IP: u32 = 1;
-    // Abort Timeout
-    pub const AOP_ABORT_TIMEOUT: u32 = 2;
-    // Abort Acknowledged
-    pub const AOP_ABORT_ACKED: u32 = 3;
-    // Range Request
-    pub const AOP_RANGE: u32 = 4;
-    // Range in Progress
-    pub const AOP_RANGE_IP: u32 = 5;
-    // Range Timeout
-    pub const AOP_RANGE_TIMEOUT: u32 = 6;
-    // Range Received
-    pub const AOP_RANGE_RECVED: u32 = 7;
-    // Modem is Busy
-    pub const AOP_BUSY: u32 = 8;
-    // Unsupported operation
-    pub const AOP_UNSUPPORTED: u32 = 9;
-    // Transducer Not Detected
-    pub const AOP_NO_TXD: u32 = 10;
-    // Send Message
-    pub const AOP_MSG: u32 = 11;
-    // Message Send -- Queued
-    pub const AOP_MSG_QUEUED: u32 = 12;
-    // Message Send -- In progress
-    pub const AOP_MSG_IP: u32 = 13;
-    // Message Send -- Done
-    pub const AOP_MSG_DONE: u32 = 14;
-    // Message Send -- Failure
-    pub const AOP_MSG_FAILURE: u32 = 15;
-    // Send Short Message
-    pub const AOP_MSG_SHORT: u32 = 16;
-}
-
 /// Request message over acoustic channel. The message to send
 /// is specified by the 'msg' field.
 #[derive(Default)]

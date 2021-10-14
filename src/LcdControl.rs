@@ -23,20 +23,6 @@ pub enum OperationEnum {
     OP_WRITE1 = 4,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Turn off display
-    pub const OP_TURN_OFF: u32 = 0;
-    // Turn on display
-    pub const OP_TURN_ON: u32 = 1;
-    // Clear display
-    pub const OP_CLEAR: u32 = 2;
-    // Write Line #0
-    pub const OP_WRITE0: u32 = 3;
-    // Write Line #1
-    pub const OP_WRITE1: u32 = 4;
-}
-
 /// Control LCD.
 #[derive(Default)]
 pub struct LcdControl {

@@ -35,30 +35,6 @@ pub enum CommandEnum {
     VC_STOP_CALIBRATION = 3,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Request
-    pub const VC_REQUEST: u32 = 0;
-    // Reply -- Success
-    pub const VC_SUCCESS: u32 = 1;
-    // Reply -- In Progress
-    pub const VC_IN_PROGRESS: u32 = 2;
-    // Reply -- Failure
-    pub const VC_FAILURE: u32 = 3;
-}
-
-#[allow(non_camel_case_types)]
-pub mod Command {
-    // Execute Maneuver
-    pub const VC_EXEC_MANEUVER: u32 = 0;
-    // Stop Maneuver
-    pub const VC_STOP_MANEUVER: u32 = 1;
-    // Start Calibration
-    pub const VC_START_CALIBRATION: u32 = 2;
-    // Stop Calibration
-    pub const VC_STOP_CALIBRATION: u32 = 3;
-}
-
 /// Start calibrating vehicle.
 #[derive(Default)]
 pub struct VehicleCommand {

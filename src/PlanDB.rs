@@ -41,38 +41,6 @@ pub enum OperationEnum {
     DBOP_BOOT = 7,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Request
-    pub const DBT_REQUEST: u32 = 0;
-    // Reply -- Success
-    pub const DBT_SUCCESS: u32 = 1;
-    // Reply -- Failure
-    pub const DBT_FAILURE: u32 = 2;
-    // Reply -- In Progress
-    pub const DBT_IN_PROGRESS: u32 = 3;
-}
-
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Set Plan
-    pub const DBOP_SET: u32 = 0;
-    // Delete Plan
-    pub const DBOP_DEL: u32 = 1;
-    // Get Plan
-    pub const DBOP_GET: u32 = 2;
-    // Get Plan Info
-    pub const DBOP_GET_INFO: u32 = 3;
-    // Clear Database
-    pub const DBOP_CLEAR: u32 = 4;
-    // Get Database State (Simple)
-    pub const DBOP_GET_STATE: u32 = 5;
-    // Get Database State (Detailed)
-    pub const DBOP_GET_DSTATE: u32 = 6;
-    // Boot Notification
-    pub const DBOP_BOOT: u32 = 7;
-}
-
 /// Get detailed state of the entire DB. Successful replies
 /// will yield a 'PlanDBState' message in the 'arg' field with
 /// individual plan information (in the 'plans_info' field of

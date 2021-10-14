@@ -20,41 +20,17 @@ pub enum TypeEnum {
 }
 
 #[allow(non_camel_case_types)]
-pub enum PropertiesEnum {
-    // Basic Plan
-    PRP_BASIC = 0x00,
-    // Nonlinear
-    PRP_NONLINEAR = 0x01,
-    // Infinite
-    PRP_INFINITE = 0x02,
-    // Cyclical
-    PRP_CYCLICAL = 0x04,
-    // All
-    PRP_ALL = 0x07,
-}
-
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Before Plan
-    pub const TP_PREPLAN: u32 = 0;
-    // During Plan
-    pub const TP_INPLAN: u32 = 1;
-    // After Plan
-    pub const TP_POSTPLAN: u32 = 2;
-}
-
-#[allow(non_camel_case_types)]
 pub mod Properties {
     // Basic Plan
-    pub const PRP_BASIC: u32 = 0x00;
+    pub const _BASIC: u32 = 0x00;
     // Nonlinear
-    pub const PRP_NONLINEAR: u32 = 0x01;
+    pub const _NONLINEAR: u32 = 0x01;
     // Infinite
-    pub const PRP_INFINITE: u32 = 0x02;
+    pub const _INFINITE: u32 = 0x02;
     // Cyclical
-    pub const PRP_CYCLICAL: u32 = 0x04;
+    pub const _CYCLICAL: u32 = 0x04;
     // All
-    pub const PRP_ALL: u32 = 0x07;
+    pub const _ALL: u32 = 0x07;
 }
 
 /// Plan is cyclical.

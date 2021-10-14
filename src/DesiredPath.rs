@@ -12,43 +12,23 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Start Point
-    FL_START = 0x01,
-    // Direct
-    FL_DIRECT = 0x02,
-    // No Altitude/Depth control
-    FL_NO_Z = 0x04,
-    // 3D Tracking
-    FL_3DTRACK = 0x08,
-    // Counter-Clockwise loiter
-    FL_CCLOCKW = 0x10,
-    // Loiter from current position
-    FL_LOITER_CURR = 0x20,
-    // Takeoff
-    FL_TAKEOFF = 0x40,
-    // Land
-    FL_LAND = 0x80,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Start Point
-    pub const FL_START: u32 = 0x01;
+    pub const _START: u32 = 0x01;
     // Direct
-    pub const FL_DIRECT: u32 = 0x02;
+    pub const _DIRECT: u32 = 0x02;
     // No Altitude/Depth control
-    pub const FL_NO_Z: u32 = 0x04;
+    pub const _NO_Z: u32 = 0x04;
     // 3D Tracking
-    pub const FL_3DTRACK: u32 = 0x08;
+    pub const _3DTRACK: u32 = 0x08;
     // Counter-Clockwise loiter
-    pub const FL_CCLOCKW: u32 = 0x10;
+    pub const _CCLOCKW: u32 = 0x10;
     // Loiter from current position
-    pub const FL_LOITER_CURR: u32 = 0x20;
+    pub const _LOITER_CURR: u32 = 0x20;
     // Takeoff
-    pub const FL_TAKEOFF: u32 = 0x40;
+    pub const _TAKEOFF: u32 = 0x40;
     // Land
-    pub const FL_LAND: u32 = 0x80;
+    pub const _LAND: u32 = 0x80;
 }
 
 /// message-group: ControlCommand

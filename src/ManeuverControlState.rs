@@ -21,18 +21,6 @@ pub enum StateEnum {
     MCS_STOPPED = 3,
 }
 
-#[allow(non_camel_case_types)]
-pub mod State {
-    // Maneuver in progress
-    pub const MCS_EXECUTING: u32 = 0;
-    // Maneuver completed
-    pub const MCS_DONE: u32 = 1;
-    // Maneuver error
-    pub const MCS_ERROR: u32 = 2;
-    // Maneuver stopped
-    pub const MCS_STOPPED: u32 = 3;
-}
-
 /// Maneuver error.
 #[derive(Default)]
 pub struct ManeuverControlState {

@@ -23,20 +23,6 @@ pub enum CommandEnum {
     MES_STATUS = 4,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Command {
-    // Reset to defaults
-    pub const MES_RESET: u32 = 0;
-    // Enable Monitoring
-    pub const MES_ENABLE: u32 = 1;
-    // Disable Monitoring
-    pub const MES_DISABLE: u32 = 2;
-    // Enable Monitoring (exclusive - disables all others)
-    pub const MES_ENABLE_EXCLUSIVE: u32 = 3;
-    // Status Report
-    pub const MES_STATUS: u32 = 4;
-}
-
 /// Controls monitoring of entity states in the vehicle.
 #[derive(Default)]
 pub struct MonitorEntityState {

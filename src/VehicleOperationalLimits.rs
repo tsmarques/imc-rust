@@ -19,16 +19,6 @@ pub enum ActiononthevehicleoperationallimitsEnum {
     OP_REPORT = 2,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Actiononthevehicleoperationallimits {
-    // Request
-    pub const OP_REQUEST: u32 = 0;
-    // Set
-    pub const OP_SET: u32 = 1;
-    // Report
-    pub const OP_REPORT: u32 = 2;
-}
-
 /// Vehicle opertional limits.
 /// For aircraft this should represent the flight envelope and the dynamic contraints.
 #[derive(Default)]

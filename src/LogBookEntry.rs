@@ -23,20 +23,6 @@ pub enum TypeEnum {
     LBET_DEBUG = 4,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Information
-    pub const LBET_INFO: u32 = 0;
-    // Warning
-    pub const LBET_WARNING: u32 = 1;
-    // Error
-    pub const LBET_ERROR: u32 = 2;
-    // Critical
-    pub const LBET_CRITICAL: u32 = 3;
-    // Debug
-    pub const LBET_DEBUG: u32 = 4;
-}
-
 /// Human readable message reporting an event of interest.
 #[derive(Default)]
 pub struct LogBookEntry {

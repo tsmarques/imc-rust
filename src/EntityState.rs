@@ -24,29 +24,9 @@ pub enum StateEnum {
 }
 
 #[allow(non_camel_case_types)]
-pub enum FlagsEnum {
-    // Human Intervention Required
-    EFLA_HUMAN_INTERVENTION = 0x01,
-}
-
-#[allow(non_camel_case_types)]
-pub mod State {
-    // Bootstrapping
-    pub const ESTA_BOOT: u32 = 0;
-    // Normal Operation
-    pub const ESTA_NORMAL: u32 = 1;
-    // Fault
-    pub const ESTA_FAULT: u32 = 2;
-    // Error
-    pub const ESTA_ERROR: u32 = 3;
-    // Failure
-    pub const ESTA_FAILURE: u32 = 4;
-}
-
-#[allow(non_camel_case_types)]
 pub mod Flags {
     // Human Intervention Required
-    pub const EFLA_HUMAN_INTERVENTION: u32 = 0x01;
+    pub const _HUMAN_INTERVENTION: u32 = 0x01;
 }
 
 /// State reported by an entity in the vehicle. The source entity is

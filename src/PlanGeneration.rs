@@ -27,24 +27,6 @@ pub enum OperationEnum {
     OP_SUCCESS = 2,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Command {
-    // Generate
-    pub const CMD_GENERATE: u32 = 0;
-    // Execute
-    pub const CMD_EXECUTE: u32 = 1;
-}
-
-#[allow(non_camel_case_types)]
-pub mod Operation {
-    // Request
-    pub const OP_REQUEST: u32 = 0;
-    // Error
-    pub const OP_ERROR: u32 = 1;
-    // Success
-    pub const OP_SUCCESS: u32 = 2;
-}
-
 /// Some error has occurred while executing the command. The
 /// error can be found in the 'params' tuplelist (under the
 /// key 'error').

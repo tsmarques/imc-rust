@@ -17,14 +17,6 @@ pub enum TypeEnum {
     IOV_TYPE_INPUT_ERROR = 2,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Type {
-    // Input Available
-    pub const IOV_TYPE_INPUT: u32 = 1;
-    // Input Error
-    pub const IOV_TYPE_INPUT_ERROR: u32 = 2;
-}
-
 /// Notification of an I/O event.
 #[derive(Default)]
 pub struct IoEvent {

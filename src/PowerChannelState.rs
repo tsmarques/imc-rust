@@ -17,14 +17,6 @@ pub enum StateEnum {
     PCS_ON = 1,
 }
 
-#[allow(non_camel_case_types)]
-pub mod State {
-    // Off
-    pub const PCS_OFF: u32 = 0;
-    // On
-    pub const PCS_ON: u32 = 1;
-}
-
 /// Power channel is off.
 #[derive(Default)]
 pub struct PowerChannelState {

@@ -10,27 +10,15 @@ use crate::packet::ImcError;
 use crate::packet::*;
 
 #[allow(non_camel_case_types)]
-pub enum TypeEnum {
-    // X-axis
-    CD_X = 0x01,
-    // Y-axis
-    CD_Y = 0x02,
-    // Z-axis
-    CD_Z = 0x04,
-    // Impact
-    CD_IMPACT = 0x08,
-}
-
-#[allow(non_camel_case_types)]
 pub mod Type {
     // X-axis
-    pub const CD_X: u32 = 0x01;
+    pub const _X: u32 = 0x01;
     // Y-axis
-    pub const CD_Y: u32 = 0x02;
+    pub const _Y: u32 = 0x02;
     // Z-axis
-    pub const CD_Z: u32 = 0x04;
+    pub const _Z: u32 = 0x04;
     // Impact
-    pub const CD_IMPACT: u32 = 0x08;
+    pub const _IMPACT: u32 = 0x08;
 }
 
 /// Collision detected in the z-axis

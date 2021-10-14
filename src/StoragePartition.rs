@@ -19,16 +19,6 @@ pub enum StatusEnum {
     SDST_UNKWN = 2,
 }
 
-#[allow(non_camel_case_types)]
-pub mod Status {
-    // Mounted
-    pub const SDST_MOUNTED: u32 = 0;
-    // Unmounted
-    pub const SDST_UNMOUNTED: u32 = 1;
-    // Unknown
-    pub const SDST_UNKWN: u32 = 2;
-}
-
 /// Storage device is unmounted
 #[derive(Default)]
 pub struct StoragePartition {
