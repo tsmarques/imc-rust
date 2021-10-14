@@ -44,7 +44,7 @@ fn imc_crc() {
     lc.set_destination(57);
     lc.set_destination_ent(32);
     lc._name = String::from("20210707_IMC_RUST_TEST");
-    lc._op = ControlOperationEnum::COP_REQUEST_START.value();
+    lc._op = ControlOperationEnum::COP_REQUEST_START as u8;
 
     let mut bfr: bytes::BytesMut = bytes::BytesMut::with_capacity(lc.serialization_size());
     let ret = imc::packet::serialize(&mut lc, &mut bfr);
@@ -90,7 +90,7 @@ fn deserialize_as() {
     lc.set_destination(57);
     lc.set_destination_ent(32);
     lc._name = String::from("20210707_IMC_RUST_TEST");
-    lc._op = ControlOperationEnum::COP_REQUEST_START.value();
+    lc._op = ControlOperationEnum::COP_REQUEST_START as u8;
 
     let mut bfr: bytes::BytesMut = bytes::BytesMut::with_capacity(lc.serialization_size());
 
@@ -117,7 +117,7 @@ fn generic_deserialize() {
     lc.set_destination(57);
     lc.set_destination_ent(32);
     lc._name = String::from("20210707_IMC_RUST_TEST");
-    lc._op = ControlOperationEnum::COP_REQUEST_START.value();
+    lc._op = ControlOperationEnum::COP_REQUEST_START as u8;
 
     let mut bfr: bytes::BytesMut = bytes::BytesMut::with_capacity(lc.serialization_size());
 
