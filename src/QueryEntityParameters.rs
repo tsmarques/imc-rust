@@ -43,10 +43,7 @@ pub struct QueryEntityParameters {
 }
 
 impl Message for QueryEntityParameters {
-    fn new() -> QueryEntityParameters
-    where
-        Self: Sized,
-    {
+    fn new() -> QueryEntityParameters {
         let msg = QueryEntityParameters {
             _header: Header::new(803),
             _name: Default::default(),
@@ -58,18 +55,12 @@ impl Message for QueryEntityParameters {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         803
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         803
     }
 

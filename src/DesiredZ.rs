@@ -42,10 +42,7 @@ pub struct DesiredZ {
 }
 
 impl Message for DesiredZ {
-    fn new() -> DesiredZ
-    where
-        Self: Sized,
-    {
+    fn new() -> DesiredZ {
         let msg = DesiredZ {
             _header: Header::new(401),
             _value: Default::default(),
@@ -56,18 +53,12 @@ impl Message for DesiredZ {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         401
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         401
     }
 

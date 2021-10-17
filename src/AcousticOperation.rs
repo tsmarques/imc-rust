@@ -86,10 +86,7 @@ pub struct AcousticOperation {
 }
 
 impl Message for AcousticOperation {
-    fn new() -> AcousticOperation
-    where
-        Self: Sized,
-    {
+    fn new() -> AcousticOperation {
         let msg = AcousticOperation {
             _header: Header::new(211),
             _op: Default::default(),
@@ -102,18 +99,12 @@ impl Message for AcousticOperation {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         211
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         211
     }
 

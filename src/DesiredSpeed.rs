@@ -42,10 +42,7 @@ pub struct DesiredSpeed {
 }
 
 impl Message for DesiredSpeed {
-    fn new() -> DesiredSpeed
-    where
-        Self: Sized,
-    {
+    fn new() -> DesiredSpeed {
         let msg = DesiredSpeed {
             _header: Header::new(402),
             _value: Default::default(),
@@ -56,18 +53,12 @@ impl Message for DesiredSpeed {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         402
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         402
     }
 

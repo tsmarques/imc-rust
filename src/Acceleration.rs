@@ -47,10 +47,7 @@ pub struct Acceleration {
 }
 
 impl Message for Acceleration {
-    fn new() -> Acceleration
-    where
-        Self: Sized,
-    {
+    fn new() -> Acceleration {
         let msg = Acceleration {
             _header: Header::new(257),
             _time: Default::default(),
@@ -63,18 +60,12 @@ impl Message for Acceleration {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         257
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         257
     }
 

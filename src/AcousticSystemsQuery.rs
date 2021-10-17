@@ -39,10 +39,7 @@ pub struct AcousticSystemsQuery {
 }
 
 impl Message for AcousticSystemsQuery {
-    fn new() -> AcousticSystemsQuery
-    where
-        Self: Sized,
-    {
+    fn new() -> AcousticSystemsQuery {
         let msg = AcousticSystemsQuery {
             _header: Header::new(212),
         };
@@ -51,18 +48,12 @@ impl Message for AcousticSystemsQuery {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         212
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         212
     }
 

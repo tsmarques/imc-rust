@@ -79,10 +79,7 @@ pub struct Rows {
 }
 
 impl Message for Rows {
-    fn new() -> Rows
-    where
-        Self: Sized,
-    {
+    fn new() -> Rows {
         let msg = Rows {
             _header: Header::new(456),
             _timeout: Default::default(),
@@ -107,18 +104,12 @@ impl Message for Rows {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         456
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         456
     }
 

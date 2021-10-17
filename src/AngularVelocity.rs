@@ -47,10 +47,7 @@ pub struct AngularVelocity {
 }
 
 impl Message for AngularVelocity {
-    fn new() -> AngularVelocity
-    where
-        Self: Sized,
-    {
+    fn new() -> AngularVelocity {
         let msg = AngularVelocity {
             _header: Header::new(256),
             _time: Default::default(),
@@ -63,18 +60,12 @@ impl Message for AngularVelocity {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         256
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         256
     }
 

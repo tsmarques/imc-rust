@@ -41,10 +41,7 @@ pub struct GpioStateGet {
 }
 
 impl Message for GpioStateGet {
-    fn new() -> GpioStateGet
-    where
-        Self: Sized,
-    {
+    fn new() -> GpioStateGet {
         let msg = GpioStateGet {
             _header: Header::new(2001),
             _name: Default::default(),
@@ -54,18 +51,12 @@ impl Message for GpioStateGet {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         2001
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         2001
     }
 

@@ -59,10 +59,7 @@ pub struct FollowPath {
 }
 
 impl Message for FollowPath {
-    fn new() -> FollowPath
-    where
-        Self: Sized,
-    {
+    fn new() -> FollowPath {
         let msg = FollowPath {
             _header: Header::new(457),
             _timeout: Default::default(),
@@ -80,18 +77,12 @@ impl Message for FollowPath {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         457
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         457
     }
 

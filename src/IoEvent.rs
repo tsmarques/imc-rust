@@ -51,10 +51,7 @@ pub struct IoEvent {
 }
 
 impl Message for IoEvent {
-    fn new() -> IoEvent
-    where
-        Self: Sized,
-    {
+    fn new() -> IoEvent {
         let msg = IoEvent {
             _header: Header::new(813),
             _type: Default::default(),
@@ -65,18 +62,12 @@ impl Message for IoEvent {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         813
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         813
     }
 

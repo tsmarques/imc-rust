@@ -37,10 +37,7 @@ pub struct Abort {
 }
 
 impl Message for Abort {
-    fn new() -> Abort
-    where
-        Self: Sized,
-    {
+    fn new() -> Abort {
         let msg = Abort {
             _header: Header::new(550),
         };
@@ -49,18 +46,12 @@ impl Message for Abort {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         550
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         550
     }
 

@@ -53,10 +53,7 @@ pub struct StorageDevice {
 }
 
 impl Message for StorageDevice {
-    fn new() -> StorageDevice
-    where
-        Self: Sized,
-    {
+    fn new() -> StorageDevice {
         let msg = StorageDevice {
             _header: Header::new(108),
             _device_model: Default::default(),
@@ -71,18 +68,12 @@ impl Message for StorageDevice {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         108
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         108
     }
 

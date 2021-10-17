@@ -41,10 +41,7 @@ pub struct QueryLedBrightness {
 }
 
 impl Message for QueryLedBrightness {
-    fn new() -> QueryLedBrightness
-    where
-        Self: Sized,
-    {
+    fn new() -> QueryLedBrightness {
         let msg = QueryLedBrightness {
             _header: Header::new(313),
             _name: Default::default(),
@@ -54,18 +51,12 @@ impl Message for QueryLedBrightness {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         313
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         313
     }
 

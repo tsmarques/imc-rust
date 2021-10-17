@@ -40,10 +40,7 @@ pub struct PH {
 }
 
 impl Message for PH {
-    fn new() -> PH
-    where
-        Self: Sized,
-    {
+    fn new() -> PH {
         let msg = PH {
             _header: Header::new(298),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for PH {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         298
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         298
     }
 

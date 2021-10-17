@@ -67,10 +67,7 @@ pub struct PlanGeneration {
 }
 
 impl Message for PlanGeneration {
-    fn new() -> PlanGeneration
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanGeneration {
         let msg = PlanGeneration {
             _header: Header::new(562),
             _cmd: Default::default(),
@@ -83,18 +80,12 @@ impl Message for PlanGeneration {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         562
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         562
     }
 

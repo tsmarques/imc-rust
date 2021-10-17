@@ -40,10 +40,7 @@ pub struct DesiredHeadingRate {
 }
 
 impl Message for DesiredHeadingRate {
-    fn new() -> DesiredHeadingRate
-    where
-        Self: Sized,
-    {
+    fn new() -> DesiredHeadingRate {
         let msg = DesiredHeadingRate {
             _header: Header::new(408),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for DesiredHeadingRate {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         408
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         408
     }
 

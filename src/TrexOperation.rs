@@ -61,10 +61,7 @@ pub struct TrexOperation {
 }
 
 impl Message for TrexOperation {
-    fn new() -> TrexOperation
-    where
-        Self: Sized,
-    {
+    fn new() -> TrexOperation {
         let msg = TrexOperation {
             _header: Header::new(655),
             _op: Default::default(),
@@ -76,18 +73,12 @@ impl Message for TrexOperation {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         655
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         655
     }
 

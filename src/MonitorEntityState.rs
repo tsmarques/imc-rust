@@ -57,10 +57,7 @@ pub struct MonitorEntityState {
 }
 
 impl Message for MonitorEntityState {
-    fn new() -> MonitorEntityState
-    where
-        Self: Sized,
-    {
+    fn new() -> MonitorEntityState {
         let msg = MonitorEntityState {
             _header: Header::new(502),
             _command: Default::default(),
@@ -71,18 +68,12 @@ impl Message for MonitorEntityState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         502
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         502
     }
 

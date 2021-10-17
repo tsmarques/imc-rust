@@ -40,10 +40,7 @@ pub struct Conductivity {
 }
 
 impl Message for Conductivity {
-    fn new() -> Conductivity
-    where
-        Self: Sized,
-    {
+    fn new() -> Conductivity {
         let msg = Conductivity {
             _header: Header::new(269),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Conductivity {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         269
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         269
     }
 

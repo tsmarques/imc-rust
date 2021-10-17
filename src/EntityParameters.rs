@@ -45,10 +45,7 @@ pub struct EntityParameters {
 }
 
 impl Message for EntityParameters {
-    fn new() -> EntityParameters
-    where
-        Self: Sized,
-    {
+    fn new() -> EntityParameters {
         let msg = EntityParameters {
             _header: Header::new(802),
             _name: Default::default(),
@@ -59,18 +56,12 @@ impl Message for EntityParameters {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         802
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         802
     }
 

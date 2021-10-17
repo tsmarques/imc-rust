@@ -77,10 +77,7 @@ pub struct VehicleCommand {
 }
 
 impl Message for VehicleCommand {
-    fn new() -> VehicleCommand
-    where
-        Self: Sized,
-    {
+    fn new() -> VehicleCommand {
         let msg = VehicleCommand {
             _header: Header::new(501),
             _type: Default::default(),
@@ -95,18 +92,12 @@ impl Message for VehicleCommand {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         501
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         501
     }
 

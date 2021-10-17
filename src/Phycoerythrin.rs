@@ -40,10 +40,7 @@ pub struct Phycoerythrin {
 }
 
 impl Message for Phycoerythrin {
-    fn new() -> Phycoerythrin
-    where
-        Self: Sized,
-    {
+    fn new() -> Phycoerythrin {
         let msg = Phycoerythrin {
             _header: Header::new(292),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Phycoerythrin {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         292
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         292
     }
 

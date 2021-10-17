@@ -45,10 +45,7 @@ pub struct LblRange {
 }
 
 impl Message for LblRange {
-    fn new() -> LblRange
-    where
-        Self: Sized,
-    {
+    fn new() -> LblRange {
         let msg = LblRange {
             _header: Header::new(200),
             _id: Default::default(),
@@ -59,18 +56,12 @@ impl Message for LblRange {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         200
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         200
     }
 

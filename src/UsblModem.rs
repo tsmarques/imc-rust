@@ -48,10 +48,7 @@ pub struct UsblModem {
 }
 
 impl Message for UsblModem {
-    fn new() -> UsblModem
-    where
-        Self: Sized,
-    {
+    fn new() -> UsblModem {
         let msg = UsblModem {
             _header: Header::new(901),
             _name: Default::default(),
@@ -65,18 +62,12 @@ impl Message for UsblModem {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         901
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         901
     }
 

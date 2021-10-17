@@ -40,10 +40,7 @@ pub struct Calibration {
 }
 
 impl Message for Calibration {
-    fn new() -> Calibration
-    where
-        Self: Sized,
-    {
+    fn new() -> Calibration {
         let msg = Calibration {
             _header: Header::new(506),
             _duration: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Calibration {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         506
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         506
     }
 

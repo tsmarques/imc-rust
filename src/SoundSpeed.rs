@@ -40,10 +40,7 @@ pub struct SoundSpeed {
 }
 
 impl Message for SoundSpeed {
-    fn new() -> SoundSpeed
-    where
-        Self: Sized,
-    {
+    fn new() -> SoundSpeed {
         let msg = SoundSpeed {
             _header: Header::new(267),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for SoundSpeed {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         267
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         267
     }
 

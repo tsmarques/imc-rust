@@ -60,10 +60,7 @@ pub struct LogBookControl {
 }
 
 impl Message for LogBookControl {
-    fn new() -> LogBookControl
-    where
-        Self: Sized,
-    {
+    fn new() -> LogBookControl {
         let msg = LogBookControl {
             _header: Header::new(104),
             _command: Default::default(),
@@ -75,18 +72,12 @@ impl Message for LogBookControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         104
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         104
     }
 

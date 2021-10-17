@@ -42,10 +42,7 @@ pub struct IdleManeuver {
 }
 
 impl Message for IdleManeuver {
-    fn new() -> IdleManeuver
-    where
-        Self: Sized,
-    {
+    fn new() -> IdleManeuver {
         let msg = IdleManeuver {
             _header: Header::new(454),
             _duration: Default::default(),
@@ -56,18 +53,12 @@ impl Message for IdleManeuver {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         454
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         454
     }
 

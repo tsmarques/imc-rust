@@ -39,10 +39,7 @@ pub struct PushEntityParameters {
 }
 
 impl Message for PushEntityParameters {
-    fn new() -> PushEntityParameters
-    where
-        Self: Sized,
-    {
+    fn new() -> PushEntityParameters {
         let msg = PushEntityParameters {
             _header: Header::new(811),
             _name: Default::default(),
@@ -52,18 +49,12 @@ impl Message for PushEntityParameters {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         811
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         811
     }
 

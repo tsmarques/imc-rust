@@ -91,10 +91,7 @@ pub struct PathControlState {
 }
 
 impl Message for PathControlState {
-    fn new() -> PathControlState
-    where
-        Self: Sized,
-    {
+    fn new() -> PathControlState {
         let msg = PathControlState {
             _header: Header::new(410),
             _path_ref: Default::default(),
@@ -122,18 +119,12 @@ impl Message for PathControlState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         410
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         410
     }
 

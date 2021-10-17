@@ -77,10 +77,7 @@ pub struct PlanStatistics {
 }
 
 impl Message for PlanStatistics {
-    fn new() -> PlanStatistics
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanStatistics {
         let msg = PlanStatistics {
             _header: Header::new(564),
             _plan_id: Default::default(),
@@ -96,18 +93,12 @@ impl Message for PlanStatistics {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         564
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         564
     }
 

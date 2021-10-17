@@ -60,10 +60,7 @@ pub struct TrexAttribute {
 }
 
 impl Message for TrexAttribute {
-    fn new() -> TrexAttribute
-    where
-        Self: Sized,
-    {
+    fn new() -> TrexAttribute {
         let msg = TrexAttribute {
             _header: Header::new(656),
             _name: Default::default(),
@@ -76,18 +73,12 @@ impl Message for TrexAttribute {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         656
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         656
     }
 

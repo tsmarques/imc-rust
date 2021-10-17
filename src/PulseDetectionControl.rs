@@ -49,10 +49,7 @@ pub struct PulseDetectionControl {
 }
 
 impl Message for PulseDetectionControl {
-    fn new() -> PulseDetectionControl
-    where
-        Self: Sized,
-    {
+    fn new() -> PulseDetectionControl {
         let msg = PulseDetectionControl {
             _header: Header::new(278),
             _op: Default::default(),
@@ -62,18 +59,12 @@ impl Message for PulseDetectionControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         278
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         278
     }
 

@@ -62,10 +62,7 @@ pub struct OperationalLimits {
 }
 
 impl Message for OperationalLimits {
-    fn new() -> OperationalLimits
-    where
-        Self: Sized,
-    {
+    fn new() -> OperationalLimits {
         let msg = OperationalLimits {
             _header: Header::new(504),
             _mask: Default::default(),
@@ -86,18 +83,12 @@ impl Message for OperationalLimits {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         504
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         504
     }
 

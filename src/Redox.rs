@@ -40,10 +40,7 @@ pub struct Redox {
 }
 
 impl Message for Redox {
-    fn new() -> Redox
-    where
-        Self: Sized,
-    {
+    fn new() -> Redox {
         let msg = Redox {
             _header: Header::new(299),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Redox {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         299
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         299
     }
 

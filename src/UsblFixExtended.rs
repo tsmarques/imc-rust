@@ -51,10 +51,7 @@ pub struct UsblFixExtended {
 }
 
 impl Message for UsblFixExtended {
-    fn new() -> UsblFixExtended
-    where
-        Self: Sized,
-    {
+    fn new() -> UsblFixExtended {
         let msg = UsblFixExtended {
             _header: Header::new(900),
             _target: Default::default(),
@@ -69,18 +66,12 @@ impl Message for UsblFixExtended {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         900
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         900
     }
 

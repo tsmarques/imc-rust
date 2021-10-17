@@ -37,10 +37,7 @@ pub struct Pulse {
 }
 
 impl Message for Pulse {
-    fn new() -> Pulse
-    where
-        Self: Sized,
-    {
+    fn new() -> Pulse {
         let msg = Pulse {
             _header: Header::new(277),
         };
@@ -49,18 +46,12 @@ impl Message for Pulse {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         277
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         277
     }
 

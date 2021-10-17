@@ -42,10 +42,7 @@ pub struct BeamConfig {
 }
 
 impl Message for BeamConfig {
-    fn new() -> BeamConfig
-    where
-        Self: Sized,
-    {
+    fn new() -> BeamConfig {
         let msg = BeamConfig {
             _header: Header::new(283),
             _beam_width: Default::default(),
@@ -56,18 +53,12 @@ impl Message for BeamConfig {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         283
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         283
     }
 

@@ -46,10 +46,7 @@ pub struct VelocityDelta {
 }
 
 impl Message for VelocityDelta {
-    fn new() -> VelocityDelta
-    where
-        Self: Sized,
-    {
+    fn new() -> VelocityDelta {
         let msg = VelocityDelta {
             _header: Header::new(261),
             _time: Default::default(),
@@ -62,18 +59,12 @@ impl Message for VelocityDelta {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         261
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         261
     }
 

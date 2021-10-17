@@ -59,10 +59,7 @@ pub struct FollowTrajectory {
 }
 
 impl Message for FollowTrajectory {
-    fn new() -> FollowTrajectory
-    where
-        Self: Sized,
-    {
+    fn new() -> FollowTrajectory {
         let msg = FollowTrajectory {
             _header: Header::new(463),
             _timeout: Default::default(),
@@ -80,18 +77,12 @@ impl Message for FollowTrajectory {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         463
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         463
     }
 

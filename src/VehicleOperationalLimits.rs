@@ -86,10 +86,7 @@ pub struct VehicleOperationalLimits {
 }
 
 impl Message for VehicleOperationalLimits {
-    fn new() -> VehicleOperationalLimits
-    where
-        Self: Sized,
-    {
+    fn new() -> VehicleOperationalLimits {
         let msg = VehicleOperationalLimits {
             _header: Header::new(16),
             _op: Default::default(),
@@ -116,18 +113,12 @@ impl Message for VehicleOperationalLimits {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         16
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         16
     }
 

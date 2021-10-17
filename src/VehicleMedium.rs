@@ -55,10 +55,7 @@ pub struct VehicleMedium {
 }
 
 impl Message for VehicleMedium {
-    fn new() -> VehicleMedium
-    where
-        Self: Sized,
-    {
+    fn new() -> VehicleMedium {
         let msg = VehicleMedium {
             _header: Header::new(508),
             _medium: Default::default(),
@@ -68,18 +65,12 @@ impl Message for VehicleMedium {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         508
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         508
     }
 

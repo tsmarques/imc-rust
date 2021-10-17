@@ -59,10 +59,7 @@ pub struct LoggingControl {
 }
 
 impl Message for LoggingControl {
-    fn new() -> LoggingControl
-    where
-        Self: Sized,
-    {
+    fn new() -> LoggingControl {
         let msg = LoggingControl {
             _header: Header::new(102),
             _op: Default::default(),
@@ -73,18 +70,12 @@ impl Message for LoggingControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         102
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         102
     }
 

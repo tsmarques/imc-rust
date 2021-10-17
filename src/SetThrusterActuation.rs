@@ -42,10 +42,7 @@ pub struct SetThrusterActuation {
 }
 
 impl Message for SetThrusterActuation {
-    fn new() -> SetThrusterActuation
-    where
-        Self: Sized,
-    {
+    fn new() -> SetThrusterActuation {
         let msg = SetThrusterActuation {
             _header: Header::new(301),
             _id: Default::default(),
@@ -56,18 +53,12 @@ impl Message for SetThrusterActuation {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         301
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         301
     }
 

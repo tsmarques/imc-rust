@@ -56,10 +56,7 @@ pub struct GpsFixRejection {
 }
 
 impl Message for GpsFixRejection {
-    fn new() -> GpsFixRejection
-    where
-        Self: Sized,
-    {
+    fn new() -> GpsFixRejection {
         let msg = GpsFixRejection {
             _header: Header::new(356),
             _utc_time: Default::default(),
@@ -70,18 +67,12 @@ impl Message for GpsFixRejection {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         356
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         356
     }
 

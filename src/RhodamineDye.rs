@@ -40,10 +40,7 @@ pub struct RhodamineDye {
 }
 
 impl Message for RhodamineDye {
-    fn new() -> RhodamineDye
-    where
-        Self: Sized,
-    {
+    fn new() -> RhodamineDye {
         let msg = RhodamineDye {
             _header: Header::new(285),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for RhodamineDye {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         285
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         285
     }
 

@@ -38,10 +38,7 @@ pub struct QueryEntityState {
 }
 
 impl Message for QueryEntityState {
-    fn new() -> QueryEntityState
-    where
-        Self: Sized,
-    {
+    fn new() -> QueryEntityState {
         let msg = QueryEntityState {
             _header: Header::new(2),
         };
@@ -50,18 +47,12 @@ impl Message for QueryEntityState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         2
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         2
     }
 

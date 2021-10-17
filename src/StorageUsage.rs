@@ -42,10 +42,7 @@ pub struct StorageUsage {
 }
 
 impl Message for StorageUsage {
-    fn new() -> StorageUsage
-    where
-        Self: Sized,
-    {
+    fn new() -> StorageUsage {
         let msg = StorageUsage {
             _header: Header::new(100),
             _available: Default::default(),
@@ -56,18 +53,12 @@ impl Message for StorageUsage {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         100
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         100
     }
 

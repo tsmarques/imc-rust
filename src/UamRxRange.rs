@@ -44,10 +44,7 @@ pub struct UamRxRange {
 }
 
 impl Message for UamRxRange {
-    fn new() -> UamRxRange
-    where
-        Self: Sized,
-    {
+    fn new() -> UamRxRange {
         let msg = UamRxRange {
             _header: Header::new(817),
             _seq: Default::default(),
@@ -59,18 +56,12 @@ impl Message for UamRxRange {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         817
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         817
     }
 

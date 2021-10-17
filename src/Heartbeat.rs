@@ -39,10 +39,7 @@ pub struct Heartbeat {
 }
 
 impl Message for Heartbeat {
-    fn new() -> Heartbeat
-    where
-        Self: Sized,
-    {
+    fn new() -> Heartbeat {
         let msg = Heartbeat {
             _header: Header::new(150),
         };
@@ -51,18 +48,12 @@ impl Message for Heartbeat {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         150
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         150
     }
 

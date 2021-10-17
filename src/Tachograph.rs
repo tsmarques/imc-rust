@@ -71,10 +71,7 @@ pub struct Tachograph {
 }
 
 impl Message for Tachograph {
-    fn new() -> Tachograph
-    where
-        Self: Sized,
-    {
+    fn new() -> Tachograph {
         let msg = Tachograph {
             _header: Header::new(905),
             _timestamp_last_service: Default::default(),
@@ -99,18 +96,12 @@ impl Message for Tachograph {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         905
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         905
     }
 

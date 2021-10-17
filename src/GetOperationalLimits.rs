@@ -37,10 +37,7 @@ pub struct GetOperationalLimits {
 }
 
 impl Message for GetOperationalLimits {
-    fn new() -> GetOperationalLimits
-    where
-        Self: Sized,
-    {
+    fn new() -> GetOperationalLimits {
         let msg = GetOperationalLimits {
             _header: Header::new(505),
         };
@@ -49,18 +46,12 @@ impl Message for GetOperationalLimits {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         505
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         505
     }
 

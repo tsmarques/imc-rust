@@ -63,10 +63,7 @@ pub struct PowerChannelControl {
 }
 
 impl Message for PowerChannelControl {
-    fn new() -> PowerChannelControl
-    where
-        Self: Sized,
-    {
+    fn new() -> PowerChannelControl {
         let msg = PowerChannelControl {
             _header: Header::new(309),
             _name: Default::default(),
@@ -78,18 +75,12 @@ impl Message for PowerChannelControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         309
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         309
     }
 

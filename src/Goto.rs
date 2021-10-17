@@ -68,10 +68,7 @@ pub struct Goto {
 }
 
 impl Message for Goto {
-    fn new() -> Goto
-    where
-        Self: Sized,
-    {
+    fn new() -> Goto {
         let msg = Goto {
             _header: Header::new(450),
             _timeout: Default::default(),
@@ -91,18 +88,12 @@ impl Message for Goto {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         450
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         450
     }
 

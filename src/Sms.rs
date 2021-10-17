@@ -44,10 +44,7 @@ pub struct Sms {
 }
 
 impl Message for Sms {
-    fn new() -> Sms
-    where
-        Self: Sized,
-    {
+    fn new() -> Sms {
         let msg = Sms {
             _header: Header::new(156),
             _number: Default::default(),
@@ -59,18 +56,12 @@ impl Message for Sms {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         156
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         156
     }
 

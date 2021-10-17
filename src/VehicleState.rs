@@ -87,10 +87,7 @@ pub struct VehicleState {
 }
 
 impl Message for VehicleState {
-    fn new() -> VehicleState
-    where
-        Self: Sized,
-    {
+    fn new() -> VehicleState {
         let msg = VehicleState {
             _header: Header::new(500),
             _op_mode: Default::default(),
@@ -109,18 +106,12 @@ impl Message for VehicleState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         500
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         500
     }
 

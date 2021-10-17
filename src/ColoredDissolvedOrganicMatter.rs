@@ -40,10 +40,7 @@ pub struct ColoredDissolvedOrganicMatter {
 }
 
 impl Message for ColoredDissolvedOrganicMatter {
-    fn new() -> ColoredDissolvedOrganicMatter
-    where
-        Self: Sized,
-    {
+    fn new() -> ColoredDissolvedOrganicMatter {
         let msg = ColoredDissolvedOrganicMatter {
             _header: Header::new(2003),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for ColoredDissolvedOrganicMatter {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         2003
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         2003
     }
 

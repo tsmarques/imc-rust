@@ -53,10 +53,7 @@ pub struct ControlLoops {
 }
 
 impl Message for ControlLoops {
-    fn new() -> ControlLoops
-    where
-        Self: Sized,
-    {
+    fn new() -> ControlLoops {
         let msg = ControlLoops {
             _header: Header::new(507),
             _enable: Default::default(),
@@ -68,18 +65,12 @@ impl Message for ControlLoops {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         507
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         507
     }
 

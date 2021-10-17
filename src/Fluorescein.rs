@@ -40,10 +40,7 @@ pub struct Fluorescein {
 }
 
 impl Message for Fluorescein {
-    fn new() -> Fluorescein
-    where
-        Self: Sized,
-    {
+    fn new() -> Fluorescein {
         let msg = Fluorescein {
             _header: Header::new(290),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Fluorescein {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         290
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         290
     }
 

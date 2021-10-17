@@ -37,10 +37,7 @@ pub struct TeleoperationDone {
 }
 
 impl Message for TeleoperationDone {
-    fn new() -> TeleoperationDone
-    where
-        Self: Sized,
-    {
+    fn new() -> TeleoperationDone {
         let msg = TeleoperationDone {
             _header: Header::new(460),
         };
@@ -49,18 +46,12 @@ impl Message for TeleoperationDone {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         460
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         460
     }
 

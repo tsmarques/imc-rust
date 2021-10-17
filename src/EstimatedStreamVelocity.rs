@@ -45,10 +45,7 @@ pub struct EstimatedStreamVelocity {
 }
 
 impl Message for EstimatedStreamVelocity {
-    fn new() -> EstimatedStreamVelocity
-    where
-        Self: Sized,
-    {
+    fn new() -> EstimatedStreamVelocity {
         let msg = EstimatedStreamVelocity {
             _header: Header::new(351),
             _x: Default::default(),
@@ -60,18 +57,12 @@ impl Message for EstimatedStreamVelocity {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         351
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         351
     }
 

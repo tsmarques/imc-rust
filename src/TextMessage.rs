@@ -42,10 +42,7 @@ pub struct TextMessage {
 }
 
 impl Message for TextMessage {
-    fn new() -> TextMessage
-    where
-        Self: Sized,
-    {
+    fn new() -> TextMessage {
         let msg = TextMessage {
             _header: Header::new(160),
             _origin: Default::default(),
@@ -56,18 +53,12 @@ impl Message for TextMessage {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         160
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         160
     }
 

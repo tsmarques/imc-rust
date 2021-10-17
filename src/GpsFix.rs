@@ -108,10 +108,7 @@ pub struct GpsFix {
 }
 
 impl Message for GpsFix {
-    fn new() -> GpsFix
-    where
-        Self: Sized,
-    {
+    fn new() -> GpsFix {
         let msg = GpsFix {
             _header: Header::new(253),
             _validity: Default::default(),
@@ -136,18 +133,12 @@ impl Message for GpsFix {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         253
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         253
     }
 

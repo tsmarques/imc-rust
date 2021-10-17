@@ -56,10 +56,7 @@ pub struct LblConfig {
 }
 
 impl Message for LblConfig {
-    fn new() -> LblConfig
-    where
-        Self: Sized,
-    {
+    fn new() -> LblConfig {
         let msg = LblConfig {
             _header: Header::new(203),
             _op: Default::default(),
@@ -70,18 +67,12 @@ impl Message for LblConfig {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         203
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         203
     }
 

@@ -70,10 +70,7 @@ pub struct DvlRejection {
 }
 
 impl Message for DvlRejection {
-    fn new() -> DvlRejection
-    where
-        Self: Sized,
-    {
+    fn new() -> DvlRejection {
         let msg = DvlRejection {
             _header: Header::new(358),
             _type: Default::default(),
@@ -86,18 +83,12 @@ impl Message for DvlRejection {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         358
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         358
     }
 

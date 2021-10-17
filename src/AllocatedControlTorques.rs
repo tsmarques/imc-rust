@@ -44,10 +44,7 @@ pub struct AllocatedControlTorques {
 }
 
 impl Message for AllocatedControlTorques {
-    fn new() -> AllocatedControlTorques
-    where
-        Self: Sized,
-    {
+    fn new() -> AllocatedControlTorques {
         let msg = AllocatedControlTorques {
             _header: Header::new(411),
             _k: Default::default(),
@@ -59,18 +56,12 @@ impl Message for AllocatedControlTorques {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         411
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         411
     }
 

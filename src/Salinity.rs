@@ -40,10 +40,7 @@ pub struct Salinity {
 }
 
 impl Message for Salinity {
-    fn new() -> Salinity
-    where
-        Self: Sized,
-    {
+    fn new() -> Salinity {
         let msg = Salinity {
             _header: Header::new(270),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Salinity {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         270
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         270
     }
 

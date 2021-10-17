@@ -68,10 +68,7 @@ pub struct CcuEvent {
 }
 
 impl Message for CcuEvent {
-    fn new() -> CcuEvent
-    where
-        Self: Sized,
-    {
+    fn new() -> CcuEvent {
         let msg = CcuEvent {
             _header: Header::new(606),
             _type: Default::default(),
@@ -83,18 +80,12 @@ impl Message for CcuEvent {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         606
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         606
     }
 

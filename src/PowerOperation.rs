@@ -63,10 +63,7 @@ pub struct PowerOperation {
 }
 
 impl Message for PowerOperation {
-    fn new() -> PowerOperation
-    where
-        Self: Sized,
-    {
+    fn new() -> PowerOperation {
         let msg = PowerOperation {
             _header: Header::new(308),
             _op: Default::default(),
@@ -78,18 +75,12 @@ impl Message for PowerOperation {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         308
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         308
     }
 

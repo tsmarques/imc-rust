@@ -37,10 +37,7 @@ pub struct StopManeuver {
 }
 
 impl Message for StopManeuver {
-    fn new() -> StopManeuver
-    where
-        Self: Sized,
-    {
+    fn new() -> StopManeuver {
         let msg = StopManeuver {
             _header: Header::new(468),
         };
@@ -49,18 +46,12 @@ impl Message for StopManeuver {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         468
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         468
     }
 

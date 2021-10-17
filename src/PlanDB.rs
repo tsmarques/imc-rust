@@ -85,10 +85,7 @@ pub struct PlanDB {
 }
 
 impl Message for PlanDB {
-    fn new() -> PlanDB
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanDB {
         let msg = PlanDB {
             _header: Header::new(556),
             _type: Default::default(),
@@ -103,18 +100,12 @@ impl Message for PlanDB {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         556
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         556
     }
 

@@ -45,10 +45,7 @@ pub struct MessagePart {
 }
 
 impl Message for MessagePart {
-    fn new() -> MessagePart
-    where
-        Self: Sized,
-    {
+    fn new() -> MessagePart {
         let msg = MessagePart {
             _header: Header::new(877),
             _uid: Default::default(),
@@ -61,18 +58,12 @@ impl Message for MessagePart {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         877
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         877
     }
 

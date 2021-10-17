@@ -40,10 +40,7 @@ pub struct Turbidity {
 }
 
 impl Message for Turbidity {
-    fn new() -> Turbidity
-    where
-        Self: Sized,
-    {
+    fn new() -> Turbidity {
         let msg = Turbidity {
             _header: Header::new(288),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Turbidity {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         288
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         288
     }
 

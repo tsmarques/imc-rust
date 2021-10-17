@@ -42,10 +42,7 @@ pub struct RemoteActions {
 }
 
 impl Message for RemoteActions {
-    fn new() -> RemoteActions
-    where
-        Self: Sized,
-    {
+    fn new() -> RemoteActions {
         let msg = RemoteActions {
             _header: Header::new(305),
             _actions: Default::default(),
@@ -55,18 +52,12 @@ impl Message for RemoteActions {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         305
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         305
     }
 

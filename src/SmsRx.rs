@@ -42,10 +42,7 @@ pub struct SmsRx {
 }
 
 impl Message for SmsRx {
-    fn new() -> SmsRx
-    where
-        Self: Sized,
-    {
+    fn new() -> SmsRx {
         let msg = SmsRx {
             _header: Header::new(158),
             _source: Default::default(),
@@ -56,18 +53,12 @@ impl Message for SmsRx {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         158
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         158
     }
 

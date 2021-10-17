@@ -46,10 +46,7 @@ pub struct SonarPulse {
 }
 
 impl Message for SonarPulse {
-    fn new() -> SonarPulse
-    where
-        Self: Sized,
-    {
+    fn new() -> SonarPulse {
         let msg = SonarPulse {
             _header: Header::new(2006),
             _frequency: Default::default(),
@@ -62,18 +59,12 @@ impl Message for SonarPulse {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         2006
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         2006
     }
 

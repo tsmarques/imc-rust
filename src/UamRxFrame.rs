@@ -56,10 +56,7 @@ pub struct UamRxFrame {
 }
 
 impl Message for UamRxFrame {
-    fn new() -> UamRxFrame
-    where
-        Self: Sized,
-    {
+    fn new() -> UamRxFrame {
         let msg = UamRxFrame {
             _header: Header::new(815),
             _sys_src: Default::default(),
@@ -72,18 +69,12 @@ impl Message for UamRxFrame {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         815
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         815
     }
 

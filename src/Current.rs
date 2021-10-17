@@ -40,10 +40,7 @@ pub struct Current {
 }
 
 impl Message for Current {
-    fn new() -> Current
-    where
-        Self: Sized,
-    {
+    fn new() -> Current {
         let msg = Current {
             _header: Header::new(252),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Current {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         252
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         252
     }
 

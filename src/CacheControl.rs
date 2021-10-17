@@ -60,10 +60,7 @@ pub struct CacheControl {
 }
 
 impl Message for CacheControl {
-    fn new() -> CacheControl
-    where
-        Self: Sized,
-    {
+    fn new() -> CacheControl {
         let msg = CacheControl {
             _header: Header::new(101),
             _op: Default::default(),
@@ -75,18 +72,12 @@ impl Message for CacheControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         101
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         101
     }
 

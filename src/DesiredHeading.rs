@@ -40,10 +40,7 @@ pub struct DesiredHeading {
 }
 
 impl Message for DesiredHeading {
-    fn new() -> DesiredHeading
-    where
-        Self: Sized,
-    {
+    fn new() -> DesiredHeading {
         let msg = DesiredHeading {
             _header: Header::new(400),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for DesiredHeading {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         400
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         400
     }
 

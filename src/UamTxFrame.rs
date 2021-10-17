@@ -56,10 +56,7 @@ pub struct UamTxFrame {
 }
 
 impl Message for UamTxFrame {
-    fn new() -> UamTxFrame
-    where
-        Self: Sized,
-    {
+    fn new() -> UamTxFrame {
         let msg = UamTxFrame {
             _header: Header::new(814),
             _seq: Default::default(),
@@ -72,18 +69,12 @@ impl Message for UamTxFrame {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         814
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         814
     }
 

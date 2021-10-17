@@ -42,10 +42,7 @@ pub struct TransportBindings {
 }
 
 impl Message for TransportBindings {
-    fn new() -> TransportBindings
-    where
-        Self: Sized,
-    {
+    fn new() -> TransportBindings {
         let msg = TransportBindings {
             _header: Header::new(8),
             _consumer: Default::default(),
@@ -56,18 +53,12 @@ impl Message for TransportBindings {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         8
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         8
     }
 

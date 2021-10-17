@@ -52,10 +52,7 @@ pub struct Announce {
 }
 
 impl Message for Announce {
-    fn new() -> Announce
-    where
-        Self: Sized,
-    {
+    fn new() -> Announce {
         let msg = Announce {
             _header: Header::new(151),
             _sys_name: Default::default(),
@@ -71,18 +68,12 @@ impl Message for Announce {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         151
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         151
     }
 

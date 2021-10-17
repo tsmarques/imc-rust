@@ -37,10 +37,7 @@ pub struct RestartSystem {
 }
 
 impl Message for RestartSystem {
-    fn new() -> RestartSystem
-    where
-        Self: Sized,
-    {
+    fn new() -> RestartSystem {
         let msg = RestartSystem {
             _header: Header::new(9),
         };
@@ -49,18 +46,12 @@ impl Message for RestartSystem {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         9
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         9
     }
 

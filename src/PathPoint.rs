@@ -44,10 +44,7 @@ pub struct PathPoint {
 }
 
 impl Message for PathPoint {
-    fn new() -> PathPoint
-    where
-        Self: Sized,
-    {
+    fn new() -> PathPoint {
         let msg = PathPoint {
             _header: Header::new(458),
             _x: Default::default(),
@@ -59,18 +56,12 @@ impl Message for PathPoint {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         458
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         458
     }
 

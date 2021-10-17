@@ -39,10 +39,7 @@ pub struct SaveEntityParameters {
 }
 
 impl Message for SaveEntityParameters {
-    fn new() -> SaveEntityParameters
-    where
-        Self: Sized,
-    {
+    fn new() -> SaveEntityParameters {
         let msg = SaveEntityParameters {
             _header: Header::new(805),
             _name: Default::default(),
@@ -52,18 +49,12 @@ impl Message for SaveEntityParameters {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         805
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         805
     }
 

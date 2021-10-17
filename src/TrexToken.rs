@@ -46,10 +46,7 @@ pub struct TrexToken {
 }
 
 impl Message for TrexToken {
-    fn new() -> TrexToken
-    where
-        Self: Sized,
-    {
+    fn new() -> TrexToken {
         let msg = TrexToken {
             _header: Header::new(657),
             _timeline: Default::default(),
@@ -61,18 +58,12 @@ impl Message for TrexToken {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         657
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         657
     }
 

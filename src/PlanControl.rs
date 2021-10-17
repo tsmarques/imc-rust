@@ -88,10 +88,7 @@ pub struct PlanControl {
 }
 
 impl Message for PlanControl {
-    fn new() -> PlanControl
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanControl {
         let msg = PlanControl {
             _header: Header::new(559),
             _type: Default::default(),
@@ -107,18 +104,12 @@ impl Message for PlanControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         559
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         559
     }
 

@@ -50,10 +50,7 @@ pub struct DeviceState {
 }
 
 impl Message for DeviceState {
-    fn new() -> DeviceState
-    where
-        Self: Sized,
-    {
+    fn new() -> DeviceState {
         let msg = DeviceState {
             _header: Header::new(282),
             _x: Default::default(),
@@ -68,18 +65,12 @@ impl Message for DeviceState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         282
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         282
     }
 

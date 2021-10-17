@@ -64,10 +64,7 @@ pub struct LblRangeAcceptance {
 }
 
 impl Message for LblRangeAcceptance {
-    fn new() -> LblRangeAcceptance
-    where
-        Self: Sized,
-    {
+    fn new() -> LblRangeAcceptance {
         let msg = LblRangeAcceptance {
             _header: Header::new(357),
             _id: Default::default(),
@@ -79,18 +76,12 @@ impl Message for LblRangeAcceptance {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         357
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         357
     }
 

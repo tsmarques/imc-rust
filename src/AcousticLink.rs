@@ -45,10 +45,7 @@ pub struct AcousticLink {
 }
 
 impl Message for AcousticLink {
-    fn new() -> AcousticLink
-    where
-        Self: Sized,
-    {
+    fn new() -> AcousticLink {
         let msg = AcousticLink {
             _header: Header::new(214),
             _peer: Default::default(),
@@ -60,18 +57,12 @@ impl Message for AcousticLink {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         214
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         214
     }
 

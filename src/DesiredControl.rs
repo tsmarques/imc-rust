@@ -70,10 +70,7 @@ pub struct DesiredControl {
 }
 
 impl Message for DesiredControl {
-    fn new() -> DesiredControl
-    where
-        Self: Sized,
-    {
+    fn new() -> DesiredControl {
         let msg = DesiredControl {
             _header: Header::new(407),
             _x: Default::default(),
@@ -89,18 +86,12 @@ impl Message for DesiredControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         407
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         407
     }
 

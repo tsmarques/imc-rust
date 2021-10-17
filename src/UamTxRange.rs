@@ -44,10 +44,7 @@ pub struct UamTxRange {
 }
 
 impl Message for UamTxRange {
-    fn new() -> UamTxRange
-    where
-        Self: Sized,
-    {
+    fn new() -> UamTxRange {
         let msg = UamTxRange {
             _header: Header::new(818),
             _seq: Default::default(),
@@ -59,18 +56,12 @@ impl Message for UamTxRange {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         818
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         818
     }
 

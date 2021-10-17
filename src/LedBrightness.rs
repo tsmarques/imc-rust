@@ -42,10 +42,7 @@ pub struct LedBrightness {
 }
 
 impl Message for LedBrightness {
-    fn new() -> LedBrightness
-    where
-        Self: Sized,
-    {
+    fn new() -> LedBrightness {
         let msg = LedBrightness {
             _header: Header::new(312),
             _name: Default::default(),
@@ -56,18 +53,12 @@ impl Message for LedBrightness {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         312
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         312
     }
 

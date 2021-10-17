@@ -42,10 +42,7 @@ pub struct ServoPosition {
 }
 
 impl Message for ServoPosition {
-    fn new() -> ServoPosition
-    where
-        Self: Sized,
-    {
+    fn new() -> ServoPosition {
         let msg = ServoPosition {
             _header: Header::new(281),
             _id: Default::default(),
@@ -56,18 +53,12 @@ impl Message for ServoPosition {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         281
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         281
     }
 

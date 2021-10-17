@@ -47,10 +47,7 @@ pub struct CustomManeuver {
 }
 
 impl Message for CustomManeuver {
-    fn new() -> CustomManeuver
-    where
-        Self: Sized,
-    {
+    fn new() -> CustomManeuver {
         let msg = CustomManeuver {
             _header: Header::new(465),
             _timeout: Default::default(),
@@ -62,18 +59,12 @@ impl Message for CustomManeuver {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         465
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         465
     }
 

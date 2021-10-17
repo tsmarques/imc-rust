@@ -54,10 +54,7 @@ pub struct Alignment {
 }
 
 impl Message for Alignment {
-    fn new() -> Alignment
-    where
-        Self: Sized,
-    {
+    fn new() -> Alignment {
         let msg = Alignment {
             _header: Header::new(495),
             _timeout: Default::default(),
@@ -72,18 +69,12 @@ impl Message for Alignment {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         495
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         495
     }
 

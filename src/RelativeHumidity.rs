@@ -40,10 +40,7 @@ pub struct RelativeHumidity {
 }
 
 impl Message for RelativeHumidity {
-    fn new() -> RelativeHumidity
-    where
-        Self: Sized,
-    {
+    fn new() -> RelativeHumidity {
         let msg = RelativeHumidity {
             _header: Header::new(272),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for RelativeHumidity {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         272
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         272
     }
 

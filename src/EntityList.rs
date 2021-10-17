@@ -52,10 +52,7 @@ pub struct EntityList {
 }
 
 impl Message for EntityList {
-    fn new() -> EntityList
-    where
-        Self: Sized,
-    {
+    fn new() -> EntityList {
         let msg = EntityList {
             _header: Header::new(5),
             _op: Default::default(),
@@ -66,18 +63,12 @@ impl Message for EntityList {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         5
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         5
     }
 

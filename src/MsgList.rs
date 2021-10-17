@@ -41,10 +41,7 @@ pub struct MsgList {
 }
 
 impl Message for MsgList {
-    fn new() -> MsgList
-    where
-        Self: Sized,
-    {
+    fn new() -> MsgList {
         let msg = MsgList {
             _header: Header::new(20),
             _msgs: Default::default(),
@@ -54,18 +51,12 @@ impl Message for MsgList {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         20
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         20
     }
 

@@ -47,10 +47,7 @@ pub struct IridiumMsgTxExtended {
 }
 
 impl Message for IridiumMsgTxExtended {
-    fn new() -> IridiumMsgTxExtended
-    where
-        Self: Sized,
-    {
+    fn new() -> IridiumMsgTxExtended {
         let msg = IridiumMsgTxExtended {
             _header: Header::new(2005),
             _req_id: Default::default(),
@@ -64,18 +61,12 @@ impl Message for IridiumMsgTxExtended {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         2005
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         2005
     }
 

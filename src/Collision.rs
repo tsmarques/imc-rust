@@ -55,10 +55,7 @@ pub struct Collision {
 }
 
 impl Message for Collision {
-    fn new() -> Collision
-    where
-        Self: Sized,
-    {
+    fn new() -> Collision {
         let msg = Collision {
             _header: Header::new(509),
             _value: Default::default(),
@@ -69,18 +66,12 @@ impl Message for Collision {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         509
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         509
     }
 

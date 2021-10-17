@@ -43,10 +43,7 @@ pub struct PolygonVertex {
 }
 
 impl Message for PolygonVertex {
-    fn new() -> PolygonVertex
-    where
-        Self: Sized,
-    {
+    fn new() -> PolygonVertex {
         let msg = PolygonVertex {
             _header: Header::new(474),
             _lat: Default::default(),
@@ -57,18 +54,12 @@ impl Message for PolygonVertex {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         474
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         474
     }
 

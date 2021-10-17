@@ -51,10 +51,7 @@ pub struct Brake {
 }
 
 impl Message for Brake {
-    fn new() -> Brake
-    where
-        Self: Sized,
-    {
+    fn new() -> Brake {
         let msg = Brake {
             _header: Header::new(413),
             _op: Default::default(),
@@ -64,18 +61,12 @@ impl Message for Brake {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         413
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         413
     }
 

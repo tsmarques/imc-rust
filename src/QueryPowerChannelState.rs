@@ -37,10 +37,7 @@ pub struct QueryPowerChannelState {
 }
 
 impl Message for QueryPowerChannelState {
-    fn new() -> QueryPowerChannelState
-    where
-        Self: Sized,
-    {
+    fn new() -> QueryPowerChannelState {
         let msg = QueryPowerChannelState {
             _header: Header::new(310),
         };
@@ -49,18 +46,12 @@ impl Message for QueryPowerChannelState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         310
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         310
     }
 

@@ -55,10 +55,7 @@ pub struct ReplayControl {
 }
 
 impl Message for ReplayControl {
-    fn new() -> ReplayControl
-    where
-        Self: Sized,
-    {
+    fn new() -> ReplayControl {
         let msg = ReplayControl {
             _header: Header::new(105),
             _op: Default::default(),
@@ -69,18 +66,12 @@ impl Message for ReplayControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         105
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         105
     }
 

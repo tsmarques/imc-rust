@@ -48,10 +48,7 @@ pub struct FollowReference {
 }
 
 impl Message for FollowReference {
-    fn new() -> FollowReference
-    where
-        Self: Sized,
-    {
+    fn new() -> FollowReference {
         let msg = FollowReference {
             _header: Header::new(478),
             _control_src: Default::default(),
@@ -65,18 +62,12 @@ impl Message for FollowReference {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         478
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         478
     }
 

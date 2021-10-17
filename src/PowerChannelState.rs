@@ -51,10 +51,7 @@ pub struct PowerChannelState {
 }
 
 impl Message for PowerChannelState {
-    fn new() -> PowerChannelState
-    where
-        Self: Sized,
-    {
+    fn new() -> PowerChannelState {
         let msg = PowerChannelState {
             _header: Header::new(311),
             _name: Default::default(),
@@ -65,18 +62,12 @@ impl Message for PowerChannelState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         311
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         311
     }
 

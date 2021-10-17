@@ -47,10 +47,7 @@ pub struct IridiumMsgRx {
 }
 
 impl Message for IridiumMsgRx {
-    fn new() -> IridiumMsgRx
-    where
-        Self: Sized,
-    {
+    fn new() -> IridiumMsgRx {
         let msg = IridiumMsgRx {
             _header: Header::new(170),
             _origin: Default::default(),
@@ -64,18 +61,12 @@ impl Message for IridiumMsgRx {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         170
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         170
     }
 

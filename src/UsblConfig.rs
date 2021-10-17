@@ -56,10 +56,7 @@ pub struct UsblConfig {
 }
 
 impl Message for UsblConfig {
-    fn new() -> UsblConfig
-    where
-        Self: Sized,
-    {
+    fn new() -> UsblConfig {
         let msg = UsblConfig {
             _header: Header::new(902),
             _op: Default::default(),
@@ -70,18 +67,12 @@ impl Message for UsblConfig {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         902
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         902
     }
 

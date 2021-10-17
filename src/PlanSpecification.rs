@@ -67,10 +67,7 @@ pub struct PlanSpecification {
 }
 
 impl Message for PlanSpecification {
-    fn new() -> PlanSpecification
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanSpecification {
         let msg = PlanSpecification {
             _header: Header::new(551),
             _plan_id: Default::default(),
@@ -88,18 +85,12 @@ impl Message for PlanSpecification {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         551
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         551
     }
 

@@ -49,10 +49,7 @@ pub struct EulerAngles {
 }
 
 impl Message for EulerAngles {
-    fn new() -> EulerAngles
-    where
-        Self: Sized,
-    {
+    fn new() -> EulerAngles {
         let msg = EulerAngles {
             _header: Header::new(254),
             _time: Default::default(),
@@ -66,18 +63,12 @@ impl Message for EulerAngles {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         254
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         254
     }
 

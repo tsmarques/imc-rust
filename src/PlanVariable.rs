@@ -70,10 +70,7 @@ pub struct PlanVariable {
 }
 
 impl Message for PlanVariable {
-    fn new() -> PlanVariable
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanVariable {
         let msg = PlanVariable {
             _header: Header::new(561),
             _name: Default::default(),
@@ -86,18 +83,12 @@ impl Message for PlanVariable {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         561
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         561
     }
 

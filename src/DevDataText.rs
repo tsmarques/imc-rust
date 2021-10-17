@@ -40,10 +40,7 @@ pub struct DevDataText {
 }
 
 impl Message for DevDataText {
-    fn new() -> DevDataText
-    where
-        Self: Sized,
-    {
+    fn new() -> DevDataText {
         let msg = DevDataText {
             _header: Header::new(273),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for DevDataText {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         273
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         273
     }
 

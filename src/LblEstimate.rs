@@ -52,10 +52,7 @@ pub struct LblEstimate {
 }
 
 impl Message for LblEstimate {
-    fn new() -> LblEstimate
-    where
-        Self: Sized,
-    {
+    fn new() -> LblEstimate {
         let msg = LblEstimate {
             _header: Header::new(360),
             _beacon: Default::default(),
@@ -70,18 +67,12 @@ impl Message for LblEstimate {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         360
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         360
     }
 

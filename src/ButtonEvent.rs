@@ -42,10 +42,7 @@ pub struct ButtonEvent {
 }
 
 impl Message for ButtonEvent {
-    fn new() -> ButtonEvent
-    where
-        Self: Sized,
-    {
+    fn new() -> ButtonEvent {
         let msg = ButtonEvent {
             _header: Header::new(306),
             _button: Default::default(),
@@ -56,18 +53,12 @@ impl Message for ButtonEvent {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         306
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         306
     }
 

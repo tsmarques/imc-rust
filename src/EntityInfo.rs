@@ -48,10 +48,7 @@ pub struct EntityInfo {
 }
 
 impl Message for EntityInfo {
-    fn new() -> EntityInfo
-    where
-        Self: Sized,
-    {
+    fn new() -> EntityInfo {
         let msg = EntityInfo {
             _header: Header::new(3),
             _id: Default::default(),
@@ -65,18 +62,12 @@ impl Message for EntityInfo {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         3
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         3
     }
 

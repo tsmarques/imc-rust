@@ -40,10 +40,7 @@ pub struct Chlorophyll {
 }
 
 impl Message for Chlorophyll {
-    fn new() -> Chlorophyll
-    where
-        Self: Sized,
-    {
+    fn new() -> Chlorophyll {
         let msg = Chlorophyll {
             _header: Header::new(289),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Chlorophyll {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         289
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         289
     }
 

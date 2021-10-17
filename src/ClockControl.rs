@@ -61,10 +61,7 @@ pub struct ClockControl {
 }
 
 impl Message for ClockControl {
-    fn new() -> ClockControl
-    where
-        Self: Sized,
-    {
+    fn new() -> ClockControl {
         let msg = ClockControl {
             _header: Header::new(106),
             _op: Default::default(),
@@ -76,18 +73,12 @@ impl Message for ClockControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         106
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         106
     }
 

@@ -40,10 +40,7 @@ pub struct Voltage {
 }
 
 impl Message for Voltage {
-    fn new() -> Voltage
-    where
-        Self: Sized,
-    {
+    fn new() -> Voltage {
         let msg = Voltage {
             _header: Header::new(251),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Voltage {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         251
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         251
     }
 

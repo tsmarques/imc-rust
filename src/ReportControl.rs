@@ -76,10 +76,7 @@ pub struct ReportControl {
 }
 
 impl Message for ReportControl {
-    fn new() -> ReportControl
-    where
-        Self: Sized,
-    {
+    fn new() -> ReportControl {
         let msg = ReportControl {
             _header: Header::new(513),
             _op: Default::default(),
@@ -92,18 +89,12 @@ impl Message for ReportControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         513
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         513
     }
 

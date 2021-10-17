@@ -40,10 +40,7 @@ pub struct FineOil {
 }
 
 impl Message for FineOil {
-    fn new() -> FineOil
-    where
-        Self: Sized,
-    {
+    fn new() -> FineOil {
         let msg = FineOil {
             _header: Header::new(287),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for FineOil {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         287
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         287
     }
 

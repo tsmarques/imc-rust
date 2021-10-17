@@ -47,10 +47,7 @@ pub struct UsblPosition {
 }
 
 impl Message for UsblPosition {
-    fn new() -> UsblPosition
-    where
-        Self: Sized,
-    {
+    fn new() -> UsblPosition {
         let msg = UsblPosition {
             _header: Header::new(891),
             _target: Default::default(),
@@ -63,18 +60,12 @@ impl Message for UsblPosition {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         891
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         891
     }
 

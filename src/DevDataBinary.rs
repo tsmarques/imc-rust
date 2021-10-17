@@ -40,10 +40,7 @@ pub struct DevDataBinary {
 }
 
 impl Message for DevDataBinary {
-    fn new() -> DevDataBinary
-    where
-        Self: Sized,
-    {
+    fn new() -> DevDataBinary {
         let msg = DevDataBinary {
             _header: Header::new(274),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for DevDataBinary {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         274
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         274
     }
 

@@ -68,10 +68,7 @@ pub struct NavigationUncertainty {
 }
 
 impl Message for NavigationUncertainty {
-    fn new() -> NavigationUncertainty
-    where
-        Self: Sized,
-    {
+    fn new() -> NavigationUncertainty {
         let msg = NavigationUncertainty {
             _header: Header::new(354),
             _x: Default::default(),
@@ -94,18 +91,12 @@ impl Message for NavigationUncertainty {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         354
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         354
     }
 

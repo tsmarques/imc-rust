@@ -49,10 +49,7 @@ pub struct PlanDBInformation {
 }
 
 impl Message for PlanDBInformation {
-    fn new() -> PlanDBInformation
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanDBInformation {
         let msg = PlanDBInformation {
             _header: Header::new(558),
             _plan_id: Default::default(),
@@ -67,18 +64,12 @@ impl Message for PlanDBInformation {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         558
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         558
     }
 

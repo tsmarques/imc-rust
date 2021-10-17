@@ -61,10 +61,7 @@ pub struct LogBookEntry {
 }
 
 impl Message for LogBookEntry {
-    fn new() -> LogBookEntry
-    where
-        Self: Sized,
-    {
+    fn new() -> LogBookEntry {
         let msg = LogBookEntry {
             _header: Header::new(103),
             _type: Default::default(),
@@ -77,18 +74,12 @@ impl Message for LogBookEntry {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         103
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         103
     }
 

@@ -40,10 +40,7 @@ pub struct Temperature {
 }
 
 impl Message for Temperature {
-    fn new() -> Temperature
-    where
-        Self: Sized,
-    {
+    fn new() -> Temperature {
         let msg = Temperature {
             _header: Header::new(263),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Temperature {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         263
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         263
     }
 

@@ -40,10 +40,7 @@ pub struct CrudeOil {
 }
 
 impl Message for CrudeOil {
-    fn new() -> CrudeOil
-    where
-        Self: Sized,
-    {
+    fn new() -> CrudeOil {
         let msg = CrudeOil {
             _header: Header::new(286),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for CrudeOil {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         286
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         286
     }
 

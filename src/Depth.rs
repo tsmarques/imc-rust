@@ -40,10 +40,7 @@ pub struct Depth {
 }
 
 impl Message for Depth {
-    fn new() -> Depth
-    where
-        Self: Sized,
-    {
+    fn new() -> Depth {
         let msg = Depth {
             _header: Header::new(265),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Depth {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         265
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         265
     }
 

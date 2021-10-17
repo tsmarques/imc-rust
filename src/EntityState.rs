@@ -67,10 +67,7 @@ pub struct EntityState {
 }
 
 impl Message for EntityState {
-    fn new() -> EntityState
-    where
-        Self: Sized,
-    {
+    fn new() -> EntityState {
         let msg = EntityState {
             _header: Header::new(1),
             _state: Default::default(),
@@ -82,18 +79,12 @@ impl Message for EntityState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         1
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         1
     }
 

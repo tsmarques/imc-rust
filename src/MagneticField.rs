@@ -47,10 +47,7 @@ pub struct MagneticField {
 }
 
 impl Message for MagneticField {
-    fn new() -> MagneticField
-    where
-        Self: Sized,
-    {
+    fn new() -> MagneticField {
         let msg = MagneticField {
             _header: Header::new(258),
             _time: Default::default(),
@@ -63,18 +60,12 @@ impl Message for MagneticField {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         258
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         258
     }
 

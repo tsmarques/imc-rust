@@ -57,10 +57,7 @@ pub struct ManeuverControlState {
 }
 
 impl Message for ManeuverControlState {
-    fn new() -> ManeuverControlState
-    where
-        Self: Sized,
-    {
+    fn new() -> ManeuverControlState {
         let msg = ManeuverControlState {
             _header: Header::new(470),
             _state: Default::default(),
@@ -72,18 +69,12 @@ impl Message for ManeuverControlState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         470
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         470
     }
 

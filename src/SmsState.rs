@@ -62,10 +62,7 @@ pub struct SmsState {
 }
 
 impl Message for SmsState {
-    fn new() -> SmsState
-    where
-        Self: Sized,
-    {
+    fn new() -> SmsState {
         let msg = SmsState {
             _header: Header::new(159),
             _seq: Default::default(),
@@ -77,18 +74,12 @@ impl Message for SmsState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         159
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         159
     }
 

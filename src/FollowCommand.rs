@@ -44,10 +44,7 @@ pub struct FollowCommand {
 }
 
 impl Message for FollowCommand {
-    fn new() -> FollowCommand
-    where
-        Self: Sized,
-    {
+    fn new() -> FollowCommand {
         let msg = FollowCommand {
             _header: Header::new(496),
             _control_src: Default::default(),
@@ -59,18 +56,12 @@ impl Message for FollowCommand {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         496
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         496
     }
 

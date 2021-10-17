@@ -40,10 +40,7 @@ pub struct CpuUsage {
 }
 
 impl Message for CpuUsage {
-    fn new() -> CpuUsage
-    where
-        Self: Sized,
-    {
+    fn new() -> CpuUsage {
         let msg = CpuUsage {
             _header: Header::new(7),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for CpuUsage {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         7
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         7
     }
 

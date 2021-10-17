@@ -48,10 +48,7 @@ pub struct PlanManeuver {
 }
 
 impl Message for PlanManeuver {
-    fn new() -> PlanManeuver
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanManeuver {
         let msg = PlanManeuver {
             _header: Header::new(552),
             _maneuver_id: Default::default(),
@@ -64,18 +61,12 @@ impl Message for PlanManeuver {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         552
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         552
     }
 

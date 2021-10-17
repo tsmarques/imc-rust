@@ -74,10 +74,7 @@ pub struct StorageControl {
 }
 
 impl Message for StorageControl {
-    fn new() -> StorageControl
-    where
-        Self: Sized,
-    {
+    fn new() -> StorageControl {
         let msg = StorageControl {
             _header: Header::new(107),
             _type: Default::default(),
@@ -91,18 +88,12 @@ impl Message for StorageControl {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         107
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         107
     }
 

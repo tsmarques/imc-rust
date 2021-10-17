@@ -44,10 +44,7 @@ pub struct ExtendedRSSI {
 }
 
 impl Message for ExtendedRSSI {
-    fn new() -> ExtendedRSSI
-    where
-        Self: Sized,
-    {
+    fn new() -> ExtendedRSSI {
         let msg = ExtendedRSSI {
             _header: Header::new(183),
             _value: Default::default(),
@@ -58,18 +55,12 @@ impl Message for ExtendedRSSI {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         183
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         183
     }
 

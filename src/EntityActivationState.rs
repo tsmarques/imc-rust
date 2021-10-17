@@ -63,10 +63,7 @@ pub struct EntityActivationState {
 }
 
 impl Message for EntityActivationState {
-    fn new() -> EntityActivationState
-    where
-        Self: Sized,
-    {
+    fn new() -> EntityActivationState {
         let msg = EntityActivationState {
             _header: Header::new(14),
             _state: Default::default(),
@@ -77,18 +74,12 @@ impl Message for EntityActivationState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         14
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         14
     }
 

@@ -38,10 +38,7 @@ pub struct QueryEntityActivationState {
 }
 
 impl Message for QueryEntityActivationState {
-    fn new() -> QueryEntityActivationState
-    where
-        Self: Sized,
-    {
+    fn new() -> QueryEntityActivationState {
         let msg = QueryEntityActivationState {
             _header: Header::new(15),
         };
@@ -50,18 +47,12 @@ impl Message for QueryEntityActivationState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         15
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         15
     }
 

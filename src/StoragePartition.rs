@@ -60,10 +60,7 @@ pub struct StoragePartition {
 }
 
 impl Message for StoragePartition {
-    fn new() -> StoragePartition
-    where
-        Self: Sized,
-    {
+    fn new() -> StoragePartition {
         let msg = StoragePartition {
             _header: Header::new(109),
             _part_path: Default::default(),
@@ -78,18 +75,12 @@ impl Message for StoragePartition {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         109
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         109
     }
 

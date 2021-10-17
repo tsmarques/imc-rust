@@ -40,10 +40,7 @@ pub struct DissolvedOxygen {
 }
 
 impl Message for DissolvedOxygen {
-    fn new() -> DissolvedOxygen
-    where
-        Self: Sized,
-    {
+    fn new() -> DissolvedOxygen {
         let msg = DissolvedOxygen {
             _header: Header::new(295),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for DissolvedOxygen {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         295
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         295
     }
 

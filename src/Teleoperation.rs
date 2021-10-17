@@ -41,10 +41,7 @@ pub struct Teleoperation {
 }
 
 impl Message for Teleoperation {
-    fn new() -> Teleoperation
-    where
-        Self: Sized,
-    {
+    fn new() -> Teleoperation {
         let msg = Teleoperation {
             _header: Header::new(452),
             _custom: Default::default(),
@@ -54,18 +51,12 @@ impl Message for Teleoperation {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         452
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         452
     }
 

@@ -69,10 +69,7 @@ pub struct SonarData {
 }
 
 impl Message for SonarData {
-    fn new() -> SonarData
-    where
-        Self: Sized,
-    {
+    fn new() -> SonarData {
         let msg = SonarData {
             _header: Header::new(276),
             _type: Default::default(),
@@ -89,18 +86,12 @@ impl Message for SonarData {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         276
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         276
     }
 

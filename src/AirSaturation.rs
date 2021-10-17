@@ -40,10 +40,7 @@ pub struct AirSaturation {
 }
 
 impl Message for AirSaturation {
-    fn new() -> AirSaturation
-    where
-        Self: Sized,
-    {
+    fn new() -> AirSaturation {
         let msg = AirSaturation {
             _header: Header::new(296),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for AirSaturation {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         296
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         296
     }
 

@@ -40,10 +40,7 @@ pub struct Pressure {
 }
 
 impl Message for Pressure {
-    fn new() -> Pressure
-    where
-        Self: Sized,
-    {
+    fn new() -> Pressure {
         let msg = Pressure {
             _header: Header::new(264),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Pressure {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         264
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         264
     }
 

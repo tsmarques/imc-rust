@@ -52,10 +52,7 @@ pub struct LblBeacon {
 }
 
 impl Message for LblBeacon {
-    fn new() -> LblBeacon
-    where
-        Self: Sized,
-    {
+    fn new() -> LblBeacon {
         let msg = LblBeacon {
             _header: Header::new(202),
             _beacon: Default::default(),
@@ -71,18 +68,12 @@ impl Message for LblBeacon {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         202
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         202
     }
 

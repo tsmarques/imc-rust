@@ -79,10 +79,7 @@ pub struct CompassCalibration {
 }
 
 impl Message for CompassCalibration {
-    fn new() -> CompassCalibration
-    where
-        Self: Sized,
-    {
+    fn new() -> CompassCalibration {
         let msg = CompassCalibration {
             _header: Header::new(475),
             _timeout: Default::default(),
@@ -104,18 +101,12 @@ impl Message for CompassCalibration {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         475
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         475
     }
 

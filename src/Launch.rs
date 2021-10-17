@@ -59,10 +59,7 @@ pub struct Launch {
 }
 
 impl Message for Launch {
-    fn new() -> Launch
-    where
-        Self: Sized,
-    {
+    fn new() -> Launch {
         let msg = Launch {
             _header: Header::new(485),
             _timeout: Default::default(),
@@ -79,18 +76,12 @@ impl Message for Launch {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         485
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         485
     }
 

@@ -76,10 +76,7 @@ pub struct SimulatedState {
 }
 
 impl Message for SimulatedState {
-    fn new() -> SimulatedState
-    where
-        Self: Sized,
-    {
+    fn new() -> SimulatedState {
         let msg = SimulatedState {
             _header: Header::new(50),
             _lat: Default::default(),
@@ -106,18 +103,12 @@ impl Message for SimulatedState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         50
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         50
     }
 

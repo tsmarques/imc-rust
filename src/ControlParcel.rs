@@ -46,10 +46,7 @@ pub struct ControlParcel {
 }
 
 impl Message for ControlParcel {
-    fn new() -> ControlParcel
-    where
-        Self: Sized,
-    {
+    fn new() -> ControlParcel {
         let msg = ControlParcel {
             _header: Header::new(412),
             _p: Default::default(),
@@ -62,18 +59,12 @@ impl Message for ControlParcel {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         412
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         412
     }
 

@@ -41,10 +41,7 @@ pub struct RegisterManeuver {
 }
 
 impl Message for RegisterManeuver {
-    fn new() -> RegisterManeuver
-    where
-        Self: Sized,
-    {
+    fn new() -> RegisterManeuver {
         let msg = RegisterManeuver {
             _header: Header::new(469),
             _mid: Default::default(),
@@ -54,18 +51,12 @@ impl Message for RegisterManeuver {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         469
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         469
     }
 

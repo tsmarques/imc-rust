@@ -70,10 +70,7 @@ pub struct Magnetometer {
 }
 
 impl Message for Magnetometer {
-    fn new() -> Magnetometer
-    where
-        Self: Sized,
-    {
+    fn new() -> Magnetometer {
         let msg = Magnetometer {
             _header: Header::new(499),
             _timeout: Default::default(),
@@ -93,18 +90,12 @@ impl Message for Magnetometer {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         499
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         499
     }
 

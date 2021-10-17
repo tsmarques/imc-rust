@@ -72,10 +72,7 @@ pub struct PopUp {
 }
 
 impl Message for PopUp {
-    fn new() -> PopUp
-    where
-        Self: Sized,
-    {
+    fn new() -> PopUp {
         let msg = PopUp {
             _header: Header::new(451),
             _timeout: Default::default(),
@@ -95,18 +92,12 @@ impl Message for PopUp {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         451
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         451
     }
 

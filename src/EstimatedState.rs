@@ -92,10 +92,7 @@ pub struct EstimatedState {
 }
 
 impl Message for EstimatedState {
-    fn new() -> EstimatedState
-    where
-        Self: Sized,
-    {
+    fn new() -> EstimatedState {
         let msg = EstimatedState {
             _header: Header::new(350),
             _lat: Default::default(),
@@ -124,18 +121,12 @@ impl Message for EstimatedState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         350
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         350
     }
 

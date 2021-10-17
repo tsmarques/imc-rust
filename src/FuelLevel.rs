@@ -44,10 +44,7 @@ pub struct FuelLevel {
 }
 
 impl Message for FuelLevel {
-    fn new() -> FuelLevel
-    where
-        Self: Sized,
-    {
+    fn new() -> FuelLevel {
         let msg = FuelLevel {
             _header: Header::new(279),
             _value: Default::default(),
@@ -59,18 +56,12 @@ impl Message for FuelLevel {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         279
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         279
     }
 

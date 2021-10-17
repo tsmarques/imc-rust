@@ -52,10 +52,7 @@ pub struct PlanTransition {
 }
 
 impl Message for PlanTransition {
-    fn new() -> PlanTransition
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanTransition {
         let msg = PlanTransition {
             _header: Header::new(553),
             _source_man: Default::default(),
@@ -68,18 +65,12 @@ impl Message for PlanTransition {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         553
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         553
     }
 

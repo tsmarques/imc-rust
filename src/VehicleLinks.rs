@@ -45,10 +45,7 @@ pub struct VehicleLinks {
 }
 
 impl Message for VehicleLinks {
-    fn new() -> VehicleLinks
-    where
-        Self: Sized,
-    {
+    fn new() -> VehicleLinks {
         let msg = VehicleLinks {
             _header: Header::new(650),
             _localname: Default::default(),
@@ -59,18 +56,12 @@ impl Message for VehicleLinks {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         650
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         650
     }
 

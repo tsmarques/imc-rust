@@ -67,10 +67,7 @@ pub struct Command {
 }
 
 impl Message for Command {
-    fn new() -> Command
-    where
-        Self: Sized,
-    {
+    fn new() -> Command {
         let msg = Command {
             _header: Header::new(497),
             _flags: Default::default(),
@@ -83,18 +80,12 @@ impl Message for Command {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         497
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         497
     }
 

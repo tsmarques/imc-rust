@@ -95,10 +95,7 @@ pub struct Loiter {
 }
 
 impl Message for Loiter {
-    fn new() -> Loiter
-    where
-        Self: Sized,
-    {
+    fn new() -> Loiter {
         let msg = Loiter {
             _header: Header::new(453),
             _timeout: Default::default(),
@@ -121,18 +118,12 @@ impl Message for Loiter {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         453
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         453
     }
 

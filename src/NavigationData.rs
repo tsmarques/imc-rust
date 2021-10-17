@@ -59,10 +59,7 @@ pub struct NavigationData {
 }
 
 impl Message for NavigationData {
-    fn new() -> NavigationData
-    where
-        Self: Sized,
-    {
+    fn new() -> NavigationData {
         let msg = NavigationData {
             _header: Header::new(355),
             _bias_psi: Default::default(),
@@ -80,18 +77,12 @@ impl Message for NavigationData {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         355
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         355
     }
 

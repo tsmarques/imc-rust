@@ -46,10 +46,7 @@ pub struct TrajectoryPoint {
 }
 
 impl Message for TrajectoryPoint {
-    fn new() -> TrajectoryPoint
-    where
-        Self: Sized,
-    {
+    fn new() -> TrajectoryPoint {
         let msg = TrajectoryPoint {
             _header: Header::new(464),
             _x: Default::default(),
@@ -62,18 +59,12 @@ impl Message for TrajectoryPoint {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         464
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         464
     }
 

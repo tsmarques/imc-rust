@@ -62,10 +62,7 @@ pub struct Dislodge {
 }
 
 impl Message for Dislodge {
-    fn new() -> Dislodge
-    where
-        Self: Sized,
-    {
+    fn new() -> Dislodge {
         let msg = Dislodge {
             _header: Header::new(483),
             _timeout: Default::default(),
@@ -78,18 +75,12 @@ impl Message for Dislodge {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         483
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         483
     }
 

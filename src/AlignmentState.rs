@@ -61,10 +61,7 @@ pub struct AlignmentState {
 }
 
 impl Message for AlignmentState {
-    fn new() -> AlignmentState
-    where
-        Self: Sized,
-    {
+    fn new() -> AlignmentState {
         let msg = AlignmentState {
             _header: Header::new(361),
             _state: Default::default(),
@@ -74,18 +71,12 @@ impl Message for AlignmentState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         361
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         361
     }
 

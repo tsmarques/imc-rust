@@ -57,10 +57,7 @@ pub struct UsblAnglesExtended {
 }
 
 impl Message for UsblAnglesExtended {
-    fn new() -> UsblAnglesExtended
-    where
-        Self: Sized,
-    {
+    fn new() -> UsblAnglesExtended {
         let msg = UsblAnglesExtended {
             _header: Header::new(898),
             _target: Default::default(),
@@ -78,18 +75,12 @@ impl Message for UsblAnglesExtended {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         898
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         898
     }
 

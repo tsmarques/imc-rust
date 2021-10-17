@@ -40,10 +40,7 @@ pub struct Rpm {
 }
 
 impl Message for Rpm {
-    fn new() -> Rpm
-    where
-        Self: Sized,
-    {
+    fn new() -> Rpm {
         let msg = Rpm {
             _header: Header::new(250),
             _value: Default::default(),
@@ -53,18 +50,12 @@ impl Message for Rpm {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         250
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         250
     }
 

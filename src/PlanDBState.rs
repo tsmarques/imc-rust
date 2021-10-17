@@ -55,10 +55,7 @@ pub struct PlanDBState {
 }
 
 impl Message for PlanDBState {
-    fn new() -> PlanDBState
-    where
-        Self: Sized,
-    {
+    fn new() -> PlanDBState {
         let msg = PlanDBState {
             _header: Header::new(557),
             _plan_count: Default::default(),
@@ -74,18 +71,12 @@ impl Message for PlanDBState {
     }
 
     #[inline(always)]
-    fn static_id() -> u16
-    where
-        Self: Sized,
-    {
+    fn static_id() -> u16 {
         557
     }
 
     #[inline(always)]
-    fn id(&self) -> u16
-    where
-        Self: Sized,
-    {
+    fn id(&self) -> u16 {
         557
     }
 
