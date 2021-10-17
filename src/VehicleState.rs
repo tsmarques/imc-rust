@@ -13,14 +13,12 @@
 // See the License for the specific language governing permissions and      #
 // limitations under the License.                                           #
 //###########################################################################
-// Author: Ricardo Martins                                                  #
+// Author: Tiago Sá Marques                                                 #
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
 // IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
 //###########################################################################
-
-/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
 /// Base
 use bytes::BufMut;
