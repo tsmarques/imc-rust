@@ -1,14 +1,11 @@
 use bytes::{BufMut, IntoBuf};
-use crc16::{State, ARC};
+
 use imc::packet::{crc, deserializeHeader};
 use imc::Alignment::Alignment;
-use imc::AlignmentState::AlignmentState;
-use imc::AlignmentState::StateEnum::{AS_NOT_ALIGNED, AS_WRONG_MEDIUM};
-use imc::DataSanity::DataSanity;
-use imc::EstimatedState::EstimatedState;
+
 use imc::EstimatedStreamVelocity::EstimatedStreamVelocity;
 use imc::FollowReference::FollowReference;
-use imc::GpsFix::GpsFix;
+
 use imc::Header::Header;
 use imc::Heartbeat::Heartbeat;
 use imc::LoggingControl::{ControlOperationEnum, LoggingControl};
@@ -195,7 +192,7 @@ fn test_PlanSpecification() {
     assert_eq!(tmp_msg_1.dynamic_serialization_size(), 328);
     assert_eq!(tmp_msg_1.serialization_size(), 350);
 
-    let mut tmp_tmp_msg_1_1 = Heartbeat::new();
+    let tmp_tmp_msg_1_1 = Heartbeat::new();
 
     assert_eq!(tmp_tmp_msg_1_1.dynamic_serialization_size(), 0);
     assert_eq!(tmp_tmp_msg_1_1.serialization_size(), 22);

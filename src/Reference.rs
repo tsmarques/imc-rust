@@ -23,7 +23,7 @@
 /// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
 /// Base
-use bytes::{Buf, BufMut};
+use bytes::BufMut;
 
 use crate::packet::ImcError;
 use crate::packet::*;

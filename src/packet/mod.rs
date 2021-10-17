@@ -7,9 +7,8 @@ use crate::{
     factory, MessageList, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_NULL_ID, DUNE_IMC_CONST_SYNC,
     IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE,
 };
-use bytes::{Buf, BufMut, IntoBuf};
+use bytes::{Buf, BufMut};
 use crc16::{State, ARC};
-use std::borrow::Borrow;
 
 pub mod crc;
 
@@ -52,7 +51,7 @@ pub fn serialize(msg: &mut dyn Message, bfr: &mut bytes::BytesMut) -> Result<usi
     // footer
     let sersize = msg.serialization_size();
     let end = cursor + sersize - IMC_CONST_FOOTER_SIZE as usize;
-    let mut crc = crc::compute_from_range(cursor, end, bfr);
+    let crc = crc::compute_from_range(cursor, end, bfr);
     bfr.put_u16_le(crc.get());
 
     Result::Ok(bfr.len())
@@ -61,7 +60,7 @@ pub fn serialize(msg: &mut dyn Message, bfr: &mut bytes::BytesMut) -> Result<usi
 pub fn deserialize(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, ImcError> {
     // deserialize header
     let mut hdr: Header = Header::new(0);
-    let mut ret = deserializeHeader(&mut hdr, bfr);
+    let ret = deserializeHeader(&mut hdr, bfr);
     if ret.is_err() {
         return Err(ret.err().unwrap());
     }
@@ -80,7 +79,7 @@ pub fn deserialize(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, ImcErro
     // update crc with payload
     crc::update_from_range(&mut crc, 0, ser_size, bfr.bytes());
 
-    msg.deserialize_fields(bfr);
+    msg.deserialize_fields(bfr)?;
 
     let read_crc = bfr.get_u16_le();
     if crc.get() != read_crc {
@@ -104,7 +103,7 @@ pub fn deserialize_inline(bfr: &mut dyn bytes::Buf) -> Result<Box<dyn Message>, 
     }
 
     let mut msg = ret.unwrap();
-    msg.deserialize_fields(bfr);
+    msg.deserialize_fields(bfr)?;
 
     Ok(msg)
 }
@@ -128,7 +127,7 @@ pub fn deserialize_inline_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<T, 
     }
 
     let mut msg = ret.unwrap();
-    msg.deserialize_fields(bfr);
+    msg.deserialize_fields(bfr)?;
 
     Ok(msg)
 }
@@ -164,7 +163,7 @@ pub fn deserialize_message_list_as<T: Message>(
 pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<T, ImcError> {
     // deserialize header
     let mut hdr: Header = Header::new(0);
-    let mut ret = deserializeHeader(&mut hdr, bfr);
+    let ret = deserializeHeader(&mut hdr, bfr);
     if ret.is_err() {
         return Err(ret.err().unwrap());
     }
@@ -183,7 +182,7 @@ pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<T, ImcErro
     // update crc with payload
     crc::update_from_range(&mut crc, 0, ser_size, bfr.bytes());
 
-    msg.deserialize_fields(bfr);
+    msg.deserialize_fields(bfr)?;
 
     let read_crc = bfr.get_u16_le();
     let crc_value = crc.get();

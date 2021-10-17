@@ -3,8 +3,6 @@
 use crate::packet::ImcError;
 use crate::Header::Header;
 use crate::{IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE};
-use bytes::BufMut;
-use crc16::{State, ARC};
 
 macro_rules! serialize_bytes {
     ($bfr:expr, $bytes_slice:expr) => {
