@@ -1,108 +1,82 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// This messages is used to record system activity parameters. These
 /// parameters are mainly used for used for maintenance purposes.
 #[derive(Default)]
 pub struct Tachograph {
-    /// IMC Header
-    pub header: Header,
-
-    /// The time when the last service was performed. The number of
-    /// seconds is represented in Universal Coordinated Time (UCT) in
-    /// seconds since Jan 1, 1970.
+    /// Message Header.
+    pub _header: Header,
+    /// Last Service Timestamp.
     pub _timestamp_last_service: f64,
-
-    /// Amount of time until the next recommended service.
+    /// Time - Next Service.
     pub _time_next_service: f32,
-
-    /// Amount of time the motor can run until the next recommended service.
+    /// Time Motor - Next Service.
     pub _time_motor_next_service: f32,
-
-    /// Amount of time the system spent idle on the ground.
+    /// Time Idle - Ground.
     pub _time_idle_ground: f32,
-
-    /// Amount of time the system spent idle in the air.
+    /// Time Idle - Air.
     pub _time_idle_air: f32,
-
-    /// Amount of time the system spent idle on the water (not submerged).
+    /// Time Idle - Water.
     pub _time_idle_water: f32,
-
-    /// Amount of time the system spent idle underwater.
+    /// Time Idle - Underwater.
     pub _time_idle_underwater: f32,
-
-    /// Amount of time the system spent idle in an unknown medium.
+    /// Time Idle - Unknown.
     pub _time_idle_unknown: f32,
-
-    /// Amount of time the system spent on the ground with the motor running.
+    /// Time Motor - Ground.
     pub _time_motor_ground: f32,
-
-    /// Amount of time the system spent in the air with the motor running.
+    /// Time Motor - Air.
     pub _time_motor_air: f32,
-
-    /// Amount of time the system spent on the water (not submerged) with the motor running.
+    /// Time Motor - Water.
     pub _time_motor_water: f32,
-
-    /// Amount of time the system spent underwater with the motor running.
+    /// Time Motor - Underwater.
     pub _time_motor_underwater: f32,
-
-    /// Amount of time the system spent in an unknown medium with the motor running.
+    /// Time Motor - Unknown.
     pub _time_motor_unknown: f32,
-
-    /// The minimum recorded RPM value.
+    /// Recorded RPMs - Minimum.
     pub _rpm_min: i16,
-
-    /// The maximum recorded RPM value.
+    /// Recorded RPMs - Maximum.
     pub _rpm_max: i16,
-
-    /// The maximum recorded depth value.
+    /// Recorded Depth - Maximum.
     pub _depth_max: f32,
 }
 
 impl Message for Tachograph {
-    fn new() -> Self
+    fn new() -> Tachograph
     where
         Self: Sized,
     {
         let msg = Tachograph {
-            header: Header::new(905),
-
-            _timestamp_last_service: Default::default(),
-            _time_next_service: Default::default(),
-            _time_motor_next_service: Default::default(),
-            _time_idle_ground: Default::default(),
-            _time_idle_air: Default::default(),
-            _time_idle_water: Default::default(),
-            _time_idle_underwater: Default::default(),
-            _time_idle_unknown: Default::default(),
-            _time_motor_ground: Default::default(),
-            _time_motor_air: Default::default(),
-            _time_motor_water: Default::default(),
-            _time_motor_underwater: Default::default(),
-            _time_motor_unknown: Default::default(),
-            _rpm_min: Default::default(),
-            _rpm_max: Default::default(),
-            _depth_max: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = Tachograph {
-            header: hdr,
-
+            _header: Header::new(905),
             _timestamp_last_service: Default::default(),
             _time_next_service: Default::default(),
             _time_motor_next_service: Default::default(),
@@ -133,17 +107,19 @@ impl Message for Tachograph {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         905
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(905);
         self._timestamp_last_service = Default::default();
         self._time_next_service = Default::default();
         self._time_motor_next_service = Default::default();
@@ -159,7 +135,7 @@ impl Message for Tachograph {
         self._time_motor_unknown = Default::default();
         self._rpm_min = Default::default();
         self._rpm_max = Default::default();
-        self._depth_max = Default::default();
+        self._depth_max = Default::default()
     }
 
     #[inline(always)]
@@ -167,6 +143,7 @@ impl Message for Tachograph {
         64
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -207,7 +184,6 @@ impl Message for Tachograph {
         self._rpm_min = bfr.get_i16_le();
         self._rpm_max = bfr.get_i16_le();
         self._depth_max = bfr.get_f32_le();
-
         Ok(())
     }
 }

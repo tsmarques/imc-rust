@@ -1,62 +1,59 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// This message describes an entity.
 #[derive(Default)]
 pub struct EntityInfo {
-    /// IMC Header
-    pub header: Header,
-
-    /// Entity identifier.
+    /// Message Header.
+    pub _header: Header,
+    /// Entity Identifier.
     pub _id: u8,
-
-    /// Entity label or empty if the entity id is not valid.
+    /// Label.
     pub _label: String,
-
-    /// Name of the plugin/component/subsystem associated with this
-    /// entity.
+    /// Component name.
     pub _component: String,
-
-    /// Amount of time needed to properly activate the entity.
+    /// Activation Time.
     pub _act_time: u16,
-
-    /// Amount of time needed to properly deactivate the entity.
+    /// Deactivation Time.
     pub _deact_time: u16,
 }
 
 impl Message for EntityInfo {
-    fn new() -> Self
+    fn new() -> EntityInfo
     where
         Self: Sized,
     {
         let msg = EntityInfo {
-            header: Header::new(3),
-
-            _id: Default::default(),
-            _label: Default::default(),
-            _component: Default::default(),
-            _act_time: Default::default(),
-            _deact_time: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = EntityInfo {
-            header: hdr,
-
+            _header: Header::new(3),
             _id: Default::default(),
             _label: Default::default(),
             _component: Default::default(),
@@ -76,22 +73,24 @@ impl Message for EntityInfo {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         3
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(3);
         self._id = Default::default();
         self._label = Default::default();
         self._component = Default::default();
         self._act_time = Default::default();
-        self._deact_time = Default::default();
+        self._deact_time = Default::default()
     }
 
     #[inline(always)]
@@ -99,11 +98,10 @@ impl Message for EntityInfo {
         5
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._label.len() + 2;
-
         dyn_size += self._component.len() + 2;
 
         dyn_size
@@ -123,7 +121,6 @@ impl Message for EntityInfo {
         deserialize_string!(bfr, self._component);
         self._act_time = bfr.get_u16_le();
         self._deact_time = bfr.get_u16_le();
-
         Ok(())
     }
 }

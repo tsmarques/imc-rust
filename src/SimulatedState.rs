@@ -1,115 +1,87 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// This message presents the simulated state of the vehicle. The simulated
 /// state attempts to provide a realistic state interpretation of operating
 /// various kinds of vehicles.
 #[derive(Default)]
 pub struct SimulatedState {
-    /// IMC Header
-    pub header: Header,
-
-    /// WGS-84 Latitude.
+    /// Message Header.
+    pub _header: Header,
+    /// Latitude (WGS-84).
     pub _lat: f64,
-
-    /// WGS-84 Longitude.
+    /// Longitude (WGS-84).
     pub _lon: f64,
-
-    /// Height above the WGS-84 ellipsoid.
+    /// Height (WGS-84).
     pub _height: f32,
-
-    /// The North offset of the North/East/Down field.
+    /// Offset north (m).
     pub _x: f32,
-
-    /// The East offset of the North/East/Down field.
+    /// Offset east (m).
     pub _y: f32,
-
-    /// The Down offset of the North/East/Down field.
+    /// Offset down (m).
     pub _z: f32,
-
-    /// The phi Euler angle from the vehicle's attitude.
+    /// Rotation over x axis.
     pub _phi: f32,
-
-    /// The theta Euler angle from the vehicle's attitude.
+    /// Rotation over y axis.
     pub _theta: f32,
-
-    /// The psi Euler angle from the vehicle's attitude.
+    /// Rotation over z axis.
     pub _psi: f32,
-
-    /// Body-fixed frame xx axis linear velocity component.
+    /// Body-Fixed xx Linear Velocity.
     pub _u: f32,
-
-    /// Body-fixed frame yy axis linear velocity component.
+    /// Body-Fixed yy Linear Velocity.
     pub _v: f32,
-
-    /// Body-fixed frame zz axis linear velocity component.
+    /// Body-Fixed zz Linear Velocity.
     pub _w: f32,
-
-    /// The angular velocity over body-fixed xx axis (roll rate).
+    /// Angular Velocity in x.
     pub _p: f32,
-
-    /// The angular velocity over body-fixed yy axis (pitch rate).
+    /// Angular Velocity in y.
     pub _q: f32,
-
-    /// The angular velocity over body-fixed zz axis (yaw rate).
+    /// Angular Velocity in z.
     pub _r: f32,
-
-    /// Stream Velocity xx axis velocity component.
+    /// Stream Velocity X (North).
     pub _svx: f32,
-
-    /// Stream Velocity yy axis velocity component.
+    /// Stream Velocity Y (East).
     pub _svy: f32,
-
-    /// Stream Velocity zz axis velocity component.
+    /// Stream Velocity Z (Down).
     pub _svz: f32,
 }
 
 impl Message for SimulatedState {
-    fn new() -> Self
+    fn new() -> SimulatedState
     where
         Self: Sized,
     {
         let msg = SimulatedState {
-            header: Header::new(50),
-
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _height: Default::default(),
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _phi: Default::default(),
-            _theta: Default::default(),
-            _psi: Default::default(),
-            _u: Default::default(),
-            _v: Default::default(),
-            _w: Default::default(),
-            _p: Default::default(),
-            _q: Default::default(),
-            _r: Default::default(),
-            _svx: Default::default(),
-            _svy: Default::default(),
-            _svz: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = SimulatedState {
-            header: hdr,
-
+            _header: Header::new(50),
             _lat: Default::default(),
             _lon: Default::default(),
             _height: Default::default(),
@@ -142,17 +114,19 @@ impl Message for SimulatedState {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         50
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(50);
         self._lat = Default::default();
         self._lon = Default::default();
         self._height = Default::default();
@@ -170,7 +144,7 @@ impl Message for SimulatedState {
         self._r = Default::default();
         self._svx = Default::default();
         self._svy = Default::default();
-        self._svz = Default::default();
+        self._svz = Default::default()
     }
 
     #[inline(always)]
@@ -178,6 +152,7 @@ impl Message for SimulatedState {
         80
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -222,7 +197,6 @@ impl Message for SimulatedState {
         self._svx = bfr.get_f32_le();
         self._svy = bfr.get_f32_le();
         self._svz = bfr.get_f32_le();
-
         Ok(())
     }
 }

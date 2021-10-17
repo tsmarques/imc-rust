@@ -1,64 +1,67 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Reason.
 #[allow(non_camel_case_types)]
 pub enum ReasonEnum {
-    // Above Threshold
+    /// Above Threshold.
     RR_ABOVE_THRESHOLD = 0,
-    // Invalid Fix
+    /// Invalid Fix.
     RR_INVALID = 1,
-    // Above Maximum HDOP
+    /// Above Maximum HDOP.
     RR_ABOVE_MAX_HDOP = 2,
-    // Above Maximum HACC
+    /// Above Maximum HACC.
     RR_ABOVE_MAX_HACC = 3,
-    // Lost Validity Bit
+    /// Lost Validity Bit.
     RR_LOST_VAL_BIT = 4,
 }
 
-/// Lost one of the validity bits between consecutive GPS fixes.
 #[derive(Default)]
 pub struct GpsFixRejection {
-    /// IMC Header
-    pub header: Header,
-
-    /// UTC time of the rejected GPS fix measured in seconds since
-    /// 00:00:00 (midnight).
+    /// Message Header.
+    pub _header: Header,
+    /// UTC Time of Fix.
     pub _utc_time: f32,
-
-    /// Above maximum horizontal accuracy index.
+    /// Reason.
     pub _reason: u8,
 }
 
 impl Message for GpsFixRejection {
-    fn new() -> Self
+    fn new() -> GpsFixRejection
     where
         Self: Sized,
     {
         let msg = GpsFixRejection {
-            header: Header::new(356),
-
-            _utc_time: Default::default(),
-            _reason: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = GpsFixRejection {
-            header: hdr,
-
+            _header: Header::new(356),
             _utc_time: Default::default(),
             _reason: Default::default(),
         };
@@ -75,19 +78,21 @@ impl Message for GpsFixRejection {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         356
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(356);
         self._utc_time = Default::default();
-        self._reason = Default::default();
+        self._reason = Default::default()
     }
 
     #[inline(always)]
@@ -95,6 +100,7 @@ impl Message for GpsFixRejection {
         5
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -107,7 +113,6 @@ impl Message for GpsFixRejection {
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._utc_time = bfr.get_f32_le();
         self._reason = bfr.get_u8();
-
         Ok(())
     }
 }

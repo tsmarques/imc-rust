@@ -1,13 +1,34 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// Report of navigation data.
 /// This is constituted by data which is not
@@ -15,66 +36,35 @@ use crate::packet::*;
 /// that the user may refer for more information.
 #[derive(Default)]
 pub struct NavigationData {
-    /// IMC Header
-    pub header: Header,
-
-    /// The psi Euler angle bias from the vehicle's sensed attitude.
+    /// Message Header.
+    pub _header: Header,
+    /// Yaw Bias.
     pub _bias_psi: f32,
-
-    /// The angular velocity over body-fixed zz axis bias from sensor.
+    /// Gyro. Yaw Rate Bias.
     pub _bias_r: f32,
-
-    /// Course over ground given by NED ground velocity vectors.
+    /// Course Over Ground.
     pub _cog: f32,
-
-    /// Continuous psi Euler angle (without normalizations).
+    /// Continuous Yaw.
     pub _cyaw: f32,
-
-    /// GPS rejection filter level.
+    /// GPS Rejection Filter Level.
     pub _lbl_rej_level: f32,
-
-    /// LBL rejection filter level.
+    /// LBL Rejection Filter Level.
     pub _gps_rej_level: f32,
-
-    /// Custom variable.
+    /// Variance - Custom Variable X.
     pub _custom_x: f32,
-
-    /// Custom variable.
+    /// Variance - Custom Variable Y.
     pub _custom_y: f32,
-
-    /// Custom variable.
+    /// Variance - Custom Variable Z.
     pub _custom_z: f32,
 }
 
 impl Message for NavigationData {
-    fn new() -> Self
+    fn new() -> NavigationData
     where
         Self: Sized,
     {
         let msg = NavigationData {
-            header: Header::new(355),
-
-            _bias_psi: Default::default(),
-            _bias_r: Default::default(),
-            _cog: Default::default(),
-            _cyaw: Default::default(),
-            _lbl_rej_level: Default::default(),
-            _gps_rej_level: Default::default(),
-            _custom_x: Default::default(),
-            _custom_y: Default::default(),
-            _custom_z: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = NavigationData {
-            header: hdr,
-
+            _header: Header::new(355),
             _bias_psi: Default::default(),
             _bias_r: Default::default(),
             _cog: Default::default(),
@@ -98,17 +88,19 @@ impl Message for NavigationData {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         355
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(355);
         self._bias_psi = Default::default();
         self._bias_r = Default::default();
         self._cog = Default::default();
@@ -117,7 +109,7 @@ impl Message for NavigationData {
         self._gps_rej_level = Default::default();
         self._custom_x = Default::default();
         self._custom_y = Default::default();
-        self._custom_z = Default::default();
+        self._custom_z = Default::default()
     }
 
     #[inline(always)]
@@ -125,6 +117,7 @@ impl Message for NavigationData {
         36
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -151,7 +144,6 @@ impl Message for NavigationData {
         self._custom_x = bfr.get_f32_le();
         self._custom_y = bfr.get_f32_le();
         self._custom_z = bfr.get_f32_le();
-
         Ok(())
     }
 }

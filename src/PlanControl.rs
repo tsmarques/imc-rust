@@ -1,110 +1,99 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
+/// Type.
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    // Request
+    /// Request.
     PC_REQUEST = 0,
-    // Reply -- Success
+    /// Reply -- Success.
     PC_SUCCESS = 1,
-    // Reply -- Failure
+    /// Reply -- Failure.
     PC_FAILURE = 2,
-    // Reply -- In Progress
+    /// Reply -- In Progress.
     PC_IN_PROGRESS = 3,
 }
 
+/// Operation.
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    // Start Plan
+    /// Start Plan.
     PC_START = 0,
-    // Stop Plan
+    /// Stop Plan.
     PC_STOP = 1,
-    // Load Plan
+    /// Load Plan.
     PC_LOAD = 2,
-    // Get Plan
+    /// Get Plan.
     PC_GET = 3,
 }
 
+/// Flags.
 #[allow(non_camel_case_types)]
-pub mod Flags {
-    // Calibrate Vehicle
-    pub const _CALIBRATE: u32 = 0x0001;
-    // Ignore Errors
-    pub const _IGNORE_ERRORS: u32 = 0x0002;
+pub mod FlagsBits {
+    /// Calibrate Vehicle.
+    pub const FLG_CALIBRATE: u32 = 0x0001;
+    /// Ignore Errors.
+    pub const FLG_IGNORE_ERRORS: u32 = 0x0002;
 }
 
-/// Execute current plan while ignoring some errors that might be active.
+/// Plan control request/reply.
 #[derive(Default)]
 pub struct PlanControl {
-    /// IMC Header
-    pub header: Header,
-
-    /// Indicates if the message is a request or a reply to a
-    /// previous request. The *op*, *request_id* and *plan_id* fields
-    /// of a request will be echoed in one or more responses to that
-    /// request.
+    /// Message Header.
+    pub _header: Header,
+    /// Type.
     pub _type: u8,
-
-    /// Get loaded plan. For a successful reply, the *data* field
-    /// will contain the :ref:`PlanSpecification` message that
-    /// corresponds to the currently loaded plan.
+    /// Operation.
     pub _op: u8,
-
-    /// Request ID. This may be used by interfacing modules e.g. using
-    /// sequence counters.  to annotate requests and appropriately
-    /// identify replies.
+    /// Request ID.
     pub _request_id: u16,
-
-    /// The identifier for the plan to be stopped / started / loaded /
-    /// retrieved according to the command requested (*op* field).
+    /// Plan Identifier.
     pub _plan_id: String,
-
-    /// Perform vehicle calibration.
+    /// Flags.
     pub _flags: u16,
-
-    /// Complementary message argument for requests/replies.
+    /// Request/Reply Argument.
     pub _arg: Option<Box<dyn Message>>,
-
-    /// Complementary human-readable information. This is used
-    /// in association to replies.
+    /// Complementary Info.
     pub _info: String,
 }
 
 impl Message for PlanControl {
-    fn new() -> Self
+    fn new() -> PlanControl
     where
         Self: Sized,
     {
         let msg = PlanControl {
-            header: Header::new(559),
-
-            _type: Default::default(),
-            _op: Default::default(),
-            _request_id: Default::default(),
-            _plan_id: Default::default(),
-            _flags: Default::default(),
-            _arg: Default::default(),
-            _info: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = PlanControl {
-            header: hdr,
-
+            _header: Header::new(559),
             _type: Default::default(),
             _op: Default::default(),
             _request_id: Default::default(),
@@ -126,24 +115,26 @@ impl Message for PlanControl {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         559
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(559);
         self._type = Default::default();
         self._op = Default::default();
         self._request_id = Default::default();
         self._plan_id = Default::default();
         self._flags = Default::default();
         self._arg = Default::default();
-        self._info = Default::default();
+        self._info = Default::default()
     }
 
     #[inline(always)]
@@ -151,13 +142,11 @@ impl Message for PlanControl {
         6
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._plan_id.len() + 2;
-
         inline_message_serialization_size!(dyn_size, self._arg);
-
         dyn_size += self._info.len() + 2;
 
         dyn_size
@@ -181,7 +170,6 @@ impl Message for PlanControl {
         self._flags = bfr.get_u16_le();
         self._arg = deserialize_inline(bfr).ok();
         deserialize_string!(bfr, self._info);
-
         Ok(())
     }
 }

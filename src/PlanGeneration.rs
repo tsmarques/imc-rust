@@ -1,78 +1,78 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Command.
 #[allow(non_camel_case_types)]
 pub enum CommandEnum {
-    // Generate
+    /// Generate.
     CMD_GENERATE = 0,
-    // Execute
+    /// Execute.
     CMD_EXECUTE = 1,
 }
 
+/// Operation.
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    // Request
+    /// Request.
     OP_REQUEST = 0,
-    // Error
+    /// Error.
     OP_ERROR = 1,
-    // Success
+    /// Success.
     OP_SUCCESS = 2,
 }
 
-/// Some error has occurred while executing the command. The
-/// error can be found in the 'params' tuplelist (under the
-/// key 'error').
+/// This message is used to order the generation of plans based on
+/// id and set of parameters.
 #[derive(Default)]
 pub struct PlanGeneration {
-    /// IMC Header
-    pub header: Header,
-
-    /// Generate the plan and store it in the PlanDB.
+    /// Message Header.
+    pub _header: Header,
+    /// Command.
     pub _cmd: u8,
-
-    /// The requested command was executed successfully.
+    /// Operation.
     pub _op: u8,
-
-    /// The name of the plan to be generated.
+    /// Plan Identifier.
     pub _plan_id: String,
-
-    /// An optional list of parameters to be used by the plan
-    /// generation module.
+    /// Parameters.
     pub _params: String,
 }
 
 impl Message for PlanGeneration {
-    fn new() -> Self
+    fn new() -> PlanGeneration
     where
         Self: Sized,
     {
         let msg = PlanGeneration {
-            header: Header::new(562),
-
-            _cmd: Default::default(),
-            _op: Default::default(),
-            _plan_id: Default::default(),
-            _params: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = PlanGeneration {
-            header: hdr,
-
+            _header: Header::new(562),
             _cmd: Default::default(),
             _op: Default::default(),
             _plan_id: Default::default(),
@@ -91,21 +91,23 @@ impl Message for PlanGeneration {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         562
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(562);
         self._cmd = Default::default();
         self._op = Default::default();
         self._plan_id = Default::default();
-        self._params = Default::default();
+        self._params = Default::default()
     }
 
     #[inline(always)]
@@ -113,11 +115,10 @@ impl Message for PlanGeneration {
         2
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._plan_id.len() + 2;
-
         dyn_size += self._params.len() + 2;
 
         dyn_size
@@ -135,7 +136,6 @@ impl Message for PlanGeneration {
         self._op = bfr.get_u8();
         deserialize_string!(bfr, self._plan_id);
         deserialize_string!(bfr, self._params);
-
         Ok(())
     }
 }

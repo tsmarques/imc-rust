@@ -1,25 +1,46 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::MessageList;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use crate::DUNE_IMC_CONST_NULL_ID;
-
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::BeamConfig::BeamConfig;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::BeamConfig::BeamConfig;
+use crate::Header::Header;
+use crate::Message::*;
+use crate::MessageList;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
+/// Type.
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    // Sidescan
+    /// Sidescan.
     ST_SIDESCAN = 0,
-    // Echo Sounder
+    /// Echo Sounder.
     ST_ECHOSOUNDER = 1,
-    // Multibeam
+    /// Multibeam.
     ST_MULTIBEAM = 2,
 }
 
@@ -27,70 +48,40 @@ pub enum TypeEnum {
 /// measurement.
 #[derive(Default)]
 pub struct SonarData {
-    /// IMC Header
-    pub header: Header,
-
-    /// Type of sonar.
+    /// Message Header.
+    pub _header: Header,
+    /// Type.
     pub _type: u8,
-
-    /// Operating frequency.
+    /// Frequency.
     pub _frequency: u32,
-
-    /// Minimum range.
+    /// Minimum Range.
     pub _min_range: u16,
-
-    /// Maximum range.
+    /// Maximum Range.
     pub _max_range: u16,
-
-    /// Size of the data unit.
+    /// Bits Per Data Point.
     pub _bits_per_point: u8,
-
-    /// Scaling factor used to multiply each data unit to restore the
-    /// original floating point value.
+    /// Scaling Factor.
     pub _scale_factor: f32,
-
-    /// Beam configuration of the device.
+    /// Beam Configuration.
     pub _beam_config: MessageList<BeamConfig>,
-
-    /// Data acquired by the measurement.
+    /// Data.
     pub _data: Vec<u8>,
 }
 
 impl Message for SonarData {
-    fn new() -> Self
+    fn new() -> SonarData
     where
         Self: Sized,
     {
         let msg = SonarData {
-            header: Header::new(276),
-
+            _header: Header::new(276),
             _type: Default::default(),
             _frequency: Default::default(),
             _min_range: Default::default(),
             _max_range: Default::default(),
             _bits_per_point: Default::default(),
             _scale_factor: Default::default(),
-            _beam_config: vec![],
-            _data: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = SonarData {
-            header: hdr,
-
-            _type: Default::default(),
-            _frequency: Default::default(),
-            _min_range: Default::default(),
-            _max_range: Default::default(),
-            _bits_per_point: Default::default(),
-            _scale_factor: Default::default(),
-            _beam_config: vec![],
+            _beam_config: Default::default(),
             _data: Default::default(),
         };
 
@@ -106,17 +97,19 @@ impl Message for SonarData {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         276
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(276);
         self._type = Default::default();
         self._frequency = Default::default();
         self._min_range = Default::default();
@@ -124,7 +117,7 @@ impl Message for SonarData {
         self._bits_per_point = Default::default();
         self._scale_factor = Default::default();
         self._beam_config = Default::default();
-        self._data = Default::default();
+        self._data = Default::default()
     }
 
     #[inline(always)]
@@ -132,11 +125,10 @@ impl Message for SonarData {
         14
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         message_list_serialization_size!(dyn_size, self._beam_config);
-
         dyn_size += self._data.len() + 2;
 
         dyn_size
@@ -162,7 +154,6 @@ impl Message for SonarData {
         self._scale_factor = bfr.get_f32_le();
         self._beam_config = deserialize_message_list_as::<BeamConfig>(bfr)?;
         deserialize_bytes!(bfr, self._data);
-
         Ok(())
     }
 }

@@ -1,59 +1,66 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Medium.
 #[allow(non_camel_case_types)]
 pub enum MediumEnum {
-    // Ground
+    /// Ground.
     VM_GROUND = 0,
-    // Air
+    /// Air.
     VM_AIR = 1,
-    // Water
+    /// Water.
     VM_WATER = 2,
-    // Underwater
+    /// Underwater.
     VM_UNDERWATER = 3,
-    // Unknown
+    /// Unknown.
     VM_UNKNOWN = 4,
 }
 
-/// Vehicle medium is unknown
+/// Detect current vehicle medium.
 #[derive(Default)]
 pub struct VehicleMedium {
-    /// IMC Header
-    pub header: Header,
-
-    /// Vehicle is underwater
+    /// Message Header.
+    pub _header: Header,
+    /// Medium.
     pub _medium: u8,
 }
 
 impl Message for VehicleMedium {
-    fn new() -> Self
+    fn new() -> VehicleMedium
     where
         Self: Sized,
     {
         let msg = VehicleMedium {
-            header: Header::new(508),
-
-            _medium: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = VehicleMedium {
-            header: hdr,
-
+            _header: Header::new(508),
             _medium: Default::default(),
         };
 
@@ -69,18 +76,20 @@ impl Message for VehicleMedium {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         508
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
-        self._medium = Default::default();
+        self._header = Header::new(508);
+        self._medium = Default::default()
     }
 
     #[inline(always)]
@@ -88,6 +97,7 @@ impl Message for VehicleMedium {
         1
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -98,7 +108,6 @@ impl Message for VehicleMedium {
 
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._medium = bfr.get_u8();
-
         Ok(())
     }
 }

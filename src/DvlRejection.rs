@@ -1,91 +1,81 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Reason.
 #[allow(non_camel_case_types)]
 pub enum ReasonEnum {
-    // Innovation Threshold - X
+    /// Innovation Threshold - X.
     RR_INNOV_THRESHOLD_X = 0,
-    // Innovation Threshold - Y
+    /// Innovation Threshold - Y.
     RR_INNOV_THRESHOLD_Y = 1,
-    // Absolute Threshold - X
+    /// Absolute Threshold - X.
     RR_ABS_THRESHOLD_X = 2,
-    // Absolute Threshold - Y
+    /// Absolute Threshold - Y.
     RR_ABS_THRESHOLD_Y = 3,
 }
 
+/// Type of velocity.
 #[allow(non_camel_case_types)]
-pub mod Typeofvelocity {
-    // Ground velocity
-    pub const _GV: u32 = 0x01;
-    // Water velocity
-    pub const _WV: u32 = 0x02;
+pub mod TypeofvelocityBits {
+    /// Ground velocity.
+    pub const TYPE_GV: u32 = 0x01;
+    /// Water velocity.
+    pub const TYPE_WV: u32 = 0x02;
 }
 
-/// The current DVL x-axis measurement is discarded
-/// because the the absolute value is above a
-/// configurable threshold.
+/// When the vehicle uses Doppler Velocity Log sensor, this message
+/// notifies that a new measurement was locally rejected by the
+/// navigation filter.
 #[derive(Default)]
 pub struct DvlRejection {
-    /// IMC Header
-    pub header: Header,
-
-    /// This field represents the type of the rejected velocity.
+    /// Message Header.
+    pub _header: Header,
+    /// Type of velocity.
     pub _type: u8,
-
-    /// The current DVL y-axis measurement is discarded
-    /// because the the absolute value is above a
-    /// configurable threshold.
+    /// Reason.
     pub _reason: u8,
-
-    /// Value of the rejection.
-    /// If it is an innovation rejection the value is
-    /// the absolute difference between the previous
-    /// accepted DVL measurement and the current one.
-    /// If it is an absolute rejection the value is
-    /// the current DVL measurement.
+    /// Value.
     pub _value: f32,
-
-    /// Timestep of the rejection.
-    /// The timestep is 0 for an absolute rejection
-    /// since it is an instantaneous reading. For
-    /// innovation rejection it is the time difference
-    /// between the previous accepted DVL measurement
-    /// and the current one.
+    /// Timestep.
     pub _timestep: f32,
 }
 
 impl Message for DvlRejection {
-    fn new() -> Self
+    fn new() -> DvlRejection
     where
         Self: Sized,
     {
         let msg = DvlRejection {
-            header: Header::new(358),
-
-            _type: Default::default(),
-            _reason: Default::default(),
-            _value: Default::default(),
-            _timestep: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = DvlRejection {
-            header: hdr,
-
+            _header: Header::new(358),
             _type: Default::default(),
             _reason: Default::default(),
             _value: Default::default(),
@@ -104,21 +94,23 @@ impl Message for DvlRejection {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         358
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(358);
         self._type = Default::default();
         self._reason = Default::default();
         self._value = Default::default();
-        self._timestep = Default::default();
+        self._timestep = Default::default()
     }
 
     #[inline(always)]
@@ -126,6 +118,7 @@ impl Message for DvlRejection {
         10
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -142,7 +135,6 @@ impl Message for DvlRejection {
         self._reason = bfr.get_u8();
         self._value = bfr.get_f32_le();
         self._timestep = bfr.get_f32_le();
-
         Ok(())
     }
 }

@@ -1,109 +1,83 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::MessageGroup::Maneuver;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Flags.
 #[allow(non_camel_case_types)]
-pub mod Flags {
-    // Start from current position
-    pub const _CURR_POS: u32 = 0x01;
+pub mod FlagsBits {
+    /// Start from current position.
+    pub const FLG_CURR_POS: u32 = 0x01;
 }
 
-/// message-group: Maneuver
-// impl Maneuver for Elevator { }
-
-/// If this flag is set, lat/lon/start_z fields should be
-/// ignored and current vehicle position should be considered as
-/// starting point for ascent/descent.
-/// message-group: Maneuver
+/// The Elevator maneuver specifies a vehicle to reach a target
+/// waypoint using a cruise altitude/depth and then ascend or
+/// descend to another target altitude/depth. The ascent/descent
+/// slope and radius can also be optionally specified.
 #[derive(Default)]
 pub struct Elevator {
-    /// IMC Header
-    pub header: Header,
-
-    /// The amount of time the maneuver is allowed to run. If the
-    /// maneuver is not completed in the amount of time specified an
-    /// error will be generated.
+    /// Message Header.
+    pub _header: Header,
+    /// Timeout.
     pub _timeout: u16,
-
-    /// Flags of the maneuver.
+    /// Flags.
     pub _flags: u8,
-
-    /// WGS-84 Latitude.
+    /// Latitude WGS-84.
     pub _lat: f64,
-
-    /// WGS-84 Longitude.
+    /// Longitude WGS-84.
     pub _lon: f64,
-
-    /// Altitude or depth of start point. This parameter will be
-    /// ignored if the 'NO_Z' flag is set, or if the 'START' flag is
-    /// not set.
+    /// Start Point -- Z Reference.
     pub _start_z: f32,
-
-    /// Units of the start point's z reference.
+    /// Start Point -- Z Units.
     pub _start_z_units: u8,
-
-    /// Depth or altitude for the end point.  This parameter will be
-    /// ignored if the 'NO_Z' flag is set.
+    /// End Point -- Z Reference.
     pub _end_z: f32,
-
-    /// Units of the end point's z reference.
+    /// End Point -- Z Units.
     pub _end_z_units: u8,
-
-    /// Radius for use in ascent/descent. If 0 the controller to
-    /// should use a custom control strategy.
+    /// Radius.
     pub _radius: f32,
-
-    /// Maneuver speed.
+    /// Speed.
     pub _speed: f32,
-
-    /// Speed units.
+    /// Speed Units.
     pub _speed_units: u8,
-
     /// Custom settings for maneuver.
     pub _custom: String,
 }
 
 impl Message for Elevator {
-    fn new() -> Self
+    fn new() -> Elevator
     where
         Self: Sized,
     {
         let msg = Elevator {
-            header: Header::new(462),
-
-            _timeout: Default::default(),
-            _flags: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _start_z: Default::default(),
-            _start_z_units: 0_u8,
-            _end_z: Default::default(),
-            _end_z_units: 0_u8,
-            _radius: Default::default(),
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _custom: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = Elevator {
-            header: hdr,
-
+            _header: Header::new(462),
             _timeout: Default::default(),
             _flags: Default::default(),
             _lat: Default::default(),
@@ -130,29 +104,31 @@ impl Message for Elevator {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         462
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(462);
         self._timeout = Default::default();
         self._flags = Default::default();
         self._lat = Default::default();
         self._lon = Default::default();
         self._start_z = Default::default();
-        self._start_z_units = Default::default();
+        self._start_z_units = 0_u8;
         self._end_z = Default::default();
-        self._end_z_units = Default::default();
+        self._end_z_units = 0_u8;
         self._radius = Default::default();
         self._speed = Default::default();
-        self._speed_units = Default::default();
-        self._custom = Default::default();
+        self._speed_units = 0_u8;
+        self._custom = Default::default()
     }
 
     #[inline(always)]
@@ -160,9 +136,9 @@ impl Message for Elevator {
         38
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._custom.len() + 2;
 
         dyn_size
@@ -196,7 +172,6 @@ impl Message for Elevator {
         self._speed = bfr.get_f32_le();
         self._speed_units = bfr.get_u8();
         deserialize_string!(bfr, self._custom);
-
         Ok(())
     }
 }

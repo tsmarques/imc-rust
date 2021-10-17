@@ -1,102 +1,79 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// Report of navigation uncertainty.
 /// This is usually given by the output of the state
 /// covariance matrix of an Extended Kalman Filter.
 #[derive(Default)]
 pub struct NavigationUncertainty {
-    /// IMC Header
-    pub header: Header,
-
-    /// The North offset variance of the North/East/Down
-    /// field with respect to LLH.
+    /// Message Header.
+    pub _header: Header,
+    /// Variance - x Position.
     pub _x: f32,
-
-    /// The East offset variance of the North/East/Down
-    /// field with respect to LLH.
+    /// Variance - y Position.
     pub _y: f32,
-
-    /// The Down offset variance of the North/East/Down
-    /// field with respect to LLH.
+    /// Variance - z Position.
     pub _z: f32,
-
-    /// The phi Euler angle variance from the vehicle's attitude.
+    /// Variance - Roll.
     pub _phi: f32,
-
-    /// The theta Euler angle variance from the vehicle's attitude.
+    /// Variance - Pitch.
     pub _theta: f32,
-
-    /// The psi Euler angle variance from the vehicle's attitude.
+    /// Variance - Yaw.
     pub _psi: f32,
-
-    /// The angular velocity variance over body-fixed xx axis (roll).
+    /// Variance - Gyro. Roll Rate.
     pub _p: f32,
-
-    /// The angular velocity variance over body-fixed yy axis (pitch).
+    /// Variance - Gyro. Pitch Rate.
     pub _q: f32,
-
-    /// The angular velocity variance over body-fixed zz axis (yaw).
+    /// Variance - Gyro. Yaw Rate.
     pub _r: f32,
-
-    /// Body-fixed frame xx axis velocity variance component.
+    /// Variance - Body-Fixed xx Velocity.
     pub _u: f32,
-
-    /// Body-fixed frame yy axis velocity variance component.
+    /// Variance - Body-Fixed yy Velocity.
     pub _v: f32,
-
-    /// Body-fixed frame zz axis velocity variance component.
+    /// Variance - Body-Fixed ww Velocity.
     pub _w: f32,
-
-    /// The psi Euler angle bias variance from the vehicle's sensed attitude.
+    /// Variance - Yaw Bias.
     pub _bias_psi: f32,
-
-    /// The angular velocity over body-fixed zz axis bias variance from sensor.
+    /// Variance - Gyro. Yaw Rate Bias.
     pub _bias_r: f32,
 }
 
 impl Message for NavigationUncertainty {
-    fn new() -> Self
+    fn new() -> NavigationUncertainty
     where
         Self: Sized,
     {
         let msg = NavigationUncertainty {
-            header: Header::new(354),
-
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _phi: Default::default(),
-            _theta: Default::default(),
-            _psi: Default::default(),
-            _p: Default::default(),
-            _q: Default::default(),
-            _r: Default::default(),
-            _u: Default::default(),
-            _v: Default::default(),
-            _w: Default::default(),
-            _bias_psi: Default::default(),
-            _bias_r: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = NavigationUncertainty {
-            header: hdr,
-
+            _header: Header::new(354),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
@@ -125,17 +102,19 @@ impl Message for NavigationUncertainty {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         354
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(354);
         self._x = Default::default();
         self._y = Default::default();
         self._z = Default::default();
@@ -149,7 +128,7 @@ impl Message for NavigationUncertainty {
         self._v = Default::default();
         self._w = Default::default();
         self._bias_psi = Default::default();
-        self._bias_r = Default::default();
+        self._bias_r = Default::default()
     }
 
     #[inline(always)]
@@ -157,6 +136,7 @@ impl Message for NavigationUncertainty {
         56
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -193,7 +173,6 @@ impl Message for NavigationUncertainty {
         self._w = bfr.get_f32_le();
         self._bias_psi = bfr.get_f32_le();
         self._bias_r = bfr.get_f32_le();
-
         Ok(())
     }
 }

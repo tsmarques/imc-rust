@@ -1,69 +1,71 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Attribute type.
 #[allow(non_camel_case_types)]
 pub enum AttributetypeEnum {
-    // Boolean Domain
+    /// Boolean Domain.
     TYPE_BOOL = 1,
-    // Integer Domain
+    /// Integer Domain.
     TYPE_INT = 2,
-    // Float Domain
+    /// Float Domain.
     TYPE_FLOAT = 3,
-    // String Domain
+    /// String Domain.
     TYPE_STRING = 4,
-    // Enumerated Domain
+    /// Enumerated Domain.
     TYPE_ENUM = 5,
 }
 
 #[derive(Default)]
 pub struct TrexAttribute {
-    /// IMC Header
-    pub header: Header,
-
-    /// Name of this attribute.
+    /// Message Header.
+    pub _header: Header,
+    /// Attribute Name.
     pub _name: String,
-
+    /// Attribute type.
     pub _attr_type: u8,
-
-    /// Lower bound of this interval. Empty text means no bound.
+    /// Minimum.
     pub _min: String,
-
-    /// Upper bound of this interval. Empty text means no bound.
+    /// Maximum.
     pub _max: String,
 }
 
 impl Message for TrexAttribute {
-    fn new() -> Self
+    fn new() -> TrexAttribute
     where
         Self: Sized,
     {
         let msg = TrexAttribute {
-            header: Header::new(656),
-
-            _name: Default::default(),
-            _attr_type: Default::default(),
-            _min: Default::default(),
-            _max: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = TrexAttribute {
-            header: hdr,
-
+            _header: Header::new(656),
             _name: Default::default(),
             _attr_type: Default::default(),
             _min: Default::default(),
@@ -82,21 +84,23 @@ impl Message for TrexAttribute {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         656
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(656);
         self._name = Default::default();
         self._attr_type = Default::default();
         self._min = Default::default();
-        self._max = Default::default();
+        self._max = Default::default()
     }
 
     #[inline(always)]
@@ -104,13 +108,11 @@ impl Message for TrexAttribute {
         1
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._name.len() + 2;
-
         dyn_size += self._min.len() + 2;
-
         dyn_size += self._max.len() + 2;
 
         dyn_size
@@ -128,7 +130,6 @@ impl Message for TrexAttribute {
         self._attr_type = bfr.get_u8();
         deserialize_string!(bfr, self._min);
         deserialize_string!(bfr, self._max);
-
         Ok(())
     }
 }

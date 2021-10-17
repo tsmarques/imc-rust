@@ -1,62 +1,56 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// This message is used to report the perceived link quality to other
 /// acoustic peers.
 #[derive(Default)]
 pub struct AcousticLink {
-    /// IMC Header
-    pub header: Header,
-
-    /// The name of the peer on the other side of this link.
+    /// Message Header.
+    pub _header: Header,
+    /// Peer Name.
     pub _peer: String,
-
-    /// RSSI is a signed floating point number. Higher RSSI values correspond to
-    /// stronger signals.
-    /// The signal strength is acceptable when measured RSSI values lie between
-    /// -20 dB and -85 dB.
+    /// Received Signal Strength Indicator.
     pub _rssi: f32,
-
-    /// Signal Integrity value illustrates distortion of the last received
-    /// acoustic signal. It is calculated based on cross-correlation
-    /// measurements.
-    /// Higher *Signal Integrity Level* values correspond to less distorted
-    /// signals. An acoustic link is considered weak if the *Signal Integrity
-    /// Level* value is less than 100.
+    /// Signal Integrity Level.
     pub _integrity: u16,
 }
 
 impl Message for AcousticLink {
-    fn new() -> Self
+    fn new() -> AcousticLink
     where
         Self: Sized,
     {
         let msg = AcousticLink {
-            header: Header::new(214),
-
-            _peer: Default::default(),
-            _rssi: Default::default(),
-            _integrity: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = AcousticLink {
-            header: hdr,
-
+            _header: Header::new(214),
             _peer: Default::default(),
             _rssi: Default::default(),
             _integrity: Default::default(),
@@ -74,20 +68,22 @@ impl Message for AcousticLink {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         214
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(214);
         self._peer = Default::default();
         self._rssi = Default::default();
-        self._integrity = Default::default();
+        self._integrity = Default::default()
     }
 
     #[inline(always)]
@@ -95,9 +91,9 @@ impl Message for AcousticLink {
         6
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._peer.len() + 2;
 
         dyn_size
@@ -113,7 +109,6 @@ impl Message for AcousticLink {
         deserialize_string!(bfr, self._peer);
         self._rssi = bfr.get_f32_le();
         self._integrity = bfr.get_u16_le();
-
         Ok(())
     }
 }

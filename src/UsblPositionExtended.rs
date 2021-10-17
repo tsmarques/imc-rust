@@ -1,86 +1,72 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// This message contains information, collected using USBL, about a
 /// target's position.
 #[derive(Default)]
 pub struct UsblPositionExtended {
-    /// IMC Header
-    pub header: Header,
-
-    /// Target's system name.
+    /// Message Header.
+    pub _header: Header,
+    /// Target.
     pub _target: String,
-
-    /// X coordinate of the target in the local device's reference frame.
+    /// X.
     pub _x: f32,
-
-    /// Y coordinate of the target in the local device's reference frame.
+    /// Y.
     pub _y: f32,
-
-    /// Z coordinate of the target in the local device's reference frame.
+    /// Z.
     pub _z: f32,
-
-    /// X coordinate of the target in the navigation reference frame.
+    /// N.
     pub _n: f32,
-
-    /// Y coordinate of the target in the navigation reference frame.
+    /// E.
     pub _e: f32,
-
-    /// Z coordinate of the target in the navigation reference frame.
+    /// D.
     pub _d: f32,
-
-    /// Rotation around the device longitudinal axis.
+    /// Roll Angle.
     pub _phi: f32,
-
-    /// Rotation around the device lateral or transverse axis.
+    /// Pitch Angle.
     pub _theta: f32,
-
-    /// Rotation around the device vertical axis.
+    /// Yaw Angle.
     pub _psi: f32,
-
-    /// Accuracy of the position fix.
+    /// Accuracy.
     pub _accuracy: f32,
 }
 
 impl Message for UsblPositionExtended {
-    fn new() -> Self
+    fn new() -> UsblPositionExtended
     where
         Self: Sized,
     {
         let msg = UsblPositionExtended {
-            header: Header::new(899),
-
-            _target: Default::default(),
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-            _n: Default::default(),
-            _e: Default::default(),
-            _d: Default::default(),
-            _phi: Default::default(),
-            _theta: Default::default(),
-            _psi: Default::default(),
-            _accuracy: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = UsblPositionExtended {
-            header: hdr,
-
+            _header: Header::new(899),
             _target: Default::default(),
             _x: Default::default(),
             _y: Default::default(),
@@ -106,17 +92,19 @@ impl Message for UsblPositionExtended {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         899
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(899);
         self._target = Default::default();
         self._x = Default::default();
         self._y = Default::default();
@@ -127,7 +115,7 @@ impl Message for UsblPositionExtended {
         self._phi = Default::default();
         self._theta = Default::default();
         self._psi = Default::default();
-        self._accuracy = Default::default();
+        self._accuracy = Default::default()
     }
 
     #[inline(always)]
@@ -135,9 +123,9 @@ impl Message for UsblPositionExtended {
         40
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._target.len() + 2;
 
         dyn_size
@@ -169,7 +157,6 @@ impl Message for UsblPositionExtended {
         self._theta = bfr.get_f32_le();
         self._psi = bfr.get_f32_le();
         self._accuracy = bfr.get_f32_le();
-
         Ok(())
     }
 }

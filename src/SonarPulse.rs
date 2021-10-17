@@ -1,57 +1,57 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// Information regarding a sent/received Sonar pulse.
 #[derive(Default)]
 pub struct SonarPulse {
-    /// IMC Header
-    pub header: Header,
-
-    /// Frequency of the sent/received sonar pulse.
+    /// Message Header.
+    pub _header: Header,
+    /// Frequency.
     pub _frequency: i32,
-
-    /// Pulse Length of the sonar pulse.
+    /// Pulse Length.
     pub _pulse_length: i32,
-
-    /// Time Delay of the sonar pulse.
+    /// Time Delay.
     pub _time_delay: i32,
-
-    /// Doppler shift added to the sonar pulse in retransmission
+    /// Simulated Speed.
     pub _simulated_speed: i32,
 }
 
 impl Message for SonarPulse {
-    fn new() -> Self
+    fn new() -> SonarPulse
     where
         Self: Sized,
     {
         let msg = SonarPulse {
-            header: Header::new(2006),
-
-            _frequency: Default::default(),
-            _pulse_length: Default::default(),
-            _time_delay: Default::default(),
-            _simulated_speed: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = SonarPulse {
-            header: hdr,
-
+            _header: Header::new(2006),
             _frequency: Default::default(),
             _pulse_length: Default::default(),
             _time_delay: Default::default(),
@@ -70,21 +70,23 @@ impl Message for SonarPulse {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         2006
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(2006);
         self._frequency = Default::default();
         self._pulse_length = Default::default();
         self._time_delay = Default::default();
-        self._simulated_speed = Default::default();
+        self._simulated_speed = Default::default()
     }
 
     #[inline(always)]
@@ -92,6 +94,7 @@ impl Message for SonarPulse {
         16
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -108,7 +111,6 @@ impl Message for SonarPulse {
         self._pulse_length = bfr.get_i32_le();
         self._time_delay = bfr.get_i32_le();
         self._simulated_speed = bfr.get_i32_le();
-
         Ok(())
     }
 }

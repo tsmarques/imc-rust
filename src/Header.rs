@@ -1,46 +1,50 @@
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
+
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
+
+/// Base
 use bytes::BufMut;
 
+/// The packet header contains handling information in the form of
+/// supplemental fields, it is always placed at the beginning of a
+/// packet.
 #[derive(Default, PartialEq, Debug)]
 pub struct Header {
-    /// The synchronization number marks the beginning of a packet.
-    ///  
-    /// It denotes the packet API version and can be used to deduce
-    /// the byte order of the sending host.
-    ///  
-    /// It encodes value 0xFE[major][minor] where [major] equals the
-    /// major version number of the protocol and [minor] equals the
-    /// minor version of the protocol.
-    ///  
-    /// The packet recipient is responsible for the correct
-    /// interpretation of the synchronization number and byte order
-    /// conversions.
+    /// Synchronization Number.
     pub _sync: u16,
-
-    /// The identification number of the message contained in the
-    /// packet. This field is used for correct message interpretation
-    /// and deserialization.
+    /// Message Identification Number.
     pub _mgid: u16,
-
-    /// The size of the message data in the packet.
+    /// Message size.
     pub _size: u16,
-
-    /// The time when the packet was sent, as seen by the packet
-    /// dispatcher. The number of seconds is represented in Universal
-    /// Coordinated Time (UCT) in seconds since Jan 1, 1970 using IEEE
-    /// double precision floating point numbers.
+    /// Time stamp.
     pub _timestamp: f64,
-
-    /// The Source IMC system ID.
+    /// Source Address.
     pub _src: u16,
-
-    /// The entity generating this message at the source address.
+    /// Source Entity.
     pub _src_ent: u8,
-
-    /// The Destination IMC system ID.
+    /// Destination Address.
     pub _dst: u16,
-
-    /// The entity that should process this message at the destination
-    /// address.
+    /// Destination Entity.
     pub _dst_ent: u8,
 }
 
@@ -58,28 +62,19 @@ impl Header {
         };
 
         header._mgid = msg_id;
-
         header
     }
 
     pub fn clear(&mut self) {
-        self._sync = Default::default();
-
+        self._sync = 0xFE54_u16;
         self._mgid = Default::default();
-
         self._size = Default::default();
-
         self._timestamp = Default::default();
-
         self._src = Default::default();
-
         self._src_ent = Default::default();
-
         self._dst = Default::default();
-
-        self._dst_ent = Default::default();
+        self._dst_ent = Default::default()
     }
-
     pub fn serialize(&self, bfr: &mut bytes::BytesMut) {
         bfr.put_u16_le(self._sync);
         bfr.put_u16_le(self._mgid);

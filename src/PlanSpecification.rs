@@ -1,104 +1,87 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::MessageList;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use crate::DUNE_IMC_CONST_NULL_ID;
-
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::PlanVariable::PlanVariable;
-
-use crate::PlanTransition::PlanTransition;
-
-use crate::PlanManeuver::PlanManeuver;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
+use crate::MessageList;
+use crate::PlanManeuver::PlanManeuver;
+use crate::PlanTransition::PlanTransition;
+use crate::PlanVariable::PlanVariable;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// Identity and description of a plan's general parameters,
 /// associated with plan loading (i.e. load plan command in
 /// *PlanCommand*).
-///  
 /// A plan specification is defined by a plan identifier, a set of
 /// maneuver specifications and a start maneuver from that set.
-///  
 /// See the :ref:`PlanManeuver` message for details on maneuver
 /// specification.
 #[derive(Default)]
 pub struct PlanSpecification {
-    /// IMC Header
-    pub header: Header,
-
-    /// The plan's identifier.
+    /// Message Header.
+    pub _header: Header,
+    /// Plan ID.
     pub _plan_id: String,
-
-    /// Verbose text description of plan.
+    /// Plan Description.
     pub _description: String,
-
-    /// Namespace for plan variables.
+    /// Namespace.
     pub _vnamespace: String,
-
-    /// Plan variables.
+    /// Plan Variables.
     pub _variables: MessageList<PlanVariable>,
-
-    /// Indicates the id of the starting maneuver for this plan.
+    /// Starting maneuver.
     pub _start_man_id: String,
-
-    /// List of maneuver specifications.
+    /// Maneuvers.
     pub _maneuvers: MessageList<PlanManeuver>,
-
-    /// List of maneuver specifications.
+    /// Transitions.
     pub _transitions: MessageList<PlanTransition>,
-
-    /// Contains an optionally defined 'MessageList' for actions fired
-    /// on plan activation.
+    /// Start Actions.
     pub _start_actions: MessageList<Box<dyn Message>>,
-
-    /// Contains an optionally defined 'MessageList' for actions fired
-    /// on plan termination.
+    /// End Actions.
     pub _end_actions: MessageList<Box<dyn Message>>,
 }
 
 impl Message for PlanSpecification {
-    fn new() -> Self
+    fn new() -> PlanSpecification
     where
         Self: Sized,
     {
         let msg = PlanSpecification {
-            header: Header::new(551),
-
+            _header: Header::new(551),
             _plan_id: Default::default(),
             _description: Default::default(),
             _vnamespace: Default::default(),
-            _variables: vec![],
+            _variables: Default::default(),
             _start_man_id: Default::default(),
-            _maneuvers: vec![],
-            _transitions: vec![],
-            _start_actions: vec![],
-            _end_actions: vec![],
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = PlanSpecification {
-            header: hdr,
-
-            _plan_id: Default::default(),
-            _description: Default::default(),
-            _vnamespace: Default::default(),
-            _variables: vec![],
-            _start_man_id: Default::default(),
-            _maneuvers: vec![],
-            _transitions: vec![],
-            _start_actions: vec![],
-            _end_actions: vec![],
+            _maneuvers: Default::default(),
+            _transitions: Default::default(),
+            _start_actions: Default::default(),
+            _end_actions: Default::default(),
         };
 
         msg
@@ -113,17 +96,19 @@ impl Message for PlanSpecification {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         551
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(551);
         self._plan_id = Default::default();
         self._description = Default::default();
         self._vnamespace = Default::default();
@@ -132,7 +117,7 @@ impl Message for PlanSpecification {
         self._maneuvers = Default::default();
         self._transitions = Default::default();
         self._start_actions = Default::default();
-        self._end_actions = Default::default();
+        self._end_actions = Default::default()
     }
 
     #[inline(always)]
@@ -140,25 +125,17 @@ impl Message for PlanSpecification {
         0
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._plan_id.len() + 2;
-
         dyn_size += self._description.len() + 2;
-
         dyn_size += self._vnamespace.len() + 2;
-
         message_list_serialization_size!(dyn_size, self._variables);
-
         dyn_size += self._start_man_id.len() + 2;
-
         message_list_serialization_size!(dyn_size, self._maneuvers);
-
         message_list_serialization_size!(dyn_size, self._transitions);
-
         message_list_serialization_size!(dyn_size, self._start_actions);
-
         message_list_serialization_size!(dyn_size, self._end_actions);
 
         dyn_size
@@ -186,7 +163,6 @@ impl Message for PlanSpecification {
         self._transitions = deserialize_message_list_as::<PlanTransition>(bfr)?;
         self._start_actions = deserialize_message_list(bfr)?;
         self._end_actions = deserialize_message_list(bfr)?;
-
         Ok(())
     }
 }

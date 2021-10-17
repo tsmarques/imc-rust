@@ -1,21 +1,43 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Action on the vehicle operational limits.
 #[allow(non_camel_case_types)]
 pub enum ActiononthevehicleoperationallimitsEnum {
-    // Request
+    /// Request.
     OP_REQUEST = 0,
-    // Set
+    /// Set.
     OP_SET = 1,
-    // Report
+    /// Report.
     OP_REPORT = 2,
 }
 
@@ -23,107 +45,53 @@ pub enum ActiononthevehicleoperationallimitsEnum {
 /// For aircraft this should represent the flight envelope and the dynamic contraints.
 #[derive(Default)]
 pub struct VehicleOperationalLimits {
-    /// IMC Header
-    pub header: Header,
-
-    /// Action on the vehicle operation limits
+    /// Message Header.
+    pub _header: Header,
+    /// Action on the vehicle operational limits.
     pub _op: u8,
-
-    /// Minimum operation speed.
-    /// For aircraft this is equal or larger then the stall speed.
+    /// Minimum speed.
     pub _speed_min: f32,
-
-    /// Maximum operation speed.
-    /// For aircraft this is limited by the engine power or structural contrains.
+    /// Maximum speed.
     pub _speed_max: f32,
-
-    /// Maximum longitudinal acceleration.
+    /// Longitudinal maximum acceleration.
     pub _long_accel: f32,
-
-    /// Maximum altitude above mean-sea-level.
+    /// Maximum MSL altitude.
     pub _alt_max_msl: f32,
-
-    /// Maximum dive rate (negative vertical speed) as a fraction of the longitudinal speed.
+    /// Maximum Dive Rate Speed Fraction.
     pub _dive_fraction_max: f32,
-
-    /// Maximum climb rate (positive vertical speed) as a fraction of the longitudinal speed.
+    /// Maximum Climb Rate Speed Fraction.
     pub _climb_fraction_max: f32,
-
-    /// Limit to the bank angle (roll; angle over the xx body-axis).
+    /// Bank limit.
     pub _bank_max: f32,
-
-    /// Limit to the bank angular rate (roll; angle over the xx body-axis).
+    /// Bank rate limit.
     pub _p_max: f32,
-
-    /// Minimum pitch angle (angle over the xx body-axis).
+    /// Minimum pitch angle.
     pub _pitch_min: f32,
-
-    /// Maximum pitch angle (angle over the xx body-axis).
+    /// Maximum pitch angle.
     pub _pitch_max: f32,
-
-    /// Maximum pitch angular rate (angle over the xx body-axis).
+    /// Maximum pitch rate.
     pub _q_max: f32,
-
-    /// Minimum load factor, i.e., maximum positive acceleration in the zz body-axis
-    /// as a factor of the gravity acceleration at mean-sea-level.
+    /// Minimum load factor.
     pub _g_min: f32,
-
-    /// Maximum load factor, i.e., maximum negative acceleration in the zz body-axis
-    /// as a factor of the gravity acceleration at mean-sea-level.
+    /// Maximum load factor.
     pub _g_max: f32,
-
-    /// Maximum lateral load factor, i.e., maximum acceleration in the yy body-axis
-    /// as a factor of the gravity acceleration at mean-sea-level.
+    /// Maximum lateral load factor.
     pub _g_lat_max: f32,
-
-    /// Minimum motor RPMs.
+    /// Minimum RPMs.
     pub _rpm_min: f32,
-
-    /// Maximum motor RPMs.
+    /// Maximum RPMs.
     pub _rpm_max: f32,
-
-    /// Maximum motor RPMs' rate of change.
+    /// Maximum RPM rate.
     pub _rpm_rate_max: f32,
 }
 
 impl Message for VehicleOperationalLimits {
-    fn new() -> Self
+    fn new() -> VehicleOperationalLimits
     where
         Self: Sized,
     {
         let msg = VehicleOperationalLimits {
-            header: Header::new(16),
-
-            _op: Default::default(),
-            _speed_min: Default::default(),
-            _speed_max: Default::default(),
-            _long_accel: Default::default(),
-            _alt_max_msl: Default::default(),
-            _dive_fraction_max: Default::default(),
-            _climb_fraction_max: Default::default(),
-            _bank_max: Default::default(),
-            _p_max: Default::default(),
-            _pitch_min: Default::default(),
-            _pitch_max: Default::default(),
-            _q_max: Default::default(),
-            _g_min: Default::default(),
-            _g_max: Default::default(),
-            _g_lat_max: Default::default(),
-            _rpm_min: Default::default(),
-            _rpm_max: Default::default(),
-            _rpm_rate_max: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = VehicleOperationalLimits {
-            header: hdr,
-
+            _header: Header::new(16),
             _op: Default::default(),
             _speed_min: Default::default(),
             _speed_max: Default::default(),
@@ -156,17 +124,19 @@ impl Message for VehicleOperationalLimits {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         16
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(16);
         self._op = Default::default();
         self._speed_min = Default::default();
         self._speed_max = Default::default();
@@ -184,7 +154,7 @@ impl Message for VehicleOperationalLimits {
         self._g_lat_max = Default::default();
         self._rpm_min = Default::default();
         self._rpm_max = Default::default();
-        self._rpm_rate_max = Default::default();
+        self._rpm_rate_max = Default::default()
     }
 
     #[inline(always)]
@@ -192,6 +162,7 @@ impl Message for VehicleOperationalLimits {
         69
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -236,7 +207,6 @@ impl Message for VehicleOperationalLimits {
         self._rpm_min = bfr.get_f32_le();
         self._rpm_max = bfr.get_f32_le();
         self._rpm_rate_max = bfr.get_f32_le();
-
         Ok(())
     }
 }

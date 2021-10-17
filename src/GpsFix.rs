@@ -1,142 +1,119 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Type.
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    // Stand Alone
+    /// Stand Alone.
     GFT_STANDALONE = 0x00,
-    // Differential
+    /// Differential.
     GFT_DIFFERENTIAL = 0x01,
-    // Dead Reckoning
+    /// Dead Reckoning.
     GFT_DEAD_RECKONING = 0x02,
-    // Manual Input
+    /// Manual Input.
     GFT_MANUAL_INPUT = 0x03,
-    // Simulation
+    /// Simulation.
     GFT_SIMULATION = 0x04,
 }
 
+/// Validity.
 #[allow(non_camel_case_types)]
-pub mod Validity {
-    // Valid Date
-    pub const _VALID_DATE: u32 = 0x0001;
-    // Valid Time
-    pub const _VALID_TIME: u32 = 0x0002;
-    // Valid Position
-    pub const _VALID_POS: u32 = 0x0004;
-    // Valid Course Over Ground
-    pub const _VALID_COG: u32 = 0x0008;
-    // Valid Speed Over Ground
-    pub const _VALID_SOG: u32 = 0x0010;
-    // Valid Horizontal Accuracy Estimate
-    pub const _VALID_HACC: u32 = 0x0020;
-    // Valid Vertical Accuracy Estimate
-    pub const _VALID_VACC: u32 = 0x0040;
-    // Valid Horizontal Dilution of Precision
-    pub const _VALID_HDOP: u32 = 0x0080;
-    // Valid Vertical Dilution of Precision
-    pub const _VALID_VDOP: u32 = 0x0100;
+pub mod ValidityBits {
+    /// Valid Date.
+    pub const GFV_VALID_DATE: u32 = 0x0001;
+    /// Valid Time.
+    pub const GFV_VALID_TIME: u32 = 0x0002;
+    /// Valid Position.
+    pub const GFV_VALID_POS: u32 = 0x0004;
+    /// Valid Course Over Ground.
+    pub const GFV_VALID_COG: u32 = 0x0008;
+    /// Valid Speed Over Ground.
+    pub const GFV_VALID_SOG: u32 = 0x0010;
+    /// Valid Horizontal Accuracy Estimate.
+    pub const GFV_VALID_HACC: u32 = 0x0020;
+    /// Valid Vertical Accuracy Estimate.
+    pub const GFV_VALID_VACC: u32 = 0x0040;
+    /// Valid Horizontal Dilution of Precision.
+    pub const GFV_VALID_HDOP: u32 = 0x0080;
+    /// Valid Vertical Dilution of Precision.
+    pub const GFV_VALID_VDOP: u32 = 0x0100;
 }
 
-/// Simulated solution.
+/// Report of a GPS fix.
 #[derive(Default)]
 pub struct GpsFix {
-    /// IMC Header
-    pub header: Header,
-
-    /// Field 'hdop' is valid.
+    /// Message Header.
+    pub _header: Header,
+    /// Validity.
     pub _validity: u16,
-
-    /// Manual solution.
+    /// Type.
     pub _type: u8,
-
-    /// UTC year.
+    /// UTC Year.
     pub _utc_year: u16,
-
-    /// UTC month.
+    /// UTC Month.
     pub _utc_month: u8,
-
-    /// UTC day.
+    /// UTC Day.
     pub _utc_day: u8,
-
-    /// UTC time of the GPS fix measured in seconds since 00:00:00 (midnight).
+    /// UTC Time of Fix.
     pub _utc_time: f32,
-
-    /// WGS-84 Latitude coordinate.
+    /// Latitude WGS-84.
     pub _lat: f64,
-
-    /// WGS-84 Longitude coordinate.
+    /// Longitude WGS-84.
     pub _lon: f64,
-
     /// Height above WGS-84 ellipsoid.
     pub _height: f32,
-
-    /// Number of satellites used by the GPS device to compute the
-    /// solution.
+    /// Number of Satellites.
     pub _satellites: u8,
-
-    /// Course Over Ground (true).
+    /// Course Over Ground.
     pub _cog: f32,
-
     /// Speed Over Ground.
     pub _sog: f32,
-
-    /// Horizontal dilution of precision.
+    /// Horizontal Dilution of Precision.
     pub _hdop: f32,
-
-    /// Vertical dilution of precision.
+    /// Vertical Dilution of Precision.
     pub _vdop: f32,
-
     /// Horizontal Accuracy Estimate.
     pub _hacc: f32,
-
     /// Vertical Accuracy Estimate.
     pub _vacc: f32,
 }
 
 impl Message for GpsFix {
-    fn new() -> Self
+    fn new() -> GpsFix
     where
         Self: Sized,
     {
         let msg = GpsFix {
-            header: Header::new(253),
-
-            _validity: Default::default(),
-            _type: Default::default(),
-            _utc_year: Default::default(),
-            _utc_month: Default::default(),
-            _utc_day: Default::default(),
-            _utc_time: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _height: Default::default(),
-            _satellites: Default::default(),
-            _cog: Default::default(),
-            _sog: Default::default(),
-            _hdop: Default::default(),
-            _vdop: Default::default(),
-            _hacc: Default::default(),
-            _vacc: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = GpsFix {
-            header: hdr,
-
+            _header: Header::new(253),
             _validity: Default::default(),
             _type: Default::default(),
             _utc_year: Default::default(),
@@ -167,17 +144,19 @@ impl Message for GpsFix {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         253
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(253);
         self._validity = Default::default();
         self._type = Default::default();
         self._utc_year = Default::default();
@@ -193,7 +172,7 @@ impl Message for GpsFix {
         self._hdop = Default::default();
         self._vdop = Default::default();
         self._hacc = Default::default();
-        self._vacc = Default::default();
+        self._vacc = Default::default()
     }
 
     #[inline(always)]
@@ -201,6 +180,7 @@ impl Message for GpsFix {
         56
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -241,7 +221,6 @@ impl Message for GpsFix {
         self._vdop = bfr.get_f32_le();
         self._hacc = bfr.get_f32_le();
         self._vacc = bfr.get_f32_le();
-
         Ok(())
     }
 }

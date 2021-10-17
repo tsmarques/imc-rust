@@ -1,66 +1,68 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// State.
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    // Maneuver in progress
+    /// Maneuver in progress.
     MCS_EXECUTING = 0,
-    // Maneuver completed
+    /// Maneuver completed.
     MCS_DONE = 1,
-    // Maneuver error
+    /// Maneuver error.
     MCS_ERROR = 2,
-    // Maneuver stopped
+    /// Maneuver stopped.
     MCS_STOPPED = 3,
 }
 
-/// Maneuver error.
+/// Maneuver control state.
 #[derive(Default)]
 pub struct ManeuverControlState {
-    /// IMC Header
-    pub header: Header,
-
-    /// Maneuver stopped.
+    /// Message Header.
+    pub _header: Header,
+    /// State.
     pub _state: u8,
-
-    /// Estimated time to completion of the maneuver, when executing.
-    /// The value will be 65535 if the time is unknown or undefined.
+    /// Completion Time.
     pub _eta: u16,
-
-    /// Complementary information, e.g., regarding errors.
+    /// Info.
     pub _info: String,
 }
 
 impl Message for ManeuverControlState {
-    fn new() -> Self
+    fn new() -> ManeuverControlState
     where
         Self: Sized,
     {
         let msg = ManeuverControlState {
-            header: Header::new(470),
-
-            _state: Default::default(),
-            _eta: Default::default(),
-            _info: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = ManeuverControlState {
-            header: hdr,
-
+            _header: Header::new(470),
             _state: Default::default(),
             _eta: Default::default(),
             _info: Default::default(),
@@ -78,20 +80,22 @@ impl Message for ManeuverControlState {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         470
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(470);
         self._state = Default::default();
         self._eta = Default::default();
-        self._info = Default::default();
+        self._info = Default::default()
     }
 
     #[inline(always)]
@@ -99,9 +103,9 @@ impl Message for ManeuverControlState {
         3
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._info.len() + 2;
 
         dyn_size
@@ -117,7 +121,6 @@ impl Message for ManeuverControlState {
         self._state = bfr.get_u8();
         self._eta = bfr.get_u16_le();
         deserialize_string!(bfr, self._info);
-
         Ok(())
     }
 }

@@ -1,109 +1,83 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::MessageGroup::Maneuver;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Flags.
 #[allow(non_camel_case_types)]
-pub mod Flags {
-    // Start from current position
-    pub const _CURR_POS: u32 = 0x01;
-    // Wait at surface
-    pub const _WAIT_AT_SURFACE: u32 = 0x02;
-    // Station keeping
-    pub const _STATION_KEEP: u32 = 0x04;
+pub mod FlagsBits {
+    /// Start from current position.
+    pub const FLG_CURR_POS: u32 = 0x01;
+    /// Wait at surface.
+    pub const FLG_WAIT_AT_SURFACE: u32 = 0x02;
+    /// Station keeping.
+    pub const FLG_STATION_KEEP: u32 = 0x04;
 }
 
-/// message-group: Maneuver
-// impl Maneuver for PopUp { }
-
-/// This flag will only make sense if WAIT_AT_SURFACE is also set.
-/// While holding position at surface the vehicle will assume a
-/// station keeping behavior.
-/// message-group: Maneuver
+/// The Pop Up maneuver makes the vehicle come to the surface at a
+/// specific waypoint. This maneuver is restricted to underwater vehicles.
 #[derive(Default)]
 pub struct PopUp {
-    /// IMC Header
-    pub header: Header,
-
-    /// The amount of time the maneuver is allowed to run. If the
-    /// maneuver is not completed in the amount of time specified an
-    /// error will be generated.
+    /// Message Header.
+    pub _header: Header,
+    /// Timeout.
     pub _timeout: u16,
-
-    /// WGS-84 Latitude.
+    /// Latitude WGS-84.
     pub _lat: f64,
-
-    /// WGS-84 Longitude.
+    /// Longitude WGS-84.
     pub _lon: f64,
-
-    /// Maneuver reference in the z axis. Use z_units to specify
-    /// whether z represents depth, altitude or other.
+    /// Z Reference.
     pub _z: f32,
-
-    /// Units of the z reference.
+    /// Z Units.
     pub _z_units: u8,
-
-    /// Maneuver speed reference.
+    /// Speed.
     pub _speed: f32,
-
-    /// Speed units.
+    /// Speed Units.
     pub _speed_units: u8,
-
-    /// The duration of this maneuver at surface level.
-    /// Only used if flag WAIT_AT_SURFACE is on.
+    /// Duration.
     pub _duration: u16,
-
-    /// Radius of the maneuver.
-    /// Only used if flag STATION_KEEP is on.
+    /// Radius.
     pub _radius: f32,
-
-    /// If this flag is set, duration field is used to hold position at surface
-    /// for that amount of time.
+    /// Flags.
     pub _flags: u8,
-
     /// Custom settings for maneuver.
     pub _custom: String,
 }
 
 impl Message for PopUp {
-    fn new() -> Self
+    fn new() -> PopUp
     where
         Self: Sized,
     {
         let msg = PopUp {
-            header: Header::new(451),
-
-            _timeout: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _z: Default::default(),
-            _z_units: 0_u8,
-            _speed: Default::default(),
-            _speed_units: 0_u8,
-            _duration: Default::default(),
-            _radius: Default::default(),
-            _flags: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = PopUp {
-            header: hdr,
-
+            _header: Header::new(451),
             _timeout: Default::default(),
             _lat: Default::default(),
             _lon: Default::default(),
@@ -129,28 +103,30 @@ impl Message for PopUp {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         451
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(451);
         self._timeout = Default::default();
         self._lat = Default::default();
         self._lon = Default::default();
         self._z = Default::default();
-        self._z_units = Default::default();
+        self._z_units = 0_u8;
         self._speed = Default::default();
-        self._speed_units = Default::default();
+        self._speed_units = 0_u8;
         self._duration = Default::default();
         self._radius = Default::default();
         self._flags = Default::default();
-        self._custom = Default::default();
+        self._custom = Default::default()
     }
 
     #[inline(always)]
@@ -158,9 +134,9 @@ impl Message for PopUp {
         35
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._custom.len() + 2;
 
         dyn_size
@@ -192,7 +168,6 @@ impl Message for PopUp {
         self._radius = bfr.get_f32_le();
         self._flags = bfr.get_u8();
         deserialize_string!(bfr, self._custom);
-
         Ok(())
     }
 }

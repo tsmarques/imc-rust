@@ -1,68 +1,75 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Acceptance.
 #[allow(non_camel_case_types)]
 pub enum AcceptanceEnum {
-    // Accepted
+    /// Accepted.
     RR_ACCEPTED = 0,
-    // Rejected - Above Threshold
+    /// Rejected - Above Threshold.
     RR_ABOVE_THRESHOLD = 1,
-    // Rejected - Singular Point
+    /// Rejected - Singular Point.
     RR_SINGULAR = 2,
-    // Rejected - Not Enough Information
+    /// Rejected - Not Enough Information.
     RR_NO_INFO = 3,
-    // Rejected - Vehicle At Surface
+    /// Rejected - Vehicle At Surface.
     RR_AT_SURFACE = 4,
 }
 
-/// Vehicle is using only GPS fix when it is at surface.
+/// When the vehicle uses Long Base Line navigation, this message
+/// notifies that a new range was received from one of the acoustics
+/// transponders. The message fields are used to identify the range
+/// value and the transponder name. Also, this message has an
+/// acceptance field that indicates whether a LBL range was accepted
+/// or rejected, and if rejected, the reason why.
 #[derive(Default)]
 pub struct LblRangeAcceptance {
-    /// IMC Header
-    pub header: Header,
-
-    /// Identification number of the acoustic transponder from which
-    /// the range information was received.
+    /// Message Header.
+    pub _header: Header,
+    /// Beacon Identification Number.
     pub _id: u8,
-
-    /// Distance to the acoustic transponder.
+    /// Range.
     pub _range: f32,
-
-    /// The filter lacks information to properly use the received LBL range.
+    /// Acceptance.
     pub _acceptance: u8,
 }
 
 impl Message for LblRangeAcceptance {
-    fn new() -> Self
+    fn new() -> LblRangeAcceptance
     where
         Self: Sized,
     {
         let msg = LblRangeAcceptance {
-            header: Header::new(357),
-
-            _id: Default::default(),
-            _range: Default::default(),
-            _acceptance: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = LblRangeAcceptance {
-            header: hdr,
-
+            _header: Header::new(357),
             _id: Default::default(),
             _range: Default::default(),
             _acceptance: Default::default(),
@@ -80,20 +87,22 @@ impl Message for LblRangeAcceptance {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         357
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(357);
         self._id = Default::default();
         self._range = Default::default();
-        self._acceptance = Default::default();
+        self._acceptance = Default::default()
     }
 
     #[inline(always)]
@@ -101,6 +110,7 @@ impl Message for LblRangeAcceptance {
         6
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -115,7 +125,6 @@ impl Message for LblRangeAcceptance {
         self._id = bfr.get_u8();
         self._range = bfr.get_f32_le();
         self._acceptance = bfr.get_u8();
-
         Ok(())
     }
 }

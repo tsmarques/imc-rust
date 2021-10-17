@@ -1,73 +1,64 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 #[derive(Default)]
 pub struct EntityMonitoringState {
-    /// IMC Header
-    pub header: Header,
-
-    /// Number of entitities being monitored.
+    /// Message Header.
+    pub _header: Header,
+    /// Entities monitored - Count.
     pub _mcount: u8,
-
-    /// Comma separated list of all entity names being monitored.
+    /// Entities monitored - Names.
     pub _mnames: String,
-
-    /// Number of entitities with non-critical errors.
+    /// Entities with errors - Count.
     pub _ecount: u8,
-
-    /// Comma separated list of all entity names with non-critical
-    /// errors.
+    /// Entities with errors - Names.
     pub _enames: String,
-
-    /// Number of entitities with critical errors.
+    /// Entities with critical errors - Count.
     pub _ccount: u8,
-
-    /// Comma separated list of all entity names with critical errors.
+    /// Entities with critical errors - Names.
     pub _cnames: String,
-
-    /// Description of last error.
+    /// Last Error -- Description.
     pub _last_error: String,
-
-    /// Time of last error (Epoch time).
+    /// Last Error -- Time.
     pub _last_error_time: f64,
 }
 
 impl Message for EntityMonitoringState {
-    fn new() -> Self
+    fn new() -> EntityMonitoringState
     where
         Self: Sized,
     {
         let msg = EntityMonitoringState {
-            header: Header::new(503),
-
-            _mcount: Default::default(),
-            _mnames: Default::default(),
-            _ecount: Default::default(),
-            _enames: Default::default(),
-            _ccount: Default::default(),
-            _cnames: Default::default(),
-            _last_error: Default::default(),
-            _last_error_time: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = EntityMonitoringState {
-            header: hdr,
-
+            _header: Header::new(503),
             _mcount: Default::default(),
             _mnames: Default::default(),
             _ecount: Default::default(),
@@ -90,17 +81,19 @@ impl Message for EntityMonitoringState {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         503
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(503);
         self._mcount = Default::default();
         self._mnames = Default::default();
         self._ecount = Default::default();
@@ -108,7 +101,7 @@ impl Message for EntityMonitoringState {
         self._ccount = Default::default();
         self._cnames = Default::default();
         self._last_error = Default::default();
-        self._last_error_time = Default::default();
+        self._last_error_time = Default::default()
     }
 
     #[inline(always)]
@@ -116,15 +109,12 @@ impl Message for EntityMonitoringState {
         11
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._mnames.len() + 2;
-
         dyn_size += self._enames.len() + 2;
-
         dyn_size += self._cnames.len() + 2;
-
         dyn_size += self._last_error.len() + 2;
 
         dyn_size
@@ -150,7 +140,6 @@ impl Message for EntityMonitoringState {
         deserialize_string!(bfr, self._cnames);
         deserialize_string!(bfr, self._last_error);
         self._last_error_time = bfr.get_f64_le();
-
         Ok(())
     }
 }

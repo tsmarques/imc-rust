@@ -1,77 +1,78 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Flags.
 #[allow(non_camel_case_types)]
-pub mod Flags {
-    // Use Speed Reference in meters per second
-    pub const _SPEED_METERS_PS: u32 = 0x01;
-    // Use Speed Reference in revolutions per minute
-    pub const _SPEED_RPM: u32 = 0x02;
-    // Use Z Reference as depth
-    pub const _DEPTH: u32 = 0x04;
-    // Use Z Reference as altitude
-    pub const _ALTITUDE: u32 = 0x08;
-    // Use Heading Reference
-    pub const _HEADING: u32 = 0x10;
-    // Use Heading Rate Reference
-    pub const _HEADING_RATE: u32 = 0x20;
-    // Flag Maneuver Completion
-    pub const _MANDONE: u32 = 0x80;
+pub mod FlagsBits {
+    /// Use Speed Reference in meters per second.
+    pub const FLAG_SPEED_METERS_PS: u32 = 0x01;
+    /// Use Speed Reference in revolutions per minute.
+    pub const FLAG_SPEED_RPM: u32 = 0x02;
+    /// Use Z Reference as depth.
+    pub const FLAG_DEPTH: u32 = 0x04;
+    /// Use Z Reference as altitude.
+    pub const FLAG_ALTITUDE: u32 = 0x08;
+    /// Use Heading Reference.
+    pub const FLAG_HEADING: u32 = 0x10;
+    /// Use Heading Rate Reference.
+    pub const FLAG_HEADING_RATE: u32 = 0x20;
+    /// Flag Maneuver Completion.
+    pub const FLAG_MANDONE: u32 = 0x80;
 }
 
-/// Command system to move at a heading rate reference provided in &quot;heading&quot; field in radians/s.
+/// This message must be sent by an external entity to provide command references to a system
+/// running a "Follow Command Maneuver". If no Command messages are transmitted, the system
+/// will terminate maneuver.
 #[derive(Default)]
 pub struct Command {
-    /// IMC Header
-    pub header: Header,
-
-    /// Command system to exit maneuver's execution.
+    /// Message Header.
+    pub _header: Header,
+    /// Flags.
     pub _flags: u8,
-
-    /// The value of the desired speed, in the scale specified by the
-    /// &quot;flags&quot; field.
+    /// Speed Reference.
     pub _speed: f32,
-
-    /// The value of the desired z reference in meters.
+    /// Z Reference.
     pub _z: f32,
-
-    /// The value of the desired heading angle, relative to true  north, in radians,
-    /// or, the value of the desired heading rate angle, in radians.
+    /// Heading Reference.
     pub _heading: f32,
 }
 
 impl Message for Command {
-    fn new() -> Self
+    fn new() -> Command
     where
         Self: Sized,
     {
         let msg = Command {
-            header: Header::new(497),
-
-            _flags: Default::default(),
-            _speed: Default::default(),
-            _z: Default::default(),
-            _heading: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = Command {
-            header: hdr,
-
+            _header: Header::new(497),
             _flags: Default::default(),
             _speed: Default::default(),
             _z: Default::default(),
@@ -90,21 +91,23 @@ impl Message for Command {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         497
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(497);
         self._flags = Default::default();
         self._speed = Default::default();
         self._z = Default::default();
-        self._heading = Default::default();
+        self._heading = Default::default()
     }
 
     #[inline(always)]
@@ -112,6 +115,7 @@ impl Message for Command {
         13
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -128,7 +132,6 @@ impl Message for Command {
         self._speed = bfr.get_f32_le();
         self._z = bfr.get_f32_le();
         self._heading = bfr.get_f32_le();
-
         Ok(())
     }
 }

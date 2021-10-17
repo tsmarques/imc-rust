@@ -1,61 +1,66 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Type.
 #[allow(non_camel_case_types)]
-pub mod Type {
-    // X-axis
-    pub const _X: u32 = 0x01;
-    // Y-axis
-    pub const _Y: u32 = 0x02;
-    // Z-axis
-    pub const _Z: u32 = 0x04;
-    // Impact
-    pub const _IMPACT: u32 = 0x08;
+pub mod TypeBits {
+    /// X-axis.
+    pub const CD_X: u32 = 0x01;
+    /// Y-axis.
+    pub const CD_Y: u32 = 0x02;
+    /// Z-axis.
+    pub const CD_Z: u32 = 0x04;
+    /// Impact.
+    pub const CD_IMPACT: u32 = 0x08;
 }
 
-/// Collision detected in the z-axis
+/// Detected collision.
 #[derive(Default)]
 pub struct Collision {
-    /// IMC Header
-    pub header: Header,
-
-    /// Estimated collision acceleration value.
+    /// Message Header.
+    pub _header: Header,
+    /// Collision value.
     pub _value: f32,
-
-    /// Sudden impact detected
+    /// Type.
     pub _type: u8,
 }
 
 impl Message for Collision {
-    fn new() -> Self
+    fn new() -> Collision
     where
         Self: Sized,
     {
         let msg = Collision {
-            header: Header::new(509),
-
-            _value: Default::default(),
-            _type: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = Collision {
-            header: hdr,
-
+            _header: Header::new(509),
             _value: Default::default(),
             _type: Default::default(),
         };
@@ -72,19 +77,21 @@ impl Message for Collision {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         509
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(509);
         self._value = Default::default();
-        self._type = Default::default();
+        self._type = Default::default()
     }
 
     #[inline(always)]
@@ -92,6 +99,7 @@ impl Message for Collision {
         5
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -104,7 +112,6 @@ impl Message for Collision {
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._value = bfr.get_f32_le();
         self._type = bfr.get_u8();
-
         Ok(())
     }
 }

@@ -1,54 +1,56 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// The estimated stream velocity, typically for water or air
 /// streams.
 #[derive(Default)]
 pub struct EstimatedStreamVelocity {
-    /// IMC Header
-    pub header: Header,
-
+    /// Message Header.
+    pub _header: Header,
     /// X component (North).
     pub _x: f64,
-
     /// Y component (East).
     pub _y: f64,
-
     /// Z component (Down).
     pub _z: f64,
 }
 
 impl Message for EstimatedStreamVelocity {
-    fn new() -> Self
+    fn new() -> EstimatedStreamVelocity
     where
         Self: Sized,
     {
         let msg = EstimatedStreamVelocity {
-            header: Header::new(351),
-
-            _x: Default::default(),
-            _y: Default::default(),
-            _z: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = EstimatedStreamVelocity {
-            header: hdr,
-
+            _header: Header::new(351),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
@@ -66,20 +68,22 @@ impl Message for EstimatedStreamVelocity {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         351
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(351);
         self._x = Default::default();
         self._y = Default::default();
-        self._z = Default::default();
+        self._z = Default::default()
     }
 
     #[inline(always)]
@@ -87,6 +91,7 @@ impl Message for EstimatedStreamVelocity {
         24
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -101,7 +106,6 @@ impl Message for EstimatedStreamVelocity {
         self._x = bfr.get_f64_le();
         self._y = bfr.get_f64_le();
         self._z = bfr.get_f64_le();
-
         Ok(())
     }
 }

@@ -1,83 +1,73 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::MessageList;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use crate::DUNE_IMC_CONST_NULL_ID;
-
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::PlanDBInformation::PlanDBInformation;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
+use crate::MessageList;
+use crate::PlanDBInformation::PlanDBInformation;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// Characterizes the state of the entire plan database.
 #[derive(Default)]
 pub struct PlanDBState {
-    /// IMC Header
-    pub header: Header,
-
-    /// Number of stored plans.
+    /// Message Header.
+    pub _header: Header,
+    /// Plan -- Count.
     pub _plan_count: u16,
-
-    /// Size of all plans.The value equals the sum of the IMC payload
-    /// sizes for 'PlanSpecification' stored in the DB.
+    /// Plan -- Size of all plans.
     pub _plan_size: u32,
-
-    /// Time of last change (Epoch time).
+    /// Last Change -- Time.
     pub _change_time: f64,
-
-    /// IMC address for source of last DB change.
+    /// Last Change -- Source Address.
     pub _change_sid: u16,
-
-    /// IMC node name for source of last DB change.
+    /// Last Change -- Source Name.
     pub _change_sname: String,
-
-    /// MD5 database verification code. The MD5 hash sum is computed
-    /// over the stream formed by the MD5 of all plans, ordered by
-    /// plan id, in compliance with RFC 1321.
+    /// MD5.
     pub _md5: Vec<u8>,
-
-    /// Individual information for plans.
+    /// Plan info.
     pub _plans_info: MessageList<PlanDBInformation>,
 }
 
 impl Message for PlanDBState {
-    fn new() -> Self
+    fn new() -> PlanDBState
     where
         Self: Sized,
     {
         let msg = PlanDBState {
-            header: Header::new(557),
-
+            _header: Header::new(557),
             _plan_count: Default::default(),
             _plan_size: Default::default(),
             _change_time: Default::default(),
             _change_sid: Default::default(),
             _change_sname: Default::default(),
             _md5: Default::default(),
-            _plans_info: vec![],
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = PlanDBState {
-            header: hdr,
-
-            _plan_count: Default::default(),
-            _plan_size: Default::default(),
-            _change_time: Default::default(),
-            _change_sid: Default::default(),
-            _change_sname: Default::default(),
-            _md5: Default::default(),
-            _plans_info: vec![],
+            _plans_info: Default::default(),
         };
 
         msg
@@ -92,24 +82,26 @@ impl Message for PlanDBState {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         557
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(557);
         self._plan_count = Default::default();
         self._plan_size = Default::default();
         self._change_time = Default::default();
         self._change_sid = Default::default();
         self._change_sname = Default::default();
         self._md5 = Default::default();
-        self._plans_info = Default::default();
+        self._plans_info = Default::default()
     }
 
     #[inline(always)]
@@ -117,13 +109,11 @@ impl Message for PlanDBState {
         16
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._change_sname.len() + 2;
-
         dyn_size += self._md5.len() + 2;
-
         message_list_serialization_size!(dyn_size, self._plans_info);
 
         dyn_size
@@ -147,7 +137,6 @@ impl Message for PlanDBState {
         deserialize_string!(bfr, self._change_sname);
         deserialize_bytes!(bfr, self._md5);
         self._plans_info = deserialize_message_list_as::<PlanDBInformation>(bfr)?;
-
         Ok(())
     }
 }

@@ -1,56 +1,60 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::MessageList;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use crate::DUNE_IMC_CONST_NULL_ID;
-
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::TrexAttribute::TrexAttribute;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
+use crate::MessageList;
+use crate::TrexAttribute::TrexAttribute;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
 #[derive(Default)]
 pub struct TrexToken {
-    /// IMC Header
-    pub header: Header,
-
+    /// Message Header.
+    pub _header: Header,
+    /// Timeline.
     pub _timeline: String,
-
+    /// Predicate.
     pub _predicate: String,
-
+    /// Attributes.
     pub _attributes: MessageList<TrexAttribute>,
 }
 
 impl Message for TrexToken {
-    fn new() -> Self
+    fn new() -> TrexToken
     where
         Self: Sized,
     {
         let msg = TrexToken {
-            header: Header::new(657),
-
+            _header: Header::new(657),
             _timeline: Default::default(),
             _predicate: Default::default(),
-            _attributes: vec![],
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = TrexToken {
-            header: hdr,
-
-            _timeline: Default::default(),
-            _predicate: Default::default(),
-            _attributes: vec![],
+            _attributes: Default::default(),
         };
 
         msg
@@ -65,20 +69,22 @@ impl Message for TrexToken {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         657
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(657);
         self._timeline = Default::default();
         self._predicate = Default::default();
-        self._attributes = Default::default();
+        self._attributes = Default::default()
     }
 
     #[inline(always)]
@@ -86,13 +92,11 @@ impl Message for TrexToken {
         0
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._timeline.len() + 2;
-
         dyn_size += self._predicate.len() + 2;
-
         message_list_serialization_size!(dyn_size, self._attributes);
 
         dyn_size
@@ -108,7 +112,6 @@ impl Message for TrexToken {
         deserialize_string!(bfr, self._timeline);
         deserialize_string!(bfr, self._predicate);
         self._attributes = deserialize_message_list_as::<TrexAttribute>(bfr)?;
-
         Ok(())
     }
 }

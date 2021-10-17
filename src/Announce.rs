@@ -1,73 +1,63 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// A system description that is to be broadcasted to other systems.
 #[derive(Default)]
 pub struct Announce {
-    /// IMC Header
-    pub header: Header,
-
-    /// System name.
+    /// Message Header.
+    pub _header: Header,
+    /// System Name.
     pub _sys_name: String,
-
-    /// System type.
+    /// System Type.
     pub _sys_type: u8,
-
-    /// The owner IMC system ID.
+    /// Control Owner.
     pub _owner: u16,
-
-    /// WGS-84 Latitude. If lat=0 and lon=0 means location value is unknown.
+    /// Latitude WGS-84.
     pub _lat: f64,
-
-    /// WGS-84 Longitude. If lat=0 and lon=0 means location value is unknown.
+    /// Longitude WGS-84.
     pub _lon: f64,
-
-    /// Height above WGS-84 ellipsoid.
+    /// Height WGS-84.
     pub _height: f32,
-
-    /// Semicolon separated list of URLs. Examples of such URLs are:
-    ///  
-    /// - *imc+udp://192.168.106.34:6002/*
-    /// - *dune://0.0.0.0/uid/1294925553839635/*
-    /// - *http://192.168.106.34/dune/*.
+    /// Services.
     pub _services: String,
 }
 
 impl Message for Announce {
-    fn new() -> Self
+    fn new() -> Announce
     where
         Self: Sized,
     {
         let msg = Announce {
-            header: Header::new(151),
-
-            _sys_name: Default::default(),
-            _sys_type: Default::default(),
-            _owner: Default::default(),
-            _lat: Default::default(),
-            _lon: Default::default(),
-            _height: Default::default(),
-            _services: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = Announce {
-            header: hdr,
-
+            _header: Header::new(151),
             _sys_name: Default::default(),
             _sys_type: Default::default(),
             _owner: Default::default(),
@@ -89,24 +79,26 @@ impl Message for Announce {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         151
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(151);
         self._sys_name = Default::default();
         self._sys_type = Default::default();
         self._owner = Default::default();
         self._lat = Default::default();
         self._lon = Default::default();
         self._height = Default::default();
-        self._services = Default::default();
+        self._services = Default::default()
     }
 
     #[inline(always)]
@@ -114,11 +106,10 @@ impl Message for Announce {
         23
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._sys_name.len() + 2;
-
         dyn_size += self._services.len() + 2;
 
         dyn_size
@@ -142,7 +133,6 @@ impl Message for Announce {
         self._lon = bfr.get_f64_le();
         self._height = bfr.get_f32_le();
         deserialize_string!(bfr, self._services);
-
         Ok(())
     }
 }

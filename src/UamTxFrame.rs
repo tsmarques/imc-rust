@@ -1,73 +1,67 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Flags.
 #[allow(non_camel_case_types)]
-pub mod Flags {
-    // Acknowledgement
-    pub const _ACK: u32 = 0x01;
-    // Delayed
-    pub const _DELAYED: u32 = 0x02;
+pub mod FlagsBits {
+    /// Acknowledgement.
+    pub const UTF_ACK: u32 = 0x01;
+    /// Delayed.
+    pub const UTF_DELAYED: u32 = 0x02;
 }
 
-/// On modems that support it, this flag shall be used to request an
-/// acknowledgment of reception from the receiving node.
+/// This message shall be sent to acoustic modem drivers to request
+/// transmission of a data frame via the acoustic channel.
 #[derive(Default)]
 pub struct UamTxFrame {
-    /// IMC Header
-    pub header: Header,
-
-    /// A sequence identifier that should be incremented for each
-    /// request. This number will then be used to issue transmission
-    /// status updates via the message UamTxStatus.
+    /// Message Header.
+    pub _header: Header,
+    /// Sequence Id.
     pub _seq: u16,
-
-    /// The canonical name of the destination system. If supported, the
-    /// special destination 'broadcast' shall be used to dispatch messages
-    /// to all nodes.
+    /// Destination System.
     pub _sys_dst: String,
-
-    /// On modems that support it, this flag shall be used to delay the
-    /// frame transmission until the modem needs to transmit control
-    /// data (e.g., acknowledgment of reception, etc).
+    /// Flags.
     pub _flags: u8,
-
-    /// The actual data frame to transmit. The data size shall not exceed
-    /// the MTU of the acoustic modem.
+    /// Data.
     pub _data: Vec<u8>,
 }
 
 impl Message for UamTxFrame {
-    fn new() -> Self
+    fn new() -> UamTxFrame
     where
         Self: Sized,
     {
         let msg = UamTxFrame {
-            header: Header::new(814),
-
-            _seq: Default::default(),
-            _sys_dst: Default::default(),
-            _flags: Default::default(),
-            _data: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = UamTxFrame {
-            header: hdr,
-
+            _header: Header::new(814),
             _seq: Default::default(),
             _sys_dst: Default::default(),
             _flags: Default::default(),
@@ -86,21 +80,23 @@ impl Message for UamTxFrame {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         814
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(814);
         self._seq = Default::default();
         self._sys_dst = Default::default();
         self._flags = Default::default();
-        self._data = Default::default();
+        self._data = Default::default()
     }
 
     #[inline(always)]
@@ -108,11 +104,10 @@ impl Message for UamTxFrame {
         3
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._sys_dst.len() + 2;
-
         dyn_size += self._data.len() + 2;
 
         dyn_size
@@ -130,7 +125,6 @@ impl Message for UamTxFrame {
         deserialize_string!(bfr, self._sys_dst);
         self._flags = bfr.get_u8();
         deserialize_bytes!(bfr, self._data);
-
         Ok(())
     }
 }

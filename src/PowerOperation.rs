@@ -1,74 +1,74 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Operation.
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    // Power Down
+    /// Power Down.
     POP_PWR_DOWN = 0,
-    // Power Down in Progress
+    /// Power Down in Progress.
     POP_PWR_DOWN_IP = 1,
-    // Power Down Aborted
+    /// Power Down Aborted.
     POP_PWR_DOWN_ABORTED = 2,
-    // Schedule Power Down
+    /// Schedule Power Down.
     POP_SCHED_PWR_DOWN = 3,
-    // Power Up
+    /// Power Up.
     POP_PWR_UP = 4,
-    // Power Up in Progress
+    /// Power Up in Progress.
     POP_PWR_UP_IP = 5,
-    // Schedule Power Up
+    /// Schedule Power Up.
     POP_SCHED_PWR_UP = 6,
 }
 
-/// Request the destination entity of this message to power up
-/// it's devices at the time given in the field 'sched_time'. If
-/// the destination entity is the special entity '0' the whole
-/// system will power up.
+/// This message allows controlling the system's power lines.
 #[derive(Default)]
 pub struct PowerOperation {
-    /// IMC Header
-    pub header: Header,
-
-    /// The latest power up request is in progress.
+    /// Message Header.
+    pub _header: Header,
+    /// Operation.
     pub _op: u8,
-
-    /// Time remaining to complete operation.
+    /// Time Remaining.
     pub _time_remain: f32,
-
-    /// Scheduled time of operation.
+    /// Scheduled Time.
     pub _sched_time: f64,
 }
 
 impl Message for PowerOperation {
-    fn new() -> Self
+    fn new() -> PowerOperation
     where
         Self: Sized,
     {
         let msg = PowerOperation {
-            header: Header::new(308),
-
-            _op: Default::default(),
-            _time_remain: Default::default(),
-            _sched_time: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = PowerOperation {
-            header: hdr,
-
+            _header: Header::new(308),
             _op: Default::default(),
             _time_remain: Default::default(),
             _sched_time: Default::default(),
@@ -86,20 +86,22 @@ impl Message for PowerOperation {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         308
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(308);
         self._op = Default::default();
         self._time_remain = Default::default();
-        self._sched_time = Default::default();
+        self._sched_time = Default::default()
     }
 
     #[inline(always)]
@@ -107,6 +109,7 @@ impl Message for PowerOperation {
         13
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -121,7 +124,6 @@ impl Message for PowerOperation {
         self._op = bfr.get_u8();
         self._time_remain = bfr.get_f32_le();
         self._sched_time = bfr.get_f64_le();
-
         Ok(())
     }
 }

@@ -1,79 +1,73 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::MessageGroup::Maneuver;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Direction.
 #[allow(non_camel_case_types)]
 pub enum DirectionEnum {
-    // Let the vehicle decide
+    /// Let the vehicle decide.
     DIR_AUTO = 0,
-    // Attempt to move forward
+    /// Attempt to move forward.
     DIR_FORWARD = 1,
-    // Attempt to move backward
+    /// Attempt to move backward.
     DIR_BACKWARD = 2,
 }
 
-/// message-group: Maneuver
-// impl Maneuver for Dislodge { }
-
-/// A &quot;Dislodge&quot; is a maneuver ordering the vehicle to attempt a
+/// A "Dislodge" is a maneuver ordering the vehicle to attempt a
 /// series of thruster operations that will hopefully get it
 /// unstuck from an entangled condition.
-///  
 /// Parameters are RPMs for the motor when attempting dislodge and
 /// and a flag specifying whether the thrust burst should be attempted
 /// forward, backward or auto (letting the vehicle decide).
-/// message-group: Maneuver
 #[derive(Default)]
 pub struct Dislodge {
-    /// IMC Header
-    pub header: Header,
-
-    /// The amount of time the maneuver is allowed to run.
+    /// Message Header.
+    pub _header: Header,
+    /// Timeout.
     pub _timeout: u16,
-
-    /// Maneuver RPM reference.
+    /// RPM.
     pub _rpm: f32,
-
-    /// Direction to which the vehicle should attempt to unstuck.
+    /// Direction.
     pub _direction: u8,
-
     /// Custom settings for maneuver.
     pub _custom: String,
 }
 
 impl Message for Dislodge {
-    fn new() -> Self
+    fn new() -> Dislodge
     where
         Self: Sized,
     {
         let msg = Dislodge {
-            header: Header::new(483),
-
-            _timeout: Default::default(),
-            _rpm: Default::default(),
-            _direction: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = Dislodge {
-            header: hdr,
-
+            _header: Header::new(483),
             _timeout: Default::default(),
             _rpm: Default::default(),
             _direction: Default::default(),
@@ -92,21 +86,23 @@ impl Message for Dislodge {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         483
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(483);
         self._timeout = Default::default();
         self._rpm = Default::default();
         self._direction = Default::default();
-        self._custom = Default::default();
+        self._custom = Default::default()
     }
 
     #[inline(always)]
@@ -114,9 +110,9 @@ impl Message for Dislodge {
         7
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._custom.len() + 2;
 
         dyn_size
@@ -134,7 +130,6 @@ impl Message for Dislodge {
         self._rpm = bfr.get_f32_le();
         self._direction = bfr.get_u8();
         deserialize_string!(bfr, self._custom);
-
         Ok(())
     }
 }

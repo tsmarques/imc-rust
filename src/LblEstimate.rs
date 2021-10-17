@@ -1,69 +1,63 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::LblBeacon::LblBeacon;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::LblBeacon::LblBeacon;
+use crate::Message::*;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// LBL Beacon position estimate.
 #[derive(Default)]
 pub struct LblEstimate {
-    /// IMC Header
-    pub header: Header,
-
-    /// LBL Beacon configuration estimate.
+    /// Message Header.
+    pub _header: Header,
+    /// LBL Beacon Configuration.
     pub _beacon: Option<LblBeacon>,
-
-    /// The North position offset of the NED field with respect to origin.
+    /// North position.
     pub _x: f32,
-
-    /// The East position offset of the NED field with respect to origin.
+    /// East position.
     pub _y: f32,
-
-    /// The North offset variance of the North/East/Down
-    /// field with respect to LLH.
+    /// North position variance.
     pub _var_x: f32,
-
-    /// The East offset variance of the North/East/Down
-    /// field with respect to LLH.
+    /// East position variance.
     pub _var_y: f32,
-
-    /// Distance between current LBL Beacon position and filter estimation.
+    /// Distance.
     pub _distance: f32,
 }
 
 impl Message for LblEstimate {
-    fn new() -> Self
+    fn new() -> LblEstimate
     where
         Self: Sized,
     {
         let msg = LblEstimate {
-            header: Header::new(360),
-
-            _beacon: Default::default(),
-            _x: Default::default(),
-            _y: Default::default(),
-            _var_x: Default::default(),
-            _var_y: Default::default(),
-            _distance: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = LblEstimate {
-            header: hdr,
-
+            _header: Header::new(360),
             _beacon: Default::default(),
             _x: Default::default(),
             _y: Default::default(),
@@ -84,23 +78,25 @@ impl Message for LblEstimate {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         360
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(360);
         self._beacon = Default::default();
         self._x = Default::default();
         self._y = Default::default();
         self._var_x = Default::default();
         self._var_y = Default::default();
-        self._distance = Default::default();
+        self._distance = Default::default()
     }
 
     #[inline(always)]
@@ -108,9 +104,9 @@ impl Message for LblEstimate {
         20
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         inline_message_serialization_size!(dyn_size, self._beacon);
 
         dyn_size
@@ -132,7 +128,6 @@ impl Message for LblEstimate {
         self._var_x = bfr.get_f32_le();
         self._var_y = bfr.get_f32_le();
         self._distance = bfr.get_f32_le();
-
         Ok(())
     }
 }

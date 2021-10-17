@@ -1,76 +1,71 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Status.
 #[allow(non_camel_case_types)]
 pub enum StatusEnum {
-    // Mounted
+    /// Mounted.
     SDST_MOUNTED = 0,
-    // Unmounted
+    /// Unmounted.
     SDST_UNMOUNTED = 1,
-    // Unknown
+    /// Unknown.
     SDST_UNKWN = 2,
 }
 
-/// Storage device is unmounted
 #[derive(Default)]
 pub struct StoragePartition {
-    /// IMC Header
-    pub header: Header,
-
-    /// Partition path, e.g. /dev/sdb1 or nvme0n1p1.
+    /// Message Header.
+    pub _header: Header,
+    /// Path.
     pub _part_path: String,
-
-    /// User defined label
+    /// Label.
     pub _label: String,
-
-    /// Partition size in MiB.
+    /// Size.
     pub _size: u32,
-
-    /// Used partition size, as a percentage.
+    /// Used Size.
     pub _used_size: f32,
-
-    /// Text description of the filesystem type, e.g. ext4. It should match
-    /// the real name of the type.
+    /// Filesystem Type.
     pub _fstype: String,
-
-    /// Storage device state is unknown
+    /// Status.
     pub _status: u8,
 }
 
 impl Message for StoragePartition {
-    fn new() -> Self
+    fn new() -> StoragePartition
     where
         Self: Sized,
     {
         let msg = StoragePartition {
-            header: Header::new(109),
-
-            _part_path: Default::default(),
-            _label: Default::default(),
-            _size: Default::default(),
-            _used_size: Default::default(),
-            _fstype: Default::default(),
-            _status: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = StoragePartition {
-            header: hdr,
-
+            _header: Header::new(109),
             _part_path: Default::default(),
             _label: Default::default(),
             _size: Default::default(),
@@ -91,23 +86,25 @@ impl Message for StoragePartition {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         109
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(109);
         self._part_path = Default::default();
         self._label = Default::default();
         self._size = Default::default();
         self._used_size = Default::default();
         self._fstype = Default::default();
-        self._status = Default::default();
+        self._status = Default::default()
     }
 
     #[inline(always)]
@@ -115,13 +112,11 @@ impl Message for StoragePartition {
         9
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._part_path.len() + 2;
-
         dyn_size += self._label.len() + 2;
-
         dyn_size += self._fstype.len() + 2;
 
         dyn_size
@@ -143,7 +138,6 @@ impl Message for StoragePartition {
         self._used_size = bfr.get_f32_le();
         deserialize_string!(bfr, self._fstype);
         self._status = bfr.get_u8();
-
         Ok(())
     }
 }

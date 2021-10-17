@@ -1,63 +1,55 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::MessageGroup::Maneuver;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
-
-/// message-group: Maneuver
-// impl Maneuver for FollowCommand { }
+use crate::Header::Header;
+use crate::Message::*;
 
 /// This maneuver follows a direct command given by an external entity.
-/// message-group: Maneuver
 #[derive(Default)]
 pub struct FollowCommand {
-    /// IMC Header
-    pub header: Header,
-
-    /// The IMC identifier of the source system that is allowed to provide command to this maneuver.
-    /// If the value ''0xFFFF'' is used, any system is allowed to command references.
+    /// Message Header.
+    pub _header: Header,
+    /// Controlling Source.
     pub _control_src: u16,
-
-    /// The entity identifier of the entity that is allowed to provide commands to this maneuver.
-    /// If the value ''0xFF'' is used, any entity is allowed to command references.
+    /// Controlling Entity.
     pub _control_ent: u8,
-
-    /// The ammount of time, in seconds, after which the maneuver will be terminated if no new command has
-    /// been received. In other words, the controlling entity should send command updates in shorter periods than
-    /// 'timeout'.
+    /// Reference Update Timeout.
     pub _timeout: f32,
 }
 
 impl Message for FollowCommand {
-    fn new() -> Self
+    fn new() -> FollowCommand
     where
         Self: Sized,
     {
         let msg = FollowCommand {
-            header: Header::new(496),
-
-            _control_src: Default::default(),
-            _control_ent: Default::default(),
-            _timeout: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = FollowCommand {
-            header: hdr,
-
+            _header: Header::new(496),
             _control_src: Default::default(),
             _control_ent: Default::default(),
             _timeout: Default::default(),
@@ -75,20 +67,22 @@ impl Message for FollowCommand {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         496
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(496);
         self._control_src = Default::default();
         self._control_ent = Default::default();
-        self._timeout = Default::default();
+        self._timeout = Default::default()
     }
 
     #[inline(always)]
@@ -96,6 +90,7 @@ impl Message for FollowCommand {
         7
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -110,7 +105,6 @@ impl Message for FollowCommand {
         self._control_src = bfr.get_u16_le();
         self._control_ent = bfr.get_u8();
         self._timeout = bfr.get_f32_le();
-
         Ok(())
     }
 }

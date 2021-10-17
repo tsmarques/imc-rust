@@ -1,56 +1,53 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::MessageGroup::Maneuver;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
-
-/// message-group: Maneuver
-// impl Maneuver for IdleManeuver { }
+use crate::Header::Header;
+use crate::Message::*;
 
 /// Causes the vehicle to stay idle for some time.
-/// message-group: Maneuver
 #[derive(Default)]
 pub struct IdleManeuver {
-    /// IMC Header
-    pub header: Header,
-
-    /// Optional duration of the Idle maneuver. Use '0' for unlimited
-    /// duration time (maneuver will have to be explicitly stopped).
+    /// Message Header.
+    pub _header: Header,
+    /// Duration.
     pub _duration: u16,
-
     /// Custom settings for maneuver.
     pub _custom: String,
 }
 
 impl Message for IdleManeuver {
-    fn new() -> Self
+    fn new() -> IdleManeuver
     where
         Self: Sized,
     {
         let msg = IdleManeuver {
-            header: Header::new(454),
-
-            _duration: Default::default(),
-            _custom: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = IdleManeuver {
-            header: hdr,
-
+            _header: Header::new(454),
             _duration: Default::default(),
             _custom: Default::default(),
         };
@@ -67,19 +64,21 @@ impl Message for IdleManeuver {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         454
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(454);
         self._duration = Default::default();
-        self._custom = Default::default();
+        self._custom = Default::default()
     }
 
     #[inline(always)]
@@ -87,9 +86,9 @@ impl Message for IdleManeuver {
         2
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._custom.len() + 2;
 
         dyn_size
@@ -103,7 +102,6 @@ impl Message for IdleManeuver {
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._duration = bfr.get_u16_le();
         deserialize_string!(bfr, self._custom);
-
         Ok(())
     }
 }

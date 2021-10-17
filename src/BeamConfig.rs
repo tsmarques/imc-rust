@@ -1,51 +1,53 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// Beam configuration of the device.
 #[derive(Default)]
 pub struct BeamConfig {
-    /// IMC Header
-    pub header: Header,
-
-    /// Beam width of the instrument. A negative number denotes that
-    /// this information is not available or is not applicable.
+    /// Message Header.
+    pub _header: Header,
+    /// Beam Width.
     pub _beam_width: f32,
-
-    /// Beam height of the instrument. A negative number denotes that
-    /// this information is not available or is not applicable.
+    /// Beam Height.
     pub _beam_height: f32,
 }
 
 impl Message for BeamConfig {
-    fn new() -> Self
+    fn new() -> BeamConfig
     where
         Self: Sized,
     {
         let msg = BeamConfig {
-            header: Header::new(283),
-
-            _beam_width: Default::default(),
-            _beam_height: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = BeamConfig {
-            header: hdr,
-
+            _header: Header::new(283),
             _beam_width: Default::default(),
             _beam_height: Default::default(),
         };
@@ -62,19 +64,21 @@ impl Message for BeamConfig {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         283
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(283);
         self._beam_width = Default::default();
-        self._beam_height = Default::default();
+        self._beam_height = Default::default()
     }
 
     #[inline(always)]
@@ -82,6 +86,7 @@ impl Message for BeamConfig {
         8
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -94,7 +99,6 @@ impl Message for BeamConfig {
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._beam_width = bfr.get_f32_le();
         self._beam_height = bfr.get_f32_le();
-
         Ok(())
     }
 }

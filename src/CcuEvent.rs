@@ -1,72 +1,79 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
+/// Event Type.
 #[allow(non_camel_case_types)]
 pub enum EventTypeEnum {
-    // Log Book Entry Added
+    /// Log Book Entry Added.
     EVT_LOG_ENTRY = 1,
-    // Plan Added
+    /// Plan Added.
     EVT_PLAN_ADDED = 2,
-    // Plan Removed
+    /// Plan Removed.
     EVT_PLAN_REMOVED = 3,
-    // Plan Changed
+    /// Plan Changed.
     EVT_PLAN_CHANGED = 4,
-    // Map feature added
+    /// Map feature added.
     EVT_MAP_FEATURE_ADDED = 5,
-    // Map feature removed
+    /// Map feature removed.
     EVT_MAP_FEATURE_REMOVED = 6,
-    // Map feature changed
+    /// Map feature changed.
     EVT_MAP_FEATURE_CHANGED = 7,
-    // The sender is now teleoperating the vehicle
+    /// The sender is now teleoperating the vehicle.
     EVT_TELEOPERATION_STARTED = 8,
-    // The sender stopped teleoperating the vehicle
+    /// The sender stopped teleoperating the vehicle.
     EVT_TELEOPERATION_ENDED = 9,
 }
 
 /// This message is used to signal events among running CCUs.
 #[derive(Default)]
 pub struct CcuEvent {
-    /// IMC Header
-    pub header: Header,
-
+    /// Message Header.
+    pub _header: Header,
+    /// Event Type.
     pub _type: u8,
-
+    /// Identifier.
     pub _id: String,
-
+    /// Additional Data.
     pub _arg: Option<Box<dyn Message>>,
 }
 
 impl Message for CcuEvent {
-    fn new() -> Self
+    fn new() -> CcuEvent
     where
         Self: Sized,
     {
         let msg = CcuEvent {
-            header: Header::new(606),
-
-            _type: Default::default(),
-            _id: Default::default(),
-            _arg: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = CcuEvent {
-            header: hdr,
-
+            _header: Header::new(606),
             _type: Default::default(),
             _id: Default::default(),
             _arg: Default::default(),
@@ -84,20 +91,22 @@ impl Message for CcuEvent {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         606
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(606);
         self._type = Default::default();
         self._id = Default::default();
-        self._arg = Default::default();
+        self._arg = Default::default()
     }
 
     #[inline(always)]
@@ -105,11 +114,10 @@ impl Message for CcuEvent {
         1
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._id.len() + 2;
-
         inline_message_serialization_size!(dyn_size, self._arg);
 
         dyn_size
@@ -125,7 +133,6 @@ impl Message for CcuEvent {
         self._type = bfr.get_u8();
         deserialize_string!(bfr, self._id);
         self._arg = deserialize_inline(bfr).ok();
-
         Ok(())
     }
 }

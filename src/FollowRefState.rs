@@ -1,92 +1,92 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::Reference::Reference;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
+use crate::Reference::Reference;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
+/// State.
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    // Waiting for first reference
+    /// Waiting for first reference.
     FR_WAIT = 1,
-    // Going towards received reference
+    /// Going towards received reference.
     FR_GOTO = 2,
-    // Loitering after arriving at the reference
+    /// Loitering after arriving at the reference.
     FR_LOITER = 3,
-    // Hovering after arriving at the reference
+    /// Hovering after arriving at the reference.
     FR_HOVER = 4,
-    // Moving in z after arriving at the target cylinder
+    /// Moving in z after arriving at the target cylinder.
     FR_ELEVATOR = 5,
-    // Controlling system timed out
+    /// Controlling system timed out.
     FR_TIMEOUT = 6,
 }
 
+/// Proximity.
 #[allow(non_camel_case_types)]
-pub mod Proximity {
-    // Far from the destination
-    pub const _FAR: u32 = 0x01;
-    // Near in the horizontal plane
-    pub const _XY_NEAR: u32 = 0x02;
-    // Near in the vertical plane
-    pub const _Z_NEAR: u32 = 0x04;
-    // Unreachable in the horizontal plane
-    pub const _XY_UNREACHABLE: u32 = 0x08;
-    // Unreachable in the vertical plane
-    pub const _Z_UNREACHABLE: u32 = 0x10;
+pub mod ProximityBits {
+    /// Far from the destination.
+    pub const PROX_FAR: u32 = 0x01;
+    /// Near in the horizontal plane.
+    pub const PROX_XY_NEAR: u32 = 0x02;
+    /// Near in the vertical plane.
+    pub const PROX_Z_NEAR: u32 = 0x04;
+    /// Unreachable in the horizontal plane.
+    pub const PROX_XY_UNREACHABLE: u32 = 0x08;
+    /// Unreachable in the vertical plane.
+    pub const PROX_Z_UNREACHABLE: u32 = 0x10;
 }
 
 #[derive(Default)]
 pub struct FollowRefState {
-    /// IMC Header
-    pub header: Header,
-
-    /// The IMC identifier of the source system that is allowed to control the vehicle.
-    /// If the value ''0xFFFF'' is used, any system is allowed to command references.
+    /// Message Header.
+    pub _header: Header,
+    /// Controlling Source.
     pub _control_src: u16,
-
-    /// The entity identifier of the entity that is allowed to control the vehicle.
-    /// If the value ''0xFF'' is used, any entity is allowed to command references.
+    /// Controlling Entity.
     pub _control_ent: u8,
-
-    /// Reference currently being followed.
+    /// Reference.
     pub _reference: Option<Reference>,
-
+    /// State.
     pub _state: u8,
-
+    /// Proximity.
     pub _proximity: u8,
 }
 
 impl Message for FollowRefState {
-    fn new() -> Self
+    fn new() -> FollowRefState
     where
         Self: Sized,
     {
         let msg = FollowRefState {
-            header: Header::new(480),
-
-            _control_src: Default::default(),
-            _control_ent: Default::default(),
-            _reference: Default::default(),
-            _state: Default::default(),
-            _proximity: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = FollowRefState {
-            header: hdr,
-
+            _header: Header::new(480),
             _control_src: Default::default(),
             _control_ent: Default::default(),
             _reference: Default::default(),
@@ -106,22 +106,24 @@ impl Message for FollowRefState {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         480
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(480);
         self._control_src = Default::default();
         self._control_ent = Default::default();
         self._reference = Default::default();
         self._state = Default::default();
-        self._proximity = Default::default();
+        self._proximity = Default::default()
     }
 
     #[inline(always)]
@@ -129,9 +131,9 @@ impl Message for FollowRefState {
         5
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         inline_message_serialization_size!(dyn_size, self._reference);
 
         dyn_size
@@ -151,7 +153,6 @@ impl Message for FollowRefState {
         self._reference = deserialize_inline_as::<Reference>(bfr).ok();
         self._state = bfr.get_u8();
         self._proximity = bfr.get_u8();
-
         Ok(())
     }
 }

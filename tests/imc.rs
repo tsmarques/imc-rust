@@ -8,7 +8,7 @@ use imc::DataSanity::DataSanity;
 use imc::EstimatedState::EstimatedState;
 use imc::EstimatedStreamVelocity::EstimatedStreamVelocity;
 use imc::FollowReference::FollowReference;
-use imc::GpsFix::{GpsFix};
+use imc::GpsFix::GpsFix;
 use imc::Header::Header;
 use imc::Heartbeat::Heartbeat;
 use imc::LoggingControl::{ControlOperationEnum, LoggingControl};

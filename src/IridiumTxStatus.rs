@@ -1,64 +1,69 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Status Code.
 #[allow(non_camel_case_types)]
 pub enum StatusCodeEnum {
-    // Successfull transmission
+    /// Successfull transmission.
     TXSTATUS_OK = 1,
-    // Error while trying to transmit message
+    /// Error while trying to transmit message.
     TXSTATUS_ERROR = 2,
-    // Message has been queued for transmission
+    /// Message has been queued for transmission.
     TXSTATUS_QUEUED = 3,
-    // Message is currently being transmitted
+    /// Message is currently being transmitted.
     TXSTATUS_TRANSMIT = 4,
-    // Message's TTL has expired. Transmition cancelled.
+    /// Message's TTL has expired. Transmition cancelled..
     TXSTATUS_EXPIRED = 5,
 }
 
 #[derive(Default)]
 pub struct IridiumTxStatus {
-    /// IMC Header
-    pub header: Header,
-
-    /// The request identifier used to receive transmission updates
+    /// Message Header.
+    pub _header: Header,
+    /// Request Identifier.
     pub _req_id: u16,
-
+    /// Status Code.
     pub _status: u8,
-
+    /// Status Text.
     pub _text: String,
 }
 
 impl Message for IridiumTxStatus {
-    fn new() -> Self
+    fn new() -> IridiumTxStatus
     where
         Self: Sized,
     {
         let msg = IridiumTxStatus {
-            header: Header::new(172),
-
-            _req_id: Default::default(),
-            _status: Default::default(),
-            _text: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = IridiumTxStatus {
-            header: hdr,
-
+            _header: Header::new(172),
             _req_id: Default::default(),
             _status: Default::default(),
             _text: Default::default(),
@@ -76,20 +81,22 @@ impl Message for IridiumTxStatus {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         172
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(172);
         self._req_id = Default::default();
         self._status = Default::default();
-        self._text = Default::default();
+        self._text = Default::default()
     }
 
     #[inline(always)]
@@ -97,9 +104,9 @@ impl Message for IridiumTxStatus {
         3
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._text.len() + 2;
 
         dyn_size
@@ -115,7 +122,6 @@ impl Message for IridiumTxStatus {
         self._req_id = bfr.get_u16_le();
         self._status = bfr.get_u8();
         deserialize_string!(bfr, self._text);
-
         Ok(())
     }
 }

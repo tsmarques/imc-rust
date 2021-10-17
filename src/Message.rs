@@ -110,11 +110,6 @@ pub trait Message {
     where
         Self: Sized;
 
-    /// Construct from existing header
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized;
-
     /// Retrieve message's identification number.
     fn static_id() -> u16
     where

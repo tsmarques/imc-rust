@@ -1,12 +1,36 @@
 #![allow(non_snake_case)]
 #![allow(dead_code)]
 
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
+
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
+
+/// Base
 pub mod Header;
 pub mod Message;
 pub mod MessageGroup;
 pub mod factory;
 pub mod packet;
-
 pub type MessageList<T> = Vec<T>;
 
 pub mod Abort;
@@ -221,145 +245,124 @@ pub mod WaterDensity;
 pub mod WaterVelocity;
 pub mod YoYo;
 
+/// IMC Constants
 pub const DUNE_IMC_VERSION: &'static str = "5.4.24";
-
-// IMC Synchronization number
 pub const DUNE_IMC_CONST_SYNC: u16 = 0xFE54;
-
-// Reversed synchronization number.
 pub const DUNE_IMC_CONST_SYNC_REV: u16 = 0x54FE;
-
-// IMC's header size
 pub const IMC_CONST_HEADER_SIZE: u8 = 20;
-
-// IMC's footer size
 pub const IMC_CONST_FOOTER_SIZE: u8 = 2;
-
-// Unknown entity identifier.
 pub const IMC_CONST_UNK_EID: u8 = 255;
-
-// Identification number of the null message.
 pub const DUNE_IMC_CONST_NULL_ID: u16 = 65535;
-
-// Maximum message data size.
 pub const DUNE_IMC_CONST_MAX_SIZE: usize = 65535;
-
-// System entity identifier.
 pub const DUNE_IMC_CONST_SYS_EID: u8 = 0;
 
 /// Global Enumerators
 
+/// Speed Units.
 #[allow(non_camel_case_types)]
-pub enum SpeedUnitsEnum {
-    // Meters per second
+pub enum SpeedUnits {
+    /// Meters per second.
     SUNITS_METERS_PS = 0,
-    // RPM
+    /// RPM.
     SUNITS_RPM = 1,
-    // Percentage
+    /// Percentage.
     SUNITS_PERCENTAGE = 2,
 }
 
+/// System Type.
 #[allow(non_camel_case_types)]
-pub enum SystemTypeEnum {
-    // CCU
+pub enum SystemType {
+    /// CCU.
     SYSTEMTYPE_CCU = 0,
-    // Human-portable Sensor
+    /// Human-portable Sensor.
     SYSTEMTYPE_HUMANSENSOR = 1,
-    // UUV
+    /// UUV.
     SYSTEMTYPE_UUV = 2,
-    // USV
+    /// USV.
     SYSTEMTYPE_USV = 3,
-    // UAV
+    /// UAV.
     SYSTEMTYPE_UAV = 4,
-    // UGV
+    /// UGV.
     SYSTEMTYPE_UGV = 5,
-    // Static sensor
+    /// Static sensor.
     SYSTEMTYPE_STATICSENSOR = 6,
-    // Mobile sensor
+    /// Mobile sensor.
     SYSTEMTYPE_MOBILESENSOR = 7,
-    // Wireless Sensor Network
+    /// Wireless Sensor Network.
     SYSTEMTYPE_WSN = 8,
 }
 
+/// Z Units.
 #[allow(non_camel_case_types)]
-pub enum ZUnitsEnum {
-    // None
+pub enum ZUnits {
+    /// None.
     Z_NONE = 0,
-    // Depth
+    /// Depth.
     Z_DEPTH = 1,
-    // Altitude
+    /// Altitude.
     Z_ALTITUDE = 2,
-    // Height
+    /// Height.
     Z_HEIGHT = 3,
 }
 
+/// RSSI Units.
 #[allow(non_camel_case_types)]
-pub enum RSSIUnitsEnum {
-    // Decibel
+pub enum RSSIUnits {
+    /// Decibel.
     RSSIUNITS_dB = 0,
-    // Percentage
+    /// Percentage.
     RSSIUNITS_PERCENTAGE = 1,
 }
 
 /// Global Bitfields
-
+/// Control Loops Mask.
 #[allow(non_camel_case_types)]
-pub mod ControlLoopsMask {
-    // None
-    pub const _NONE: u32 = 0x00000000;
-    // Path Control
-    pub const _PATH: u32 = 0x00000001;
-    // Teleoperation Control
-    pub const _TELEOPERATION: u32 = 0x00000002;
-    // Altitude Control
-    pub const _ALTITUDE: u32 = 0x00000004;
-    // Depth Control
-    pub const _DEPTH: u32 = 0x00000008;
-    // Roll Control
-    pub const _ROLL: u32 = 0x00000010;
-    // Pitch Control
-    pub const _PITCH: u32 = 0x00000020;
-    // Yaw Control
-    pub const _YAW: u32 = 0x00000040;
-    // Speed Control
-    pub const _SPEED: u32 = 0x00000080;
-    // Yaw Rate Control
-    pub const _YAW_RATE: u32 = 0x00000100;
-    // Torque Control
-    pub const _TORQUE: u32 = 0x00000400;
-    // Force Control
-    pub const _FORCE: u32 = 0x00000800;
-    // Non-overridable control
-    pub const _NO_OVERRIDE: u32 = 0x80000000;
-    // All
-    pub const _ALL: u32 = 0xFFFFFFFF;
+pub mod CLoopsMask {
+    /// None.
+    pub const CL_NONE: u32 = 0x00000000;
+    /// Path Control.
+    pub const CL_PATH: u32 = 0x00000001;
+    /// Teleoperation Control.
+    pub const CL_TELEOPERATION: u32 = 0x00000002;
+    /// Altitude Control.
+    pub const CL_ALTITUDE: u32 = 0x00000004;
+    /// Depth Control.
+    pub const CL_DEPTH: u32 = 0x00000008;
+    /// Roll Control.
+    pub const CL_ROLL: u32 = 0x00000010;
+    /// Pitch Control.
+    pub const CL_PITCH: u32 = 0x00000020;
+    /// Yaw Control.
+    pub const CL_YAW: u32 = 0x00000040;
+    /// Speed Control.
+    pub const CL_SPEED: u32 = 0x00000080;
+    /// Yaw Rate Control.
+    pub const CL_YAW_RATE: u32 = 0x00000100;
+    /// Torque Control.
+    pub const CL_TORQUE: u32 = 0x00000400;
+    /// Force Control.
+    pub const CL_FORCE: u32 = 0x00000800;
+    /// Non-overridable control.
+    pub const CL_NO_OVERRIDE: u32 = 0x80000000;
+    /// All.
+    pub const CL_ALL: u32 = 0xFFFFFFFF;
 }
 
+/// Operational Limits Mask.
 #[allow(non_camel_case_types)]
-pub mod OperationalLimitsMask {
-    // Maximum Depth
-    pub const _MAX_DEPTH: u32 = 0x01;
-    // Minimum Altitude
-    pub const _MIN_ALT: u32 = 0x02;
-    // Maximum Altitude
-    pub const _MAX_ALT: u32 = 0x04;
-    // Minimum Speed
-    pub const _MIN_SPEED: u32 = 0x08;
-    // Maximum Speed
-    pub const _MAX_SPEED: u32 = 0x10;
-    // Maximum Vertical Rate
-    pub const _MAX_VRATE: u32 = 0x20;
-    // Operation Area
-    pub const _AREA: u32 = 0x40;
-}
-
-pub mod utils {
-    use std::time::{SystemTime, UNIX_EPOCH};
-
-    pub(crate) fn get_timestamp_secs() -> f64 {
-        SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .expect("failed to get timestamp")
-            .as_secs_f64()
-    }
+pub mod OpLimitsMask {
+    /// Maximum Depth.
+    pub const OPL_MAX_DEPTH: u32 = 0x01;
+    /// Minimum Altitude.
+    pub const OPL_MIN_ALT: u32 = 0x02;
+    /// Maximum Altitude.
+    pub const OPL_MAX_ALT: u32 = 0x04;
+    /// Minimum Speed.
+    pub const OPL_MIN_SPEED: u32 = 0x08;
+    /// Maximum Speed.
+    pub const OPL_MAX_SPEED: u32 = 0x10;
+    /// Maximum Vertical Rate.
+    pub const OPL_MAX_VRATE: u32 = 0x20;
+    /// Operation Area.
+    pub const OPL_AREA: u32 = 0x40;
 }

@@ -1,68 +1,72 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::TrexToken::TrexToken;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
+use crate::TrexToken::TrexToken;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
+/// Operation.
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    // Post Token
+    /// Post Token.
     OP_POST_TOKEN = 1,
-    // Post Goal
+    /// Post Goal.
     OP_POST_GOAL = 2,
-    // Recall Goal
+    /// Recall Goal.
     OP_RECALL_GOAL = 3,
-    // Request current plan
+    /// Request current plan.
     OP_REQUEST_PLAN = 4,
-    // Report current plan
+    /// Report current plan.
     OP_REPORT_PLAN = 5,
 }
 
 /// This message is used to control TREX execution
 #[derive(Default)]
 pub struct TrexOperation {
-    /// IMC Header
-    pub header: Header,
-
+    /// Message Header.
+    pub _header: Header,
+    /// Operation.
     pub _op: u8,
-
-    /// The id of the goal, if applicable (OP == POST_GOAL || OP == RECALL_GOAL)
+    /// Goal Id.
     pub _goal_id: String,
-
-    /// Goal / observation to post, if applicable (OP == POST_GOAL || OP == POST_TOKEN)
+    /// Token.
     pub _token: Option<TrexToken>,
 }
 
 impl Message for TrexOperation {
-    fn new() -> Self
+    fn new() -> TrexOperation
     where
         Self: Sized,
     {
         let msg = TrexOperation {
-            header: Header::new(655),
-
-            _op: Default::default(),
-            _goal_id: Default::default(),
-            _token: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = TrexOperation {
-            header: hdr,
-
+            _header: Header::new(655),
             _op: Default::default(),
             _goal_id: Default::default(),
             _token: Default::default(),
@@ -80,20 +84,22 @@ impl Message for TrexOperation {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         655
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(655);
         self._op = Default::default();
         self._goal_id = Default::default();
-        self._token = Default::default();
+        self._token = Default::default()
     }
 
     #[inline(always)]
@@ -101,11 +107,10 @@ impl Message for TrexOperation {
         1
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._goal_id.len() + 2;
-
         inline_message_serialization_size!(dyn_size, self._token);
 
         dyn_size
@@ -121,7 +126,6 @@ impl Message for TrexOperation {
         self._op = bfr.get_u8();
         deserialize_string!(bfr, self._goal_id);
         self._token = deserialize_inline_as::<TrexToken>(bfr).ok();
-
         Ok(())
     }
 }

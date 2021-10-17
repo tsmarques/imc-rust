@@ -1,49 +1,53 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// Event of a specific hardware button.
 #[derive(Default)]
 pub struct ButtonEvent {
-    /// IMC Header
-    pub header: Header,
-
-    /// Button identifier.
+    /// Message Header.
+    pub _header: Header,
+    /// Button.
     pub _button: u8,
-
-    /// Value of the button.
+    /// Value.
     pub _value: u8,
 }
 
 impl Message for ButtonEvent {
-    fn new() -> Self
+    fn new() -> ButtonEvent
     where
         Self: Sized,
     {
         let msg = ButtonEvent {
-            header: Header::new(306),
-
-            _button: Default::default(),
-            _value: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = ButtonEvent {
-            header: hdr,
-
+            _header: Header::new(306),
             _button: Default::default(),
             _value: Default::default(),
         };
@@ -60,19 +64,21 @@ impl Message for ButtonEvent {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         306
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(306);
         self._button = Default::default();
-        self._value = Default::default();
+        self._value = Default::default()
     }
 
     #[inline(always)]
@@ -80,6 +86,7 @@ impl Message for ButtonEvent {
         2
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -92,7 +99,6 @@ impl Message for ButtonEvent {
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         self._button = bfr.get_u8();
         self._value = bfr.get_u8();
-
         Ok(())
     }
 }

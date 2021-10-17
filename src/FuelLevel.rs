@@ -1,55 +1,55 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// Report of fuel level.
 #[derive(Default)]
 pub struct FuelLevel {
-    /// IMC Header
-    pub header: Header,
-
-    /// Fuel level percentage of the system.
+    /// Message Header.
+    pub _header: Header,
+    /// Value.
     pub _value: f32,
-
-    /// Percentage level of confidence in the estimation of the amount
-    /// of energy in the batteries.
+    /// Confidence Level.
     pub _confidence: f32,
-
-    /// Operation mode name and the estimated time available in that
-    /// mode in hours. Example: &quot;Motion=1.5&quot;
+    /// Operation Modes.
     pub _opmodes: String,
 }
 
 impl Message for FuelLevel {
-    fn new() -> Self
+    fn new() -> FuelLevel
     where
         Self: Sized,
     {
         let msg = FuelLevel {
-            header: Header::new(279),
-
-            _value: Default::default(),
-            _confidence: Default::default(),
-            _opmodes: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = FuelLevel {
-            header: hdr,
-
+            _header: Header::new(279),
             _value: Default::default(),
             _confidence: Default::default(),
             _opmodes: Default::default(),
@@ -67,20 +67,22 @@ impl Message for FuelLevel {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         279
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(279);
         self._value = Default::default();
         self._confidence = Default::default();
-        self._opmodes = Default::default();
+        self._opmodes = Default::default()
     }
 
     #[inline(always)]
@@ -88,9 +90,9 @@ impl Message for FuelLevel {
         8
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._opmodes.len() + 2;
 
         dyn_size
@@ -106,7 +108,6 @@ impl Message for FuelLevel {
         self._value = bfr.get_f32_le();
         self._confidence = bfr.get_f32_le();
         deserialize_string!(bfr, self._opmodes);
-
         Ok(())
     }
 }

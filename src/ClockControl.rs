@@ -1,69 +1,72 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// Operation.
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    // Execute Sync.
+    /// Execute Sync..
     COP_SYNC_EXEC = 0,
-    // Request Sync.
+    /// Request Sync..
     COP_SYNC_REQUEST = 1,
-    // Sync. Started
+    /// Sync. Started.
     COP_SYNC_STARTED = 2,
-    // Sync. done
+    /// Sync. done.
     COP_SYNC_DONE = 3,
-    // Set Timezone
+    /// Set Timezone .
     COP_SET_TZ = 4,
-    // Timezone Setup
+    /// Timezone Setup.
     COP_SET_TZ_DONE = 5,
 }
 
-/// Set timezone.
+/// Clock control.
 #[derive(Default)]
 pub struct ClockControl {
-    /// IMC Header
-    pub header: Header,
-
-    /// Notification due to timezone modification.
+    /// Message Header.
+    pub _header: Header,
+    /// Operation.
     pub _op: u8,
-
-    /// Clock value (Epoch time).
+    /// Clock.
     pub _clock: f64,
-
     /// Timezone.
     pub _tz: i8,
 }
 
 impl Message for ClockControl {
-    fn new() -> Self
+    fn new() -> ClockControl
     where
         Self: Sized,
     {
         let msg = ClockControl {
-            header: Header::new(106),
-
-            _op: Default::default(),
-            _clock: Default::default(),
-            _tz: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = ClockControl {
-            header: hdr,
-
+            _header: Header::new(106),
             _op: Default::default(),
             _clock: Default::default(),
             _tz: Default::default(),
@@ -81,20 +84,22 @@ impl Message for ClockControl {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         106
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(106);
         self._op = Default::default();
         self._clock = Default::default();
-        self._tz = Default::default();
+        self._tz = Default::default()
     }
 
     #[inline(always)]
@@ -102,6 +107,7 @@ impl Message for ClockControl {
         10
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -116,7 +122,6 @@ impl Message for ClockControl {
         self._op = bfr.get_u8();
         self._clock = bfr.get_f64_le();
         self._tz = bfr.get_i8();
-
         Ok(())
     }
 }

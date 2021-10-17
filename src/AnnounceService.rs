@@ -1,58 +1,62 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
+/// ServiceType.
 #[allow(non_camel_case_types)]
-pub mod ServiceType {
-    // External
-    pub const _EXTERNAL: u32 = 0x01;
-    // Local
-    pub const _LOCAL: u32 = 0x02;
+pub mod ServiceTypeBits {
+    /// External.
+    pub const SRV_TYPE_EXTERNAL: u32 = 0x01;
+    /// Local.
+    pub const SRV_TYPE_LOCAL: u32 = 0x02;
 }
 
 /// Announcement about the existence of a service.
 #[derive(Default)]
 pub struct AnnounceService {
-    /// IMC Header
-    pub header: Header,
-
-    /// Semicolon separated list of URLs (see :ref:`Announce`).
+    /// Message Header.
+    pub _header: Header,
+    /// Service.
     pub _service: String,
-
-    /// Informs about the availability of the service on internal and
-    /// external networks.
+    /// ServiceType.
     pub _service_type: u8,
 }
 
 impl Message for AnnounceService {
-    fn new() -> Self
+    fn new() -> AnnounceService
     where
         Self: Sized,
     {
         let msg = AnnounceService {
-            header: Header::new(152),
-
-            _service: Default::default(),
-            _service_type: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = AnnounceService {
-            header: hdr,
-
+            _header: Header::new(152),
             _service: Default::default(),
             _service_type: Default::default(),
         };
@@ -69,19 +73,21 @@ impl Message for AnnounceService {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         152
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(152);
         self._service = Default::default();
-        self._service_type = Default::default();
+        self._service_type = Default::default()
     }
 
     #[inline(always)]
@@ -89,9 +95,9 @@ impl Message for AnnounceService {
         1
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         dyn_size += self._service.len() + 2;
 
         dyn_size
@@ -105,7 +111,6 @@ impl Message for AnnounceService {
     fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         deserialize_string!(bfr, self._service);
         self._service_type = bfr.get_u8();
-
         Ok(())
     }
 }

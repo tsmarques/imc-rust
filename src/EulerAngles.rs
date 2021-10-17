@@ -1,68 +1,60 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::DUNE_IMC_CONST_NULL_ID;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use bytes::BufMut;
-
-use crate::Header::Header;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::Header::Header;
+use crate::Message::*;
 
 /// Report of spatial orientation according to SNAME's notation
 /// (1950).
 #[derive(Default)]
 pub struct EulerAngles {
-    /// IMC Header
-    pub header: Header,
-
-    /// The device time.
+    /// Message Header.
+    pub _header: Header,
+    /// Device Time.
     pub _time: f64,
-
-    /// Rotation around the vehicle longitudinal axis.
+    /// Roll Angle.
     pub _phi: f64,
-
-    /// Rotation around the vehicle lateral or transverse axis.
+    /// Pitch Angle.
     pub _theta: f64,
-
-    /// Rotation around the vehicle vertical axis. A value of 0 means
-    /// the vehicle is oriented towards true north. In cases where the
-    /// sensor cannot measure the true heading, this field will have
-    /// the same value as Yaw (Magnetic).
+    /// Yaw Angle (True).
     pub _psi: f64,
-
-    /// Rotation around the vehicle vertical axis. A value of 0 means
-    /// the vehicle is oriented towards magnetic north. In cases where
-    /// the sensor cannot measure the magnetic heading, this field
-    /// will have the same value as Yaw (True).
+    /// Yaw Angle (Magnetic).
     pub _psi_magnetic: f64,
 }
 
 impl Message for EulerAngles {
-    fn new() -> Self
+    fn new() -> EulerAngles
     where
         Self: Sized,
     {
         let msg = EulerAngles {
-            header: Header::new(254),
-
-            _time: Default::default(),
-            _phi: Default::default(),
-            _theta: Default::default(),
-            _psi: Default::default(),
-            _psi_magnetic: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = EulerAngles {
-            header: hdr,
-
+            _header: Header::new(254),
             _time: Default::default(),
             _phi: Default::default(),
             _theta: Default::default(),
@@ -82,22 +74,24 @@ impl Message for EulerAngles {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         254
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(254);
         self._time = Default::default();
         self._phi = Default::default();
         self._theta = Default::default();
         self._psi = Default::default();
-        self._psi_magnetic = Default::default();
+        self._psi_magnetic = Default::default()
     }
 
     #[inline(always)]
@@ -105,6 +99,7 @@ impl Message for EulerAngles {
         40
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         0
     }
@@ -123,7 +118,6 @@ impl Message for EulerAngles {
         self._theta = bfr.get_f64_le();
         self._psi = bfr.get_f64_le();
         self._psi_magnetic = bfr.get_f64_le();
-
         Ok(())
     }
 }

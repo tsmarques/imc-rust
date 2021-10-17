@@ -1,74 +1,73 @@
-use crate::Message::*;
+//###########################################################################
+// Copyright 2017 OceanScan - Marine Systems & Technology, Lda.             #
+//###########################################################################
+// Licensed under the Apache License, Version 2.0 (the "License");          #
+// you may not use this file except in compliance with the License.         #
+// You may obtain a copy of the License at                                  #
+//                                                                          #
+// http://www.apache.org/licenses/LICENSE-2.0                               #
+//                                                                          #
+// Unless required by applicable law or agreed to in writing, software      #
+// distributed under the License is distributed on an "AS IS" BASIS,        #
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+// See the License for the specific language governing permissions and      #
+// limitations under the License.                                           #
+//###########################################################################
+// Author: Ricardo Martins                                                  #
+//###########################################################################
+// Automatically generated.                                                 *
+//###########################################################################
+// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+//###########################################################################
 
-use crate::MessageList;
+/// Author: Tiago Sá Marques <tmarques@oceanscan-mst.com>
 
-use crate::DUNE_IMC_CONST_NULL_ID;
-
-use bytes::BufMut;
-
-use crate::Header::Header;
-
-use crate::BeamConfig::BeamConfig;
-
-use crate::DeviceState::DeviceState;
+/// Base
+use bytes::{Buf, BufMut};
 
 use crate::packet::ImcError;
 use crate::packet::*;
+use crate::BeamConfig::BeamConfig;
+use crate::DeviceState::DeviceState;
+use crate::Header::Header;
+use crate::Message::*;
+use crate::MessageList;
+use crate::DUNE_IMC_CONST_NULL_ID;
 
+/// Validity.
 #[allow(non_camel_case_types)]
 pub enum ValidityEnum {
-    // Invalid
+    /// Invalid.
     DV_INVALID = 0,
-    // Valid
+    /// Valid.
     DV_VALID = 1,
 }
 
-/// Measurement is invalid.
+/// Distance measurement detected by the device.
 #[derive(Default)]
 pub struct Distance {
-    /// IMC Header
-    pub header: Header,
-
-    /// Measurement is valid.
+    /// Message Header.
+    pub _header: Header,
+    /// Validity.
     pub _validity: u8,
-
-    /// Device Location in the system.
+    /// Location.
     pub _location: MessageList<DeviceState>,
-
-    /// Beam configuration of the device.
+    /// Beam Configuration.
     pub _beam_config: MessageList<BeamConfig>,
-
-    /// Measured distance.
+    /// Measured Distance.
     pub _value: f32,
 }
 
 impl Message for Distance {
-    fn new() -> Self
+    fn new() -> Distance
     where
         Self: Sized,
     {
         let msg = Distance {
-            header: Header::new(262),
-
+            _header: Header::new(262),
             _validity: Default::default(),
-            _location: vec![],
-            _beam_config: vec![],
-            _value: Default::default(),
-        };
-
-        msg
-    }
-
-    fn fromHeader(hdr: Header) -> Self
-    where
-        Self: Sized,
-    {
-        let msg = Distance {
-            header: hdr,
-
-            _validity: Default::default(),
-            _location: vec![],
-            _beam_config: vec![],
+            _location: Default::default(),
+            _beam_config: Default::default(),
             _value: Default::default(),
         };
 
@@ -84,21 +83,23 @@ impl Message for Distance {
     }
 
     #[inline(always)]
-    fn id(&self) -> u16 {
+    fn id(&self) -> u16
+    where
+        Self: Sized,
+    {
         262
     }
 
     fn get_header(&mut self) -> &mut Header {
-        &mut self.header
+        &mut self._header
     }
 
     fn clear(&mut self) {
-        self.header.clear();
-
+        self._header = Header::new(262);
         self._validity = Default::default();
         self._location = Default::default();
         self._beam_config = Default::default();
-        self._value = Default::default();
+        self._value = Default::default()
     }
 
     #[inline(always)]
@@ -106,11 +107,10 @@ impl Message for Distance {
         5
     }
 
+    #[inline(always)]
     fn dynamic_serialization_size(&self) -> usize {
         let mut dyn_size: usize = 0;
-
         message_list_serialization_size!(dyn_size, self._location);
-
         message_list_serialization_size!(dyn_size, self._beam_config);
 
         dyn_size
@@ -128,7 +128,6 @@ impl Message for Distance {
         self._location = deserialize_message_list_as::<DeviceState>(bfr)?;
         self._beam_config = deserialize_message_list_as::<BeamConfig>(bfr)?;
         self._value = bfr.get_f32_le();
-
         Ok(())
     }
 }
