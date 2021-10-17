@@ -26,7 +26,6 @@
 use bytes::BufMut;
 
 use crate::packet::ImcError;
-use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -83,9 +82,9 @@ impl Message for QueryPowerChannelState {
         0
     }
 
-    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {}
+    fn serialize_fields(&self, _bfr: &mut bytes::BytesMut) {}
 
-    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
+    fn deserialize_fields(&mut self, _bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
         Ok(())
     }
 }
