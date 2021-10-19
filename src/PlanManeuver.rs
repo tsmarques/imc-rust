@@ -72,6 +72,71 @@ impl Message for PlanManeuver {
         &mut self._header
     }
 
+    fn set_timestamp_secs(&mut self, ts: f64) {
+        self.get_header()._timestamp = ts;
+        for m in &mut self._start_actions {
+            m.set_timestamp_secs(ts);
+        }
+        for m in &mut self._end_actions {
+            m.set_timestamp_secs(ts);
+        }
+        if let Some(m) = &mut self._data {
+            m.set_timestamp_secs(ts);
+        }
+    }
+
+    fn set_source(&mut self, src: u16) {
+        self.get_header()._src = src;
+        for m in &mut self._start_actions {
+            m.set_source(src);
+        }
+        for m in &mut self._end_actions {
+            m.set_source(src);
+        }
+        if let Some(m) = &mut self._data {
+            m.set_source(src);
+        }
+    }
+
+    fn set_source_ent(&mut self, src_ent: u8) {
+        self.get_header()._src_ent = src_ent;
+        for m in &mut self._start_actions {
+            m.set_source_ent(src_ent);
+        }
+        for m in &mut self._end_actions {
+            m.set_source_ent(src_ent);
+        }
+        if let Some(m) = &mut self._data {
+            m.set_source_ent(src_ent);
+        }
+    }
+
+    fn set_destination(&mut self, dst: u16) {
+        self.get_header()._dst = dst;
+        for m in &mut self._start_actions {
+            m.set_destination(dst);
+        }
+        for m in &mut self._end_actions {
+            m.set_destination(dst);
+        }
+        if let Some(m) = &mut self._data {
+            m.set_destination(dst);
+        }
+    }
+
+    fn set_destination_ent(&mut self, dst_ent: u8) {
+        self.get_header()._dst_ent = dst_ent;
+        for m in &mut self._start_actions {
+            m.set_destination_ent(dst_ent);
+        }
+        for m in &mut self._end_actions {
+            m.set_destination_ent(dst_ent);
+        }
+        if let Some(m) = &mut self._data {
+            m.set_destination_ent(dst_ent);
+        }
+    }
+
     fn clear(&mut self) {
         self._header = Header::new(552);
         self._maneuver_id = Default::default();

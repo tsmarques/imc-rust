@@ -103,6 +103,41 @@ impl Message for VehicleCommand {
         &mut self._header
     }
 
+    fn set_timestamp_secs(&mut self, ts: f64) {
+        self.get_header()._timestamp = ts;
+        if let Some(m) = &mut self._maneuver {
+            m.set_timestamp_secs(ts);
+        }
+    }
+
+    fn set_source(&mut self, src: u16) {
+        self.get_header()._src = src;
+        if let Some(m) = &mut self._maneuver {
+            m.set_source(src);
+        }
+    }
+
+    fn set_source_ent(&mut self, src_ent: u8) {
+        self.get_header()._src_ent = src_ent;
+        if let Some(m) = &mut self._maneuver {
+            m.set_source_ent(src_ent);
+        }
+    }
+
+    fn set_destination(&mut self, dst: u16) {
+        self.get_header()._dst = dst;
+        if let Some(m) = &mut self._maneuver {
+            m.set_destination(dst);
+        }
+    }
+
+    fn set_destination_ent(&mut self, dst_ent: u8) {
+        self.get_header()._dst_ent = dst_ent;
+        if let Some(m) = &mut self._maneuver {
+            m.set_destination_ent(dst_ent);
+        }
+    }
+
     fn clear(&mut self) {
         self._header = Header::new(501);
         self._type = Default::default();
