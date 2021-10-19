@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Fluorescein measurement.
 #[derive(Default)]
 pub struct Fluorescein {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Fluorescein reading.
     pub _value: f32,
 }
 

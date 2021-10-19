@@ -32,13 +32,21 @@ use crate::Message::*;
 /// acoustic peers.
 #[derive(Default)]
 pub struct AcousticLink {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Peer Name.
+    /// The name of the peer on the other side of this link.
     pub _peer: String,
-    /// Received Signal Strength Indicator.
+    /// RSSI is a signed floating point number. Higher RSSI values correspond to
+    /// stronger signals.
+    /// The signal strength is acceptable when measured RSSI values lie between
+    /// -20 dB and -85 dB.
     pub _rssi: f32,
-    /// Signal Integrity Level.
+    /// Signal Integrity value illustrates distortion of the last received
+    /// acoustic signal. It is calculated based on cross-correlation
+    /// measurements.
+    /// Higher *Signal Integrity Level* values correspond to less distorted
+    /// signals. An acoustic link is considered weak if the *Signal Integrity
+    /// Level* value is less than 100.
     pub _integrity: u16,
 }
 

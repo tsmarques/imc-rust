@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Message generated when tasks bind to messages.
 #[derive(Default)]
 pub struct TransportBindings {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Consumer name.
+    /// The name of the consumer (e.g. task name).
     pub _consumer: String,
-    /// Message Identifier.
+    /// The id of the message to be listened to.
     pub _message_id: u16,
 }
 

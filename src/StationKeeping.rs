@@ -33,23 +33,25 @@ use crate::Message::*;
 /// for a certain amount of time.
 #[derive(Default)]
 pub struct StationKeeping {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude.
     pub _lon: f64,
-    /// Z Reference.
+    /// Maneuver reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
     /// Radius.
     pub _radius: f32,
-    /// Duration.
+    /// Duration (0 for unlimited).
     pub _duration: u16,
-    /// Speed.
+    /// The value of the desired speed, in the scale specified
+    /// by the "Speed Units" field.
     pub _speed: f32,
-    /// Speed Units.
+    /// Indicates the units used for the speed value.
     pub _speed_units: u8,
     /// Custom settings for maneuver.
     pub _custom: String,

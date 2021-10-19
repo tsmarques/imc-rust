@@ -28,12 +28,12 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Promiscuous.
+    /// Promiscuous
     pub const URF_PROMISCUOUS: u32 = 0x01;
-    /// Delayed.
+    /// Delayed
     pub const URF_DELAYED: u32 = 0x02;
 }
 
@@ -41,15 +41,17 @@ pub mod FlagsBits {
 /// a data frame is received over the acoustic channel.
 #[derive(Default)]
 pub struct UamRxFrame {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Source System.
+    /// The canonical name of the node that transmitted the data frame. If
+    /// this name cannot be resolved the string 'unknown' shall be used.
     pub _sys_src: String,
-    /// Destination System.
+    /// The canonical name of the destination node of the data frame. If
+    /// this name cannot be resolved the string 'unknown' shall be used.
     pub _sys_dst: String,
-    /// Flags.
+    /// Reception flags.
     pub _flags: u8,
-    /// Data.
+    /// The actual received data frame.
     pub _data: Vec<u8>,
 }
 

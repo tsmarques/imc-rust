@@ -28,29 +28,29 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Command.
+/// Command
 #[allow(non_camel_case_types)]
 pub enum CommandEnum {
-    /// Reset to defaults.
+    /// Reset to defaults
     MES_RESET = 0,
-    /// Enable Monitoring.
+    /// Enable Monitoring
     MES_ENABLE = 1,
-    /// Disable Monitoring.
+    /// Disable Monitoring
     MES_DISABLE = 2,
-    /// Enable Monitoring (exclusive - disables all others).
+    /// Enable Monitoring (exclusive - disables all others)
     MES_ENABLE_EXCLUSIVE = 3,
-    /// Status Report.
+    /// Status Report
     MES_STATUS = 4,
 }
 
 /// Controls monitoring of entity states in the vehicle.
 #[derive(Default)]
 pub struct MonitorEntityState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
     /// Command.
     pub _command: u8,
-    /// Entity Names.
+    /// Comma separated list of entity names.
     pub _entities: String,
 }
 

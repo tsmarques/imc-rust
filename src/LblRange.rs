@@ -34,11 +34,12 @@ use crate::Message::*;
 /// value and the transponder name.
 #[derive(Default)]
 pub struct LblRange {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Beacon Identification Number.
+    /// Identification number of the acoustic transponder from which
+    /// the range information was received.
     pub _id: u8,
-    /// Range.
+    /// Distance to the acoustic transponder.
     pub _range: f32,
 }
 

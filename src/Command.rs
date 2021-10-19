@@ -28,22 +28,22 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Use Speed Reference in meters per second.
+    /// Use Speed Reference in meters per second
     pub const FLAG_SPEED_METERS_PS: u32 = 0x01;
-    /// Use Speed Reference in revolutions per minute.
+    /// Use Speed Reference in revolutions per minute
     pub const FLAG_SPEED_RPM: u32 = 0x02;
-    /// Use Z Reference as depth.
+    /// Use Z Reference as depth
     pub const FLAG_DEPTH: u32 = 0x04;
-    /// Use Z Reference as altitude.
+    /// Use Z Reference as altitude
     pub const FLAG_ALTITUDE: u32 = 0x08;
-    /// Use Heading Reference.
+    /// Use Heading Reference
     pub const FLAG_HEADING: u32 = 0x10;
-    /// Use Heading Rate Reference.
+    /// Use Heading Rate Reference
     pub const FLAG_HEADING_RATE: u32 = 0x20;
-    /// Flag Maneuver Completion.
+    /// Flag Maneuver Completion
     pub const FLAG_MANDONE: u32 = 0x80;
 }
 
@@ -52,15 +52,16 @@ pub mod FlagsBits {
 /// will terminate maneuver.
 #[derive(Default)]
 pub struct Command {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Flags.
     pub _flags: u8,
-    /// Speed Reference.
+    /// The value of the desired speed, in the scale specified by the
+    /// "flags" field.
     pub _speed: f32,
-    /// Z Reference.
+    /// The value of the desired z reference in meters.
     pub _z: f32,
-    /// Heading Reference.
+    /// The value of the desired heading angle, relative to true  north, in radians,
+    /// or, the value of the desired heading rate angle, in radians.
     pub _heading: f32,
 }
 

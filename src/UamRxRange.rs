@@ -31,13 +31,13 @@ use crate::Message::*;
 /// Acoustic range measurement.
 #[derive(Default)]
 pub struct UamRxRange {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Sequence Id.
+    /// The sequence identifier of the ranging request.
     pub _seq: u16,
-    /// System.
+    /// The canonical name of the ranged system.
     pub _sys: String,
-    /// Value.
+    /// The actual range. Negative values denote invalid measurements.
     pub _value: f32,
 }
 

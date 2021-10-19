@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Fine oil measurement.
 #[derive(Default)]
 pub struct FineOil {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Amount of fine oil detected.
     pub _value: f32,
 }
 

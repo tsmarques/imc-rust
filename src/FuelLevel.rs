@@ -31,13 +31,15 @@ use crate::Message::*;
 /// Report of fuel level.
 #[derive(Default)]
 pub struct FuelLevel {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Fuel level percentage of the system.
     pub _value: f32,
-    /// Confidence Level.
+    /// Percentage level of confidence in the estimation of the amount
+    /// of energy in the batteries.
     pub _confidence: f32,
-    /// Operation Modes.
+    /// Operation mode name and the estimated time available in that
+    /// mode in hours. Example: "Motion=1.5"
     pub _opmodes: String,
 }
 

@@ -28,21 +28,21 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Pulse Detection OFF.
+    /// Pulse Detection OFF
     POP_OFF = 0,
-    /// Pulse Detection ON.
+    /// Pulse Detection ON
     POP_ON = 1,
 }
 
 /// Control of hardware pulse detection.
 #[derive(Default)]
 pub struct PulseDetectionControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
+    /// Activate or deactivate hardware pulse detection.
     pub _op: u8,
 }
 

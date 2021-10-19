@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Report of pH.
 #[derive(Default)]
 pub struct PH {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// The value of the pH as measured by the sensor.
     pub _value: f32,
 }
 

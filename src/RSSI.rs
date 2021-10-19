@@ -32,9 +32,9 @@ use crate::Message::*;
 /// Indicates the gain or loss in the signal strength due to the transmission and reception equipment and the transmission medium and distance.
 #[derive(Default)]
 pub struct RSSI {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// RSSI measurement.
     pub _value: f32,
 }
 

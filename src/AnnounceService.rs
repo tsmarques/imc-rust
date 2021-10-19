@@ -28,23 +28,24 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// ServiceType.
+/// ServiceType
 #[allow(non_camel_case_types)]
 pub mod ServiceTypeBits {
-    /// External.
+    /// External
     pub const SRV_TYPE_EXTERNAL: u32 = 0x01;
-    /// Local.
+    /// Local
     pub const SRV_TYPE_LOCAL: u32 = 0x02;
 }
 
 /// Announcement about the existence of a service.
 #[derive(Default)]
 pub struct AnnounceService {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Service.
+    /// Semicolon separated list of URLs (see :ref:`Announce`).
     pub _service: String,
-    /// ServiceType.
+    /// Informs about the availability of the service on internal and
+    /// external networks.
     pub _service_type: u8,
 }
 

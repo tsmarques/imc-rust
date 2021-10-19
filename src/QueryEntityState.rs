@@ -31,7 +31,7 @@ use crate::Message::*;
 /// by issuing an appropriate EntityState message.
 #[derive(Default)]
 pub struct QueryEntityState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

@@ -28,14 +28,14 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Validity.
+/// Validity
 #[allow(non_camel_case_types)]
 pub mod ValidityBits {
-    /// X component is valid.
+    /// X component is valid
     pub const VAL_VEL_X: u32 = 0x01;
-    /// Y component is valid.
+    /// Y component is valid
     pub const VAL_VEL_Y: u32 = 0x02;
-    /// Z component is valid.
+    /// Z component is valid
     pub const VAL_VEL_Z: u32 = 0x04;
 }
 
@@ -43,15 +43,16 @@ pub mod ValidityBits {
 /// velocity relative to the ground that a device is exposed to.
 #[derive(Default)]
 pub struct GroundVelocity {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Validity.
+    /// Each bit of this field represents if a given velocity
+    /// component is valid.
     pub _validity: u8,
-    /// X.
+    /// X component.
     pub _x: f64,
-    /// Y.
+    /// Y component.
     pub _y: f64,
-    /// Z.
+    /// Z component.
     pub _z: f64,
 }
 

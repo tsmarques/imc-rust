@@ -33,11 +33,11 @@ use crate::Message::*;
 /// the desired 'value' and reply with 'LedBrightness'.
 #[derive(Default)]
 pub struct SetLedBrightness {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Name.
+    /// LED name.
     pub _name: String,
-    /// Value.
+    /// Desired brightness value.
     pub _value: u8,
 }
 

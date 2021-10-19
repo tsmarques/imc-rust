@@ -33,11 +33,9 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 #[derive(Default)]
 pub struct SetEntityParameters {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Entity Name.
     pub _name: String,
-    /// Parameters.
     pub _params: MessageList<EntityParameter>,
 }
 

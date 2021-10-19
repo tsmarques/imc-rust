@@ -33,35 +33,38 @@ use crate::Message::*;
 /// covariance matrix of an Extended Kalman Filter.
 #[derive(Default)]
 pub struct NavigationUncertainty {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Variance - x Position.
+    /// The North offset variance of the North/East/Down
+    /// field with respect to LLH.
     pub _x: f32,
-    /// Variance - y Position.
+    /// The East offset variance of the North/East/Down
+    /// field with respect to LLH.
     pub _y: f32,
-    /// Variance - z Position.
+    /// The Down offset variance of the North/East/Down
+    /// field with respect to LLH.
     pub _z: f32,
-    /// Variance - Roll.
+    /// The phi Euler angle variance from the vehicle's attitude.
     pub _phi: f32,
-    /// Variance - Pitch.
+    /// The theta Euler angle variance from the vehicle's attitude.
     pub _theta: f32,
-    /// Variance - Yaw.
+    /// The psi Euler angle variance from the vehicle's attitude.
     pub _psi: f32,
-    /// Variance - Gyro. Roll Rate.
+    /// The angular velocity variance over body-fixed xx axis (roll).
     pub _p: f32,
-    /// Variance - Gyro. Pitch Rate.
+    /// The angular velocity variance over body-fixed yy axis (pitch).
     pub _q: f32,
-    /// Variance - Gyro. Yaw Rate.
+    /// The angular velocity variance over body-fixed zz axis (yaw).
     pub _r: f32,
-    /// Variance - Body-Fixed xx Velocity.
+    /// Body-fixed frame xx axis velocity variance component.
     pub _u: f32,
-    /// Variance - Body-Fixed yy Velocity.
+    /// Body-fixed frame yy axis velocity variance component.
     pub _v: f32,
-    /// Variance - Body-Fixed ww Velocity.
+    /// Body-fixed frame zz axis velocity variance component.
     pub _w: f32,
-    /// Variance - Yaw Bias.
+    /// The psi Euler angle bias variance from the vehicle's sensed attitude.
     pub _bias_psi: f32,
-    /// Variance - Gyro. Yaw Rate Bias.
+    /// The angular velocity over body-fixed zz axis bias variance from sensor.
     pub _bias_r: f32,
 }
 

@@ -32,9 +32,9 @@ use crate::Message::*;
 /// recipient of this message shall reply with 'LedBrightness'.
 #[derive(Default)]
 pub struct QueryLedBrightness {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Name.
+    /// LED name.
     pub _name: String,
 }
 

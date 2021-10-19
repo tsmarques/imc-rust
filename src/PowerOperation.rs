@@ -28,35 +28,35 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Power Down.
+    /// Power Down
     POP_PWR_DOWN = 0,
-    /// Power Down in Progress.
+    /// Power Down in Progress
     POP_PWR_DOWN_IP = 1,
-    /// Power Down Aborted.
+    /// Power Down Aborted
     POP_PWR_DOWN_ABORTED = 2,
-    /// Schedule Power Down.
+    /// Schedule Power Down
     POP_SCHED_PWR_DOWN = 3,
-    /// Power Up.
+    /// Power Up
     POP_PWR_UP = 4,
-    /// Power Up in Progress.
+    /// Power Up in Progress
     POP_PWR_UP_IP = 5,
-    /// Schedule Power Up.
+    /// Schedule Power Up
     POP_SCHED_PWR_UP = 6,
 }
 
 /// This message allows controlling the system's power lines.
 #[derive(Default)]
 pub struct PowerOperation {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
+    /// Operation type.
     pub _op: u8,
-    /// Time Remaining.
+    /// Time remaining to complete operation.
     pub _time_remain: f32,
-    /// Scheduled Time.
+    /// Scheduled time of operation.
     pub _sched_time: f64,
 }
 

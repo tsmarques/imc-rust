@@ -30,7 +30,7 @@ use crate::Message::*;
 /// Stops any executing actions and put the system in a standby mode.
 #[derive(Default)]
 pub struct Abort {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

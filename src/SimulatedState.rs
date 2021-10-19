@@ -33,43 +33,43 @@ use crate::Message::*;
 /// various kinds of vehicles.
 #[derive(Default)]
 pub struct SimulatedState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Latitude (WGS-84).
+    /// WGS-84 Latitude.
     pub _lat: f64,
-    /// Longitude (WGS-84).
+    /// WGS-84 Longitude.
     pub _lon: f64,
-    /// Height (WGS-84).
+    /// Height above the WGS-84 ellipsoid.
     pub _height: f32,
-    /// Offset north (m).
+    /// The North offset of the North/East/Down field.
     pub _x: f32,
-    /// Offset east (m).
+    /// The East offset of the North/East/Down field.
     pub _y: f32,
-    /// Offset down (m).
+    /// The Down offset of the North/East/Down field.
     pub _z: f32,
-    /// Rotation over x axis.
+    /// The phi Euler angle from the vehicle's attitude.
     pub _phi: f32,
-    /// Rotation over y axis.
+    /// The theta Euler angle from the vehicle's attitude.
     pub _theta: f32,
-    /// Rotation over z axis.
+    /// The psi Euler angle from the vehicle's attitude.
     pub _psi: f32,
-    /// Body-Fixed xx Linear Velocity.
+    /// Body-fixed frame xx axis linear velocity component.
     pub _u: f32,
-    /// Body-Fixed yy Linear Velocity.
+    /// Body-fixed frame yy axis linear velocity component.
     pub _v: f32,
-    /// Body-Fixed zz Linear Velocity.
+    /// Body-fixed frame zz axis linear velocity component.
     pub _w: f32,
-    /// Angular Velocity in x.
+    /// The angular velocity over body-fixed xx axis (roll rate).
     pub _p: f32,
-    /// Angular Velocity in y.
+    /// The angular velocity over body-fixed yy axis (pitch rate).
     pub _q: f32,
-    /// Angular Velocity in z.
+    /// The angular velocity over body-fixed zz axis (yaw rate).
     pub _r: f32,
-    /// Stream Velocity X (North).
+    /// Stream Velocity xx axis velocity component.
     pub _svx: f32,
-    /// Stream Velocity Y (East).
+    /// Stream Velocity yy axis velocity component.
     pub _svy: f32,
-    /// Stream Velocity Z (Down).
+    /// Stream Velocity zz axis velocity component.
     pub _svz: f32,
 }
 

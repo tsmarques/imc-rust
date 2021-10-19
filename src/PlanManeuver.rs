@@ -33,15 +33,17 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// Named plan maneuver.
 #[derive(Default)]
 pub struct PlanManeuver {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Maneuver ID.
+    /// The maneuver ID.
     pub _maneuver_id: String,
-    /// Maneuver Specification.
+    /// The maneuver specification.
     pub _data: Option<Box<dyn Message>>,
-    /// Start Actions.
+    /// Contains an optionally defined 'MessageList' for actions fired
+    /// on plan activation.
     pub _start_actions: MessageList<Box<dyn Message>>,
-    /// End Actions.
+    /// Contains an optionally defined 'MessageList' for actions fired
+    /// on plan termination.
     pub _end_actions: MessageList<Box<dyn Message>>,
 }
 

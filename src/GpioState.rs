@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Current state of a GPIO.
 #[derive(Default)]
 pub struct GpioState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Name.
+    /// GPIO Name.
     pub _name: String,
-    /// Value.
+    /// Logical level of the GPIO.
     pub _value: u8,
 }
 

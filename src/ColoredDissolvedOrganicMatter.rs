@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Colored Dissolved Organic Matter measurement.
 #[derive(Default)]
 pub struct ColoredDissolvedOrganicMatter {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Colored Dissolved Organic Matter reading.
     pub _value: f32,
 }
 

@@ -31,13 +31,13 @@ use crate::Message::*;
 /// Send a SMS message.
 #[derive(Default)]
 pub struct Sms {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Number.
+    /// Target mobile device number.
     pub _number: String,
-    /// Timeout.
+    /// Timeout for sending message.
     pub _timeout: u16,
-    /// Contents.
+    /// Message contents.
     pub _contents: String,
 }
 

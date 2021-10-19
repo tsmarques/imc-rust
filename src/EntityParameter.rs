@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Entity parameter.
 #[derive(Default)]
 pub struct EntityParameter {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Name.
+    /// Name of the parameter.
     pub _name: String,
-    /// Value.
+    /// Current value of the parameter.
     pub _value: String,
 }
 

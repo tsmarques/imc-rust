@@ -28,35 +28,35 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Turn Off.
+    /// Turn Off
     PCC_OP_TURN_OFF = 0,
-    /// Turn On.
+    /// Turn On
     PCC_OP_TURN_ON = 1,
-    /// Toggle.
+    /// Toggle
     PCC_OP_TOGGLE = 2,
-    /// Schedule Turn On.
+    /// Schedule Turn On
     PCC_OP_SCHED_ON = 3,
-    /// Schedule Turn Off.
+    /// Schedule Turn Off
     PCC_OP_SCHED_OFF = 4,
-    /// Reset Schedules.
+    /// Reset Schedules
     PCC_OP_SCHED_RESET = 5,
-    /// Save Current State.
+    /// Save Current State
     PCC_OP_SAVE = 6,
 }
 
 /// This message allows controlling power channels.
 #[derive(Default)]
 pub struct PowerChannelControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Channel Name.
+    /// The name of the power channel.
     pub _name: String,
-    /// Operation.
+    /// Operation to perform.
     pub _op: u8,
-    /// Scheduled Time.
+    /// Scheduled time of operation.
     pub _sched_time: f64,
 }
 

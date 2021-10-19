@@ -45,47 +45,51 @@ use crate::Message::*;
 /// Euler angles
 #[derive(Default)]
 pub struct EstimatedState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Latitude (WGS-84).
+    /// WGS-84 Latitude.
     pub _lat: f64,
-    /// Longitude (WGS-84).
+    /// WGS-84 Longitude.
     pub _lon: f64,
-    /// Height (WGS-84).
+    /// Height above the WGS-84 ellipsoid.
     pub _height: f32,
-    /// Offset north.
+    /// The North offset of the North/East/Down field with respect to
+    /// LLH.
     pub _x: f32,
-    /// Offset east.
+    /// The East offset of the North/East/Down field with respect to
+    /// LLH.
     pub _y: f32,
-    /// Offset down.
+    /// The Down offset of the North/East/Down field with respect to
+    /// LLH.
     pub _z: f32,
-    /// Rotation over x axis.
+    /// The phi Euler angle from the vehicle's attitude.
     pub _phi: f32,
-    /// Rotation over y axis.
+    /// The theta Euler angle from the vehicle's attitude.
     pub _theta: f32,
-    /// Rotation over z axis.
+    /// The psi Euler angle from the vehicle's attitude.
     pub _psi: f32,
-    /// Body-Fixed xx Velocity.
+    /// Body-fixed frame xx axis velocity component.
     pub _u: f32,
-    /// Body-Fixed yy Velocity.
+    /// Body-fixed frame yy axis velocity component.
     pub _v: f32,
-    /// Body-Fixed zz Velocity.
+    /// Body-fixed frame zz axis velocity component.
     pub _w: f32,
-    /// Ground Velocity X (North).
+    /// Ground Velocity xx axis velocity component.
     pub _vx: f32,
-    /// Ground Velocity Y (East).
+    /// Ground Velocity yy axis velocity component.
     pub _vy: f32,
-    /// Ground Velocity Z (Down).
+    /// Ground Velocity zz axis velocity component.
     pub _vz: f32,
-    /// Angular Velocity in x.
+    /// The angular velocity over body-fixed xx axis (roll).
     pub _p: f32,
-    /// Angular Velocity in y.
+    /// The angular velocity over body-fixed yy axis (pitch).
     pub _q: f32,
-    /// Angular Velocity in z.
+    /// The angular velocity over body-fixed zz axis (yaw).
     pub _r: f32,
-    /// Depth.
+    /// Depth, in meters. To be used by underwater vehicles. Negative
+    /// values denote invalid estimates.
     pub _depth: f32,
-    /// Altitude.
+    /// Altitude, in meters. Negative values denote invalid estimates.
     pub _alt: f32,
 }
 

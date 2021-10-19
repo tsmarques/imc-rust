@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Verbatim representation of device data in plain text format.
 #[derive(Default)]
 pub struct DevDataText {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Plain text data as extracted directly from the device.
     pub _value: String,
 }
 

@@ -31,15 +31,15 @@ use crate::Message::*;
 /// Request to send SMS.
 #[derive(Default)]
 pub struct SmsTx {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Sequence Number.
+    /// Sequence number.
     pub _seq: u32,
-    /// Destination.
+    /// Number or name of the recipient.
     pub _destination: String,
-    /// Timeout.
+    /// Timeout for sending message.
     pub _timeout: u16,
-    /// Data.
+    /// Message data.
     pub _data: Vec<u8>,
 }
 

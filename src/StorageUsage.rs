@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Report of storage usage.
 #[derive(Default)]
 pub struct StorageUsage {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Available.
+    /// The available storage of the reporting device.
     pub _available: u32,
-    /// Usage.
+    /// The percentage of storage used by the reporting device.
     pub _value: u8,
 }
 

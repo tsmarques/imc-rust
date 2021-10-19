@@ -28,29 +28,29 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Turn off display.
+    /// Turn off display
     OP_TURN_OFF = 0,
-    /// Turn on display.
+    /// Turn on display
     OP_TURN_ON = 1,
-    /// Clear display.
+    /// Clear display
     OP_CLEAR = 2,
-    /// Write Line #0.
+    /// Write Line #0
     OP_WRITE0 = 3,
-    /// Write Line #1.
+    /// Write Line #1
     OP_WRITE1 = 4,
 }
 
 /// Control LCD.
 #[derive(Default)]
 pub struct LcdControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
+    /// The LCD action to perform
     pub _op: u8,
-    /// Text.
+    /// Text to be written (if defined write operation).
     pub _text: String,
 }
 

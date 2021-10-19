@@ -30,31 +30,30 @@ use crate::Message::*;
 use crate::TrexToken::TrexToken;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Post Token.
+    /// Post Token
     OP_POST_TOKEN = 1,
-    /// Post Goal.
+    /// Post Goal
     OP_POST_GOAL = 2,
-    /// Recall Goal.
+    /// Recall Goal
     OP_RECALL_GOAL = 3,
-    /// Request current plan.
+    /// Request current plan
     OP_REQUEST_PLAN = 4,
-    /// Report current plan.
+    /// Report current plan
     OP_REPORT_PLAN = 5,
 }
 
 /// This message is used to control TREX execution
 #[derive(Default)]
 pub struct TrexOperation {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
     pub _op: u8,
-    /// Goal Id.
+    /// The id of the goal, if applicable (OP == POST_GOAL || OP == RECALL_GOAL)
     pub _goal_id: String,
-    /// Token.
+    /// Goal / observation to post, if applicable (OP == POST_GOAL || OP == POST_TOKEN)
     pub _token: Option<TrexToken>,
 }
 

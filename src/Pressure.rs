@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Report of external pressure.
 #[derive(Default)]
 pub struct Pressure {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Measured Pressure.
+    /// The value of the pressure as measured by the sensor.
     pub _value: f64,
 }
 

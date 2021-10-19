@@ -32,27 +32,27 @@ use crate::Message::*;
 use crate::MessageList;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Validity.
+/// Validity
 #[allow(non_camel_case_types)]
 pub enum ValidityEnum {
-    /// Invalid.
+    /// Invalid
     DV_INVALID = 0,
-    /// Valid.
+    /// Valid
     DV_VALID = 1,
 }
 
 /// Distance measurement detected by the device.
 #[derive(Default)]
 pub struct Distance {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Validity.
+    /// Validity of the measurement.
     pub _validity: u8,
-    /// Location.
+    /// Device Location in the system.
     pub _location: MessageList<DeviceState>,
-    /// Beam Configuration.
+    /// Beam configuration of the device.
     pub _beam_config: MessageList<BeamConfig>,
-    /// Measured Distance.
+    /// Measured distance.
     pub _value: f32,
 }
 

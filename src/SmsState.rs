@@ -28,34 +28,33 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// State.
+/// State
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    /// Accepted.
+    /// Accepted
     SMS_ACCEPTED = 0,
-    /// Rejected.
+    /// Rejected
     SMS_REJECTED = 1,
-    /// Interrupted.
+    /// Interrupted
     SMS_INTERRUPTED = 2,
-    /// Completed.
+    /// Completed
     SMS_COMPLETED = 3,
-    /// Idle.
+    /// Idle
     SMS_IDLE = 4,
-    /// Transmitting.
+    /// Transmitting
     SMS_TRANSMITTING = 5,
-    /// Receiving.
+    /// Receiving
     SMS_RECEIVING = 6,
 }
 
 #[derive(Default)]
 pub struct SmsState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Sequence Number.
+    /// Sequence number.
     pub _seq: u32,
-    /// State.
+    /// Current state of an SMS transaction.
     pub _state: u8,
-    /// Error Message.
     pub _error: String,
 }
 

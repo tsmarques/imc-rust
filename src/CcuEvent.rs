@@ -29,39 +29,36 @@ use crate::Header::Header;
 use crate::Message::*;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Event Type.
+/// Event Type
 #[allow(non_camel_case_types)]
 pub enum EventTypeEnum {
-    /// Log Book Entry Added.
+    /// Log Book Entry Added
     EVT_LOG_ENTRY = 1,
-    /// Plan Added.
+    /// Plan Added
     EVT_PLAN_ADDED = 2,
-    /// Plan Removed.
+    /// Plan Removed
     EVT_PLAN_REMOVED = 3,
-    /// Plan Changed.
+    /// Plan Changed
     EVT_PLAN_CHANGED = 4,
-    /// Map feature added.
+    /// Map feature added
     EVT_MAP_FEATURE_ADDED = 5,
-    /// Map feature removed.
+    /// Map feature removed
     EVT_MAP_FEATURE_REMOVED = 6,
-    /// Map feature changed.
+    /// Map feature changed
     EVT_MAP_FEATURE_CHANGED = 7,
-    /// The sender is now teleoperating the vehicle.
+    /// The sender is now teleoperating the vehicle
     EVT_TELEOPERATION_STARTED = 8,
-    /// The sender stopped teleoperating the vehicle.
+    /// The sender stopped teleoperating the vehicle
     EVT_TELEOPERATION_ENDED = 9,
 }
 
 /// This message is used to signal events among running CCUs.
 #[derive(Default)]
 pub struct CcuEvent {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Event Type.
     pub _type: u8,
-    /// Identifier.
     pub _id: String,
-    /// Additional Data.
     pub _arg: Option<Box<dyn Message>>,
 }
 

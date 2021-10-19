@@ -28,27 +28,27 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub mod TypeBits {
-    /// X-axis.
+    /// X-axis
     pub const CD_X: u32 = 0x01;
-    /// Y-axis.
+    /// Y-axis
     pub const CD_Y: u32 = 0x02;
-    /// Z-axis.
+    /// Z-axis
     pub const CD_Z: u32 = 0x04;
-    /// Impact.
+    /// Impact
     pub const CD_IMPACT: u32 = 0x08;
 }
 
 /// Detected collision.
 #[derive(Default)]
 pub struct Collision {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Collision value.
+    /// Estimated collision acceleration value.
     pub _value: f32,
-    /// Type.
+    /// Collision flags.
     pub _type: u8,
 }
 

@@ -32,7 +32,7 @@ use crate::Message::*;
 /// are alive.
 #[derive(Default)]
 pub struct Heartbeat {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

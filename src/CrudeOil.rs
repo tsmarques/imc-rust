@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Crude oil measurement.
 #[derive(Default)]
 pub struct CrudeOil {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Amount of crude oil detected.
     pub _value: f32,
 }
 

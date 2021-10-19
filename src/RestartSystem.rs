@@ -30,7 +30,7 @@ use crate::Message::*;
 /// Request the destination system to restart itself.
 #[derive(Default)]
 pub struct RestartSystem {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

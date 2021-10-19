@@ -31,29 +31,29 @@ use crate::Message::*;
 use crate::MessageList;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Command.
+/// Command
 #[allow(non_camel_case_types)]
 pub enum CommandEnum {
-    /// Get.
+    /// Get
     LBC_GET = 0,
-    /// Clear.
+    /// Clear
     LBC_CLEAR = 1,
-    /// Get Errors.
+    /// Get Errors
     LBC_GET_ERR = 2,
-    /// Reply.
+    /// Reply
     LBC_REPLY = 3,
 }
 
 /// Control history log.
 #[derive(Default)]
 pub struct LogBookControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Command.
+    /// Command to perform.
     pub _command: u8,
-    /// Timestamp.
+    /// Timestamp for command (Epoch time).
     pub _htime: f64,
-    /// Messages.
+    /// Argument, currently used only for 'REPLY'.
     pub _msg: MessageList<LogBookEntry>,
 }
 

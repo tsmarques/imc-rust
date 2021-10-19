@@ -31,25 +31,25 @@ use crate::MessageList;
 use crate::UsblModem::UsblModem;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Set LBL Configuration.
+    /// Set LBL Configuration
     OP_SET_CFG = 0,
-    /// Retrieve LBL Configuration.
+    /// Retrieve LBL Configuration
     OP_GET_CFG = 1,
-    /// Reply to a GET command.
+    /// Reply to a GET command
     OP_CUR_CFG = 2,
 }
 
 /// Ultra-Short Base Line configuration.
 #[derive(Default)]
 pub struct UsblConfig {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
+    /// Used to define the type of the operation this message holds.
     pub _op: u8,
-    /// Modems.
+    /// A list of USBL modem configuration messages.
     pub _modems: MessageList<UsblModem>,
 }
 

@@ -32,15 +32,15 @@ use crate::Message::*;
 /// acceleration that a device is exposed to.
 #[derive(Default)]
 pub struct Acceleration {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Device Time.
+    /// The device time.
     pub _time: f64,
-    /// X.
+    /// X component.
     pub _x: f64,
-    /// Y.
+    /// Y component.
     pub _y: f64,
-    /// Z.
+    /// Z component.
     pub _z: f64,
 }
 

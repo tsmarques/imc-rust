@@ -31,14 +31,14 @@ use crate::Message::*;
 use crate::MessageList;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Sidescan.
+    /// Sidescan
     ST_SIDESCAN = 0,
-    /// Echo Sounder.
+    /// Echo Sounder
     ST_ECHOSOUNDER = 1,
-    /// Multibeam.
+    /// Multibeam
     ST_MULTIBEAM = 2,
 }
 
@@ -46,23 +46,24 @@ pub enum TypeEnum {
 /// measurement.
 #[derive(Default)]
 pub struct SonarData {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Type.
+    /// Type of sonar.
     pub _type: u8,
-    /// Frequency.
+    /// Operating frequency.
     pub _frequency: u32,
-    /// Minimum Range.
+    /// Minimum range.
     pub _min_range: u16,
-    /// Maximum Range.
+    /// Maximum range.
     pub _max_range: u16,
-    /// Bits Per Data Point.
+    /// Size of the data unit.
     pub _bits_per_point: u8,
-    /// Scaling Factor.
+    /// Scaling factor used to multiply each data unit to restore the
+    /// original floating point value.
     pub _scale_factor: f32,
-    /// Beam Configuration.
+    /// Beam configuration of the device.
     pub _beam_config: MessageList<BeamConfig>,
-    /// Data.
+    /// Data acquired by the measurement.
     pub _data: Vec<u8>,
 }
 

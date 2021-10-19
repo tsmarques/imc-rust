@@ -28,14 +28,14 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Action on the vehicle operational limits.
+/// Action on the vehicle operational limits
 #[allow(non_camel_case_types)]
 pub enum ActiononthevehicleoperationallimitsEnum {
-    /// Request.
+    /// Request
     OP_REQUEST = 0,
-    /// Set.
+    /// Set
     OP_SET = 1,
-    /// Report.
+    /// Report
     OP_REPORT = 2,
 }
 
@@ -43,43 +43,48 @@ pub enum ActiononthevehicleoperationallimitsEnum {
 /// For aircraft this should represent the flight envelope and the dynamic contraints.
 #[derive(Default)]
 pub struct VehicleOperationalLimits {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Action on the vehicle operational limits.
+    /// Action on the vehicle operation limits
     pub _op: u8,
-    /// Minimum speed.
+    /// Minimum operation speed.
+    /// For aircraft this is equal or larger then the stall speed.
     pub _speed_min: f32,
-    /// Maximum speed.
+    /// Maximum operation speed.
+    /// For aircraft this is limited by the engine power or structural contrains.
     pub _speed_max: f32,
-    /// Longitudinal maximum acceleration.
+    /// Maximum longitudinal acceleration.
     pub _long_accel: f32,
-    /// Maximum MSL altitude.
+    /// Maximum altitude above mean-sea-level.
     pub _alt_max_msl: f32,
-    /// Maximum Dive Rate Speed Fraction.
+    /// Maximum dive rate (negative vertical speed) as a fraction of the longitudinal speed.
     pub _dive_fraction_max: f32,
-    /// Maximum Climb Rate Speed Fraction.
+    /// Maximum climb rate (positive vertical speed) as a fraction of the longitudinal speed.
     pub _climb_fraction_max: f32,
-    /// Bank limit.
+    /// Limit to the bank angle (roll; angle over the xx body-axis).
     pub _bank_max: f32,
-    /// Bank rate limit.
+    /// Limit to the bank angular rate (roll; angle over the xx body-axis).
     pub _p_max: f32,
-    /// Minimum pitch angle.
+    /// Minimum pitch angle (angle over the xx body-axis).
     pub _pitch_min: f32,
-    /// Maximum pitch angle.
+    /// Maximum pitch angle (angle over the xx body-axis).
     pub _pitch_max: f32,
-    /// Maximum pitch rate.
+    /// Maximum pitch angular rate (angle over the xx body-axis).
     pub _q_max: f32,
-    /// Minimum load factor.
+    /// Minimum load factor, i.e., maximum positive acceleration in the zz body-axis
+    /// as a factor of the gravity acceleration at mean-sea-level.
     pub _g_min: f32,
-    /// Maximum load factor.
+    /// Maximum load factor, i.e., maximum negative acceleration in the zz body-axis
+    /// as a factor of the gravity acceleration at mean-sea-level.
     pub _g_max: f32,
-    /// Maximum lateral load factor.
+    /// Maximum lateral load factor, i.e., maximum acceleration in the yy body-axis
+    /// as a factor of the gravity acceleration at mean-sea-level.
     pub _g_lat_max: f32,
-    /// Minimum RPMs.
+    /// Minimum motor RPMs.
     pub _rpm_min: f32,
-    /// Maximum RPMs.
+    /// Maximum motor RPMs.
     pub _rpm_max: f32,
-    /// Maximum RPM rate.
+    /// Maximum motor RPMs' rate of change.
     pub _rpm_rate_max: f32,
 }
 

@@ -31,19 +31,19 @@ use crate::Message::*;
 /// Location of a specific device in the system infrastructure.
 #[derive(Default)]
 pub struct DeviceState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Device Position - X.
+    /// Device's position over the X axis.
     pub _x: f32,
-    /// Device Position - Y.
+    /// Device's position over the Y axis.
     pub _y: f32,
-    /// Device Position - Z.
+    /// Device's position over the Z axis.
     pub _z: f32,
-    /// Device Rotation - X.
+    /// Device's rotation over the X axis.
     pub _phi: f32,
-    /// Device Rotation - Y.
+    /// Device's rotation over the Y axis.
     pub _theta: f32,
-    /// Device Rotation - Z.
+    /// Device's rotation over the Z axis.
     pub _psi: f32,
 }
 

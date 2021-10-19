@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Dissolved Oxygen measurement.
 #[derive(Default)]
 pub struct DissolvedOxygen {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Dissolved Oxygen reading.
     pub _value: f32,
 }
 

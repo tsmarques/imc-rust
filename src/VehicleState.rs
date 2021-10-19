@@ -28,27 +28,27 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Operation Mode.
+/// Operation Mode
 #[allow(non_camel_case_types)]
 pub enum OperationModeEnum {
-    /// Service.
+    /// Service
     VS_SERVICE = 0,
-    /// Calibration.
+    /// Calibration
     VS_CALIBRATION = 1,
-    /// Error.
+    /// Error
     VS_ERROR = 2,
-    /// Maneuver.
+    /// Maneuver
     VS_MANEUVER = 3,
-    /// External Control.
+    /// External Control
     VS_EXTERNAL = 4,
-    /// Boot.
+    /// Boot
     VS_BOOT = 5,
 }
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Maneuver Done.
+    /// Maneuver Done
     pub const VFLG_MANEUVER_DONE: u32 = 0x01;
 }
 
@@ -60,27 +60,31 @@ pub mod FlagsBits {
 /// - Active control loops.
 #[derive(Default)]
 pub struct VehicleState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation Mode.
+    /// The overall operation mode.
     pub _op_mode: u8,
-    /// Errors -- Count.
+    /// Error count for monitored entitites.
     pub _error_count: u8,
-    /// Errors -- Entities.
+    /// The monitored entities with error conditions. This is a comma
+    /// separated list of entity names.
     pub _error_ents: String,
-    /// Maneuver -- Type.
+    /// Type of maneuver being executed, when in MANEUVER mode. The
+    /// value is the IMC serialization ID of the corresponding
+    /// maneuver.
     pub _maneuver_type: u16,
-    /// Maneuver -- Start Time.
+    /// Start time of maneuver being executed (Epoch time), when in
+    /// MANEUVER mode.
     pub _maneuver_stime: f64,
-    /// Maneuver -- ETA.
+    /// Estimated time for maneuver completion. The value will be
+    /// 65535 if the time is unknown or undefined.
     pub _maneuver_eta: u16,
-    /// Control Loops.
+    /// Enabled control loops.
     pub _control_loops: u32,
-    /// Flags.
     pub _flags: u8,
-    /// Last Error -- Description.
+    /// Description of last error.
     pub _last_error: String,
-    /// Last Error -- Time.
+    /// Time of last error (Epoch time).
     pub _last_error_time: f64,
 }
 

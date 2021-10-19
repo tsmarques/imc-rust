@@ -28,26 +28,26 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Value.
+/// Value
 #[allow(non_camel_case_types)]
 pub enum ValueEnum {
-    /// Transmission Completed.
+    /// Transmission Completed
     UTS_DONE = 0,
-    /// Transmission Failed.
+    /// Transmission Failed
     UTS_FAILED = 1,
-    /// Transmission Canceled.
+    /// Transmission Canceled
     UTS_CANCELED = 2,
-    /// Modem is busy.
+    /// Modem is busy
     UTS_BUSY = 3,
-    /// Invalid address.
+    /// Invalid address
     UTS_INV_ADDR = 4,
-    /// In Progress.
+    /// In Progress
     UTS_IP = 5,
-    /// Unsupported operation.
+    /// Unsupported operation
     UTS_UNSUPPORTED = 6,
-    /// Invalid transmission size.
+    /// Invalid transmission size
     UTS_INV_SIZE = 7,
-    /// Not transducer.
+    /// Not transducer
     UTS_NOT_TRANSDUCER = 8,
 }
 
@@ -55,13 +55,14 @@ pub enum ValueEnum {
 /// on the transmission status of data frames.
 #[derive(Default)]
 pub struct UamTxStatus {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Sequence Id.
+    /// The sequence identifier of the frame transmission request.
     pub _seq: u16,
-    /// Value.
+    /// Frame transmission status.
     pub _value: u8,
-    /// Error Message.
+    /// Where applicable this field shall contain a human-readable message
+    /// explaining the error.
     pub _error: String,
 }
 

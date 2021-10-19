@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Desired Z reference value for the control layer.
 #[derive(Default)]
 pub struct DesiredZ {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// The value of the desired z reference in meters.
     pub _value: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
 }
 

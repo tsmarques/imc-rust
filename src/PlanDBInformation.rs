@@ -30,19 +30,22 @@ use crate::Message::*;
 
 #[derive(Default)]
 pub struct PlanDBInformation {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Plan ID.
+    /// Plan identifier.
     pub _plan_id: String,
-    /// Plan Size.
+    /// Plan size. The value equals the IMC message payload of the
+    /// associated 'PlanSpecification' message in bytes.
     pub _plan_size: u16,
-    /// Last Changed -- Time.
+    /// Time of last change to the plan (Epoch time).
     pub _change_time: f64,
-    /// Last Change -- Source Address.
+    /// IMC address for source of last change to the plan.
     pub _change_sid: u16,
-    /// Last Change -- Source Name.
+    /// IMC node name for source of last change to the plan.
     pub _change_sname: String,
-    /// MD5.
+    /// MD5 plan verification code. The value is calculated over the
+    /// message payload of the 'PlanSpecification', in compliance with
+    /// RFC 1321.
     pub _md5: Vec<u8>,
 }
 

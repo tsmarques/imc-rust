@@ -31,40 +31,34 @@ use crate::Header::Header;
 use crate::Message::*;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Use Location Reference.
+    /// Use Location Reference
     pub const FLAG_LOCATION: u32 = 0x01;
-    /// Use Speed Reference.
+    /// Use Speed Reference
     pub const FLAG_SPEED: u32 = 0x02;
-    /// Use Z Reference.
+    /// Use Z Reference
     pub const FLAG_Z: u32 = 0x04;
-    /// Use Radius Reference.
+    /// Use Radius Reference
     pub const FLAG_RADIUS: u32 = 0x08;
-    /// Use this Reference as Start Position for PathControler.
+    /// Use this Reference as Start Position for PathControler
     pub const FLAG_START_POINT: u32 = 0x10;
-    /// Use Current Position as Start Position for PathControler.
+    /// Use Current Position as Start Position for PathControler
     pub const FLAG_DIRECT: u32 = 0x20;
-    /// Flag Maneuver Completion.
+    /// Flag Maneuver Completion
     pub const FLAG_MANDONE: u32 = 0x80;
 }
 
 #[derive(Default)]
 pub struct Reference {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Flags.
     pub _flags: u8,
-    /// Speed Reference.
     pub _speed: Option<DesiredSpeed>,
-    /// Z Reference.
     pub _z: Option<DesiredZ>,
-    /// Latitude Reference.
     pub _lat: f64,
-    /// Longitude Reference.
     pub _lon: f64,
-    /// Radius.
     pub _radius: f32,
 }
 

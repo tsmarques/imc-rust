@@ -28,27 +28,27 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Medium.
+/// Medium
 #[allow(non_camel_case_types)]
 pub enum MediumEnum {
-    /// Ground.
+    /// Ground
     VM_GROUND = 0,
-    /// Air.
+    /// Air
     VM_AIR = 1,
-    /// Water.
+    /// Water
     VM_WATER = 2,
-    /// Underwater.
+    /// Underwater
     VM_UNDERWATER = 3,
-    /// Unknown.
+    /// Unknown
     VM_UNKNOWN = 4,
 }
 
 /// Detect current vehicle medium.
 #[derive(Default)]
 pub struct VehicleMedium {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Medium.
+    /// Current medium.
     pub _medium: u8,
 }
 

@@ -30,9 +30,8 @@ use crate::Message::*;
 
 #[derive(Default)]
 pub struct SaveEntityParameters {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Entity Name.
     pub _name: String,
 }
 

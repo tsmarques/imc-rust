@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Event of a specific hardware button.
 #[derive(Default)]
 pub struct ButtonEvent {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Button.
+    /// Button identifier.
     pub _button: u8,
-    /// Value.
+    /// Value of the button.
     pub _value: u8,
 }
 

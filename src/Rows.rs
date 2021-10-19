@@ -28,49 +28,50 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Square Curve.
+    /// Square Curve
     pub const FLG_SQUARE_CURVE: u32 = 0x0001;
-    /// First Curve Right.
+    /// First Curve Right
     pub const FLG_CURVE_RIGHT: u32 = 0x0002;
 }
 
 /// Rows maneuver (i.e: lawn mower type maneuver)
 #[derive(Default)]
 pub struct Rows {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run.
     pub _timeout: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude of target waypoint.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude of target waypoint.
     pub _lon: f64,
-    /// Z Reference.
+    /// Maneuver reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
-    /// Speed.
+    /// Maneuver speed reference.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
-    /// Bearing.
+    /// Rows bearing angle.
     pub _bearing: f64,
-    /// Cross Angle.
+    /// Rows cross angle reference.
     pub _cross_angle: f64,
-    /// Width.
+    /// Width of the maneuver.
     pub _width: f32,
-    /// Length.
+    /// Length of the maneuver.
     pub _length: f32,
-    /// Horizontal Step.
+    /// Horizontal step.
     pub _hstep: f32,
-    /// Curve Offset.
+    /// Desired curve offset.
     pub _coff: u8,
-    /// Alternation Parameter.
+    /// Alternation parameter.
     pub _alternation: u8,
-    /// Flags.
+    /// Maneuver flags.
     pub _flags: u8,
     /// Custom settings for maneuver.
     pub _custom: String,

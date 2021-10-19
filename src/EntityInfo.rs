@@ -31,17 +31,18 @@ use crate::Message::*;
 /// This message describes an entity.
 #[derive(Default)]
 pub struct EntityInfo {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Entity Identifier.
+    /// Entity identifier.
     pub _id: u8,
-    /// Label.
+    /// Entity label or empty if the entity id is not valid.
     pub _label: String,
-    /// Component name.
+    /// Name of the plugin/component/subsystem associated with this
+    /// entity.
     pub _component: String,
-    /// Activation Time.
+    /// Amount of time needed to properly activate the entity.
     pub _act_time: u16,
-    /// Deactivation Time.
+    /// Amount of time needed to properly deactivate the entity.
     pub _deact_time: u16,
 }
 

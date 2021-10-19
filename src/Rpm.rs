@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Number of revolutions per minute.
 #[derive(Default)]
 pub struct Rpm {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Number of revolutions per minute.
     pub _value: i16,
 }
 

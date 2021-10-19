@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Report of software CPU usage.
 #[derive(Default)]
 pub struct CpuUsage {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Usage percentage.
+    /// The CPU usage, in percentage, of the sending software.
     pub _value: u8,
 }
 

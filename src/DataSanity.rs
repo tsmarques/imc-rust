@@ -28,21 +28,21 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Sanity.
+/// Sanity
 #[allow(non_camel_case_types)]
 pub enum SanityEnum {
-    /// Sane.
+    /// Sane
     DS_SANE = 0,
-    /// Not Sane.
+    /// Not Sane
     DS_NOT_SANE = 1,
 }
 
 /// Report sanity or lack of it in the data output by a sensor.
 #[derive(Default)]
 pub struct DataSanity {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Sanity.
+    /// Whether the data is sane or not sane.
     pub _sane: u8,
 }
 

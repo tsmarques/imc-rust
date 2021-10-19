@@ -28,31 +28,32 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Control Operation.
+/// Control Operation
 #[allow(non_camel_case_types)]
 pub enum ControlOperationEnum {
-    /// Request Start of Logging.
+    /// Request Start of Logging
     COP_REQUEST_START = 0,
-    /// Logging Started.
+    /// Logging Started
     COP_STARTED = 1,
-    /// Request Logging Stop.
+    /// Request Logging Stop
     COP_REQUEST_STOP = 2,
-    /// Logging Stopped.
+    /// Logging Stopped
     COP_STOPPED = 3,
-    /// Request Current Log Name.
+    /// Request Current Log Name
     COP_REQUEST_CURRENT_NAME = 4,
-    /// Current Log Name.
+    /// Current Log Name
     COP_CURRENT_NAME = 5,
 }
 
 /// Control logging of messages to persistent storage.
 #[derive(Default)]
 pub struct LoggingControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Control Operation.
+    /// Operation to perform.
     pub _op: u8,
-    /// Log Label / Path.
+    /// The meaning of this field depends on the operation and is
+    /// explained in the operation's description.
     pub _name: String,
 }
 

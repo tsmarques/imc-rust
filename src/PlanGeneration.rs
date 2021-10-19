@@ -28,23 +28,23 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Command.
+/// Command
 #[allow(non_camel_case_types)]
 pub enum CommandEnum {
-    /// Generate.
+    /// Generate
     CMD_GENERATE = 0,
-    /// Execute.
+    /// Execute
     CMD_EXECUTE = 1,
 }
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Request.
+    /// Request
     OP_REQUEST = 0,
-    /// Error.
+    /// Error
     OP_ERROR = 1,
-    /// Success.
+    /// Success
     OP_SUCCESS = 2,
 }
 
@@ -52,15 +52,14 @@ pub enum OperationEnum {
 /// id and set of parameters.
 #[derive(Default)]
 pub struct PlanGeneration {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Command.
     pub _cmd: u8,
-    /// Operation.
     pub _op: u8,
-    /// Plan Identifier.
+    /// The name of the plan to be generated.
     pub _plan_id: String,
-    /// Parameters.
+    /// An optional list of parameters to be used by the plan
+    /// generation module.
     pub _params: String,
 }
 

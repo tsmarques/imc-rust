@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Desired Pitch angle reference value for the control layer.
 #[derive(Default)]
 pub struct DesiredPitch {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// The value of the desired pitch angle.
     pub _value: f64,
 }
 

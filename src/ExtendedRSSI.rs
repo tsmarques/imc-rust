@@ -33,11 +33,11 @@ use crate::Message::*;
 /// and reception equipment and the transmission medium and distance.
 #[derive(Default)]
 pub struct ExtendedRSSI {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// RSSI measurement.
     pub _value: f32,
-    /// RSSI Units.
+    /// Indicates the units used for the RSSI value.
     pub _units: u8,
 }
 

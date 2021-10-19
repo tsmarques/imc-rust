@@ -256,111 +256,111 @@ pub const DUNE_IMC_CONST_SYS_EID: u8 = 0;
 
 /// Global Enumerators
 
-/// Speed Units.
+/// Speed Units
 #[allow(non_camel_case_types)]
 pub enum SpeedUnits {
-    /// Meters per second.
+    /// Meters per second
     SUNITS_METERS_PS = 0,
-    /// RPM.
+    /// RPM
     SUNITS_RPM = 1,
-    /// Percentage.
+    /// Percentage
     SUNITS_PERCENTAGE = 2,
 }
 
-/// System Type.
+/// System Type
 #[allow(non_camel_case_types)]
 pub enum SystemType {
-    /// CCU.
+    /// CCU
     SYSTEMTYPE_CCU = 0,
-    /// Human-portable Sensor.
+    /// Human-portable Sensor
     SYSTEMTYPE_HUMANSENSOR = 1,
-    /// UUV.
+    /// UUV
     SYSTEMTYPE_UUV = 2,
-    /// USV.
+    /// USV
     SYSTEMTYPE_USV = 3,
-    /// UAV.
+    /// UAV
     SYSTEMTYPE_UAV = 4,
-    /// UGV.
+    /// UGV
     SYSTEMTYPE_UGV = 5,
-    /// Static sensor.
+    /// Static sensor
     SYSTEMTYPE_STATICSENSOR = 6,
-    /// Mobile sensor.
+    /// Mobile sensor
     SYSTEMTYPE_MOBILESENSOR = 7,
-    /// Wireless Sensor Network.
+    /// Wireless Sensor Network
     SYSTEMTYPE_WSN = 8,
 }
 
-/// Z Units.
+/// Z Units
 #[allow(non_camel_case_types)]
 pub enum ZUnits {
-    /// None.
+    /// None
     Z_NONE = 0,
-    /// Depth.
+    /// Depth
     Z_DEPTH = 1,
-    /// Altitude.
+    /// Altitude
     Z_ALTITUDE = 2,
-    /// Height.
+    /// Height
     Z_HEIGHT = 3,
 }
 
-/// RSSI Units.
+/// RSSI Units
 #[allow(non_camel_case_types)]
 pub enum RSSIUnits {
-    /// Decibel.
+    /// Decibel
     RSSIUNITS_dB = 0,
-    /// Percentage.
+    /// Percentage
     RSSIUNITS_PERCENTAGE = 1,
 }
 
 /// Global Bitfields
-/// Control Loops Mask.
+/// Control Loops Mask
 #[allow(non_camel_case_types)]
 pub mod CLoopsMask {
-    /// None.
+    /// None
     pub const CL_NONE: u32 = 0x00000000;
-    /// Path Control.
+    /// Path Control
     pub const CL_PATH: u32 = 0x00000001;
-    /// Teleoperation Control.
+    /// Teleoperation Control
     pub const CL_TELEOPERATION: u32 = 0x00000002;
-    /// Altitude Control.
+    /// Altitude Control
     pub const CL_ALTITUDE: u32 = 0x00000004;
-    /// Depth Control.
+    /// Depth Control
     pub const CL_DEPTH: u32 = 0x00000008;
-    /// Roll Control.
+    /// Roll Control
     pub const CL_ROLL: u32 = 0x00000010;
-    /// Pitch Control.
+    /// Pitch Control
     pub const CL_PITCH: u32 = 0x00000020;
-    /// Yaw Control.
+    /// Yaw Control
     pub const CL_YAW: u32 = 0x00000040;
-    /// Speed Control.
+    /// Speed Control
     pub const CL_SPEED: u32 = 0x00000080;
-    /// Yaw Rate Control.
+    /// Yaw Rate Control
     pub const CL_YAW_RATE: u32 = 0x00000100;
-    /// Torque Control.
+    /// Torque Control
     pub const CL_TORQUE: u32 = 0x00000400;
-    /// Force Control.
+    /// Force Control
     pub const CL_FORCE: u32 = 0x00000800;
-    /// Non-overridable control.
+    /// Non-overridable control
     pub const CL_NO_OVERRIDE: u32 = 0x80000000;
-    /// All.
+    /// All
     pub const CL_ALL: u32 = 0xFFFFFFFF;
 }
 
-/// Operational Limits Mask.
+/// Operational Limits Mask
 #[allow(non_camel_case_types)]
 pub mod OpLimitsMask {
-    /// Maximum Depth.
+    /// Maximum Depth
     pub const OPL_MAX_DEPTH: u32 = 0x01;
-    /// Minimum Altitude.
+    /// Minimum Altitude
     pub const OPL_MIN_ALT: u32 = 0x02;
-    /// Maximum Altitude.
+    /// Maximum Altitude
     pub const OPL_MAX_ALT: u32 = 0x04;
-    /// Minimum Speed.
+    /// Minimum Speed
     pub const OPL_MIN_SPEED: u32 = 0x08;
-    /// Maximum Speed.
+    /// Maximum Speed
     pub const OPL_MAX_SPEED: u32 = 0x10;
-    /// Maximum Vertical Rate.
+    /// Maximum Vertical Rate
     pub const OPL_MAX_VRATE: u32 = 0x20;
-    /// Operation Area.
+    /// Operation Area
     pub const OPL_AREA: u32 = 0x40;
 }

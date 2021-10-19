@@ -28,33 +28,33 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// State.
+/// State
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    /// Not Aligned.
+    /// Not Aligned
     AS_NOT_ALIGNED = 0,
-    /// Aligned.
+    /// Aligned
     AS_ALIGNED = 1,
-    /// Not Supported.
+    /// Not Supported
     AS_NOT_SUPPORTED = 2,
-    /// Aligning.
+    /// Aligning
     AS_ALIGNING = 3,
-    /// Wrong Medium.
+    /// Wrong Medium
     AS_WRONG_MEDIUM = 4,
-    /// Coarse Alignment.
+    /// Coarse Alignment
     AS_COARSE_ALIGNMENT = 5,
-    /// Fine Alignment.
+    /// Fine Alignment
     AS_FINE_ALIGNMENT = 6,
-    /// System Ready.
+    /// System Ready
     AS_SYSTEM_READY = 7,
 }
 
 /// This message notifies the vehicle is ready for dead-reckoning missions.
 #[derive(Default)]
 pub struct AlignmentState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// State.
+    /// Alignment State.
     pub _state: u8,
 }
 

@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Brightness value of an LED (Light-Emitting Diode).
 #[derive(Default)]
 pub struct LedBrightness {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Name.
+    /// LED name.
     pub _name: String,
-    /// Value.
+    /// Brightness value.
     pub _value: u8,
 }
 

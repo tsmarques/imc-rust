@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Actual position of a servo.
 #[derive(Default)]
 pub struct ServoPosition {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Identifier.
+    /// Servo identifier.
     pub _id: u8,
-    /// Position.
+    /// Value of the servo position.
     pub _value: f32,
 }
 

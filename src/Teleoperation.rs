@@ -32,7 +32,7 @@ use crate::Message::*;
 /// external human operator.
 #[derive(Default)]
 pub struct Teleoperation {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
     /// Custom settings for maneuver.
     pub _custom: String,

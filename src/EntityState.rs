@@ -28,25 +28,25 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// State.
+/// State
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    /// Bootstrapping.
+    /// Bootstrapping
     ESTA_BOOT = 0,
-    /// Normal Operation.
+    /// Normal Operation
     ESTA_NORMAL = 1,
-    /// Fault.
+    /// Fault
     ESTA_FAULT = 2,
-    /// Error.
+    /// Error
     ESTA_ERROR = 3,
-    /// Failure.
+    /// Failure
     ESTA_FAILURE = 4,
 }
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Human Intervention Required.
+    /// Human Intervention Required
     pub const EFLA_HUMAN_INTERVENTION: u32 = 0x01;
 }
 
@@ -54,13 +54,13 @@ pub mod FlagsBits {
 /// identified in the message header.
 #[derive(Default)]
 pub struct EntityState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// State.
+    /// State of entity.
     pub _state: u8,
-    /// Flags.
+    /// Complementary entity state flags.
     pub _flags: u8,
-    /// Complementary description.
+    /// Complementary human-readable description of entity state.
     pub _description: String,
 }
 

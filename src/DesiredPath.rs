@@ -28,24 +28,24 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Start Point.
+    /// Start Point
     pub const FL_START: u32 = 0x01;
-    /// Direct.
+    /// Direct
     pub const FL_DIRECT: u32 = 0x02;
-    /// No Altitude/Depth control.
+    /// No Altitude/Depth control
     pub const FL_NO_Z: u32 = 0x04;
-    /// 3D Tracking.
+    /// 3D Tracking
     pub const FL_3DTRACK: u32 = 0x08;
-    /// Counter-Clockwise loiter.
+    /// Counter-Clockwise loiter
     pub const FL_CCLOCKW: u32 = 0x10;
-    /// Loiter from current position.
+    /// Loiter from current position
     pub const FL_LOITER_CURR: u32 = 0x20;
-    /// Takeoff.
+    /// Takeoff
     pub const FL_TAKEOFF: u32 = 0x40;
-    /// Land.
+    /// Land
     pub const FL_LAND: u32 = 0x80;
 }
 
@@ -72,33 +72,42 @@ pub mod FlagsBits {
 /// counter-clockwise direction ('CCLOCKW' flag).
 #[derive(Default)]
 pub struct DesiredPath {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Path Reference.
+    /// Unsigned integer reference for the scope of the desired path message.
+    /// Path reference should only be set by a maneuver.
+    /// Should be set to an always increasing reference at the time of dispatching this message.
+    /// Lower level path controllers must inherit the same path reference sent by maneuver.
     pub _path_ref: u32,
-    /// Start Point -- Latitude WGS-84.
+    /// WGS-84 latitude of start point. This will be ignored unless
+    /// the 'START' flag is set.
     pub _start_lat: f64,
-    /// Start Point -- WGS-84 Longitude.
+    /// WGS-84 longitude of start point. This will be ignored unless
+    /// the 'START' flag is set.
     pub _start_lon: f64,
-    /// Start Point -- Z Reference.
+    /// Altitude or depth of start point. This parameter will be
+    /// ignored if the 'NO_Z' flag is set, or if the 'START' flag is
+    /// not set.
     pub _start_z: f32,
-    /// Start Point -- Z Units.
+    /// Units of the start point's z reference.
     pub _start_z_units: u8,
-    /// End Point -- WGS84 Latitude.
+    /// WGS-84 latitude of end point.
     pub _end_lat: f64,
-    /// End Point -- WGS-84 Longitude.
+    /// WGS-84 longitude of end point.
     pub _end_lon: f64,
-    /// End Point -- Z Reference.
+    /// Depth or altitude for the end point. This parameter will be
+    /// ignored if the 'NO_Z' flag is set.
     pub _end_z: f32,
-    /// End Point -- Z Units.
+    /// Units of the end point's z reference.
     pub _end_z_units: u8,
-    /// Speed.
+    /// Maneuver speed reference.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
-    /// Loiter -- Radius.
+    /// Radius for loitering at end point. Specify less or equal to 0
+    /// for no loitering.
     pub _lradius: f32,
-    /// Flags.
+    /// Desired Path flags.
     pub _flags: u8,
 }
 

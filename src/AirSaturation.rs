@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Air Saturation measurement.
 #[derive(Default)]
 pub struct AirSaturation {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Air Saturation reading.
     pub _value: f32,
 }
 

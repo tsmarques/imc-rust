@@ -28,30 +28,28 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Status Code.
+/// Status Code
 #[allow(non_camel_case_types)]
 pub enum StatusCodeEnum {
-    /// Successfull transmission.
+    /// Successfull transmission
     TXSTATUS_OK = 1,
-    /// Error while trying to transmit message.
+    /// Error while trying to transmit message
     TXSTATUS_ERROR = 2,
-    /// Message has been queued for transmission.
+    /// Message has been queued for transmission
     TXSTATUS_QUEUED = 3,
-    /// Message is currently being transmitted.
+    /// Message is currently being transmitted
     TXSTATUS_TRANSMIT = 4,
-    /// Message's TTL has expired. Transmition cancelled..
+    /// Message's TTL has expired. Transmition cancelled.
     TXSTATUS_EXPIRED = 5,
 }
 
 #[derive(Default)]
 pub struct IridiumTxStatus {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Request Identifier.
+    /// The request identifier used to receive transmission updates
     pub _req_id: u16,
-    /// Status Code.
     pub _status: u8,
-    /// Status Text.
     pub _text: String,
 }
 

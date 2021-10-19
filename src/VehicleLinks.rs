@@ -34,11 +34,11 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// This message is sent by the TREX task which gives further information to a TREX instance about connected IMC nodes
 #[derive(Default)]
 pub struct VehicleLinks {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Local Name.
+    /// The name of the vehicle being controlled
     pub _localname: String,
-    /// Active Links.
+    /// A list of Announce messages with last announces heard
     pub _links: MessageList<Announce>,
 }
 

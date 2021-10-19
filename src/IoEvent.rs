@@ -28,23 +28,23 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Input Available.
+    /// Input Available
     IOV_TYPE_INPUT = 1,
-    /// Input Error.
+    /// Input Error
     IOV_TYPE_INPUT_ERROR = 2,
 }
 
 /// Notification of an I/O event.
 #[derive(Default)]
 pub struct IoEvent {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Type.
+    /// Event type.
     pub _type: u8,
-    /// Error Message.
+    /// Human-readable error message.
     pub _error: String,
 }
 

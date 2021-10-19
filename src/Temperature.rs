@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Report of temperature.
 #[derive(Default)]
 pub struct Temperature {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Measured Temperature.
+    /// The value of the temperature as measured by the sensor.
     pub _value: f32,
 }
 

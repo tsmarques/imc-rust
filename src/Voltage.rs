@@ -31,9 +31,10 @@ use crate::Message::*;
 /// Report of electrical voltage.
 #[derive(Default)]
 pub struct Voltage {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Measured Voltage Value.
+    /// The value of the internal electrical voltage as measured by
+    /// the sensor.
     pub _value: f32,
 }
 

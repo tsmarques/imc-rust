@@ -28,32 +28,31 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Attribute type.
+/// Attribute type
 #[allow(non_camel_case_types)]
 pub enum AttributetypeEnum {
-    /// Boolean Domain.
+    /// Boolean Domain
     TYPE_BOOL = 1,
-    /// Integer Domain.
+    /// Integer Domain
     TYPE_INT = 2,
-    /// Float Domain.
+    /// Float Domain
     TYPE_FLOAT = 3,
-    /// String Domain.
+    /// String Domain
     TYPE_STRING = 4,
-    /// Enumerated Domain.
+    /// Enumerated Domain
     TYPE_ENUM = 5,
 }
 
 #[derive(Default)]
 pub struct TrexAttribute {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Attribute Name.
+    /// Name of this attribute.
     pub _name: String,
-    /// Attribute type.
     pub _attr_type: u8,
-    /// Minimum.
+    /// Lower bound of this interval. Empty text means no bound.
     pub _min: String,
-    /// Maximum.
+    /// Upper bound of this interval. Empty text means no bound.
     pub _max: String,
 }
 

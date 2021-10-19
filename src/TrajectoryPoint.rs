@@ -31,15 +31,18 @@ use crate::Message::*;
 /// Waypoint coordinate of a Follow Trajectory maneuver.
 #[derive(Default)]
 pub struct TrajectoryPoint {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// North Offset (m).
+    /// The North offset of the North/East/Down coordinate of this
+    /// point in relation to the trajectory start point.
     pub _x: f32,
-    /// East Offset (m).
+    /// The East offset of the North/East/Down coordinate of this
+    /// point in relation to the trajectory start point.
     pub _y: f32,
-    /// Down Offset (m).
+    /// The Down offset of the North/East/Down coordinate of this
+    /// point in relation to the trajectory start point.
     pub _z: f32,
-    /// Time Offset (s).
+    /// The time offset relative to the previous trajectory point.
     pub _t: f32,
 }
 

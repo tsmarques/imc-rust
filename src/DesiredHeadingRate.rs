@@ -31,9 +31,10 @@ use crate::Message::*;
 /// Desired Heading Rate speed reference value for the control layer.
 #[derive(Default)]
 pub struct DesiredHeadingRate {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// The value of the desired heading rate speed in radians per
+    /// second.
     pub _value: f64,
 }
 

@@ -32,17 +32,18 @@ use crate::Message::*;
 /// USBL.
 #[derive(Default)]
 pub struct UsblFix {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Target.
+    /// Target's IMC address.
     pub _target: u16,
-    /// Latitude (WGS-84).
+    /// WGS-84 Latitude.
     pub _lat: f64,
-    /// Longitude (WGS-84).
+    /// WGS-84 Longitude.
     pub _lon: f64,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
-    /// Z Reference.
+    /// Target reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
 }
 

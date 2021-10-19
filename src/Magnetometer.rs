@@ -28,12 +28,12 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Direction.
+/// Direction
 #[allow(non_camel_case_types)]
 pub enum DirectionEnum {
-    /// Clockwise First.
+    /// Clockwise First
     MD_CLOCKW_FIRST = 0,
-    /// Counter Clockwise First.
+    /// Counter Clockwise First
     MD_CCLOCKW_FIRST = 1,
 }
 
@@ -41,27 +41,28 @@ pub enum DirectionEnum {
 /// in one direction, a second square in the opposite direction)
 #[derive(Default)]
 pub struct Magnetometer {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run.
     pub _timeout: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude of target waypoint.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude of target waypoint.
     pub _lon: f64,
-    /// Z Reference.
+    /// Maneuver reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
-    /// Speed.
+    /// Maneuver speed reference.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
-    /// Bearing.
+    /// Rows bearing angle.
     pub _bearing: f64,
-    /// Width.
+    /// Width of the maneuver.
     pub _width: f32,
-    /// Direction.
+    /// Desired direction.
     pub _direction: u8,
     /// Custom settings for maneuver.
     pub _custom: String,

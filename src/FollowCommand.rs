@@ -31,13 +31,17 @@ use crate::Message::*;
 /// This maneuver follows a direct command given by an external entity.
 #[derive(Default)]
 pub struct FollowCommand {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Controlling Source.
+    /// The IMC identifier of the source system that is allowed to provide command to this maneuver.
+    /// If the value ''0xFFFF'' is used, any system is allowed to command references.
     pub _control_src: u16,
-    /// Controlling Entity.
+    /// The entity identifier of the entity that is allowed to provide commands to this maneuver.
+    /// If the value ''0xFF'' is used, any entity is allowed to command references.
     pub _control_ent: u8,
-    /// Reference Update Timeout.
+    /// The ammount of time, in seconds, after which the maneuver will be terminated if no new command has
+    /// been received. In other words, the controlling entity should send command updates in shorter periods than
+    /// 'timeout'.
     pub _timeout: f32,
 }
 

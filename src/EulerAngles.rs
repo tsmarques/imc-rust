@@ -32,17 +32,23 @@ use crate::Message::*;
 /// (1950).
 #[derive(Default)]
 pub struct EulerAngles {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Device Time.
+    /// The device time.
     pub _time: f64,
-    /// Roll Angle.
+    /// Rotation around the vehicle longitudinal axis.
     pub _phi: f64,
-    /// Pitch Angle.
+    /// Rotation around the vehicle lateral or transverse axis.
     pub _theta: f64,
-    /// Yaw Angle (True).
+    /// Rotation around the vehicle vertical axis. A value of 0 means
+    /// the vehicle is oriented towards true north. In cases where the
+    /// sensor cannot measure the true heading, this field will have
+    /// the same value as Yaw (Magnetic).
     pub _psi: f64,
-    /// Yaw Angle (Magnetic).
+    /// Rotation around the vehicle vertical axis. A value of 0 means
+    /// the vehicle is oriented towards magnetic north. In cases where
+    /// the sensor cannot measure the magnetic heading, this field
+    /// will have the same value as Yaw (True).
     pub _psi_magnetic: f64,
 }
 

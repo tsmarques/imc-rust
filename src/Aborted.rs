@@ -30,7 +30,7 @@ use crate::Message::*;
 /// This message signals that an :ref:`Abort` message was received and acted upon.
 #[derive(Default)]
 pub struct Aborted {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

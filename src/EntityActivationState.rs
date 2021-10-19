@@ -28,35 +28,35 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// State.
+/// State
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    /// Entity is Inactive.
+    /// Entity is Inactive
     EAS_INACTIVE = 0,
-    /// Entity is Active.
+    /// Entity is Active
     EAS_ACTIVE = 1,
-    /// Activation in Progress.
+    /// Activation in Progress
     EAS_ACT_IP = 2,
-    /// Activation Completed.
+    /// Activation Completed
     EAS_ACT_DONE = 3,
-    /// Activation Failed.
+    /// Activation Failed
     EAS_ACT_FAIL = 4,
-    /// Deactivation In Progress.
+    /// Deactivation In Progress
     EAS_DEACT_IP = 5,
-    /// Deactivation Completed.
+    /// Deactivation Completed
     EAS_DEACT_DONE = 6,
-    /// Deactivation Failed.
+    /// Deactivation Failed
     EAS_DEACT_FAIL = 7,
 }
 
 /// State of entity activation/deactivation.
 #[derive(Default)]
 pub struct EntityActivationState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// State.
+    /// Current state.
     pub _state: u8,
-    /// Error.
+    /// Human-readable error message.
     pub _error: String,
 }
 

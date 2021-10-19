@@ -39,27 +39,34 @@ use crate::Message::*;
 /// of the execution of this type of maneuver.
 #[derive(Default)]
 pub struct Goto {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run.
     pub _timeout: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude of target waypoint.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude of target waypoint.
     pub _lon: f64,
-    /// Z Reference.
+    /// Target reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
-    /// Speed.
+    /// Maneuver speed reference.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
-    /// Roll.
+    /// The phi Euler angle in which the vehicle should set its
+    /// attitude. Use '-1' for this field to be
+    /// unconsidered. Otherwise the value spans from 0 to 2 Pi.
     pub _roll: f64,
-    /// Pitch.
+    /// The theta Euler angle in which the vehicle should set its
+    /// attitude. Use '-1' for this field to be
+    /// disconcerted. Otherwise the value spans from 0 to 2 Pi.
     pub _pitch: f64,
-    /// Yaw.
+    /// The psi Euler angle in which the vehicle should set its
+    /// attitude. Use '-1' for this field to be considered. Otherwise
+    /// the value spans from 0 to 2 Pi.
     pub _yaw: f64,
     /// Custom settings for maneuver.
     pub _custom: String,

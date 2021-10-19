@@ -28,31 +28,31 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Loiter Type.
+/// Loiter Type
 #[allow(non_camel_case_types)]
 pub enum LoiterTypeEnum {
-    /// Default.
+    /// Default
     LT_DEFAULT = 0,
-    /// Circular.
+    /// Circular
     LT_CIRCULAR = 1,
-    /// Race track.
+    /// Race track
     LT_RACETRACK = 2,
-    /// Figure 8.
+    /// Figure 8
     LT_EIGHT = 3,
-    /// Hover.
+    /// Hover
     LT_HOVER = 4,
 }
 
-/// Direction.
+/// Direction
 #[allow(non_camel_case_types)]
 pub enum DirectionEnum {
-    /// Vehicle Dependent.
+    /// Vehicle Dependent
     LD_VDEP = 0,
-    /// Clockwise.
+    /// Clockwise
     LD_CLOCKW = 1,
-    /// Counter Clockwise.
+    /// Counter Clockwise
     LD_CCLOCKW = 2,
-    /// Into the wind/current.
+    /// Into the wind/current
     LD_IWINDCURR = 3,
 }
 
@@ -60,33 +60,36 @@ pub enum DirectionEnum {
 /// waypoint with fixed depth reference.
 #[derive(Default)]
 pub struct Loiter {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The timeout indicates the time that an error should occur if
+    /// exceeded.
     pub _timeout: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude coordinate.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude coordinate.
     pub _lon: f64,
-    /// Z Reference.
+    /// Maneuver reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
-    /// Duration.
+    /// The duration of this maneuver. Use '0' for unlimited duration
+    /// time.
     pub _duration: u16,
-    /// Speed.
+    /// Maneuver speed reference.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
-    /// Loiter Type.
+    /// Loiter maneuver type.
     pub _type: u8,
-    /// Radius.
+    /// Radius of the maneuver.
     pub _radius: f32,
-    /// Length.
+    /// Length of the maneuver.
     pub _length: f32,
-    /// Bearing.
+    /// Bearing of the maneuver.
     pub _bearing: f64,
-    /// Direction.
+    /// Desired direction.
     pub _direction: u8,
     /// Custom settings for maneuver.
     pub _custom: String,

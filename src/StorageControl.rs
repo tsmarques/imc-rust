@@ -28,46 +28,51 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Request.
+    /// Request
     SCTR_REQUEST = 0,
-    /// Reply -- Success.
+    /// Reply -- Success
     SCTR_SUCCESS = 1,
-    /// Reply -- Failure.
+    /// Reply -- Failure
     SCTR_FAILURE = 2,
-    /// Reply -- In Progress.
+    /// Reply -- In Progress
     SCTR_IN_PROGRESS = 3,
 }
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// List.
+    /// List
     SOP_LIST = 0,
-    /// Mount.
+    /// Mount
     SOP_MOUNT = 1,
-    /// Unmount.
+    /// Unmount
     SOP_UMOUNT = 2,
-    /// Format.
+    /// Format
     SOP_FORMAT = 3,
 }
 
 /// Request/reply storage operations
 #[derive(Default)]
 pub struct StorageControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Type.
+    /// Indicates if the message is a request, or a reply to a
+    /// previous request.
     pub _type: u8,
-    /// Operation.
+    /// Indicates the operation affecting the storage
     pub _op: u8,
-    /// Request ID.
+    /// Request ID. This may be used by interfacing modules,
+    /// e.g. using sequence counters, to annotate requests and
+    /// appropriately identify replies
     pub _request_id: u16,
-    /// Device ID.
+    /// Identifier for the storage device to operate on
     pub _device_id: String,
-    /// Complementary Information.
+    /// Human-readable complementary information. For example this
+    /// may be used to detail reasons for failure, or to report
+    /// in-progress information.
     pub _info: String,
 }
 

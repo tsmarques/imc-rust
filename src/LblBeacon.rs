@@ -31,15 +31,15 @@ use crate::Message::*;
 /// Position and configuration of an LBL transponder (beacon).
 #[derive(Default)]
 pub struct LblBeacon {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Beacon Name.
+    /// Name/Label of the acoustic transponder.
     pub _beacon: String,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude coordinate.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude coordinate.
     pub _lon: f64,
-    /// Depth.
+    /// The beacon's depth.
     pub _depth: f32,
     /// Interrogation channel.
     pub _query_channel: u8,

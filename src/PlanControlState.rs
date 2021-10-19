@@ -28,50 +28,54 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// State.
+/// State
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    /// Blocked.
+    /// Blocked
     PCS_BLOCKED = 0,
-    /// Ready.
+    /// Ready
     PCS_READY = 1,
-    /// Initializing.
+    /// Initializing
     PCS_INITIALIZING = 2,
-    /// Executing.
+    /// Executing
     PCS_EXECUTING = 3,
 }
 
-/// Last Plan Outcome.
+/// Last Plan Outcome
 #[allow(non_camel_case_types)]
 pub enum LastPlanOutcomeEnum {
-    /// None.
+    /// None
     LPO_NONE = 0,
-    /// Success.
+    /// Success
     LPO_SUCCESS = 1,
-    /// Failure.
+    /// Failure
     LPO_FAILURE = 2,
 }
 
 /// State of plan control.
 #[derive(Default)]
 pub struct PlanControlState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// State.
+    /// Describes overall state.
     pub _state: u8,
-    /// Plan -- ID.
+    /// Identifier of plan currently loaded.
     pub _plan_id: String,
-    /// Plan -- ETA.
+    /// Current plan estimated time to completion.
+    /// The value will be -1 if the time is unknown or undefined.
     pub _plan_eta: i32,
-    /// Plan -- Progress.
+    /// Current plan estimated progress in percent.
+    /// The value will be negative if unknown or undefined.
     pub _plan_progress: f32,
-    /// Maneuver -- ID.
+    /// Current node ID, when executing a plan.
     pub _man_id: String,
-    /// Maneuver -- Type.
+    /// Type of maneuver being executed (IMC serialization id),
+    /// when executing a plan.
     pub _man_type: u16,
-    /// Maneuver -- ETA.
+    /// Current node estimated time to completion, when executing a plan.
+    /// The value will be -1 if the time is unknown or undefined.
     pub _man_eta: i32,
-    /// Last Plan Outcome.
+    /// Outcome of the last executed plan.
     pub _last_outcome: u8,
 }
 

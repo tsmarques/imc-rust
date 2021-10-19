@@ -33,9 +33,9 @@ use crate::Message::*;
 /// value is 0.
 #[derive(Default)]
 pub struct RemoteActions {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Actions.
+    /// List of values for each remote action (e.g: "Propeller=0.6,PanTilt=0.75,Lights=1").
     pub _actions: String,
 }
 

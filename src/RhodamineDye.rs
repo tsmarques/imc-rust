@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Rhodamine Dye measurement.
 #[derive(Default)]
 pub struct RhodamineDye {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Amount of rhodamine dye detected.
     pub _value: f32,
 }
 

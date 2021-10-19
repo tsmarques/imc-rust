@@ -33,9 +33,9 @@ use crate::Message::*;
 /// of that entity.
 #[derive(Default)]
 pub struct QueryEntityInfo {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Entity Identifier.
+    /// Entity identifier.
     pub _id: u8,
 }
 

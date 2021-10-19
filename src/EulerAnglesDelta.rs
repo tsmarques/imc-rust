@@ -31,17 +31,17 @@ use crate::Message::*;
 /// Component of incremetal orientation vector over a period of time.
 #[derive(Default)]
 pub struct EulerAnglesDelta {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Device Time.
+    /// The device time.
     pub _time: f64,
-    /// X.
+    /// X component.
     pub _x: f64,
-    /// Y.
+    /// Y component.
     pub _y: f64,
-    /// Z.
+    /// Z component.
     pub _z: f64,
-    /// Timestep.
+    /// Period of time of the orientation vector increments.
     pub _timestep: f32,
 }
 

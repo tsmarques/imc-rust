@@ -30,7 +30,7 @@ use crate::Message::*;
 /// Command to obtain the operational limits in use by the vehicle.
 #[derive(Default)]
 pub struct GetOperationalLimits {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

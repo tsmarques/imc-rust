@@ -28,21 +28,21 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Type of measurement.
+/// Type of measurement
 #[allow(non_camel_case_types)]
 pub enum TypeofmeasurementEnum {
-    /// Colored.
+    /// Colored
     DT_COLORED = 0,
-    /// Fluorescent.
+    /// Fluorescent
     DT_FLUORESCENT = 1,
 }
 
 /// Dissolved Organic Matter measurement.
 #[derive(Default)]
 pub struct DissolvedOrganicMatter {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Dissolved Organic Matter reading.
     pub _value: f32,
     /// Type of measurement.
     pub _type: u8,

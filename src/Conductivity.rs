@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Report of conductivity.
 #[derive(Default)]
 pub struct Conductivity {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Measured Conductivity.
+    /// The value of the conductivity as measured by the sensor.
     pub _value: f32,
 }
 

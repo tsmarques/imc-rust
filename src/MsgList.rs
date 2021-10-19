@@ -32,9 +32,8 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 
 #[derive(Default)]
 pub struct MsgList {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Messages.
     pub _msgs: MessageList<Box<dyn Message>>,
 }
 

@@ -30,7 +30,7 @@ use crate::Message::*;
 /// Request the state of power channels.
 #[derive(Default)]
 pub struct QueryPowerChannelState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

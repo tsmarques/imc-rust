@@ -28,21 +28,21 @@ use bytes::BufMut;
 /// packet.
 #[derive(Default, PartialEq, Debug)]
 pub struct Header {
-    /// Synchronization Number.
+    /// Synchronization Number
     pub _sync: u16,
-    /// Message Identification Number.
+    /// Message Identification Number
     pub _mgid: u16,
-    /// Message size.
+    /// Message size
     pub _size: u16,
-    /// Time stamp.
+    /// Time stamp
     pub _timestamp: f64,
-    /// Source Address.
+    /// Source Address
     pub _src: u16,
-    /// Source Entity.
+    /// Source Entity
     pub _src_ent: u8,
-    /// Destination Address.
+    /// Destination Address
     pub _dst: u16,
-    /// Destination Entity.
+    /// Destination Entity
     pub _dst_ent: u8,
 }
 

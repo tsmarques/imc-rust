@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Initiate overall calibration of a vehicle.
 #[derive(Default)]
 pub struct Calibration {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Duration.
+    /// Duration of calibration.
     pub _duration: u16,
 }
 

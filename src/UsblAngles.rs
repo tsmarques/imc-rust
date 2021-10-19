@@ -32,13 +32,13 @@ use crate::Message::*;
 /// bearing and elevation of a target.
 #[derive(Default)]
 pub struct UsblAngles {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Target.
+    /// Target's IMC address.
     pub _target: u16,
-    /// Bearing.
+    /// Target's bearing.
     pub _bearing: f32,
-    /// Elevation.
+    /// Target's elevation.
     pub _elevation: f32,
 }
 

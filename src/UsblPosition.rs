@@ -32,15 +32,15 @@ use crate::Message::*;
 /// target's position.
 #[derive(Default)]
 pub struct UsblPosition {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Target.
+    /// Target's IMC address.
     pub _target: u16,
-    /// X.
+    /// X coordinate of the target in the local device's reference frame.
     pub _x: f32,
-    /// Y.
+    /// Y coordinate of the target in the local device's reference frame.
     pub _y: f32,
-    /// Z.
+    /// Z coordinate of the target in the local device's reference frame.
     pub _z: f32,
 }
 

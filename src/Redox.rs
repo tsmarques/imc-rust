@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Report of Redox Potential.
 #[derive(Default)]
 pub struct Redox {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// The value of the Redox as measured by the sensor.
     pub _value: f32,
 }
 

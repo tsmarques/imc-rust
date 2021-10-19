@@ -34,11 +34,14 @@ use crate::Message::*;
 /// settings encoded as a tuple list.
 #[derive(Default)]
 pub struct CustomManeuver {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run. If the
+    /// maneuver is not completed in the amount of time specified an
+    /// error will be generated.
     pub _timeout: u16,
-    /// Maneuver Name.
+    /// The maneuver name, used as key by an implementation to bind
+    /// the maneuver to the corresponding controller.
     pub _name: String,
     /// Custom settings for maneuver.
     pub _custom: String,

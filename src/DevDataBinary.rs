@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Verbatim representation of device data in binary format.
 #[derive(Default)]
 pub struct DevDataBinary {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Raw binary data as extracted directly from the device.
     pub _value: Vec<u8>,
 }
 

@@ -35,17 +35,17 @@ use crate::Message::*;
 /// timeout, speed and speed units.
 #[derive(Default)]
 pub struct Alignment {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run.
     pub _timeout: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude of target waypoint.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude of target waypoint.
     pub _lon: f64,
-    /// Speed.
+    /// Maneuver speed reference.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
     /// Custom settings for maneuver.
     pub _custom: String,

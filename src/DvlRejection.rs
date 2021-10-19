@@ -28,25 +28,25 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Reason.
+/// Reason
 #[allow(non_camel_case_types)]
 pub enum ReasonEnum {
-    /// Innovation Threshold - X.
+    /// Innovation Threshold - X
     RR_INNOV_THRESHOLD_X = 0,
-    /// Innovation Threshold - Y.
+    /// Innovation Threshold - Y
     RR_INNOV_THRESHOLD_Y = 1,
-    /// Absolute Threshold - X.
+    /// Absolute Threshold - X
     RR_ABS_THRESHOLD_X = 2,
-    /// Absolute Threshold - Y.
+    /// Absolute Threshold - Y
     RR_ABS_THRESHOLD_Y = 3,
 }
 
-/// Type of velocity.
+/// Type of velocity
 #[allow(non_camel_case_types)]
 pub mod TypeofvelocityBits {
-    /// Ground velocity.
+    /// Ground velocity
     pub const TYPE_GV: u32 = 0x01;
-    /// Water velocity.
+    /// Water velocity
     pub const TYPE_WV: u32 = 0x02;
 }
 
@@ -55,15 +55,31 @@ pub mod TypeofvelocityBits {
 /// navigation filter.
 #[derive(Default)]
 pub struct DvlRejection {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Type of velocity.
+    /// This field represents the type of the rejected velocity.
     pub _type: u8,
-    /// Reason.
+    /// Reason for rejection. There are two types of DVL measurement
+    /// filters. An Innovation filter checks the innovation between
+    /// the current measurement and the previous measurement within a
+    /// certain amount of time and an Absolute filter compares the
+    /// measurement with an absolute threshold value. Those filters
+    /// are tested using horizontal speed measurements, i.e.,
+    /// measurements in the x-axis and in the y-axis.
     pub _reason: u8,
-    /// Value.
+    /// Value of the rejection.
+    /// If it is an innovation rejection the value is
+    /// the absolute difference between the previous
+    /// accepted DVL measurement and the current one.
+    /// If it is an absolute rejection the value is
+    /// the current DVL measurement.
     pub _value: f32,
-    /// Timestep.
+    /// Timestep of the rejection.
+    /// The timestep is 0 for an absolute rejection
+    /// since it is an instantaneous reading. For
+    /// innovation rejection it is the time difference
+    /// between the previous accepted DVL measurement
+    /// and the current one.
     pub _timestep: f32,
 }
 

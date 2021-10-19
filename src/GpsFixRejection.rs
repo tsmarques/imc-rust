@@ -28,28 +28,29 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Reason.
+/// Reason
 #[allow(non_camel_case_types)]
 pub enum ReasonEnum {
-    /// Above Threshold.
+    /// Above Threshold
     RR_ABOVE_THRESHOLD = 0,
-    /// Invalid Fix.
+    /// Invalid Fix
     RR_INVALID = 1,
-    /// Above Maximum HDOP.
+    /// Above Maximum HDOP
     RR_ABOVE_MAX_HDOP = 2,
-    /// Above Maximum HACC.
+    /// Above Maximum HACC
     RR_ABOVE_MAX_HACC = 3,
-    /// Lost Validity Bit.
+    /// Lost Validity Bit
     RR_LOST_VAL_BIT = 4,
 }
 
 #[derive(Default)]
 pub struct GpsFixRejection {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// UTC Time of Fix.
+    /// UTC time of the rejected GPS fix measured in seconds since
+    /// 00:00:00 (midnight).
     pub _utc_time: f32,
-    /// Reason.
+    /// Reason for rejection.
     pub _reason: u8,
 }
 

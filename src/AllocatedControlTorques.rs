@@ -31,13 +31,13 @@ use crate::Message::*;
 /// Control torques allocated to the actuators.
 #[derive(Default)]
 pub struct AllocatedControlTorques {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Torque about the x axis.
+    /// Torque K about the vehicle's x axis.
     pub _k: f64,
-    /// Torque about the y axis.
+    /// Torque M about the vehicle's y axis.
     pub _m: f64,
-    /// Torque about the x axis.
+    /// Torque N about the vehicle's z axis.
     pub _n: f64,
 }
 

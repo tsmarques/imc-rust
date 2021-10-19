@@ -28,63 +28,71 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Near Endpoint.
+    /// Near Endpoint
     pub const FL_NEAR: u32 = 0x01;
-    /// Loitering.
+    /// Loitering
     pub const FL_LOITERING: u32 = 0x02;
-    /// No Altitude/Depth control.
+    /// No Altitude/Depth control
     pub const FL_NO_Z: u32 = 0x04;
-    /// 3D Tracking.
+    /// 3D Tracking
     pub const FL_3DTRACK: u32 = 0x08;
-    /// Counter-Clockwise loiter.
+    /// Counter-Clockwise loiter
     pub const FL_CCLOCKW: u32 = 0x10;
 }
 
 /// Path control state issued by Path Controller.
 #[derive(Default)]
 pub struct PathControlState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Path Reference.
+    /// Unsigned integer reference of the desired path message to which this
+    /// PathControlState message refers to.
+    /// Path reference should only be set by a maneuver, not by path controllers.
     pub _path_ref: u32,
-    /// Start Point -- Latitude WGS-84.
+    /// WGS-84 latitude of start point.
     pub _start_lat: f64,
-    /// Start Point -- WGS-84 Longitude.
+    /// WGS-84 longitude of start point.
     pub _start_lon: f64,
-    /// Start Point -- Z Reference.
+    /// Altitude or depth of start point. This parameter will be
+    /// ignored if the 'NO_Z' flag is set, or if the 'START' flag is
+    /// not set.
     pub _start_z: f32,
-    /// Start Point -- Z Units.
+    /// Units of the start point's z reference.
     pub _start_z_units: u8,
-    /// End Point -- Latitude WGS-84.
+    /// WGS-84 latitude of end point.
     pub _end_lat: f64,
-    /// End Point -- WGS-84 Longitude.
+    /// WGS-84 longitude of end point.
     pub _end_lon: f64,
-    /// End Point -- Z Reference.
+    /// Depth or altitude for the end point. This parameter should be
+    /// ignored if the 'NO_Z' flag is set.
     pub _end_z: f32,
-    /// End Point -- Z Units.
+    /// Units of the end point's z reference.
     pub _end_z_units: u8,
-    /// Loiter -- Radius.
+    /// Radius for loitering at end point.
+    /// Will be 0 if no loitering is active.
     pub _lradius: f32,
-    /// Flags.
+    /// Path control state flags.
     pub _flags: u8,
-    /// Along Track Position.
+    /// Along-Track position value.
     pub _x: f32,
-    /// Cross Track Position.
+    /// Cross-Track position value.
     pub _y: f32,
-    /// Vertical Track Position.
+    /// Vertical-Track position value.
     pub _z: f32,
-    /// Along Track Velocity.
+    /// Along-Track velocity value.
     pub _vx: f32,
-    /// Cross Track Velocity.
+    /// Cross-Track velocity value.
     pub _vy: f32,
-    /// Vertical Track Velocity.
+    /// Vertical-Track velocity value.
     pub _vz: f32,
-    /// Course Error.
+    /// Course error value.
     pub _course_error: f32,
-    /// Estimated Time to Arrival (ETA).
+    /// Estimated time to reach target waypoint. The value will be
+    /// 65535 if the time is unknown or undefined, and 0 when
+    /// loitering.
     pub _eta: u16,
 }
 

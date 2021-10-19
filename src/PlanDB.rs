@@ -29,56 +29,68 @@ use crate::Header::Header;
 use crate::Message::*;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Request.
+    /// Request
     DBT_REQUEST = 0,
-    /// Reply -- Success.
+    /// Reply -- Success
     DBT_SUCCESS = 1,
-    /// Reply -- Failure.
+    /// Reply -- Failure
     DBT_FAILURE = 2,
-    /// Reply -- In Progress.
+    /// Reply -- In Progress
     DBT_IN_PROGRESS = 3,
 }
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Set Plan.
+    /// Set Plan
     DBOP_SET = 0,
-    /// Delete Plan.
+    /// Delete Plan
     DBOP_DEL = 1,
-    /// Get Plan.
+    /// Get Plan
     DBOP_GET = 2,
-    /// Get Plan Info.
+    /// Get Plan Info
     DBOP_GET_INFO = 3,
-    /// Clear Database.
+    /// Clear Database
     DBOP_CLEAR = 4,
-    /// Get Database State (Simple).
+    /// Get Database State (Simple)
     DBOP_GET_STATE = 5,
-    /// Get Database State (Detailed).
+    /// Get Database State (Detailed)
     DBOP_GET_DSTATE = 6,
-    /// Boot Notification.
+    /// Boot Notification
     DBOP_BOOT = 7,
 }
 
 /// Request/reply to plan database.
 #[derive(Default)]
 pub struct PlanDB {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Type.
+    /// Indicates if the message is a request, or a reply to a
+    /// previous request.
     pub _type: u8,
-    /// Operation.
+    /// Indicates the operation affecting the DB.
+    /// The operation may relate to a single plan or the entire plan DB.
+    /// For each request,  a plan DB may reply with any number of 'in progress'
+    /// replies followed by a success or a failure reply.
+    /// The 'op', 'request_id' and 'plan_id' fields of a request will be echoed
+    /// in one or more responses to that request.
+    /// The operation at stake also determines a certain type of the 'arg' field,
+    /// and whether or not the 'plan_id' field needs to be set.
     pub _op: u8,
-    /// Request ID.
+    /// Request ID. This may be used by interfacing modules,
+    /// e.g. using sequence counters, to annotate requests and
+    /// appropriately identify replies
     pub _request_id: u16,
-    /// Plan ID.
+    /// Plan identifier for the operation, if one is required.
     pub _plan_id: String,
-    /// Argument.
+    /// Request or reply argument.
     pub _arg: Option<Box<dyn Message>>,
-    /// Complementary Information.
+    /// Human-readable complementary information. For example this
+    /// may be used to detail reasons for failure, or to report
+    /// in-progress information.
     pub _info: String,
 }
 

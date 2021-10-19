@@ -31,13 +31,16 @@ use crate::Message::*;
 /// Waypoint coordinate of a Follow Path maneuver.
 #[derive(Default)]
 pub struct PathPoint {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// North Offset (m).
+    /// The North offset of the North/East/Down coordinate of this
+    /// point in relation to the path start point.
     pub _x: f32,
-    /// East Offset (m).
+    /// The East offset of the North/East/Down coordinate of this
+    /// point in relation to the path start point.
     pub _y: f32,
-    /// Down Offset (m).
+    /// The Down offset of the North/East/Down coordinate of this
+    /// point in relation to the path start point.
     pub _z: f32,
 }
 

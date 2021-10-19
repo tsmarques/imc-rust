@@ -31,9 +31,10 @@ use crate::Message::*;
 /// Desired Heading angle reference value for the control layer.
 #[derive(Default)]
 pub struct DesiredHeading {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// The value of the desired heading angle, relative to true
+    /// north, in radians.
     pub _value: f64,
 }
 

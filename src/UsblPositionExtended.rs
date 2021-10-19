@@ -32,29 +32,29 @@ use crate::Message::*;
 /// target's position.
 #[derive(Default)]
 pub struct UsblPositionExtended {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Target.
+    /// Target's system name.
     pub _target: String,
-    /// X.
+    /// X coordinate of the target in the local device's reference frame.
     pub _x: f32,
-    /// Y.
+    /// Y coordinate of the target in the local device's reference frame.
     pub _y: f32,
-    /// Z.
+    /// Z coordinate of the target in the local device's reference frame.
     pub _z: f32,
-    /// N.
+    /// X coordinate of the target in the navigation reference frame.
     pub _n: f32,
-    /// E.
+    /// Y coordinate of the target in the navigation reference frame.
     pub _e: f32,
-    /// D.
+    /// Z coordinate of the target in the navigation reference frame.
     pub _d: f32,
-    /// Roll Angle.
+    /// Rotation around the device longitudinal axis.
     pub _phi: f32,
-    /// Pitch Angle.
+    /// Rotation around the device lateral or transverse axis.
     pub _theta: f32,
-    /// Yaw Angle.
+    /// Rotation around the device vertical axis.
     pub _psi: f32,
-    /// Accuracy.
+    /// Accuracy of the position fix.
     pub _accuracy: f32,
 }
 

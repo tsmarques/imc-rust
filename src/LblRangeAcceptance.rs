@@ -28,18 +28,18 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Acceptance.
+/// Acceptance
 #[allow(non_camel_case_types)]
 pub enum AcceptanceEnum {
-    /// Accepted.
+    /// Accepted
     RR_ACCEPTED = 0,
-    /// Rejected - Above Threshold.
+    /// Rejected - Above Threshold
     RR_ABOVE_THRESHOLD = 1,
-    /// Rejected - Singular Point.
+    /// Rejected - Singular Point
     RR_SINGULAR = 2,
-    /// Rejected - Not Enough Information.
+    /// Rejected - Not Enough Information
     RR_NO_INFO = 3,
-    /// Rejected - Vehicle At Surface.
+    /// Rejected - Vehicle At Surface
     RR_AT_SURFACE = 4,
 }
 
@@ -51,13 +51,14 @@ pub enum AcceptanceEnum {
 /// or rejected, and if rejected, the reason why.
 #[derive(Default)]
 pub struct LblRangeAcceptance {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Beacon Identification Number.
+    /// Identification number of the acoustic transponder from which
+    /// the range information was received.
     pub _id: u8,
-    /// Range.
+    /// Distance to the acoustic transponder.
     pub _range: f32,
-    /// Acceptance.
+    /// Reason for acceptance/rejection.
     pub _acceptance: u8,
 }
 

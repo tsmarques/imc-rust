@@ -28,33 +28,33 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Information.
+    /// Information
     LBET_INFO = 0,
-    /// Warning.
+    /// Warning
     LBET_WARNING = 1,
-    /// Error.
+    /// Error
     LBET_ERROR = 2,
-    /// Critical.
+    /// Critical
     LBET_CRITICAL = 3,
-    /// Debug.
+    /// Debug
     LBET_DEBUG = 4,
 }
 
 /// Human readable message reporting an event of interest.
 #[derive(Default)]
 pub struct LogBookEntry {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Type.
+    /// Type of message.
     pub _type: u8,
-    /// Timestamp.
+    /// Timestamp (Epoch time).
     pub _htime: f64,
-    /// Context.
+    /// Message context.
     pub _context: String,
-    /// Text.
+    /// Message text.
     pub _text: String,
 }
 

@@ -31,31 +31,19 @@ use crate::Message::*;
 /// Definition of operational limits.
 #[derive(Default)]
 pub struct OperationalLimits {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Field Indicator Mask.
     pub _mask: u8,
-    /// Maximum Depth.
     pub _max_depth: f32,
-    /// Minimum Altitude.
     pub _min_altitude: f32,
-    /// Maximum Altitude.
     pub _max_altitude: f32,
-    /// Minimum Speed.
     pub _min_speed: f32,
-    /// Maximum Speed.
     pub _max_speed: f32,
-    /// Maximum Vertical Rate.
     pub _max_vrate: f32,
-    /// Area -- WGS-84 Latitude.
     pub _lat: f64,
-    /// Area -- WGS-84 Longitude.
     pub _lon: f64,
-    /// Area -- Orientation.
     pub _orientation: f32,
-    /// Area -- Width.
     pub _width: f32,
-    /// Area -- Length.
     pub _length: f32,
 }
 

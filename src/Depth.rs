@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Depth report.
 #[derive(Default)]
 pub struct Depth {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Measured Depth.
+    /// Depth value measured by a sensor.
     pub _value: f32,
 }
 

@@ -32,7 +32,7 @@ use crate::Message::*;
 /// message.
 #[derive(Default)]
 pub struct AcousticSystemsQuery {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

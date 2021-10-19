@@ -30,32 +30,34 @@ use crate::Header::Header;
 use crate::Message::*;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// State.
+/// State
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    /// Waiting for first command.
+    /// Waiting for first command
     FC_WAIT = 1,
-    /// Moving towards received command.
+    /// Moving towards received command
     FC_MOVING = 2,
-    /// Speed command is zero.
+    /// Speed command is zero
     FC_STOPPED = 3,
-    /// Command is out of safe bounds.
+    /// Command is out of safe bounds
     FC_BAD_COMMAND = 4,
-    /// Controlling system timed out.
+    /// Controlling system timed out
     FC_TIMEOUT = 5,
 }
 
 #[derive(Default)]
 pub struct FollowCommandState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Controlling Source.
+    /// The IMC identifier of the source system that is allowed to control the vehicle.
+    /// If the value ''0xFFFF'' is used, any system is allowed to command references.
     pub _control_src: u16,
-    /// Controlling Entity.
+    /// The entity identifier of the entity that is allowed to control the vehicle.
+    /// If the value ''0xFF'' is used, any entity is allowed to command references.
     pub _control_ent: u8,
-    /// Command.
+    /// Command currently being followed.
     pub _command: Option<Command>,
-    /// State.
+    /// Current state of execution.
     pub _state: u8,
 }
 

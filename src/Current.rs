@@ -31,9 +31,10 @@ use crate::Message::*;
 /// Report of electrical current.
 #[derive(Default)]
 pub struct Current {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Measured Current Value.
+    /// The value of the internal electrical current as measured by
+    /// the sensor.
     pub _value: f32,
 }
 

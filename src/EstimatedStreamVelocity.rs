@@ -32,7 +32,7 @@ use crate::Message::*;
 /// streams.
 #[derive(Default)]
 pub struct EstimatedStreamVelocity {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
     /// X component (North).
     pub _x: f64,

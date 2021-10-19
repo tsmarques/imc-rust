@@ -30,13 +30,10 @@ use crate::Message::*;
 
 #[derive(Default)]
 pub struct QueryEntityParameters {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Entity Name.
     pub _name: String,
-    /// Visibility.
     pub _visibility: String,
-    /// Scope.
     pub _scope: String,
 }
 

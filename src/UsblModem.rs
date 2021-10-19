@@ -31,17 +31,18 @@ use crate::Message::*;
 /// Position and configuration of an Ultra-Short Base Line modem.
 #[derive(Default)]
 pub struct UsblModem {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Modem Name.
+    /// Name/Label of the acoustic modem.
     pub _name: String,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude coordinate.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude coordinate.
     pub _lon: f64,
-    /// Z Reference.
+    /// Target reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
 }
 

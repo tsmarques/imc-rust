@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Chlorophyll measurement.
 #[derive(Default)]
 pub struct Chlorophyll {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Chlorophyll reading.
     pub _value: f32,
 }
 

@@ -31,11 +31,12 @@ use crate::Message::*;
 /// Desired Speed reference value for the control layer.
 #[derive(Default)]
 pub struct DesiredSpeed {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// The value of the desired speed, in the scale specified by the
+    /// "Speed Units" field.
     pub _value: f64,
-    /// Speed Units.
+    /// Indicates the units used for the speed value.
     pub _speed_units: u8,
 }
 

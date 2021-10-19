@@ -28,27 +28,27 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Start.
+    /// Start
     ROP_START = 0,
-    /// Stop.
+    /// Stop
     ROP_STOP = 1,
-    /// Pause.
+    /// Pause
     ROP_PAUSE = 2,
-    /// Resume.
+    /// Resume
     ROP_RESUME = 3,
 }
 
 /// Control replay of LSF logged data.
 #[derive(Default)]
 pub struct ReplayControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
+    /// Operation to perform.
     pub _op: u8,
-    /// File To Replay.
+    /// Pathname of file to replay.
     pub _file: String,
 }
 

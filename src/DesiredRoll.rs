@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Desired Roll angle reference value for the control layer.
 #[derive(Default)]
 pub struct DesiredRoll {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// The value of the desired roll angle.
     pub _value: f64,
 }
 

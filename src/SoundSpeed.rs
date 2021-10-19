@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Sound Speed report.
 #[derive(Default)]
 pub struct SoundSpeed {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Computed Sound Speed.
+    /// Estimated sound speed. Negative values denote invalid estimates.
     pub _value: f32,
 }
 

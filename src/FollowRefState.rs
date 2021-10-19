@@ -30,51 +30,51 @@ use crate::Message::*;
 use crate::Reference::Reference;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// State.
+/// State
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    /// Waiting for first reference.
+    /// Waiting for first reference
     FR_WAIT = 1,
-    /// Going towards received reference.
+    /// Going towards received reference
     FR_GOTO = 2,
-    /// Loitering after arriving at the reference.
+    /// Loitering after arriving at the reference
     FR_LOITER = 3,
-    /// Hovering after arriving at the reference.
+    /// Hovering after arriving at the reference
     FR_HOVER = 4,
-    /// Moving in z after arriving at the target cylinder.
+    /// Moving in z after arriving at the target cylinder
     FR_ELEVATOR = 5,
-    /// Controlling system timed out.
+    /// Controlling system timed out
     FR_TIMEOUT = 6,
 }
 
-/// Proximity.
+/// Proximity
 #[allow(non_camel_case_types)]
 pub mod ProximityBits {
-    /// Far from the destination.
+    /// Far from the destination
     pub const PROX_FAR: u32 = 0x01;
-    /// Near in the horizontal plane.
+    /// Near in the horizontal plane
     pub const PROX_XY_NEAR: u32 = 0x02;
-    /// Near in the vertical plane.
+    /// Near in the vertical plane
     pub const PROX_Z_NEAR: u32 = 0x04;
-    /// Unreachable in the horizontal plane.
+    /// Unreachable in the horizontal plane
     pub const PROX_XY_UNREACHABLE: u32 = 0x08;
-    /// Unreachable in the vertical plane.
+    /// Unreachable in the vertical plane
     pub const PROX_Z_UNREACHABLE: u32 = 0x10;
 }
 
 #[derive(Default)]
 pub struct FollowRefState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Controlling Source.
+    /// The IMC identifier of the source system that is allowed to control the vehicle.
+    /// If the value ''0xFFFF'' is used, any system is allowed to command references.
     pub _control_src: u16,
-    /// Controlling Entity.
+    /// The entity identifier of the entity that is allowed to control the vehicle.
+    /// If the value ''0xFF'' is used, any entity is allowed to command references.
     pub _control_ent: u8,
-    /// Reference.
+    /// Reference currently being followed.
     pub _reference: Option<Reference>,
-    /// State.
     pub _state: u8,
-    /// Proximity.
     pub _proximity: u8,
 }
 

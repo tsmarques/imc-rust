@@ -28,42 +28,38 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Boolean.
+    /// Boolean
     PVT_BOOLEAN = 0,
-    /// Number.
+    /// Number
     PVT_NUMBER = 1,
-    /// Text.
+    /// Text
     PVT_TEXT = 2,
-    /// Message.
+    /// Message
     PVT_MESSAGE = 3,
 }
 
-/// Access Type.
+/// Access Type
 #[allow(non_camel_case_types)]
 pub enum AccessTypeEnum {
-    /// Input.
+    /// Input
     PVA_INPUT = 0,
-    /// Output.
+    /// Output
     PVA_OUTPUT = 1,
-    /// Local.
+    /// Local
     PVA_LOCAL = 2,
 }
 
 /// A plan variable.
 #[derive(Default)]
 pub struct PlanVariable {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Name.
     pub _name: String,
-    /// Value.
     pub _value: String,
-    /// Type.
     pub _type: u8,
-    /// Access Type.
     pub _access: u8,
 }
 

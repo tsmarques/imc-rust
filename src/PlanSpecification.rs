@@ -42,25 +42,27 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// specification.
 #[derive(Default)]
 pub struct PlanSpecification {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Plan ID.
+    /// The plan's identifier.
     pub _plan_id: String,
-    /// Plan Description.
+    /// Verbose text description of plan.
     pub _description: String,
-    /// Namespace.
+    /// Namespace for plan variables.
     pub _vnamespace: String,
-    /// Plan Variables.
+    /// Plan variables.
     pub _variables: MessageList<PlanVariable>,
-    /// Starting maneuver.
+    /// Indicates the id of the starting maneuver for this plan.
     pub _start_man_id: String,
-    /// Maneuvers.
+    /// List of maneuver specifications.
     pub _maneuvers: MessageList<PlanManeuver>,
-    /// Transitions.
+    /// List of maneuver specifications.
     pub _transitions: MessageList<PlanTransition>,
-    /// Start Actions.
+    /// Contains an optionally defined 'MessageList' for actions fired
+    /// on plan activation.
     pub _start_actions: MessageList<Box<dyn Message>>,
-    /// End Actions.
+    /// Contains an optionally defined 'MessageList' for actions fired
+    /// on plan termination.
     pub _end_actions: MessageList<Box<dyn Message>>,
 }
 

@@ -31,21 +31,24 @@ use crate::Message::*;
 /// A system description that is to be broadcasted to other systems.
 #[derive(Default)]
 pub struct Announce {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// System Name.
+    /// System name.
     pub _sys_name: String,
-    /// System Type.
+    /// System type.
     pub _sys_type: u8,
-    /// Control Owner.
+    /// The owner IMC system ID.
     pub _owner: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude. If lat=0 and lon=0 means location value is unknown.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude. If lat=0 and lon=0 means location value is unknown.
     pub _lon: f64,
-    /// Height WGS-84.
+    /// Height above WGS-84 ellipsoid.
     pub _height: f32,
-    /// Services.
+    /// Semicolon separated list of URLs. Examples of such URLs are:
+    /// - *imc+udp://192.168.106.34:6002/*
+    /// - *dune://0.0.0.0/uid/1294925553839635/*
+    /// - *http://192.168.106.34/dune/*.
     pub _services: String,
 }
 

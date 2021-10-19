@@ -30,7 +30,7 @@ use crate::Message::*;
 /// Command used to stop currently executing maneuver.
 #[derive(Default)]
 pub struct StopManeuver {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

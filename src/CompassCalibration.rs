@@ -28,16 +28,16 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Direction.
+/// Direction
 #[allow(non_camel_case_types)]
 pub enum DirectionEnum {
-    /// Vehicle Dependent.
+    /// Vehicle Dependent
     LD_VDEP = 0,
-    /// Clockwise.
+    /// Clockwise
     LD_CLOCKW = 1,
-    /// Counter Clockwise.
+    /// Counter Clockwise
     LD_CCLOCKW = 2,
-    /// Into the wind/current.
+    /// Into the wind/current
     LD_IWINDCURR = 3,
 }
 
@@ -46,31 +46,33 @@ pub enum DirectionEnum {
 /// reference between a minimum and maximum value.
 #[derive(Default)]
 pub struct CompassCalibration {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The timeout indicates the time that an error should occur if
+    /// exceeded.
     pub _timeout: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude coordinate.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude coordinate.
     pub _lon: f64,
-    /// Z Reference.
+    /// Maneuver reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
-    /// Pitch.
+    /// Pitch angle used to perform the maneuver.
     pub _pitch: f32,
-    /// Amplitude.
+    /// Yoyo motion amplitude.
     pub _amplitude: f32,
-    /// Duration.
+    /// The duration of this maneuver. Use '0' for unlimited duration time.
     pub _duration: u16,
-    /// Speed.
+    /// Maneuver speed.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
-    /// Radius.
+    /// Radius of the maneuver.
     pub _radius: f32,
-    /// Direction.
+    /// Direction of the maneuver.
     pub _direction: u8,
     /// Custom settings for maneuver.
     pub _custom: String,

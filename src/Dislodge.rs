@@ -28,14 +28,14 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Direction.
+/// Direction
 #[allow(non_camel_case_types)]
 pub enum DirectionEnum {
-    /// Let the vehicle decide.
+    /// Let the vehicle decide
     DIR_AUTO = 0,
-    /// Attempt to move forward.
+    /// Attempt to move forward
     DIR_FORWARD = 1,
-    /// Attempt to move backward.
+    /// Attempt to move backward
     DIR_BACKWARD = 2,
 }
 
@@ -47,13 +47,13 @@ pub enum DirectionEnum {
 /// forward, backward or auto (letting the vehicle decide).
 #[derive(Default)]
 pub struct Dislodge {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run.
     pub _timeout: u16,
-    /// RPM.
+    /// Maneuver RPM reference.
     pub _rpm: f32,
-    /// Direction.
+    /// Direction to which the vehicle should attempt to unstuck.
     pub _direction: u8,
     /// Custom settings for maneuver.
     pub _custom: String,

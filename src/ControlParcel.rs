@@ -31,15 +31,15 @@ use crate::Message::*;
 /// Report of PID control parcels.
 #[derive(Default)]
 pub struct ControlParcel {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Proportional Parcel.
+    /// Proportional parcel value.
     pub _p: f32,
-    /// Integrative Parcel.
+    /// Integral parcel value.
     pub _i: f32,
-    /// Derivative Parcel.
+    /// Derivative parcel value.
     pub _d: f32,
-    /// Anti-Windup Parcel.
+    /// Anti-windup parcel value.
     pub _a: f32,
 }
 

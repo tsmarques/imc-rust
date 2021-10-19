@@ -28,48 +28,49 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Request Start of Reports.
+    /// Request Start of Reports
     OP_REQUEST_START = 0,
-    /// Report Started.
+    /// Report Started
     OP_STARTED = 1,
-    /// Request Stop of Reports.
+    /// Request Stop of Reports
     OP_REQUEST_STOP = 2,
-    /// Report Stopped.
+    /// Report Stopped
     OP_STOPPED = 3,
-    /// Request Single Reports.
+    /// Request Single Reports
     OP_REQUEST_REPORT = 4,
-    /// Single Report Sent.
+    /// Single Report Sent
     OP_REPORT_SENT = 5,
 }
 
-/// Communication Interface.
+/// Communication Interface
 #[allow(non_camel_case_types)]
 pub mod CommunicationInterfaceBits {
-    /// Acoustic.
+    /// Acoustic
     pub const CI_ACOUSTIC: u32 = 0x01;
-    /// Satellite.
+    /// Satellite
     pub const CI_SATELLITE: u32 = 0x02;
-    /// GSM.
+    /// GSM
     pub const CI_GSM: u32 = 0x04;
-    /// Mobile.
+    /// Mobile
     pub const CI_MOBILE: u32 = 0x08;
 }
 
 /// This message is sent to trigger reports to a destination system.
 #[derive(Default)]
 pub struct ReportControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
+    /// Operation to perform.
     pub _op: u8,
-    /// Communication Interface.
+    /// Communication interface to be used for reports.
     pub _comm_interface: u8,
-    /// Period.
+    /// Desired periodicity for scheduled reports.
     pub _period: u16,
-    /// Destination System.
+    /// Destination Address to be filled where applicable. It should be
+    /// interpreted differently depending on communication interface.
     pub _sys_dst: String,
 }
 

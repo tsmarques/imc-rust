@@ -32,11 +32,11 @@ use crate::Message::*;
 /// CoverArea maneuvers.
 #[derive(Default)]
 pub struct PolygonVertex {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude for start point.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude for start point.
     pub _lon: f64,
 }
 

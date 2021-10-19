@@ -37,15 +37,22 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// transition.
 #[derive(Default)]
 pub struct PlanTransition {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Source.
+    /// Comma separated list of maneuver IDs, or the special value '.'
+    /// to identify a global plan transition.
     pub _source_man: String,
-    /// Destination Maneuver Name.
+    /// Target maneuver name.
+    /// If it equals the special value '_done_' then plan should
+    /// terminate with a success status.
+    /// If it equals the special value '_error_' then the plan should
+    /// terminate with an error status.
     pub _dest_man: String,
-    /// Transition conditions.
+    /// Comma separated list of conditions for transition. Each
+    /// condition identifier corresponds to a known predicate which is
+    /// interpreted and tested internally by the vehicle.
     pub _conditions: String,
-    /// Transition actions.
+    /// Messages processed when the transition is triggered.
     pub _actions: MessageList<Box<dyn Message>>,
 }
 

@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Actuate directly on a thruster.
 #[derive(Default)]
 pub struct SetThrusterActuation {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Thruster Number.
+    /// The identification number of the destination thruster.
     pub _id: u8,
-    /// Actuation Value.
+    /// Actuation magnitude.
     pub _value: f32,
 }
 

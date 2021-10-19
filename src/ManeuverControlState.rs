@@ -28,29 +28,30 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// State.
+/// State
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    /// Maneuver in progress.
+    /// Maneuver in progress
     MCS_EXECUTING = 0,
-    /// Maneuver completed.
+    /// Maneuver completed
     MCS_DONE = 1,
-    /// Maneuver error.
+    /// Maneuver error
     MCS_ERROR = 2,
-    /// Maneuver stopped.
+    /// Maneuver stopped
     MCS_STOPPED = 3,
 }
 
 /// Maneuver control state.
 #[derive(Default)]
 pub struct ManeuverControlState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// State.
+    /// Code indicating maneuver state.
     pub _state: u8,
-    /// Completion Time.
+    /// Estimated time to completion of the maneuver, when executing.
+    /// The value will be 65535 if the time is unknown or undefined.
     pub _eta: u16,
-    /// Info.
+    /// Complementary information, e.g., regarding errors.
     pub _info: String,
 }
 

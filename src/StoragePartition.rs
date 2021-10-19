@@ -28,32 +28,32 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Status.
+/// Status
 #[allow(non_camel_case_types)]
 pub enum StatusEnum {
-    /// Mounted.
+    /// Mounted
     SDST_MOUNTED = 0,
-    /// Unmounted.
+    /// Unmounted
     SDST_UNMOUNTED = 1,
-    /// Unknown.
+    /// Unknown
     SDST_UNKWN = 2,
 }
 
 #[derive(Default)]
 pub struct StoragePartition {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Path.
+    /// Partition path, e.g. /dev/sdb1 or nvme0n1p1.
     pub _part_path: String,
-    /// Label.
+    /// User defined label
     pub _label: String,
-    /// Size.
+    /// Partition size in MiB.
     pub _size: u32,
-    /// Used Size.
+    /// Used partition size, as a percentage.
     pub _used_size: f32,
-    /// Filesystem Type.
+    /// Text description of the filesystem type, e.g. ext4. It should match
+    /// the real name of the type.
     pub _fstype: String,
-    /// Status.
     pub _status: u8,
 }
 

@@ -31,15 +31,15 @@ use crate::Message::*;
 /// Information regarding a sent/received Sonar pulse.
 #[derive(Default)]
 pub struct SonarPulse {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Frequency.
+    /// Frequency of the sent/received sonar pulse.
     pub _frequency: i32,
-    /// Pulse Length.
+    /// Pulse Length of the sonar pulse.
     pub _pulse_length: i32,
-    /// Time Delay.
+    /// Time Delay of the sonar pulse.
     pub _time_delay: i32,
-    /// Simulated Speed.
+    /// Doppler shift added to the sonar pulse in retransmission
     pub _simulated_speed: i32,
 }
 

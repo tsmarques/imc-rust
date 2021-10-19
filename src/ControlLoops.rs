@@ -28,25 +28,28 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Enable.
+/// Enable
 #[allow(non_camel_case_types)]
 pub enum EnableEnum {
-    /// Disable.
+    /// Disable
     CL_DISABLE = 0,
-    /// Enable.
+    /// Enable
     CL_ENABLE = 1,
 }
 
 /// Enable or disable control loops.
 #[derive(Default)]
 pub struct ControlLoops {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Enable.
     pub _enable: u8,
-    /// Control Loop Mask.
+    /// Control loop mask.
     pub _mask: u32,
-    /// Scope Time Reference.
+    /// Unsigned integer reference for the scope of the control loop message.
+    /// Scope reference should only be set by a maneuver.
+    /// Should be set to an always increasing reference at the time of dispatching this message.
+    /// Lower level controllers must inherit the same scope reference sent by maneuver.
+    /// This same scope reference must be sent down to lower control layers.
     pub _scope_ref: u32,
 }
 

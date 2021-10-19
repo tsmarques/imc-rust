@@ -29,57 +29,59 @@ use crate::Header::Header;
 use crate::Message::*;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Abort.
+    /// Abort
     AOP_ABORT = 0,
-    /// Abort in Progress.
+    /// Abort in Progress
     AOP_ABORT_IP = 1,
-    /// Abort Timeout.
+    /// Abort Timeout
     AOP_ABORT_TIMEOUT = 2,
-    /// Abort Acknowledged.
+    /// Abort Acknowledged
     AOP_ABORT_ACKED = 3,
-    /// Range Request.
+    /// Range Request
     AOP_RANGE = 4,
-    /// Range in Progress.
+    /// Range in Progress
     AOP_RANGE_IP = 5,
-    /// Range Timeout.
+    /// Range Timeout
     AOP_RANGE_TIMEOUT = 6,
-    /// Range Received.
+    /// Range Received
     AOP_RANGE_RECVED = 7,
-    /// Modem is Busy.
+    /// Modem is Busy
     AOP_BUSY = 8,
-    /// Unsupported operation.
+    /// Unsupported operation
     AOP_UNSUPPORTED = 9,
-    /// Transducer Not Detected.
+    /// Transducer Not Detected
     AOP_NO_TXD = 10,
-    /// Send Message.
+    /// Send Message
     AOP_MSG = 11,
-    /// Message Send -- Queued.
+    /// Message Send -- Queued
     AOP_MSG_QUEUED = 12,
-    /// Message Send -- In progress.
+    /// Message Send -- In progress
     AOP_MSG_IP = 13,
-    /// Message Send -- Done.
+    /// Message Send -- Done
     AOP_MSG_DONE = 14,
-    /// Message Send -- Failure.
+    /// Message Send -- Failure
     AOP_MSG_FAILURE = 15,
-    /// Send Short Message.
+    /// Send Short Message
     AOP_MSG_SHORT = 16,
 }
 
 /// Acoustic operation.
 #[derive(Default)]
 pub struct AcousticOperation {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
+    /// Operation type.
     pub _op: u8,
-    /// System.
+    /// The meaning of this field depends on the operation and is
+    /// explained in the operation's description.
     pub _system: String,
-    /// Range.
+    /// The meaning of this field depends on the operation and is
+    /// explained in the operation's description.
     pub _range: f32,
-    /// Message To Send.
+    /// Argument for message send ('MSG') requests.
     pub _msg: Option<Box<dyn Message>>,
 }
 

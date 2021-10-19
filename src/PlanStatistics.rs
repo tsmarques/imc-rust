@@ -28,49 +28,48 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Before Plan.
+    /// Before Plan
     TP_PREPLAN = 0,
-    /// During Plan.
+    /// During Plan
     TP_INPLAN = 1,
-    /// After Plan.
+    /// After Plan
     TP_POSTPLAN = 2,
 }
 
-/// Properties.
+/// Properties
 #[allow(non_camel_case_types)]
 pub mod PropertiesBits {
-    /// Basic Plan.
+    /// Basic Plan
     pub const PRP_BASIC: u32 = 0x00;
-    /// Nonlinear.
+    /// Nonlinear
     pub const PRP_NONLINEAR: u32 = 0x01;
-    /// Infinite.
+    /// Infinite
     pub const PRP_INFINITE: u32 = 0x02;
-    /// Cyclical.
+    /// Cyclical
     pub const PRP_CYCLICAL: u32 = 0x04;
-    /// All.
+    /// All
     pub const PRP_ALL: u32 = 0x07;
 }
 
 #[derive(Default)]
 pub struct PlanStatistics {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Plan Identifier.
+    /// The name of the plan to be generated.
     pub _plan_id: String,
-    /// Type.
+    /// Type of plan statistics, if they are launched before, during or after the plan execution.
     pub _type: u8,
-    /// Properties.
     pub _properties: u8,
-    /// Durations.
+    /// Maneuver and plan duration statistics in seconds, for example: Total=1000,Goto1=20,Rows=980
     pub _durations: String,
-    /// Distances.
+    /// Distances travelled in meters in each maneuver and/or total: Total=2000,Rows=1800,Elevator=200
     pub _distances: String,
-    /// Actions.
+    /// List of components active by plan actions during the plan and time active in seconds: Sidescan=100,Camera Module=150
     pub _actions: String,
-    /// Fuel.
+    /// Amount of fuel spent, in battery percentage, by different parcels (if applicable): Total=35,Hotel=5,Payload=10,Motion=20,IMU=0
     pub _fuel: String,
 }
 

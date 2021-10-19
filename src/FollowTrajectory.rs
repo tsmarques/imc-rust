@@ -34,23 +34,24 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// Maneuver constituted by a list of Trajectory Points.
 #[derive(Default)]
 pub struct FollowTrajectory {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run.
     pub _timeout: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude for start point.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude for start point.
     pub _lon: f64,
-    /// Z Reference.
+    /// Maneuver reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
-    /// Speed.
+    /// Maneuver speed.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
-    /// Trajectory Points.
+    /// List of trajectory points.
     pub _points: MessageList<TrajectoryPoint>,
     /// Custom settings for maneuver.
     pub _custom: String,

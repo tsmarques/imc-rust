@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Turbidity measurement.
 #[derive(Default)]
 pub struct Turbidity {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Turbidity reading.
     pub _value: f32,
 }
 

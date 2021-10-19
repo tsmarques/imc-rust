@@ -30,15 +30,11 @@ use crate::Message::*;
 
 #[derive(Default)]
 pub struct MessagePart {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Transmission Unique Id.
     pub _uid: u8,
-    /// Fragment Number.
     pub _frag_number: u8,
-    /// Total Number of fragments.
     pub _num_frags: u8,
-    /// Fragment Data.
     pub _data: Vec<u8>,
 }
 

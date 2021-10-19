@@ -28,12 +28,12 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// operation.
+/// operation
 #[allow(non_camel_case_types)]
 pub enum operationEnum {
-    /// Report.
+    /// Report
     OP_REPORT = 0,
-    /// Query.
+    /// Query
     OP_QUERY = 1,
 }
 
@@ -45,11 +45,11 @@ pub enum operationEnum {
 /// Button.
 #[derive(Default)]
 pub struct RemoteActionsRequest {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// operation.
+    /// Operation to perform.
     pub _op: u8,
-    /// Actions.
+    /// Example: "Propulsion=Axis,PanTilt=Hat,Lights=Button"
     pub _actions: String,
 }
 

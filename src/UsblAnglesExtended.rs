@@ -32,25 +32,25 @@ use crate::Message::*;
 /// bearing and elevation of a target.
 #[derive(Default)]
 pub struct UsblAnglesExtended {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Target.
+    /// Target's system name.
     pub _target: String,
-    /// Local Bearing.
+    /// Target's bearing in the local device's reference frame.
     pub _lbearing: f32,
-    /// Local Elevation.
+    /// Target's elevation in the local device's reference frame.
     pub _lelevation: f32,
-    /// Bearing.
+    /// Target's bearing in the navigation reference frame.
     pub _bearing: f32,
-    /// Elevation.
+    /// Target's elevation in the navigation reference frame.
     pub _elevation: f32,
-    /// Roll Angle.
+    /// Rotation around the device longitudinal axis.
     pub _phi: f32,
-    /// Pitch Angle.
+    /// Rotation around the device lateral or transverse axis.
     pub _theta: f32,
-    /// Yaw Angle.
+    /// Rotation around the device vertical axis.
     pub _psi: f32,
-    /// Accuracy.
+    /// Accuracy of the fix.
     pub _accuracy: f32,
 }
 

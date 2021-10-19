@@ -31,11 +31,13 @@ use crate::Message::*;
 /// Beam configuration of the device.
 #[derive(Default)]
 pub struct BeamConfig {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Beam Width.
+    /// Beam width of the instrument. A negative number denotes that
+    /// this information is not available or is not applicable.
     pub _beam_width: f32,
-    /// Beam Height.
+    /// Beam height of the instrument. A negative number denotes that
+    /// this information is not available or is not applicable.
     pub _beam_height: f32,
 }
 

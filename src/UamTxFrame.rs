@@ -28,12 +28,12 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Acknowledgement.
+    /// Acknowledgement
     pub const UTF_ACK: u32 = 0x01;
-    /// Delayed.
+    /// Delayed
     pub const UTF_DELAYED: u32 = 0x02;
 }
 
@@ -41,15 +41,20 @@ pub mod FlagsBits {
 /// transmission of a data frame via the acoustic channel.
 #[derive(Default)]
 pub struct UamTxFrame {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Sequence Id.
+    /// A sequence identifier that should be incremented for each
+    /// request. This number will then be used to issue transmission
+    /// status updates via the message UamTxStatus.
     pub _seq: u16,
-    /// Destination System.
+    /// The canonical name of the destination system. If supported, the
+    /// special destination 'broadcast' shall be used to dispatch messages
+    /// to all nodes.
     pub _sys_dst: String,
-    /// Flags.
+    /// Transmission flags.
     pub _flags: u8,
-    /// Data.
+    /// The actual data frame to transmit. The data size shall not exceed
+    /// the MTU of the acoustic modem.
     pub _data: Vec<u8>,
 }
 

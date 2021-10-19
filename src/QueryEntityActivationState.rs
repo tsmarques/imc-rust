@@ -31,7 +31,7 @@ use crate::Message::*;
 /// recipient shall reply with an EntityActivationState message.
 #[derive(Default)]
 pub struct QueryEntityActivationState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

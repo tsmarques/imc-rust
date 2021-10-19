@@ -34,21 +34,24 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// Characterizes the state of the entire plan database.
 #[derive(Default)]
 pub struct PlanDBState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Plan -- Count.
+    /// Number of stored plans.
     pub _plan_count: u16,
-    /// Plan -- Size of all plans.
+    /// Size of all plans.The value equals the sum of the IMC payload
+    /// sizes for 'PlanSpecification' stored in the DB.
     pub _plan_size: u32,
-    /// Last Change -- Time.
+    /// Time of last change (Epoch time).
     pub _change_time: f64,
-    /// Last Change -- Source Address.
+    /// IMC address for source of last DB change.
     pub _change_sid: u16,
-    /// Last Change -- Source Name.
+    /// IMC node name for source of last DB change.
     pub _change_sname: String,
-    /// MD5.
+    /// MD5 database verification code. The MD5 hash sum is computed
+    /// over the stream formed by the MD5 of all plans, ordered by
+    /// plan id, in compliance with RFC 1321.
     pub _md5: Vec<u8>,
-    /// Plan info.
+    /// Individual information for plans.
     pub _plans_info: MessageList<PlanDBInformation>,
 }
 

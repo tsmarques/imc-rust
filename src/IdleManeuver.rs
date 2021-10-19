@@ -31,9 +31,10 @@ use crate::Message::*;
 /// Causes the vehicle to stay idle for some time.
 #[derive(Default)]
 pub struct IdleManeuver {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Duration.
+    /// Optional duration of the Idle maneuver. Use '0' for unlimited
+    /// duration time (maneuver will have to be explicitly stopped).
     pub _duration: u16,
     /// Custom settings for maneuver.
     pub _custom: String,

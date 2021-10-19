@@ -28,23 +28,23 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Stop Braking.
+    /// Stop Braking
     OP_STOP = 0,
-    /// Start Braking.
+    /// Start Braking
     OP_START = 1,
-    /// Revert Actuation.
+    /// Revert Actuation
     OP_REVERT = 2,
 }
 
 /// Brake the vehicle in some way, i. e., reduce forward speed.
 #[derive(Default)]
 pub struct Brake {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
+    /// Brake operation.
     pub _op: u8,
 }
 

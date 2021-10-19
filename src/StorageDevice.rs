@@ -34,19 +34,19 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// Storage device information (e.g disk, usb flash, etc). NOTE: This is different from a partition
 #[derive(Default)]
 pub struct StorageDevice {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Model.
+    /// Storage device's model (e.g. Samsung Flash Drive FIT)
     pub _device_model: String,
-    /// Size.
+    /// Device size in MiB
     pub _size: u32,
-    /// Path.
+    /// Device's path on the filesystem, e.g. /dev/sdb
     pub _path: String,
-    /// Partition Type.
+    /// Text description of the partition type, e.g. msdos, gpt, etc
     pub _ptype: String,
-    /// Partitions.
+    /// List of partitions belonging to this device
     pub _partitions: MessageList<StoragePartition>,
-    /// Main Device.
+    /// Flag to signal if this device is the main disk device
     pub _is_main_device: u8,
 }
 

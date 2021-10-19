@@ -28,20 +28,20 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Value of X is meaningful.
+    /// Value of X is meaningful
     pub const FL_X: u32 = 0x01;
-    /// Value of Y is meaningful.
+    /// Value of Y is meaningful
     pub const FL_Y: u32 = 0x02;
-    /// Value of Z is meaningful.
+    /// Value of Z is meaningful
     pub const FL_Z: u32 = 0x04;
-    /// Value of K is meaningful.
+    /// Value of K is meaningful
     pub const FL_K: u32 = 0x08;
-    /// Value of M is meaningful.
+    /// Value of M is meaningful
     pub const FL_M: u32 = 0x10;
-    /// Value of N is meaningful.
+    /// Value of N is meaningful
     pub const FL_N: u32 = 0x20;
 }
 
@@ -49,21 +49,21 @@ pub mod FlagsBits {
 /// vehicle.
 #[derive(Default)]
 pub struct DesiredControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Force along the x axis.
+    /// Force X along the vehicle's x axis.
     pub _x: f64,
-    /// Force along the y axis.
+    /// Force Y along the vehicle's y axis.
     pub _y: f64,
-    /// Force along the z axis.
+    /// Force Z along the vehicle's z axis.
     pub _z: f64,
-    /// Torque about the x axis.
+    /// Torque K about the vehicle's x axis.
     pub _k: f64,
-    /// Torque about the y axis.
+    /// Torque M about the vehicle's y axis.
     pub _m: f64,
-    /// Torque about the z axis.
+    /// Torque N about the vehicle's z axis.
     pub _n: f64,
-    /// Flags.
+    /// Desired Control flags.
     pub _flags: u8,
 }
 

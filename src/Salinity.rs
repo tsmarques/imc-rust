@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Report of salinity.
 #[derive(Default)]
 pub struct Salinity {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Measured Salinity.
+    /// The value of the salinity as measured by the sensor.
     pub _value: f32,
 }
 

@@ -29,48 +29,47 @@ use crate::Header::Header;
 use crate::Message::*;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Request.
+    /// Request
     VC_REQUEST = 0,
-    /// Reply -- Success.
+    /// Reply -- Success
     VC_SUCCESS = 1,
-    /// Reply -- In Progress.
+    /// Reply -- In Progress
     VC_IN_PROGRESS = 2,
-    /// Reply -- Failure.
+    /// Reply -- Failure
     VC_FAILURE = 3,
 }
 
-/// Command.
+/// Command
 #[allow(non_camel_case_types)]
 pub enum CommandEnum {
-    /// Execute Maneuver.
+    /// Execute Maneuver
     VC_EXEC_MANEUVER = 0,
-    /// Stop Maneuver.
+    /// Stop Maneuver
     VC_STOP_MANEUVER = 1,
-    /// Start Calibration.
+    /// Start Calibration
     VC_START_CALIBRATION = 2,
-    /// Stop Calibration.
+    /// Stop Calibration
     VC_STOP_CALIBRATION = 3,
 }
 
 /// Vehicle command.
 #[derive(Default)]
 pub struct VehicleCommand {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Type.
     pub _type: u8,
-    /// Request ID.
+    /// Request ID
     pub _request_id: u16,
-    /// Command.
+    /// The type of command/action to be performed
     pub _command: u8,
-    /// Maneuver.
+    /// Maneuver to be executed (for 'EXEC_MANEUVER' command)
     pub _maneuver: Option<Box<dyn Message>>,
-    /// Calibration Time.
+    /// Amount of time to calibrate
     pub _calib_time: u16,
-    /// Info.
+    /// Complementary human-readable information for replies.
     pub _info: String,
 }
 

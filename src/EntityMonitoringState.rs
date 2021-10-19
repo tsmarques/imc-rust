@@ -30,23 +30,24 @@ use crate::Message::*;
 
 #[derive(Default)]
 pub struct EntityMonitoringState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Entities monitored - Count.
+    /// Number of entitities being monitored.
     pub _mcount: u8,
-    /// Entities monitored - Names.
+    /// Comma separated list of all entity names being monitored.
     pub _mnames: String,
-    /// Entities with errors - Count.
+    /// Number of entitities with non-critical errors.
     pub _ecount: u8,
-    /// Entities with errors - Names.
+    /// Comma separated list of all entity names with non-critical
+    /// errors.
     pub _enames: String,
-    /// Entities with critical errors - Count.
+    /// Number of entitities with critical errors.
     pub _ccount: u8,
-    /// Entities with critical errors - Names.
+    /// Comma separated list of all entity names with critical errors.
     pub _cnames: String,
-    /// Last Error -- Description.
+    /// Description of last error.
     pub _last_error: String,
-    /// Last Error -- Time.
+    /// Time of last error (Epoch time).
     pub _last_error_time: f64,
 }
 

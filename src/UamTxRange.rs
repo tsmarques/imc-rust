@@ -31,13 +31,15 @@ use crate::Message::*;
 /// Request an acoustic modem driver to measure the distance to another system.
 #[derive(Default)]
 pub struct UamTxRange {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Sequence Id.
+    /// A sequence identifier that should be incremented for each
+    /// request. This number will then be used to issue transmission
+    /// status updates via the message UamTxStatus.
     pub _seq: u16,
-    /// Destination System.
+    /// The canonical name of the target system.
     pub _sys_dst: String,
-    /// Timeout.
+    /// Maximum amount of time to wait for a reply.
     pub _timeout: f32,
 }
 

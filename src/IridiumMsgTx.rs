@@ -30,15 +30,15 @@ use crate::Message::*;
 
 #[derive(Default)]
 pub struct IridiumMsgTx {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Request Identifier.
+    /// The request identifier used to receive transmission updates.
     pub _req_id: u16,
-    /// Time to live.
+    /// Time, in seconds, after which there will be no more atempts to transmit the message.
     pub _ttl: u16,
-    /// Destination Identifier.
+    /// The unique identifier of this message's destination (e.g. lauv-xtreme-2, manta-0).
     pub _destination: String,
-    /// Data.
+    /// Message data.
     pub _data: Vec<u8>,
 }
 

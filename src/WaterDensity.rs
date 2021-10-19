@@ -31,7 +31,7 @@ use crate::Message::*;
 /// Water Density report.
 #[derive(Default)]
 pub struct WaterDensity {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
     /// Computed Water Density.
     pub _value: f32,

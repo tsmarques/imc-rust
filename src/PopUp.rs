@@ -28,14 +28,14 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Start from current position.
+    /// Start from current position
     pub const FLG_CURR_POS: u32 = 0x01;
-    /// Wait at surface.
+    /// Wait at surface
     pub const FLG_WAIT_AT_SURFACE: u32 = 0x02;
-    /// Station keeping.
+    /// Station keeping
     pub const FLG_STATION_KEEP: u32 = 0x04;
 }
 
@@ -43,27 +43,32 @@ pub mod FlagsBits {
 /// specific waypoint. This maneuver is restricted to underwater vehicles.
 #[derive(Default)]
 pub struct PopUp {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run. If the
+    /// maneuver is not completed in the amount of time specified an
+    /// error will be generated.
     pub _timeout: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude.
     pub _lon: f64,
-    /// Z Reference.
+    /// Maneuver reference in the z axis. Use z_units to specify
+    /// whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
-    /// Speed.
+    /// Maneuver speed reference.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
-    /// Duration.
+    /// The duration of this maneuver at surface level.
+    /// Only used if flag WAIT_AT_SURFACE is on.
     pub _duration: u16,
-    /// Radius.
+    /// Radius of the maneuver.
+    /// Only used if flag STATION_KEEP is on.
     pub _radius: f32,
-    /// Flags.
+    /// Flags of the maneuver.
     pub _flags: u8,
     /// Custom settings for maneuver.
     pub _custom: String,

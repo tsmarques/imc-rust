@@ -29,59 +29,65 @@ use crate::Header::Header;
 use crate::Message::*;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Request.
+    /// Request
     PC_REQUEST = 0,
-    /// Reply -- Success.
+    /// Reply -- Success
     PC_SUCCESS = 1,
-    /// Reply -- Failure.
+    /// Reply -- Failure
     PC_FAILURE = 2,
-    /// Reply -- In Progress.
+    /// Reply -- In Progress
     PC_IN_PROGRESS = 3,
 }
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Start Plan.
+    /// Start Plan
     PC_START = 0,
-    /// Stop Plan.
+    /// Stop Plan
     PC_STOP = 1,
-    /// Load Plan.
+    /// Load Plan
     PC_LOAD = 2,
-    /// Get Plan.
+    /// Get Plan
     PC_GET = 3,
 }
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Calibrate Vehicle.
+    /// Calibrate Vehicle
     pub const FLG_CALIBRATE: u32 = 0x0001;
-    /// Ignore Errors.
+    /// Ignore Errors
     pub const FLG_IGNORE_ERRORS: u32 = 0x0002;
 }
 
 /// Plan control request/reply.
 #[derive(Default)]
 pub struct PlanControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Type.
+    /// Indicates if the message is a request or a reply to a
+    /// previous request. The *op*, *request_id* and *plan_id* fields
+    /// of a request will be echoed in one or more responses to that
+    /// request.
     pub _type: u8,
-    /// Operation.
+    /// Plan control operation.
     pub _op: u8,
-    /// Request ID.
+    /// Request ID. This may be used by interfacing modules e.g. using
+    /// sequence counters.  to annotate requests and appropriately
+    /// identify replies.
     pub _request_id: u16,
-    /// Plan Identifier.
+    /// The identifier for the plan to be stopped / started / loaded /
+    /// retrieved according to the command requested (*op* field).
     pub _plan_id: String,
-    /// Flags.
     pub _flags: u16,
-    /// Request/Reply Argument.
+    /// Complementary message argument for requests/replies.
     pub _arg: Option<Box<dyn Message>>,
-    /// Complementary Info.
+    /// Complementary human-readable information. This is used
+    /// in association to replies.
     pub _info: String,
 }
 

@@ -32,9 +32,9 @@ use crate::Message::*;
 /// when a photon of light propagates in water and interacts with a "particle" (varying from water molecules to fish).
 #[derive(Default)]
 pub struct OpticalBackscatter {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Optical Backscattering Coefficient.
     pub _value: f32,
 }
 

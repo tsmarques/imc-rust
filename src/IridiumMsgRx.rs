@@ -30,17 +30,15 @@ use crate::Message::*;
 
 #[derive(Default)]
 pub struct IridiumMsgRx {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Origin Identifier.
+    /// The unique identifier of this message's origin device (e.g. lauv-xtreme-2, manta-0).
     pub _origin: String,
-    /// Timestamp.
+    /// Timestamp (Epoch time).
     pub _htime: f64,
-    /// Latitude Reference.
     pub _lat: f64,
-    /// Longitude Reference.
     pub _lon: f64,
-    /// Data.
+    /// Message data.
     pub _data: Vec<u8>,
 }
 

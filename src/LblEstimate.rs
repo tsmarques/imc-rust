@@ -33,19 +33,21 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// LBL Beacon position estimate.
 #[derive(Default)]
 pub struct LblEstimate {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// LBL Beacon Configuration.
+    /// LBL Beacon configuration estimate.
     pub _beacon: Option<LblBeacon>,
-    /// North position.
+    /// The North position offset of the NED field with respect to origin.
     pub _x: f32,
-    /// East position.
+    /// The East position offset of the NED field with respect to origin.
     pub _y: f32,
-    /// North position variance.
+    /// The North offset variance of the North/East/Down
+    /// field with respect to LLH.
     pub _var_x: f32,
-    /// East position variance.
+    /// The East offset variance of the North/East/Down
+    /// field with respect to LLH.
     pub _var_y: f32,
-    /// Distance.
+    /// Distance between current LBL Beacon position and filter estimation.
     pub _distance: f32,
 }
 

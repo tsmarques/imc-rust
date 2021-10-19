@@ -29,31 +29,31 @@ use crate::Header::Header;
 use crate::Message::*;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-/// Control Operation.
+/// Control Operation
 #[allow(non_camel_case_types)]
 pub enum ControlOperationEnum {
-    /// Store.
+    /// Store
     COP_STORE = 0,
-    /// Load.
+    /// Load
     COP_LOAD = 1,
-    /// Clear.
+    /// Clear
     COP_CLEAR = 2,
-    /// Copy Snapshot.
+    /// Copy Snapshot
     COP_COPY = 3,
-    /// Snapshot Copy Complete.
+    /// Snapshot Copy Complete
     COP_COPY_COMPLETE = 4,
 }
 
 /// Control caching of messages to persistent storage.
 #[derive(Default)]
 pub struct CacheControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Control Operation.
+    /// Operation to perform.
     pub _op: u8,
-    /// Snapshot destination.
+    /// Destination for the cache snapshot file.
     pub _snapshot: String,
-    /// Message.
+    /// Message to store.
     pub _message: Option<Box<dyn Message>>,
 }
 

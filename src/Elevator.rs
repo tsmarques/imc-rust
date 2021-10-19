@@ -28,10 +28,10 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Flags.
+/// Flags
 #[allow(non_camel_case_types)]
 pub mod FlagsBits {
-    /// Start from current position.
+    /// Start from current position
     pub const FLG_CURR_POS: u32 = 0x01;
 }
 
@@ -41,29 +41,35 @@ pub mod FlagsBits {
 /// slope and radius can also be optionally specified.
 #[derive(Default)]
 pub struct Elevator {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run. If the
+    /// maneuver is not completed in the amount of time specified an
+    /// error will be generated.
     pub _timeout: u16,
-    /// Flags.
+    /// Flags of the maneuver.
     pub _flags: u8,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude.
     pub _lon: f64,
-    /// Start Point -- Z Reference.
+    /// Altitude or depth of start point. This parameter will be
+    /// ignored if the 'NO_Z' flag is set, or if the 'START' flag is
+    /// not set.
     pub _start_z: f32,
-    /// Start Point -- Z Units.
+    /// Units of the start point's z reference.
     pub _start_z_units: u8,
-    /// End Point -- Z Reference.
+    /// Depth or altitude for the end point.  This parameter will be
+    /// ignored if the 'NO_Z' flag is set.
     pub _end_z: f32,
-    /// End Point -- Z Units.
+    /// Units of the end point's z reference.
     pub _end_z_units: u8,
-    /// Radius.
+    /// Radius for use in ascent/descent. If 0 the controller to
+    /// should use a custom control strategy.
     pub _radius: f32,
-    /// Speed.
+    /// Maneuver speed.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
     /// Custom settings for maneuver.
     pub _custom: String,

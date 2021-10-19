@@ -30,7 +30,7 @@ use crate::Message::*;
 /// Hardware pulse detection.
 #[derive(Default)]
 pub struct Pulse {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

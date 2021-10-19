@@ -32,39 +32,41 @@ use crate::Message::*;
 /// parameters are mainly used for used for maintenance purposes.
 #[derive(Default)]
 pub struct Tachograph {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Last Service Timestamp.
+    /// The time when the last service was performed. The number of
+    /// seconds is represented in Universal Coordinated Time (UCT) in
+    /// seconds since Jan 1, 1970.
     pub _timestamp_last_service: f64,
-    /// Time - Next Service.
+    /// Amount of time until the next recommended service.
     pub _time_next_service: f32,
-    /// Time Motor - Next Service.
+    /// Amount of time the motor can run until the next recommended service.
     pub _time_motor_next_service: f32,
-    /// Time Idle - Ground.
+    /// Amount of time the system spent idle on the ground.
     pub _time_idle_ground: f32,
-    /// Time Idle - Air.
+    /// Amount of time the system spent idle in the air.
     pub _time_idle_air: f32,
-    /// Time Idle - Water.
+    /// Amount of time the system spent idle on the water (not submerged).
     pub _time_idle_water: f32,
-    /// Time Idle - Underwater.
+    /// Amount of time the system spent idle underwater.
     pub _time_idle_underwater: f32,
-    /// Time Idle - Unknown.
+    /// Amount of time the system spent idle in an unknown medium.
     pub _time_idle_unknown: f32,
-    /// Time Motor - Ground.
+    /// Amount of time the system spent on the ground with the motor running.
     pub _time_motor_ground: f32,
-    /// Time Motor - Air.
+    /// Amount of time the system spent in the air with the motor running.
     pub _time_motor_air: f32,
-    /// Time Motor - Water.
+    /// Amount of time the system spent on the water (not submerged) with the motor running.
     pub _time_motor_water: f32,
-    /// Time Motor - Underwater.
+    /// Amount of time the system spent underwater with the motor running.
     pub _time_motor_underwater: f32,
-    /// Time Motor - Unknown.
+    /// Amount of time the system spent in an unknown medium with the motor running.
     pub _time_motor_unknown: f32,
-    /// Recorded RPMs - Minimum.
+    /// The minimum recorded RPM value.
     pub _rpm_min: i16,
-    /// Recorded RPMs - Maximum.
+    /// The maximum recorded RPM value.
     pub _rpm_max: i16,
-    /// Recorded Depth - Maximum.
+    /// The maximum recorded depth value.
     pub _depth_max: f32,
 }
 

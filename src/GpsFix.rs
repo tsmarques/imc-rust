@@ -28,76 +28,77 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Type.
+/// Type
 #[allow(non_camel_case_types)]
 pub enum TypeEnum {
-    /// Stand Alone.
+    /// Stand Alone
     GFT_STANDALONE = 0x00,
-    /// Differential.
+    /// Differential
     GFT_DIFFERENTIAL = 0x01,
-    /// Dead Reckoning.
+    /// Dead Reckoning
     GFT_DEAD_RECKONING = 0x02,
-    /// Manual Input.
+    /// Manual Input
     GFT_MANUAL_INPUT = 0x03,
-    /// Simulation.
+    /// Simulation
     GFT_SIMULATION = 0x04,
 }
 
-/// Validity.
+/// Validity
 #[allow(non_camel_case_types)]
 pub mod ValidityBits {
-    /// Valid Date.
+    /// Valid Date
     pub const GFV_VALID_DATE: u32 = 0x0001;
-    /// Valid Time.
+    /// Valid Time
     pub const GFV_VALID_TIME: u32 = 0x0002;
-    /// Valid Position.
+    /// Valid Position
     pub const GFV_VALID_POS: u32 = 0x0004;
-    /// Valid Course Over Ground.
+    /// Valid Course Over Ground
     pub const GFV_VALID_COG: u32 = 0x0008;
-    /// Valid Speed Over Ground.
+    /// Valid Speed Over Ground
     pub const GFV_VALID_SOG: u32 = 0x0010;
-    /// Valid Horizontal Accuracy Estimate.
+    /// Valid Horizontal Accuracy Estimate
     pub const GFV_VALID_HACC: u32 = 0x0020;
-    /// Valid Vertical Accuracy Estimate.
+    /// Valid Vertical Accuracy Estimate
     pub const GFV_VALID_VACC: u32 = 0x0040;
-    /// Valid Horizontal Dilution of Precision.
+    /// Valid Horizontal Dilution of Precision
     pub const GFV_VALID_HDOP: u32 = 0x0080;
-    /// Valid Vertical Dilution of Precision.
+    /// Valid Vertical Dilution of Precision
     pub const GFV_VALID_VDOP: u32 = 0x0100;
 }
 
 /// Report of a GPS fix.
 #[derive(Default)]
 pub struct GpsFix {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Validity.
+    /// Validity of fields.
     pub _validity: u16,
-    /// Type.
+    /// Type of fix.
     pub _type: u8,
-    /// UTC Year.
+    /// UTC year.
     pub _utc_year: u16,
-    /// UTC Month.
+    /// UTC month.
     pub _utc_month: u8,
-    /// UTC Day.
+    /// UTC day.
     pub _utc_day: u8,
-    /// UTC Time of Fix.
+    /// UTC time of the GPS fix measured in seconds since 00:00:00 (midnight).
     pub _utc_time: f32,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude coordinate.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude coordinate.
     pub _lon: f64,
     /// Height above WGS-84 ellipsoid.
     pub _height: f32,
-    /// Number of Satellites.
+    /// Number of satellites used by the GPS device to compute the
+    /// solution.
     pub _satellites: u8,
-    /// Course Over Ground.
+    /// Course Over Ground (true).
     pub _cog: f32,
     /// Speed Over Ground.
     pub _sog: f32,
-    /// Horizontal Dilution of Precision.
+    /// Horizontal dilution of precision.
     pub _hdop: f32,
-    /// Vertical Dilution of Precision.
+    /// Vertical dilution of precision.
     pub _vdop: f32,
     /// Horizontal Accuracy Estimate.
     pub _hacc: f32,

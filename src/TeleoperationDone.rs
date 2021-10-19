@@ -30,7 +30,7 @@ use crate::Message::*;
 /// Notification of completion of a Teleoperation maneuver.
 #[derive(Default)]
 pub struct TeleoperationDone {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
 }
 

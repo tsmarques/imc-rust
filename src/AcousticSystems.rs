@@ -33,9 +33,9 @@ use crate::Message::*;
 /// band transponders, etc).
 #[derive(Default)]
 pub struct AcousticSystems {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// System List.
+    /// Comma separated list of known acoustic system names.
     pub _list: String,
 }
 

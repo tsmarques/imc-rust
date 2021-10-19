@@ -31,11 +31,11 @@ use crate::Message::*;
 /// A text message has been received.
 #[derive(Default)]
 pub struct TextMessage {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Origin.
+    /// Message origin (if known).
     pub _origin: String,
-    /// Text.
+    /// Message contents.
     pub _text: String,
 }
 

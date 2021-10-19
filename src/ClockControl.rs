@@ -28,31 +28,31 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// Operation.
+/// Operation
 #[allow(non_camel_case_types)]
 pub enum OperationEnum {
-    /// Execute Sync..
+    /// Execute Sync.
     COP_SYNC_EXEC = 0,
-    /// Request Sync..
+    /// Request Sync.
     COP_SYNC_REQUEST = 1,
-    /// Sync. Started.
+    /// Sync. Started
     COP_SYNC_STARTED = 2,
-    /// Sync. done.
+    /// Sync. done
     COP_SYNC_DONE = 3,
-    /// Set Timezone .
+    /// Set Timezone
     COP_SET_TZ = 4,
-    /// Timezone Setup.
+    /// Timezone Setup
     COP_SET_TZ_DONE = 5,
 }
 
 /// Clock control.
 #[derive(Default)]
 pub struct ClockControl {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Operation.
+    /// Operation to perform.
     pub _op: u8,
-    /// Clock.
+    /// Clock value (Epoch time).
     pub _clock: f64,
     /// Timezone.
     pub _tz: i8,

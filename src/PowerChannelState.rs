@@ -28,23 +28,23 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// State.
+/// State
 #[allow(non_camel_case_types)]
 pub enum StateEnum {
-    /// Off.
+    /// Off
     PCS_OFF = 0,
-    /// On.
+    /// On
     PCS_ON = 1,
 }
 
 /// Message conveying the state of a power channel.
 #[derive(Default)]
 pub struct PowerChannelState {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Name.
+    /// Power Channel Name.
     pub _name: String,
-    /// State.
+    /// State of the Power Channel.
     pub _state: u8,
 }
 

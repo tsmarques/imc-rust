@@ -31,9 +31,9 @@ use crate::Message::*;
 /// Phycoerythrin measurement.
 #[derive(Default)]
 pub struct Phycoerythrin {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Value.
+    /// Phycoerythrin reading.
     pub _value: f32,
 }
 

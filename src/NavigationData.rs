@@ -34,25 +34,25 @@ use crate::Message::*;
 /// that the user may refer for more information.
 #[derive(Default)]
 pub struct NavigationData {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Yaw Bias.
+    /// The psi Euler angle bias from the vehicle's sensed attitude.
     pub _bias_psi: f32,
-    /// Gyro. Yaw Rate Bias.
+    /// The angular velocity over body-fixed zz axis bias from sensor.
     pub _bias_r: f32,
-    /// Course Over Ground.
+    /// Course over ground given by NED ground velocity vectors.
     pub _cog: f32,
-    /// Continuous Yaw.
+    /// Continuous psi Euler angle (without normalizations).
     pub _cyaw: f32,
-    /// GPS Rejection Filter Level.
+    /// GPS rejection filter level.
     pub _lbl_rej_level: f32,
-    /// LBL Rejection Filter Level.
+    /// LBL rejection filter level.
     pub _gps_rej_level: f32,
-    /// Variance - Custom Variable X.
+    /// Custom variable.
     pub _custom_x: f32,
-    /// Variance - Custom Variable Y.
+    /// Custom variable.
     pub _custom_y: f32,
-    /// Variance - Custom Variable Z.
+    /// Custom variable.
     pub _custom_z: f32,
 }
 

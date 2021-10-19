@@ -31,11 +31,11 @@ use crate::Message::*;
 /// Received SMS data.
 #[derive(Default)]
 pub struct SmsRx {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Source.
+    /// Number of name of the sender.
     pub _source: String,
-    /// Data.
+    /// Message data.
     pub _data: Vec<u8>,
 }
 

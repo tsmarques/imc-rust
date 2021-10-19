@@ -32,9 +32,9 @@ use crate::Message::*;
 /// vehicle.
 #[derive(Default)]
 pub struct RegisterManeuver {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Maneuver ID.
+    /// IMC serialization ID of maneuver type.
     pub _mid: u16,
 }
 

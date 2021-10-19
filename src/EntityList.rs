@@ -28,12 +28,12 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-/// operation.
+/// operation
 #[allow(non_camel_case_types)]
 pub enum operationEnum {
-    /// Report.
+    /// Report
     OP_REPORT = 0,
-    /// Query.
+    /// Query
     OP_QUERY = 1,
 }
 
@@ -41,11 +41,11 @@ pub enum operationEnum {
 /// all entities in the system.
 #[derive(Default)]
 pub struct EntityList {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// operation.
+    /// Operation to perform.
     pub _op: u8,
-    /// list.
+    /// Example: "Battery=11;CTD=3"
     pub _list: String,
 }
 

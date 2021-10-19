@@ -33,25 +33,26 @@ use crate::Message::*;
 /// between two values with a desired pitch angle.
 #[derive(Default)]
 pub struct YoYo {
-    /// Message Header.
+    /// Message Header
     pub _header: Header,
-    /// Timeout.
+    /// The amount of time the maneuver is allowed to run.
     pub _timeout: u16,
-    /// Latitude WGS-84.
+    /// WGS-84 Latitude of target waypoint.
     pub _lat: f64,
-    /// Longitude WGS-84.
+    /// WGS-84 Longitude of target waypoint.
     pub _lon: f64,
-    /// Z Reference.
+    /// Maneuver reference in the z axis.
+    /// Use z_units to specify whether z represents depth, altitude or other.
     pub _z: f32,
-    /// Z Units.
+    /// Units of the z reference.
     pub _z_units: u8,
     /// Amplitude.
     pub _amplitude: f32,
-    /// Pitch Angle.
+    /// Pitch angle for use in ascent/descent.
     pub _pitch: f32,
-    /// Speed.
+    /// Maneuver speed reference.
     pub _speed: f32,
-    /// Speed Units.
+    /// Speed units.
     pub _speed_units: u8,
     /// Custom settings for maneuver.
     pub _custom: String,
