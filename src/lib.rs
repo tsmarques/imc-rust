@@ -20,7 +20,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 9d37efa05563864d61f74279faa9d05f                            *
+// IMC XML MD5: 3ec4b61a1b487d356bfc62e124f22651                            *
 //###########################################################################
 
 /// Base
@@ -204,9 +204,6 @@ pub mod SonarPulse;
 pub mod SoundSpeed;
 pub mod StationKeeping;
 pub mod StopManeuver;
-pub mod StorageControl;
-pub mod StorageDevice;
-pub mod StoragePartition;
 pub mod StorageUsage;
 pub mod Tachograph;
 pub mod Teleoperation;
