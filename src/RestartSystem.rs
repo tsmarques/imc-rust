@@ -28,7 +28,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Request the destination system to restart itself.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct RestartSystem {
     /// Message Header
     pub _header: Header,

@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Report of PID control parcels.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct ControlParcel {
     /// Message Header
     pub _header: Header,

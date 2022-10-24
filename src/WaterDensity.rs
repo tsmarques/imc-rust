@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Water Density report.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct WaterDensity {
     /// Message Header
     pub _header: Header,

@@ -39,7 +39,7 @@ pub enum StatusEnum {
     SDST_UNKWN = 2,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct StoragePartition {
     /// Message Header
     pub _header: Header,

@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Phycoerythrin measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Phycoerythrin {
     /// Message Header
     pub _header: Header,

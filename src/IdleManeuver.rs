@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Causes the vehicle to stay idle for some time.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct IdleManeuver {
     /// Message Header
     pub _header: Header,

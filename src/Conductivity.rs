@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Report of conductivity.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Conductivity {
     /// Message Header
     pub _header: Header,

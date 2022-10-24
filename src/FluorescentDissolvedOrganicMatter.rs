@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Fluorescent Dissolved Organic Matter measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct FluorescentDissolvedOrganicMatter {
     /// Message Header
     pub _header: Header,

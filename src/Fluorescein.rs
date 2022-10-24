@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Fluorescein measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Fluorescein {
     /// Message Header
     pub _header: Header,

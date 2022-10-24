@@ -52,7 +52,7 @@ pub mod FlagsBits {
 
 /// State reported by an entity in the vehicle. The source entity is
 /// identified in the message header.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EntityState {
     /// Message Header
     pub _header: Header,

@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// Command used to indicate maneuver can be executed in the
 /// vehicle.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct RegisterManeuver {
     /// Message Header
     pub _header: Header,

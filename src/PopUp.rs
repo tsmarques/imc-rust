@@ -41,7 +41,7 @@ pub mod FlagsBits {
 
 /// The Pop Up maneuver makes the vehicle come to the surface at a
 /// specific waypoint. This maneuver is restricted to underwater vehicles.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PopUp {
     /// Message Header
     pub _header: Header,

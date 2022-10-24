@@ -28,7 +28,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Hardware pulse detection.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Pulse {
     /// Message Header
     pub _header: Header,

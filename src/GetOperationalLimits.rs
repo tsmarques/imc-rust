@@ -28,7 +28,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Command to obtain the operational limits in use by the vehicle.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct GetOperationalLimits {
     /// Message Header
     pub _header: Header,

@@ -32,7 +32,7 @@ use crate::PathPoint::PathPoint;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// Maneuver constituted by a list of Path Points.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct FollowPath {
     /// Message Header
     pub _header: Header,

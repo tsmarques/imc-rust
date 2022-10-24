@@ -83,7 +83,7 @@ macro_rules! deserialize_bytes {
 
 /// Basic IMC Message
 /// @todo nested callbacks
-pub trait Message {
+pub trait Message: MessageClone {
     /// Default constructor
     fn new() -> Self
     where
@@ -153,5 +153,26 @@ pub trait Message {
         self.payload_serialization_size()
             + IMC_CONST_HEADER_SIZE as usize
             + IMC_CONST_FOOTER_SIZE as usize
+    }
+}
+
+/// Rust dark magic to allow having "dyn Message" as a field
+/// on a struct that derives Clone (e.g. AcousticOperation.rs)
+pub trait MessageClone {
+    fn do_clone(&self) -> Box<dyn Message>;
+}
+
+impl<T> MessageClone for T
+    where
+        T: 'static + Message + Clone,
+{
+    fn do_clone(&self) -> Box<dyn Message> {
+        Box::new(self.clone())
+    }
+}
+
+impl Clone for Box<dyn Message> {
+    fn clone(&self) -> Box<dyn Message> {
+        self.do_clone()
     }
 }

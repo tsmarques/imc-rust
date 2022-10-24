@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// This message is used to report the perceived link quality to other
 /// acoustic peers.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct AcousticLink {
     /// Message Header
     pub _header: Header,

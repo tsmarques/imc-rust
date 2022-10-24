@@ -38,7 +38,7 @@ pub mod FlagsBits {
 }
 
 /// Rows maneuver (i.e: lawn mower type maneuver)
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Rows {
     /// Message Header
     pub _header: Header,

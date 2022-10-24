@@ -32,7 +32,7 @@ use crate::Message::*;
 /// notifies that a new range was received from one of the acoustics
 /// transponders. The message fields are used to identify the range
 /// value and the transponder name.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LblRange {
     /// Message Header
     pub _header: Header,

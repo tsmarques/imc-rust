@@ -44,7 +44,7 @@ pub enum OperationEnum {
 }
 
 /// Control LCD.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LcdControl {
     /// Message Header
     pub _header: Header,

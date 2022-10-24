@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Sound Speed report.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct SoundSpeed {
     /// Message Header
     pub _header: Header,

@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Set the position of a servo.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct SetServoPosition {
     /// Message Header
     pub _header: Header,

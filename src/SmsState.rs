@@ -47,7 +47,7 @@ pub enum StateEnum {
     SMS_RECEIVING = 6,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct SmsState {
     /// Message Header
     pub _header: Header,

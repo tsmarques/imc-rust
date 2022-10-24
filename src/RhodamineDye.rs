@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Rhodamine Dye measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct RhodamineDye {
     /// Message Header
     pub _header: Header,

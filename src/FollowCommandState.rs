@@ -45,7 +45,7 @@ pub enum StateEnum {
     FC_TIMEOUT = 5,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct FollowCommandState {
     /// Message Header
     pub _header: Header,

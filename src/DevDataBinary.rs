@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Verbatim representation of device data in binary format.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DevDataBinary {
     /// Message Header
     pub _header: Header,

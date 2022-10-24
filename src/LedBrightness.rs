@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Brightness value of an LED (Light-Emitting Diode).
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LedBrightness {
     /// Message Header
     pub _header: Header,

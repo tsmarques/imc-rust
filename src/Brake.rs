@@ -40,7 +40,7 @@ pub enum OperationEnum {
 }
 
 /// Brake the vehicle in some way, i. e., reduce forward speed.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Brake {
     /// Message Header
     pub _header: Header,

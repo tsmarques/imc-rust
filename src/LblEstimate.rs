@@ -31,7 +31,7 @@ use crate::Message::*;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// LBL Beacon position estimate.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LblEstimate {
     /// Message Header
     pub _header: Header,

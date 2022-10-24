@@ -32,7 +32,7 @@ use crate::Message::*;
 /// This is constituted by data which is not
 /// part of the vehicle estimated state but
 /// that the user may refer for more information.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct NavigationData {
     /// Message Header
     pub _header: Header,

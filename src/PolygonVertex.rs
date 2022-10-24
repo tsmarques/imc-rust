@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// This message is used to store the various polygon vertices for
 /// CoverArea maneuvers.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PolygonVertex {
     /// Message Header
     pub _header: Header,

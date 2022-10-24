@@ -50,7 +50,7 @@ pub mod FlagsBits {
 /// This message must be sent by an external entity to provide command references to a system
 /// running a "Follow Command Maneuver". If no Command messages are transmitted, the system
 /// will terminate maneuver.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Command {
     /// Message Header
     pub _header: Header,

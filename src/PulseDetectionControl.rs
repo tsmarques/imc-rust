@@ -38,7 +38,7 @@ pub enum OperationEnum {
 }
 
 /// Control of hardware pulse detection.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PulseDetectionControl {
     /// Message Header
     pub _header: Header,

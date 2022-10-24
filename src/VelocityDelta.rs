@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Component of incremetal velocity vector.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct VelocityDelta {
     /// Message Header
     pub _header: Header,

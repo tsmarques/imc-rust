@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Desired Heading angle reference value for the control layer.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DesiredHeading {
     /// Message Header
     pub _header: Header,

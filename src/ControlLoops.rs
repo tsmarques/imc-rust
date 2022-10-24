@@ -38,7 +38,7 @@ pub enum EnableEnum {
 }
 
 /// Enable or disable control loops.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct ControlLoops {
     /// Message Header
     pub _header: Header,

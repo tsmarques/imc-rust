@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Report of Redox Potential.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Redox {
     /// Message Header
     pub _header: Header,

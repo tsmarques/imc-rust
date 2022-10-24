@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Request an acoustic modem driver to measure the distance to another system.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct UamTxRange {
     /// Message Header
     pub _header: Header,

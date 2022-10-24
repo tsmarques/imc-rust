@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// Report of spatial orientation according to SNAME's notation
 /// (1950).
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EulerAngles {
     /// Message Header
     pub _header: Header,

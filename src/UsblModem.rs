@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Position and configuration of an Ultra-Short Base Line modem.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct UsblModem {
     /// Message Header
     pub _header: Header,

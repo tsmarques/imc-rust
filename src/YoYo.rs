@@ -31,7 +31,7 @@ use crate::Message::*;
 /// A "yo-yo" is a maneuver specifying a vehicle movement to a
 /// target waypoint in which depth/altitude varies along the way
 /// between two values with a desired pitch angle.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct YoYo {
     /// Message Header
     pub _header: Header,

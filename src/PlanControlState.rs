@@ -53,7 +53,7 @@ pub enum LastPlanOutcomeEnum {
 }
 
 /// State of plan control.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanControlState {
     /// Message Header
     pub _header: Header,

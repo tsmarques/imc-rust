@@ -30,7 +30,7 @@ use crate::Message::*;
 /// The Heartbeat message is used to inform other modules that the
 /// sending entity's system is running normally and communications
 /// are alive.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Heartbeat {
     /// Message Header
     pub _header: Header,

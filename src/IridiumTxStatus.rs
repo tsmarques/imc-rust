@@ -43,7 +43,7 @@ pub enum StatusCodeEnum {
     TXSTATUS_EXPIRED = 5,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct IridiumTxStatus {
     /// Message Header
     pub _header: Header,

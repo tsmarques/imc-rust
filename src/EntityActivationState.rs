@@ -50,7 +50,7 @@ pub enum StateEnum {
 }
 
 /// State of entity activation/deactivation.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EntityActivationState {
     /// Message Header
     pub _header: Header,

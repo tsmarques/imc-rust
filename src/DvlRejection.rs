@@ -53,7 +53,7 @@ pub mod TypeofvelocityBits {
 /// When the vehicle uses Doppler Velocity Log sensor, this message
 /// notifies that a new measurement was locally rejected by the
 /// navigation filter.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DvlRejection {
     /// Message Header
     pub _header: Header,

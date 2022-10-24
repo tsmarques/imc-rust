@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Report of salinity.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Salinity {
     /// Message Header
     pub _header: Header,

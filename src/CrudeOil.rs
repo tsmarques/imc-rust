@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Crude oil measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct CrudeOil {
     /// Message Header
     pub _header: Header,

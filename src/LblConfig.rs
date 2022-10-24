@@ -43,7 +43,7 @@ pub enum OperationEnum {
 }
 
 /// Long Base Line configuration.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LblConfig {
     /// Message Header
     pub _header: Header,

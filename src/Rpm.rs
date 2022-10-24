@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Number of revolutions per minute.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Rpm {
     /// Message Header
     pub _header: Header,

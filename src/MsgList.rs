@@ -30,7 +30,7 @@ use crate::Message::*;
 use crate::MessageList;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct MsgList {
     /// Message Header
     pub _header: Header,

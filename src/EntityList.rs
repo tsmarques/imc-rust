@@ -39,7 +39,7 @@ pub enum operationEnum {
 
 /// This message describes the names and identification numbers of
 /// all entities in the system.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EntityList {
     /// Message Header
     pub _header: Header,

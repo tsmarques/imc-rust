@@ -31,7 +31,7 @@ use crate::Message::*;
 /// Report of navigation uncertainty.
 /// This is usually given by the output of the state
 /// covariance matrix of an Extended Kalman Filter.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct NavigationUncertainty {
     /// Message Header
     pub _header: Header,

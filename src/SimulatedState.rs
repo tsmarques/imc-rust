@@ -31,7 +31,7 @@ use crate::Message::*;
 /// This message presents the simulated state of the vehicle. The simulated
 /// state attempts to provide a realistic state interpretation of operating
 /// various kinds of vehicles.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct SimulatedState {
     /// Message Header
     pub _header: Header,

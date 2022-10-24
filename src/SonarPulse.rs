@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Information regarding a sent/received Sonar pulse.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct SonarPulse {
     /// Message Header
     pub _header: Header,

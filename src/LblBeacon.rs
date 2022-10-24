@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Position and configuration of an LBL transponder (beacon).
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LblBeacon {
     /// Message Header
     pub _header: Header,

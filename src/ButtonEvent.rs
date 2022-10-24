@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Event of a specific hardware button.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct ButtonEvent {
     /// Message Header
     pub _header: Header,

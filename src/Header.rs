@@ -26,7 +26,7 @@ use bytes::BufMut;
 /// The packet header contains handling information in the form of
 /// supplemental fields, it is always placed at the beginning of a
 /// packet.
-#[derive(Default, PartialEq, Debug)]
+#[derive(Default, PartialEq, Debug, Clone)]
 pub struct Header {
     /// Synchronization Number
     pub _sync: u16,

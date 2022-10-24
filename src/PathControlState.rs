@@ -44,7 +44,7 @@ pub mod FlagsBits {
 }
 
 /// Path control state issued by Path Controller.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PathControlState {
     /// Message Header
     pub _header: Header,

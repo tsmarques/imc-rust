@@ -31,7 +31,7 @@ use crate::Message::*;
 /// Control the brightness of an LED (Light-Emitting Diode). The
 /// recipient of this message shall set the intensity of the LED to
 /// the desired 'value' and reply with 'LedBrightness'.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct SetLedBrightness {
     /// Message Header
     pub _header: Header,

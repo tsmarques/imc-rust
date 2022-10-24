@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Acoustic range measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct UamRxRange {
     /// Message Header
     pub _header: Header,

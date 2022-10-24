@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Dissolved Oxygen measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DissolvedOxygen {
     /// Message Header
     pub _header: Header,

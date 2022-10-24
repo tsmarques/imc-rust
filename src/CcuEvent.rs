@@ -53,7 +53,7 @@ pub enum EventTypeEnum {
 }
 
 /// This message is used to signal events among running CCUs.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct CcuEvent {
     /// Message Header
     pub _header: Header,

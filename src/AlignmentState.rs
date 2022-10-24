@@ -50,7 +50,7 @@ pub enum StateEnum {
 }
 
 /// This message notifies the vehicle is ready for dead-reckoning missions.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct AlignmentState {
     /// Message Header
     pub _header: Header,

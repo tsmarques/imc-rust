@@ -44,7 +44,7 @@ pub enum MediumEnum {
 }
 
 /// Detect current vehicle medium.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct VehicleMedium {
     /// Message Header
     pub _header: Header,

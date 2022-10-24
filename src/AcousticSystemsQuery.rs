@@ -30,7 +30,7 @@ use crate::Message::*;
 /// Request a list of known underwater acoustic systems. The
 /// recipient of this message shall reply with an AcousticSystems
 /// message.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct AcousticSystemsQuery {
     /// Message Header
     pub _header: Header,

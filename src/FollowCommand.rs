@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// This maneuver follows a direct command given by an external entity.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct FollowCommand {
     /// Message Header
     pub _header: Header,

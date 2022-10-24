@@ -67,7 +67,7 @@ pub mod ValidityBits {
 }
 
 /// Report of a GPS fix.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct GpsFix {
     /// Message Header
     pub _header: Header,

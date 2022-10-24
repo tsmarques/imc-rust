@@ -42,7 +42,7 @@ pub mod TypeBits {
 }
 
 /// Detected collision.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Collision {
     /// Message Header
     pub _header: Header,

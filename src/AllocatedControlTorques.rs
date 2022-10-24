@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Control torques allocated to the actuators.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct AllocatedControlTorques {
     /// Message Header
     pub _header: Header,

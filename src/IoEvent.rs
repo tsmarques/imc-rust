@@ -38,7 +38,7 @@ pub enum TypeEnum {
 }
 
 /// Notification of an I/O event.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct IoEvent {
     /// Message Header
     pub _header: Header,

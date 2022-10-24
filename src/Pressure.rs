@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Report of external pressure.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Pressure {
     /// Message Header
     pub _header: Header,

@@ -31,7 +31,7 @@ use crate::Message::*;
 /// The Station Keeping maneuver makes the vehicle come to the surface
 /// and then enter a given circular perimeter around a waypoint coordinate
 /// for a certain amount of time.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct StationKeeping {
     /// Message Header
     pub _header: Header,

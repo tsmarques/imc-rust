@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Phycocyanin measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Phycocyanin {
     /// Message Header
     pub _header: Header,

@@ -46,7 +46,7 @@ pub enum OperationEnum {
 }
 
 /// Clock control.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct ClockControl {
     /// Message Header
     pub _header: Header,

@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Entity parameter.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EntityParameter {
     /// Message Header
     pub _header: Header,

@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// This message contains information, collected using USBL, about a
 /// target's position.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct UsblPosition {
     /// Message Header
     pub _header: Header,

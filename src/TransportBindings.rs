@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Message generated when tasks bind to messages.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct TransportBindings {
     /// Message Header
     pub _header: Header,

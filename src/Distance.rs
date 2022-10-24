@@ -42,7 +42,7 @@ pub enum ValidityEnum {
 }
 
 /// Distance measurement detected by the device.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Distance {
     /// Message Header
     pub _header: Header,

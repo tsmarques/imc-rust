@@ -69,7 +69,7 @@ pub enum OperationEnum {
 }
 
 /// Acoustic operation.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct AcousticOperation {
     /// Message Header
     pub _header: Header,

@@ -38,7 +38,7 @@ pub mod ServiceTypeBits {
 }
 
 /// Announcement about the existence of a service.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct AnnounceService {
     /// Message Header
     pub _header: Header,

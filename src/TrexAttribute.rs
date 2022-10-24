@@ -43,7 +43,7 @@ pub enum AttributetypeEnum {
     TYPE_ENUM = 5,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct TrexAttribute {
     /// Message Header
     pub _header: Header,

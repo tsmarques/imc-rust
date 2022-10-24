@@ -44,7 +44,7 @@ pub enum TypeEnum {
 
 /// This message contains the data acquired by a single sonar
 /// measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct SonarData {
     /// Message Header
     pub _header: Header,

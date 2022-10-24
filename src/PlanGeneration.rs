@@ -50,7 +50,7 @@ pub enum OperationEnum {
 
 /// This message is used to order the generation of plans based on
 /// id and set of parameters.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanGeneration {
     /// Message Header
     pub _header: Header,

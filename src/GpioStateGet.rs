@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// Request the state of a given GPIO. The receiving entity shall reply
 /// with a GpioState message.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct GpioStateGet {
     /// Message Header
     pub _header: Header,

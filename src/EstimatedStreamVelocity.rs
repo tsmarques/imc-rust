@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// The estimated stream velocity, typically for water or air
 /// streams.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EstimatedStreamVelocity {
     /// Message Header
     pub _header: Header,

@@ -47,7 +47,7 @@ pub mod FlagsBits {
 
 /// Set the desired virtual forces and torques to be applied to the
 /// vehicle.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DesiredControl {
     /// Message Header
     pub _header: Header,

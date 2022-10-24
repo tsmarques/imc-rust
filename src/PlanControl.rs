@@ -65,7 +65,7 @@ pub mod FlagsBits {
 }
 
 /// Plan control request/reply.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanControl {
     /// Message Header
     pub _header: Header,

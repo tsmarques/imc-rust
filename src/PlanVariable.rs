@@ -53,7 +53,7 @@ pub enum AccessTypeEnum {
 }
 
 /// A plan variable.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanVariable {
     /// Message Header
     pub _header: Header,

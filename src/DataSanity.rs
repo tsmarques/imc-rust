@@ -38,7 +38,7 @@ pub enum SanityEnum {
 }
 
 /// Report sanity or lack of it in the data output by a sensor.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DataSanity {
     /// Message Header
     pub _header: Header,

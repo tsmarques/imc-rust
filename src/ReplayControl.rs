@@ -42,7 +42,7 @@ pub enum OperationEnum {
 }
 
 /// Control replay of LSF logged data.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct ReplayControl {
     /// Message Header
     pub _header: Header,

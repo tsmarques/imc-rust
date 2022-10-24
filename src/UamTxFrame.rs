@@ -39,7 +39,7 @@ pub mod FlagsBits {
 
 /// This message shall be sent to acoustic modem drivers to request
 /// transmission of a data frame via the acoustic channel.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct UamTxFrame {
     /// Message Header
     pub _header: Header,

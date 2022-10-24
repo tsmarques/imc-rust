@@ -38,7 +38,7 @@ pub enum StateEnum {
 }
 
 /// Message conveying the state of a power channel.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PowerChannelState {
     /// Message Header
     pub _header: Header,

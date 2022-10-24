@@ -43,7 +43,7 @@ pub enum ReasonEnum {
     RR_LOST_VAL_BIT = 4,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct GpsFixRejection {
     /// Message Header
     pub _header: Header,

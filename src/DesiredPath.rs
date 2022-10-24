@@ -70,7 +70,7 @@ pub mod FlagsBits {
 /// Loitering can be specified at the end point with a certain
 /// radius ('lradius'), duration ('lduration'), and clockwise or
 /// counter-clockwise direction ('CCLOCKW' flag).
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DesiredPath {
     /// Message Header
     pub _header: Header,

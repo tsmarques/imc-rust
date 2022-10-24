@@ -41,7 +41,7 @@ pub mod ValidityBits {
 
 /// Vector quantifying the direction and magnitude of the measured
 /// velocity relative to the water that a device is exposed to.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct WaterVelocity {
     /// Message Header
     pub _header: Header,

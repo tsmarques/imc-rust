@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// Measure of the RSSI by a networking device.
 /// Indicates the gain or loss in the signal strength due to the transmission and reception equipment and the transmission medium and distance.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct RSSI {
     /// Message Header
     pub _header: Header,

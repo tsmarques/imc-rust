@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// Vector quantifying the direction and magnitude of the measured
 /// acceleration that a device is exposed to.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Acceleration {
     /// Message Header
     pub _header: Header,

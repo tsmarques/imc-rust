@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// A system description that is to be broadcasted to other systems.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Announce {
     /// Message Header
     pub _header: Header,

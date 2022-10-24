@@ -59,7 +59,7 @@ pub mod CommunicationInterfaceBits {
 }
 
 /// This message is sent to trigger reports to a destination system.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct ReportControl {
     /// Message Header
     pub _header: Header,

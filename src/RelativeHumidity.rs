@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Measurement of relative humidity.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct RelativeHumidity {
     /// Message Header
     pub _header: Header,

@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// Vector quantifying the direction and magnitude of the measured
 /// angular velocity that a device is exposed to.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct AngularVelocity {
     /// Message Header
     pub _header: Header,

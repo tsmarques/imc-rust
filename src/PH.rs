@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Report of pH.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PH {
     /// Message Header
     pub _header: Header,

@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Chlorophyll measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Chlorophyll {
     /// Message Header
     pub _header: Header,

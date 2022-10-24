@@ -45,7 +45,7 @@ pub enum DirectionEnum {
 /// Parameters are RPMs for the motor when attempting dislodge and
 /// and a flag specifying whether the thrust burst should be attempted
 /// forward, backward or auto (letting the vehicle decide).
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Dislodge {
     /// Message Header
     pub _header: Header,

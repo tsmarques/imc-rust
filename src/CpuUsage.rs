@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Report of software CPU usage.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct CpuUsage {
     /// Message Header
     pub _header: Header,

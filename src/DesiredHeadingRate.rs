@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Desired Heading Rate speed reference value for the control layer.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DesiredHeadingRate {
     /// Message Header
     pub _header: Header,

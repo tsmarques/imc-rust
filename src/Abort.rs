@@ -28,7 +28,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Stops any executing actions and put the system in a standby mode.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Abort {
     /// Message Header
     pub _header: Header,

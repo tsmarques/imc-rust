@@ -43,7 +43,7 @@ pub enum operationEnum {
 /// returning the tuplelist with the pairs: Action,Type
 /// (operation=REPORT). The type of action can be Axis, Hat or
 /// Button.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct RemoteActionsRequest {
     /// Message Header
     pub _header: Header,

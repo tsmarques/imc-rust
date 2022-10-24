@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Initiate overall calibration of a vehicle.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Calibration {
     /// Message Header
     pub _header: Header,

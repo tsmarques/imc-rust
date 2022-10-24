@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Component of incremetal orientation vector over a period of time.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EulerAnglesDelta {
     /// Message Header
     pub _header: Header,

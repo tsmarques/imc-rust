@@ -49,7 +49,7 @@ pub enum AcceptanceEnum {
 /// value and the transponder name. Also, this message has an
 /// acceptance field that indicates whether a LBL range was accepted
 /// or rejected, and if rejected, the reason why.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LblRangeAcceptance {
     /// Message Header
     pub _header: Header,

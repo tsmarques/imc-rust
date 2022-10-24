@@ -31,7 +31,7 @@ use crate::Message::*;
 /// This message is used to send a periodic update of values for
 /// each remote action. If the action is not on the list the assumed
 /// value is 0.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct RemoteActions {
     /// Message Header
     pub _header: Header,

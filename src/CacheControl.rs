@@ -45,7 +45,7 @@ pub enum ControlOperationEnum {
 }
 
 /// Control caching of messages to persistent storage.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct CacheControl {
     /// Message Header
     pub _header: Header,

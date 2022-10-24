@@ -32,7 +32,7 @@ use crate::Message::*;
 /// very specific maneuver not covered by the IMC scope. The
 /// settings of the maneuver are just its id, timeout and other
 /// settings encoded as a tuple list.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct CustomManeuver {
     /// Message Header
     pub _header: Header,

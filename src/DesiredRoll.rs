@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Desired Roll angle reference value for the control layer.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DesiredRoll {
     /// Message Header
     pub _header: Header,

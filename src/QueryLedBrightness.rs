@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// Query the brightness of an LED (Light-Emitting Diode). The
 /// recipient of this message shall reply with 'LedBrightness'.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct QueryLedBrightness {
     /// Message Header
     pub _header: Header,

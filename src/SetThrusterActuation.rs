@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Actuate directly on a thruster.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct SetThrusterActuation {
     /// Message Header
     pub _header: Header,

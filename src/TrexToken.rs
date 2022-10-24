@@ -31,7 +31,7 @@ use crate::MessageList;
 use crate::TrexAttribute::TrexAttribute;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct TrexToken {
     /// Message Header
     pub _header: Header,

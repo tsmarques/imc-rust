@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Send a SMS message.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Sms {
     /// Message Header
     pub _header: Header,

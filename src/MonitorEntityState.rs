@@ -44,7 +44,7 @@ pub enum CommandEnum {
 }
 
 /// Controls monitoring of entity states in the vehicle.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct MonitorEntityState {
     /// Message Header
     pub _header: Header,

@@ -29,7 +29,7 @@ use crate::Message::*;
 
 /// Request entities to report their state. Entities should respond
 /// by issuing an appropriate EntityState message.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct QueryEntityState {
     /// Message Header
     pub _header: Header,

@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// This message contains information, collected using USBL, about the
 /// bearing and elevation of a target.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct UsblAnglesExtended {
     /// Message Header
     pub _header: Header,

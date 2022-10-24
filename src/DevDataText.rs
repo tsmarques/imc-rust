@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Verbatim representation of device data in plain text format.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DevDataText {
     /// Message Header
     pub _header: Header,

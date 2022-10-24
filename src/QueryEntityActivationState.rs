@@ -29,7 +29,7 @@ use crate::Message::*;
 
 /// Query the activation/deactivation state of an entity. The
 /// recipient shall reply with an EntityActivationState message.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct QueryEntityActivationState {
     /// Message Header
     pub _header: Header,

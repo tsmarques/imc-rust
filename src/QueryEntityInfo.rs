@@ -31,7 +31,7 @@ use crate::Message::*;
 /// Request information about an entity identifier. The receiving
 /// system shall reply with an EntityInfo message with the details
 /// of that entity.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct QueryEntityInfo {
     /// Message Header
     pub _header: Header,

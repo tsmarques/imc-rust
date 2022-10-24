@@ -48,7 +48,7 @@ pub enum OperationEnum {
 }
 
 /// This message allows controlling the system's power lines.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PowerOperation {
     /// Message Header
     pub _header: Header,

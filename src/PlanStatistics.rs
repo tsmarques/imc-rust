@@ -54,7 +54,7 @@ pub mod PropertiesBits {
     pub const PRP_ALL: u32 = 0x07;
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanStatistics {
     /// Message Header
     pub _header: Header,

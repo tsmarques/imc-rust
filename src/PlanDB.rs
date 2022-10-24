@@ -64,7 +64,7 @@ pub enum OperationEnum {
 }
 
 /// Request/reply to plan database.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanDB {
     /// Message Header
     pub _header: Header,

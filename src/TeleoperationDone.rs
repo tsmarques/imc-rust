@@ -28,7 +28,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Notification of completion of a Teleoperation maneuver.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct TeleoperationDone {
     /// Message Header
     pub _header: Header,

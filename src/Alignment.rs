@@ -33,7 +33,7 @@ use crate::Message::*;
 /// to start aligning navigation for more precise dead reckoning operation.
 /// Mandatory parameters defined for a "Launch" are
 /// timeout, speed and speed units.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Alignment {
     /// Message Header
     pub _header: Header,

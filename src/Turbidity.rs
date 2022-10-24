@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Turbidity measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Turbidity {
     /// Message Header
     pub _header: Header,

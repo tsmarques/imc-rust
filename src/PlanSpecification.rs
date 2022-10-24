@@ -40,7 +40,7 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// maneuver specifications and a start maneuver from that set.
 /// See the :ref:`PlanManeuver` message for details on maneuver
 /// specification.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanSpecification {
     /// Message Header
     pub _header: Header,

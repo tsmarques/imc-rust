@@ -31,7 +31,7 @@ use crate::Message::*;
 /// This message is sent in reply to an AcousticSystemsQuery message
 /// and lists all known underwater acoustic systems (modems, narrow
 /// band transponders, etc).
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct AcousticSystems {
     /// Message Header
     pub _header: Header,

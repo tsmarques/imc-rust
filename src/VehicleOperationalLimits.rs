@@ -41,7 +41,7 @@ pub enum ActiononthevehicleoperationallimitsEnum {
 
 /// Vehicle opertional limits.
 /// For aircraft this should represent the flight envelope and the dynamic contraints.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct VehicleOperationalLimits {
     /// Message Header
     pub _header: Header,

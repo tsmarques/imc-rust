@@ -28,7 +28,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Command used to stop currently executing maneuver.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct StopManeuver {
     /// Message Header
     pub _header: Header,

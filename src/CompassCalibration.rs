@@ -44,7 +44,7 @@ pub enum DirectionEnum {
 /// This maneuver is a mix between the Loiter maneuver and the YoYo maneuver.
 /// The vehicle cirlcles around a specific waypoint with a variable Z
 /// reference between a minimum and maximum value.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct CompassCalibration {
     /// Message Header
     pub _header: Header,

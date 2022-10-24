@@ -43,7 +43,7 @@ use crate::Message::*;
 /// .. figure:: ../images/euler-lauv.png
 /// :align:  center
 /// Euler angles
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EstimatedState {
     /// Message Header
     pub _header: Header,

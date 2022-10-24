@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// This message describes an entity.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EntityInfo {
     /// Message Header
     pub _header: Header,

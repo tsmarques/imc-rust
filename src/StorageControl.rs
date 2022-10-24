@@ -55,7 +55,7 @@ pub enum OperationEnum {
 }
 
 /// Request/reply storage operations
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct StorageControl {
     /// Message Header
     pub _header: Header,

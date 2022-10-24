@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Definition of operational limits.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct OperationalLimits {
     /// Message Header
     pub _header: Header,

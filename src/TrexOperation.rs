@@ -46,7 +46,7 @@ pub enum OperationEnum {
 }
 
 /// This message is used to control TREX execution
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct TrexOperation {
     /// Message Header
     pub _header: Header,

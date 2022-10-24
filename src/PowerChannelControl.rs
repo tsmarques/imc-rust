@@ -48,7 +48,7 @@ pub enum OperationEnum {
 }
 
 /// This message allows controlling power channels.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PowerChannelControl {
     /// Message Header
     pub _header: Header,

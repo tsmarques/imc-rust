@@ -32,7 +32,7 @@ use crate::MessageList;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// List of entity parameters.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct EntityParameters {
     /// Message Header
     pub _header: Header,

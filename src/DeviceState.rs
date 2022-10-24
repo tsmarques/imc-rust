@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Location of a specific device in the system infrastructure.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DeviceState {
     /// Message Header
     pub _header: Header,

@@ -58,7 +58,7 @@ pub enum DirectionEnum {
 
 /// The Loiter maneuver makes the vehicle circle around a specific
 /// waypoint with fixed depth reference.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Loiter {
     /// Message Header
     pub _header: Header,

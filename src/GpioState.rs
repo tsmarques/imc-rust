@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Current state of a GPIO.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct GpioState {
     /// Message Header
     pub _header: Header,

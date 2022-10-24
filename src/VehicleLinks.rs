@@ -32,7 +32,7 @@ use crate::MessageList;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// This message is sent by the TREX task which gives further information to a TREX instance about connected IMC nodes
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct VehicleLinks {
     /// Message Header
     pub _header: Header,

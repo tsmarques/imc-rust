@@ -45,7 +45,7 @@ pub enum CommandEnum {
 }
 
 /// Control history log.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LogBookControl {
     /// Message Header
     pub _header: Header,

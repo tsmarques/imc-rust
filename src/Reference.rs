@@ -50,7 +50,7 @@ pub mod FlagsBits {
     pub const FLAG_MANDONE: u32 = 0x80;
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Reference {
     /// Message Header
     pub _header: Header,

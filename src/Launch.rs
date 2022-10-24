@@ -34,7 +34,7 @@ use crate::Message::*;
 /// target Z reference.
 /// Mandatory parameters defined for a "Launch" are
 /// timeout, speed and speed units.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Launch {
     /// Message Header
     pub _header: Header,

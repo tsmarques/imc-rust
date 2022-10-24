@@ -32,7 +32,7 @@ use crate::PlanDBInformation::PlanDBInformation;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// Characterizes the state of the entire plan database.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanDBState {
     /// Message Header
     pub _header: Header,

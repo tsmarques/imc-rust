@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// The optical backscattering coefficient refers to all the photons that have been redirected in the backward directions
 /// when a photon of light propagates in water and interacts with a "particle" (varying from water molecules to fish).
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct OpticalBackscatter {
     /// Message Header
     pub _header: Header,

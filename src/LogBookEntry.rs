@@ -44,7 +44,7 @@ pub enum TypeEnum {
 }
 
 /// Human readable message reporting an event of interest.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LogBookEntry {
     /// Message Header
     pub _header: Header,

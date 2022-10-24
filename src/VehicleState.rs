@@ -58,7 +58,7 @@ pub mod FlagsBits {
 /// - Any error conditions.
 /// - Current maneuver execution.
 /// - Active control loops.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct VehicleState {
     /// Message Header
     pub _header: Header,

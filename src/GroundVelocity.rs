@@ -41,7 +41,7 @@ pub mod ValidityBits {
 
 /// Vector quantifying the direction and magnitude of the measured
 /// velocity relative to the ground that a device is exposed to.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct GroundVelocity {
     /// Message Header
     pub _header: Header,

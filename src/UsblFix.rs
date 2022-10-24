@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// This message contains the WGS-84 position of a target computed using
 /// USBL.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct UsblFix {
     /// Message Header
     pub _header: Header,

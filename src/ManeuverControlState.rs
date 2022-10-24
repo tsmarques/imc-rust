@@ -42,7 +42,7 @@ pub enum StateEnum {
 }
 
 /// Maneuver control state.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct ManeuverControlState {
     /// Message Header
     pub _header: Header,

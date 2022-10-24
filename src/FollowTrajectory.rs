@@ -32,7 +32,7 @@ use crate::TrajectoryPoint::TrajectoryPoint;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// Maneuver constituted by a list of Trajectory Points.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct FollowTrajectory {
     /// Message Header
     pub _header: Header,

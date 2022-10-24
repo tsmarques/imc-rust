@@ -28,7 +28,7 @@ use crate::packet::*;
 use crate::Header::Header;
 use crate::Message::*;
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct IridiumMsgTxExtended {
     /// Message Header
     pub _header: Header,

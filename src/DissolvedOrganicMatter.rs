@@ -38,7 +38,7 @@ pub enum TypeofmeasurementEnum {
 }
 
 /// Dissolved Organic Matter measurement.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct DissolvedOrganicMatter {
     /// Message Header
     pub _header: Header,

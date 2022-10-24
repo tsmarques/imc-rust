@@ -30,7 +30,7 @@ use crate::Message::*;
 
 /// The Teleoperation Maneuver lets the vehicle be controlled by an
 /// external human operator.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Teleoperation {
     /// Message Header
     pub _header: Header,

@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Beam configuration of the device.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct BeamConfig {
     /// Message Header
     pub _header: Header,

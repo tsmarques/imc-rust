@@ -62,7 +62,7 @@ pub mod ProximityBits {
     pub const PROX_Z_UNREACHABLE: u32 = 0x10;
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct FollowRefState {
     /// Message Header
     pub _header: Header,

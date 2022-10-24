@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Waypoint coordinate of a Follow Trajectory maneuver.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct TrajectoryPoint {
     /// Message Header
     pub _header: Header,

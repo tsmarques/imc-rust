@@ -46,7 +46,7 @@ pub enum ControlOperationEnum {
 }
 
 /// Control logging of messages to persistent storage.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LoggingControl {
     /// Message Header
     pub _header: Header,

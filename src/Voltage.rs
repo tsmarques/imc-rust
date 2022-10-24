@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Report of electrical voltage.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Voltage {
     /// Message Header
     pub _header: Header,

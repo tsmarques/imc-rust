@@ -35,7 +35,7 @@ use crate::DUNE_IMC_CONST_NULL_ID;
 /// signal the transition, the maneuver that should be started as a
 /// result, and an optional set of actions triggered by the
 /// transition.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanTransition {
     /// Message Header
     pub _header: Header,

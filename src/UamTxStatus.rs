@@ -53,7 +53,7 @@ pub enum ValueEnum {
 
 /// This message shall be used by acoustic modem drivers to send updates
 /// on the transmission status of data frames.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct UamTxStatus {
     /// Message Header
     pub _header: Header,

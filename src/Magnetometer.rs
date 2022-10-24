@@ -39,7 +39,7 @@ pub enum DirectionEnum {
 
 /// Magnetometer calibration maneuver (i.e: one square pattern
 /// in one direction, a second square in the opposite direction)
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Magnetometer {
     /// Message Header
     pub _header: Header,

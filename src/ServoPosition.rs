@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Actual position of a servo.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct ServoPosition {
     /// Message Header
     pub _header: Header,

@@ -31,7 +31,7 @@ use crate::MessageList;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// Named plan maneuver.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct PlanManeuver {
     /// Message Header
     pub _header: Header,

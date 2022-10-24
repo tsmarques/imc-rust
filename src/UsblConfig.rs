@@ -43,7 +43,7 @@ pub enum OperationEnum {
 }
 
 /// Ultra-Short Base Line configuration.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct UsblConfig {
     /// Message Header
     pub _header: Header,

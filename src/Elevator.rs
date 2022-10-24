@@ -39,7 +39,7 @@ pub mod FlagsBits {
 /// waypoint using a cruise altitude/depth and then ascend or
 /// descend to another target altitude/depth. The ascent/descent
 /// slope and radius can also be optionally specified.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Elevator {
     /// Message Header
     pub _header: Header,

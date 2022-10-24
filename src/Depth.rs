@@ -29,7 +29,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Depth report.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Depth {
     /// Message Header
     pub _header: Header,

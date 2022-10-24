@@ -37,7 +37,7 @@ use crate::Message::*;
 /// Angles (roll, pitch and yaw) though these parameters may
 /// not be considered by all maneuver controllers in charge
 /// of the execution of this type of maneuver.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct Goto {
     /// Message Header
     pub _header: Header,

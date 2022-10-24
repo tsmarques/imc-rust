@@ -32,7 +32,7 @@ use crate::StoragePartition::StoragePartition;
 use crate::DUNE_IMC_CONST_NULL_ID;
 
 /// Storage device information (e.g disk, usb flash, etc). NOTE: This is different from a partition
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct StorageDevice {
     /// Message Header
     pub _header: Header,

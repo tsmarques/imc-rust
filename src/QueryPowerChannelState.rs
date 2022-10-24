@@ -28,7 +28,7 @@ use crate::Header::Header;
 use crate::Message::*;
 
 /// Request the state of power channels.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct QueryPowerChannelState {
     /// Message Header
     pub _header: Header,
