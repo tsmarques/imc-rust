@@ -3,6 +3,7 @@
 use crate::packet::ImcError;
 use crate::Header::Header;
 use crate::{IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE};
+use std::any::Any;
 
 macro_rules! serialize_bytes {
     ($bfr:expr, $bytes_slice:expr) => {
@@ -96,6 +97,10 @@ pub trait Message: MessageClone {
 
     /// Retrieve message's identification number.
     fn id(&self) -> u16;
+
+    /// Boiler plate for down cast
+    fn as_any(&self) -> &dyn Any;
+    fn as_any_mut(&mut self) -> &mut dyn Any;
 
     /// Get a mutable reference to this message
     /// header

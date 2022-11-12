@@ -20,8 +20,9 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
-/// Base
 use bytes::BufMut;
+/// Base
+use std::any::Any;
 
 use crate::packet::ImcError;
 use crate::packet::*;
@@ -67,6 +68,14 @@ impl Message for TrajectoryPoint {
     #[inline(always)]
     fn id(&self) -> u16 {
         464
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
+
+    fn as_any_mut(&mut self) -> &mut dyn Any {
+        self
     }
 
     fn get_header(&mut self) -> &mut Header {

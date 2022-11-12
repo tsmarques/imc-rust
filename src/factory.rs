@@ -20,9 +20,9 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
+/// Base
 use crate::Header::Header;
 use crate::Message::Message;
-/// Base
 use crate::*;
 
 pub fn buildFrom<T: Message>(hdr: Header) -> Option<T> {
