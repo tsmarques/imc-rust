@@ -17,7 +17,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 3ec4b61a1b487d356bfc62e124f22651                            *
+// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
 use crate::Header::Header;
@@ -69,6 +69,7 @@ pub fn buildFromId(id: u16) -> Option<Box<dyn Message>> {
         7 => Option::Some(Box::new(CpuUsage::CpuUsage::new())),
         8 => Option::Some(Box::new(TransportBindings::TransportBindings::new())),
         9 => Option::Some(Box::new(RestartSystem::RestartSystem::new())),
+        10 => Option::Some(Box::new(MemUsage::MemUsage::new())),
         14 => Option::Some(Box::new(EntityActivationState::EntityActivationState::new())),
         15 => Option::Some(Box::new(
             QueryEntityActivationState::QueryEntityActivationState::new(),
@@ -163,6 +164,7 @@ pub fn buildFromId(id: u16) -> Option<Box<dyn Message>> {
         312 => Option::Some(Box::new(LedBrightness::LedBrightness::new())),
         313 => Option::Some(Box::new(QueryLedBrightness::QueryLedBrightness::new())),
         314 => Option::Some(Box::new(SetLedBrightness::SetLedBrightness::new())),
+        315 => Option::Some(Box::new(ChargingState::ChargingState::new())),
         350 => Option::Some(Box::new(EstimatedState::EstimatedState::new())),
         351 => Option::Some(Box::new(
             EstimatedStreamVelocity::EstimatedStreamVelocity::new(),
@@ -229,6 +231,9 @@ pub fn buildFromId(id: u16) -> Option<Box<dyn Message>> {
         508 => Option::Some(Box::new(VehicleMedium::VehicleMedium::new())),
         509 => Option::Some(Box::new(Collision::Collision::new())),
         513 => Option::Some(Box::new(ReportControl::ReportControl::new())),
+        515 => Option::Some(Box::new(AssetReport::AssetReport::new())),
+        517 => Option::Some(Box::new(SmsRequest::SmsRequest::new())),
+        518 => Option::Some(Box::new(SmsStatus::SmsStatus::new())),
         550 => Option::Some(Box::new(Abort::Abort::new())),
         551 => Option::Some(Box::new(PlanSpecification::PlanSpecification::new())),
         552 => Option::Some(Box::new(PlanManeuver::PlanManeuver::new())),
@@ -274,6 +279,9 @@ pub fn buildFromId(id: u16) -> Option<Box<dyn Message>> {
         )),
         904 => Option::Some(Box::new(OpticalBackscatter::OpticalBackscatter::new())),
         905 => Option::Some(Box::new(Tachograph::Tachograph::new())),
+        1014 => Option::Some(Box::new(CurrentProfile::CurrentProfile::new())),
+        1015 => Option::Some(Box::new(CurrentProfileCell::CurrentProfileCell::new())),
+        1016 => Option::Some(Box::new(ADCPBeam::ADCPBeam::new())),
         2000 => Option::Some(Box::new(GpioState::GpioState::new())),
         2001 => Option::Some(Box::new(GpioStateGet::GpioStateGet::new())),
         2002 => Option::Some(Box::new(GpioStateSet::GpioStateSet::new())),
@@ -284,7 +292,15 @@ pub fn buildFromId(id: u16) -> Option<Box<dyn Message>> {
             FluorescentDissolvedOrganicMatter::FluorescentDissolvedOrganicMatter::new(),
         )),
         2005 => Option::Some(Box::new(IridiumMsgTxExtended::IridiumMsgTxExtended::new())),
-        2006 => Option::Some(Box::new(SonarPulse::SonarPulse::new())),
+        2006 => Option::Some(Box::new(TotalMagIntensity::TotalMagIntensity::new())),
+        2007 => Option::Some(Box::new(ValidatePlan::ValidatePlan::new())),
+        2008 => Option::Some(Box::new(TypedEntityParameter::TypedEntityParameter::new())),
+        2009 => Option::Some(Box::new(TypedEntityParameters::TypedEntityParameters::new())),
+        2010 => Option::Some(Box::new(CommRestriction::CommRestriction::new())),
+        2011 => Option::Some(Box::new(WifiStats::WifiStats::new())),
+        2012 => Option::Some(Box::new(WifiNetwork::WifiNetwork::new())),
+        2013 => Option::Some(Box::new(SonarPulse::SonarPulse::new())),
+        2014 => Option::Some(Box::new(ValuesIf::ValuesIf::new())),
         _ => Option::None,
     }
 }

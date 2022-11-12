@@ -163,8 +163,8 @@ pub trait MessageClone {
 }
 
 impl<T> MessageClone for T
-    where
-        T: 'static + Message + Clone,
+where
+    T: 'static + Message + Clone,
 {
     fn do_clone(&self) -> Box<dyn Message> {
         Box::new(self.clone())

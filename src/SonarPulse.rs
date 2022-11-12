@@ -17,7 +17,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 3ec4b61a1b487d356bfc62e124f22651                            *
+// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
 /// Base
@@ -46,7 +46,7 @@ pub struct SonarPulse {
 impl Message for SonarPulse {
     fn new() -> SonarPulse {
         let msg = SonarPulse {
-            _header: Header::new(2006),
+            _header: Header::new(2013),
             _frequency: Default::default(),
             _pulse_length: Default::default(),
             _time_delay: Default::default(),
@@ -58,12 +58,12 @@ impl Message for SonarPulse {
 
     #[inline(always)]
     fn static_id() -> u16 {
-        2006
+        2013
     }
 
     #[inline(always)]
     fn id(&self) -> u16 {
-        2006
+        2013
     }
 
     fn get_header(&mut self) -> &mut Header {
@@ -71,7 +71,7 @@ impl Message for SonarPulse {
     }
 
     fn clear(&mut self) {
-        self._header = Header::new(2006);
+        self._header = Header::new(2013);
         self._frequency = Default::default();
         self._pulse_length = Default::default();
         self._time_delay = Default::default();

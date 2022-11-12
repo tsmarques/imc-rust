@@ -17,7 +17,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 3ec4b61a1b487d356bfc62e124f22651                            *
+// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
 /// Base
@@ -35,6 +35,8 @@ pub mod FlagsBits {
     pub const UTF_ACK: u32 = 0x01;
     /// Delayed
     pub const UTF_DELAYED: u32 = 0x02;
+    /// Forced
+    pub const UTF_FORCED: u32 = 0x04;
 }
 
 /// This message shall be sent to acoustic modem drivers to request

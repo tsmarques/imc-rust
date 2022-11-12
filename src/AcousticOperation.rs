@@ -17,7 +17,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 3ec4b61a1b487d356bfc62e124f22651                            *
+// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
 /// Base
@@ -66,6 +66,8 @@ pub enum OperationEnum {
     AOP_MSG_FAILURE = 15,
     /// Send Short Message
     AOP_MSG_SHORT = 16,
+    /// Forced Abort
+    AOP_FORCED_ABORT = 17,
 }
 
 /// Acoustic operation.

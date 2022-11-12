@@ -20,7 +20,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 3ec4b61a1b487d356bfc62e124f22651                            *
+// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
 /// Base
@@ -31,6 +31,7 @@ pub mod factory;
 pub mod packet;
 pub type MessageList<T> = Vec<T>;
 
+pub mod ADCPBeam;
 pub mod Abort;
 pub mod Aborted;
 pub mod Acceleration;
@@ -45,16 +46,19 @@ pub mod AllocatedControlTorques;
 pub mod AngularVelocity;
 pub mod Announce;
 pub mod AnnounceService;
+pub mod AssetReport;
 pub mod BeamConfig;
 pub mod Brake;
 pub mod ButtonEvent;
 pub mod CacheControl;
 pub mod Calibration;
 pub mod CcuEvent;
+pub mod ChargingState;
 pub mod Chlorophyll;
 pub mod ClockControl;
 pub mod Collision;
 pub mod ColoredDissolvedOrganicMatter;
+pub mod CommRestriction;
 pub mod Command;
 pub mod CompassCalibration;
 pub mod Conductivity;
@@ -63,6 +67,8 @@ pub mod ControlParcel;
 pub mod CpuUsage;
 pub mod CrudeOil;
 pub mod Current;
+pub mod CurrentProfile;
+pub mod CurrentProfileCell;
 pub mod CustomManeuver;
 pub mod DataSanity;
 pub mod Depth;
@@ -135,6 +141,7 @@ pub mod Loiter;
 pub mod MagneticField;
 pub mod Magnetometer;
 pub mod ManeuverControlState;
+pub mod MemUsage;
 pub mod MessagePart;
 pub mod MonitorEntityState;
 pub mod MsgList;
@@ -196,8 +203,10 @@ pub mod SetServoPosition;
 pub mod SetThrusterActuation;
 pub mod SimulatedState;
 pub mod Sms;
+pub mod SmsRequest;
 pub mod SmsRx;
 pub mod SmsState;
+pub mod SmsStatus;
 pub mod SmsTx;
 pub mod SonarData;
 pub mod SonarPulse;
@@ -210,12 +219,15 @@ pub mod Teleoperation;
 pub mod TeleoperationDone;
 pub mod Temperature;
 pub mod TextMessage;
+pub mod TotalMagIntensity;
 pub mod TrajectoryPoint;
 pub mod TransportBindings;
 pub mod TrexAttribute;
 pub mod TrexOperation;
 pub mod TrexToken;
 pub mod Turbidity;
+pub mod TypedEntityParameter;
+pub mod TypedEntityParameters;
 pub mod UamRxFrame;
 pub mod UamRxRange;
 pub mod UamTxFrame;
@@ -229,6 +241,8 @@ pub mod UsblFixExtended;
 pub mod UsblModem;
 pub mod UsblPosition;
 pub mod UsblPositionExtended;
+pub mod ValidatePlan;
+pub mod ValuesIf;
 pub mod VehicleCommand;
 pub mod VehicleLinks;
 pub mod VehicleMedium;
@@ -238,10 +252,12 @@ pub mod VelocityDelta;
 pub mod Voltage;
 pub mod WaterDensity;
 pub mod WaterVelocity;
+pub mod WifiNetwork;
+pub mod WifiStats;
 pub mod YoYo;
 
 /// IMC Constants
-pub const DUNE_IMC_VERSION: &'static str = "5.4.24";
+pub const DUNE_IMC_VERSION: &'static str = "5.4.25";
 pub const DUNE_IMC_CONST_SYNC: u16 = 0xFE54;
 pub const DUNE_IMC_CONST_SYNC_REV: u16 = 0x54FE;
 pub const IMC_CONST_HEADER_SIZE: u8 = 20;
