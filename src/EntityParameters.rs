@@ -45,13 +45,13 @@ pub struct EntityParameters {
 
 impl Message for EntityParameters {
     fn new() -> EntityParameters {
-        let msg = EntityParameters {
+        
+
+        EntityParameters {
             _header: Header::new(802),
             _name: Default::default(),
             _params: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

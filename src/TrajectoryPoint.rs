@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -49,15 +49,15 @@ pub struct TrajectoryPoint {
 
 impl Message for TrajectoryPoint {
     fn new() -> TrajectoryPoint {
-        let msg = TrajectoryPoint {
+        
+
+        TrajectoryPoint {
             _header: Header::new(464),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
             _t: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

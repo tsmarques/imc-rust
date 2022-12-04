@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -46,14 +46,14 @@ pub struct FuelLevel {
 
 impl Message for FuelLevel {
     fn new() -> FuelLevel {
-        let msg = FuelLevel {
+        
+
+        FuelLevel {
             _header: Header::new(279),
             _value: Default::default(),
             _confidence: Default::default(),
             _opmodes: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

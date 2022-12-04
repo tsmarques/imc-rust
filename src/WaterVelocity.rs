@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -59,15 +59,15 @@ pub struct WaterVelocity {
 
 impl Message for WaterVelocity {
     fn new() -> WaterVelocity {
-        let msg = WaterVelocity {
+        
+
+        WaterVelocity {
             _header: Header::new(260),
             _validity: Default::default(),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

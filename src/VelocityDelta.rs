@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -46,15 +46,15 @@ pub struct VelocityDelta {
 
 impl Message for VelocityDelta {
     fn new() -> VelocityDelta {
-        let msg = VelocityDelta {
+        
+
+        VelocityDelta {
             _header: Header::new(261),
             _time: Default::default(),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

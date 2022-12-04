@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -91,7 +91,9 @@ pub struct VehicleState {
 
 impl Message for VehicleState {
     fn new() -> VehicleState {
-        let msg = VehicleState {
+        
+
+        VehicleState {
             _header: Header::new(500),
             _op_mode: Default::default(),
             _error_count: Default::default(),
@@ -103,9 +105,7 @@ impl Message for VehicleState {
             _flags: Default::default(),
             _last_error: Default::default(),
             _last_error_time: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

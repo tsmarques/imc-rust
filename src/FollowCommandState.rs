@@ -64,15 +64,15 @@ pub struct FollowCommandState {
 
 impl Message for FollowCommandState {
     fn new() -> FollowCommandState {
-        let msg = FollowCommandState {
+        
+
+        FollowCommandState {
             _header: Header::new(498),
             _control_src: Default::default(),
             _control_ent: Default::default(),
             _command: Default::default(),
             _state: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

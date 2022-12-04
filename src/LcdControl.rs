@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -57,13 +57,13 @@ pub struct LcdControl {
 
 impl Message for LcdControl {
     fn new() -> LcdControl {
-        let msg = LcdControl {
+        
+
+        LcdControl {
             _header: Header::new(307),
             _op: Default::default(),
             _text: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

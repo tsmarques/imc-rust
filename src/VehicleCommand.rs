@@ -76,7 +76,9 @@ pub struct VehicleCommand {
 
 impl Message for VehicleCommand {
     fn new() -> VehicleCommand {
-        let msg = VehicleCommand {
+        
+
+        VehicleCommand {
             _header: Header::new(501),
             _type: Default::default(),
             _request_id: Default::default(),
@@ -84,9 +86,7 @@ impl Message for VehicleCommand {
             _maneuver: Default::default(),
             _calib_time: Default::default(),
             _info: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

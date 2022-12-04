@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct MemUsage {
 
 impl Message for MemUsage {
     fn new() -> MemUsage {
-        let msg = MemUsage {
+        
+
+        MemUsage {
             _header: Header::new(10),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

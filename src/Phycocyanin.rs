@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct Phycocyanin {
 
 impl Message for Phycocyanin {
     fn new() -> Phycocyanin {
-        let msg = Phycocyanin {
+        
+
+        Phycocyanin {
             _header: Header::new(291),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

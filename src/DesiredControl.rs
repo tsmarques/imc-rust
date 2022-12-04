@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -70,7 +70,9 @@ pub struct DesiredControl {
 
 impl Message for DesiredControl {
     fn new() -> DesiredControl {
-        let msg = DesiredControl {
+        
+
+        DesiredControl {
             _header: Header::new(407),
             _x: Default::default(),
             _y: Default::default(),
@@ -79,9 +81,7 @@ impl Message for DesiredControl {
             _m: Default::default(),
             _n: Default::default(),
             _flags: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

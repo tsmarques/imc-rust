@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct Rpm {
 
 impl Message for Rpm {
     fn new() -> Rpm {
-        let msg = Rpm {
+        
+
+        Rpm {
             _header: Header::new(250),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

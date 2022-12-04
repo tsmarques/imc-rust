@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -52,13 +52,13 @@ pub struct EntityList {
 
 impl Message for EntityList {
     fn new() -> EntityList {
-        let msg = EntityList {
+        
+
+        EntityList {
             _header: Header::new(5),
             _op: Default::default(),
             _list: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

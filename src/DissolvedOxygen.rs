@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct DissolvedOxygen {
 
 impl Message for DissolvedOxygen {
     fn new() -> DissolvedOxygen {
-        let msg = DissolvedOxygen {
+        
+
+        DissolvedOxygen {
             _header: Header::new(295),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct SoundSpeed {
 
 impl Message for SoundSpeed {
     fn new() -> SoundSpeed {
-        let msg = SoundSpeed {
+        
+
+        SoundSpeed {
             _header: Header::new(267),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

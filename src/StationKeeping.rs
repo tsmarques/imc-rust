@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -60,7 +60,9 @@ pub struct StationKeeping {
 
 impl Message for StationKeeping {
     fn new() -> StationKeeping {
-        let msg = StationKeeping {
+        
+
+        StationKeeping {
             _header: Header::new(461),
             _lat: Default::default(),
             _lon: Default::default(),
@@ -71,9 +73,7 @@ impl Message for StationKeeping {
             _speed: Default::default(),
             _speed_units: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

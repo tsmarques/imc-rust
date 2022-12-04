@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -66,15 +66,15 @@ pub struct PlanGeneration {
 
 impl Message for PlanGeneration {
     fn new() -> PlanGeneration {
-        let msg = PlanGeneration {
+        
+
+        PlanGeneration {
             _header: Header::new(562),
             _cmd: Default::default(),
             _op: Default::default(),
             _plan_id: Default::default(),
             _params: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

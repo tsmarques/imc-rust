@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -48,14 +48,14 @@ pub struct FollowCommand {
 
 impl Message for FollowCommand {
     fn new() -> FollowCommand {
-        let msg = FollowCommand {
+        
+
+        FollowCommand {
             _header: Header::new(496),
             _control_src: Default::default(),
             _control_ent: Default::default(),
             _timeout: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -65,14 +65,14 @@ pub struct CcuEvent {
 
 impl Message for CcuEvent {
     fn new() -> CcuEvent {
-        let msg = CcuEvent {
+        
+
+        CcuEvent {
             _header: Header::new(606),
             _type: Default::default(),
             _id: Default::default(),
             _arg: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

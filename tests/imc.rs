@@ -172,14 +172,14 @@ fn test_PlanSpecification() {
     tmp_tmp_msg_1_0._timeout = 43469;
     tmp_tmp_msg_1_0._lat = 0.5076048407317348;
     tmp_tmp_msg_1_0._lon = 0.8378009613232282;
-    tmp_tmp_msg_1_0._z = 0.569276149649857;
+    tmp_tmp_msg_1_0._z = 0.569_276_15;
     tmp_tmp_msg_1_0._z_units = 157;
     tmp_tmp_msg_1_0._duration = 56167;
-    tmp_tmp_msg_1_0._speed = 0.0688217054567426;
+    tmp_tmp_msg_1_0._speed = 0.068_821_706;
     tmp_tmp_msg_1_0._speed_units = 77;
     tmp_tmp_msg_1_0._type = 139;
-    tmp_tmp_msg_1_0._radius = 0.04252198382186334;
-    tmp_tmp_msg_1_0._length = 0.5792016731405074;
+    tmp_tmp_msg_1_0._radius = 0.042_521_983;
+    tmp_tmp_msg_1_0._length = 0.579_201_7;
     tmp_tmp_msg_1_0._bearing = 0.42425983894180663;
     tmp_tmp_msg_1_0._direction = 74;
     tmp_tmp_msg_1_0._custom = String::from("OJEVFYRGFVKBQJQXBRPUXIWIRYRLYCMZOUSRQAYUHDMBVVSWQECNWCYUPGVRDBJZHNAPVNOISMHTMWPUBVNEEGYNYDOZOSXCEAEQEBQBNGLGEJMGHEHQKXUMHLZAAKBSKNJSJSBOUQTO");
@@ -212,27 +212,27 @@ fn test_PlanSpecification() {
     let mut tmp_tmp_msg_2_0 = FollowReference::new();
     tmp_tmp_msg_2_0._control_src = 60688;
     tmp_tmp_msg_2_0._control_ent = 72;
-    tmp_tmp_msg_2_0._timeout = 0.9027662940527639;
-    tmp_tmp_msg_2_0._loiter_radius = 0.8635480860563065;
-    tmp_tmp_msg_2_0._altitude_interval = 0.9260483211923134;
+    tmp_tmp_msg_2_0._timeout = 0.902_766_3;
+    tmp_tmp_msg_2_0._loiter_radius = 0.863_548_1;
+    tmp_tmp_msg_2_0._altitude_interval = 0.926_048_34;
     tmp_msg_2._actions.push(Box::new(tmp_tmp_msg_2_0));
     msg._transitions.push(tmp_msg_2);
 
     let mut tmp_msg_3 = NavigationUncertainty::new();
-    tmp_msg_3._x = 0.7790642103610969;
-    tmp_msg_3._y = 0.05912914760218102;
-    tmp_msg_3._z = 0.7018785723267326;
-    tmp_msg_3._phi = 0.8663628852520322;
-    tmp_msg_3._theta = 0.17960330137675773;
-    tmp_msg_3._psi = 0.5061622991200995;
-    tmp_msg_3._p = 0.03693987453118697;
-    tmp_msg_3._q = 0.48669094286208914;
-    tmp_msg_3._r = 0.002271736811042646;
-    tmp_msg_3._u = 0.004317411102729318;
-    tmp_msg_3._v = 0.6204113959344103;
-    tmp_msg_3._w = 0.6986172922693936;
-    tmp_msg_3._bias_psi = 0.7629508231548181;
-    tmp_msg_3._bias_r = 0.1725182683049824;
+    tmp_msg_3._x = 0.779_064_24;
+    tmp_msg_3._y = 0.059_129_15;
+    tmp_msg_3._z = 0.701_878_55;
+    tmp_msg_3._phi = 0.866_362_87;
+    tmp_msg_3._theta = 0.179_603_31;
+    tmp_msg_3._psi = 0.506_162_3;
+    tmp_msg_3._p = 0.036_939_874;
+    tmp_msg_3._q = 0.486_690_94;
+    tmp_msg_3._r = 0.002_271_736_7;
+    tmp_msg_3._u = 0.004_317_411;
+    tmp_msg_3._v = 0.620_411_4;
+    tmp_msg_3._w = 0.698_617_3;
+    tmp_msg_3._bias_psi = 0.762_950_84;
+    tmp_msg_3._bias_r = 0.172_518_27;
     msg._start_actions.push(Box::new(tmp_msg_3));
 
     let mut tmp_msg_4 = EstimatedStreamVelocity::new();
@@ -259,9 +259,9 @@ fn test_PlanTransition() {
     let mut msg1 = FollowReference::new();
     msg1._control_src = 60688;
     msg1._control_ent = 72;
-    msg1._timeout = 0.9027662940527639;
-    msg1._loiter_radius = 0.8635480860563065;
-    msg1._altitude_interval = 0.9260483211923134;
+    msg1._timeout = 0.902_766_3;
+    msg1._loiter_radius = 0.863_548_1;
+    msg1._altitude_interval = 0.926_048_34;
     msg._actions.push(Box::new(msg1));
 
     assert_eq!(msg.dynamic_serialization_size(), 506);
@@ -293,7 +293,7 @@ fn test_VehicleCommand() {
     tmp_msg_0._timeout = 49484;
     tmp_msg_0._lat = 0.6773872429275245;
     tmp_msg_0._lon = 0.9711109462825693;
-    tmp_msg_0._speed = 0.9415963179494303;
+    tmp_msg_0._speed = 0.941_596_3;
     tmp_msg_0._speed_units = 127;
     tmp_msg_0._custom = String::from("AXPZXRJRIRYJDOTDHPKSNOXZJTYCUHIMUPKIXGBGUWSOGRGLUFTLPWPIR");
 

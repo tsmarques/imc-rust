@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -61,12 +61,12 @@ pub struct AlignmentState {
 
 impl Message for AlignmentState {
     fn new() -> AlignmentState {
-        let msg = AlignmentState {
+        
+
+        AlignmentState {
             _header: Header::new(361),
             _state: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

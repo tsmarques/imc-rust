@@ -20,7 +20,7 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
-use bytes::BufMut;
+
 /// Base
 use std::any::Any;
 
@@ -37,11 +37,11 @@ pub struct RestartSystem {
 
 impl Message for RestartSystem {
     fn new() -> RestartSystem {
-        let msg = RestartSystem {
-            _header: Header::new(9),
-        };
+        
 
-        msg
+        RestartSystem {
+            _header: Header::new(9),
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -38,12 +38,12 @@ pub struct PushEntityParameters {
 
 impl Message for PushEntityParameters {
     fn new() -> PushEntityParameters {
-        let msg = PushEntityParameters {
+        
+
+        PushEntityParameters {
             _header: Header::new(811),
             _name: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

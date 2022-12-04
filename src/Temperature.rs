@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct Temperature {
 
 impl Message for Temperature {
     fn new() -> Temperature {
-        let msg = Temperature {
+        
+
+        Temperature {
             _header: Header::new(263),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

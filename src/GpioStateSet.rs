@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -43,13 +43,13 @@ pub struct GpioStateSet {
 
 impl Message for GpioStateSet {
     fn new() -> GpioStateSet {
-        let msg = GpioStateSet {
+        
+
+        GpioStateSet {
             _header: Header::new(2002),
             _name: Default::default(),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

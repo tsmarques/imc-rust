@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -38,12 +38,12 @@ pub struct SaveEntityParameters {
 
 impl Message for SaveEntityParameters {
     fn new() -> SaveEntityParameters {
-        let msg = SaveEntityParameters {
+        
+
+        SaveEntityParameters {
             _header: Header::new(805),
             _name: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

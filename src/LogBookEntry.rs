@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -61,15 +61,15 @@ pub struct LogBookEntry {
 
 impl Message for LogBookEntry {
     fn new() -> LogBookEntry {
-        let msg = LogBookEntry {
+        
+
+        LogBookEntry {
             _header: Header::new(103),
             _type: Default::default(),
             _htime: Default::default(),
             _context: Default::default(),
             _text: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

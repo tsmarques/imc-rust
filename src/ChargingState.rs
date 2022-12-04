@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -48,12 +48,12 @@ pub struct ChargingState {
 
 impl Message for ChargingState {
     fn new() -> ChargingState {
-        let msg = ChargingState {
+        
+
+        ChargingState {
             _header: Header::new(315),
             _is_charging: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

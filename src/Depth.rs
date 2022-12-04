@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct Depth {
 
 impl Message for Depth {
     fn new() -> Depth {
-        let msg = Depth {
+        
+
+        Depth {
             _header: Header::new(265),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

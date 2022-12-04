@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -43,13 +43,13 @@ pub struct PolygonVertex {
 
 impl Message for PolygonVertex {
     fn new() -> PolygonVertex {
-        let msg = PolygonVertex {
+        
+
+        PolygonVertex {
             _header: Header::new(474),
             _lat: Default::default(),
             _lon: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

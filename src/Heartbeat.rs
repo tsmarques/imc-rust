@@ -20,7 +20,7 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
-use bytes::BufMut;
+
 /// Base
 use std::any::Any;
 
@@ -39,11 +39,11 @@ pub struct Heartbeat {
 
 impl Message for Heartbeat {
     fn new() -> Heartbeat {
-        let msg = Heartbeat {
-            _header: Header::new(150),
-        };
+        
 
-        msg
+        Heartbeat {
+            _header: Header::new(150),
+        }
     }
 
     #[inline(always)]

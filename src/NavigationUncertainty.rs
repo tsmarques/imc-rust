@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -71,7 +71,9 @@ pub struct NavigationUncertainty {
 
 impl Message for NavigationUncertainty {
     fn new() -> NavigationUncertainty {
-        let msg = NavigationUncertainty {
+        
+
+        NavigationUncertainty {
             _header: Header::new(354),
             _x: Default::default(),
             _y: Default::default(),
@@ -87,9 +89,7 @@ impl Message for NavigationUncertainty {
             _w: Default::default(),
             _bias_psi: Default::default(),
             _bias_r: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

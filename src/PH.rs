@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct PH {
 
 impl Message for PH {
     fn new() -> PH {
-        let msg = PH {
+        
+
+        PH {
             _header: Header::new(298),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -81,16 +81,16 @@ pub struct FollowRefState {
 
 impl Message for FollowRefState {
     fn new() -> FollowRefState {
-        let msg = FollowRefState {
+        
+
+        FollowRefState {
             _header: Header::new(480),
             _control_src: Default::default(),
             _control_ent: Default::default(),
             _reference: Default::default(),
             _state: Default::default(),
             _proximity: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

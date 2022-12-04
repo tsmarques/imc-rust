@@ -60,14 +60,14 @@ pub struct LogBookControl {
 
 impl Message for LogBookControl {
     fn new() -> LogBookControl {
-        let msg = LogBookControl {
+        
+
+        LogBookControl {
             _header: Header::new(104),
             _command: Default::default(),
             _htime: Default::default(),
             _msg: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

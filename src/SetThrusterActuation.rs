@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -42,13 +42,13 @@ pub struct SetThrusterActuation {
 
 impl Message for SetThrusterActuation {
     fn new() -> SetThrusterActuation {
-        let msg = SetThrusterActuation {
+        
+
+        SetThrusterActuation {
             _header: Header::new(301),
             _id: Default::default(),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

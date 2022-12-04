@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -51,12 +51,12 @@ pub struct Brake {
 
 impl Message for Brake {
     fn new() -> Brake {
-        let msg = Brake {
+        
+
+        Brake {
             _header: Header::new(413),
             _op: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

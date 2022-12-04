@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -55,13 +55,13 @@ pub struct ReplayControl {
 
 impl Message for ReplayControl {
     fn new() -> ReplayControl {
-        let msg = ReplayControl {
+        
+
+        ReplayControl {
             _header: Header::new(105),
             _op: Default::default(),
             _file: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

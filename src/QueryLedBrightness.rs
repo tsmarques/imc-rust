@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -41,12 +41,12 @@ pub struct QueryLedBrightness {
 
 impl Message for QueryLedBrightness {
     fn new() -> QueryLedBrightness {
-        let msg = QueryLedBrightness {
+        
+
+        QueryLedBrightness {
             _header: Header::new(313),
             _name: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

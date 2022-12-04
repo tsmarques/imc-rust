@@ -20,7 +20,7 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
-use bytes::BufMut;
+
 /// Base
 use std::any::Any;
 
@@ -39,11 +39,11 @@ pub struct AcousticSystemsQuery {
 
 impl Message for AcousticSystemsQuery {
     fn new() -> AcousticSystemsQuery {
-        let msg = AcousticSystemsQuery {
-            _header: Header::new(212),
-        };
+        
 
-        msg
+        AcousticSystemsQuery {
+            _header: Header::new(212),
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -114,7 +114,9 @@ pub struct DesiredPath {
 
 impl Message for DesiredPath {
     fn new() -> DesiredPath {
-        let msg = DesiredPath {
+        
+
+        DesiredPath {
             _header: Header::new(406),
             _path_ref: Default::default(),
             _start_lat: Default::default(),
@@ -129,9 +131,7 @@ impl Message for DesiredPath {
             _speed_units: 0_u8,
             _lradius: Default::default(),
             _flags: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct Turbidity {
 
 impl Message for Turbidity {
     fn new() -> Turbidity {
-        let msg = Turbidity {
+        
+
+        Turbidity {
             _header: Header::new(288),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

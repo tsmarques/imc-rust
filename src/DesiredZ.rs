@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -42,13 +42,13 @@ pub struct DesiredZ {
 
 impl Message for DesiredZ {
     fn new() -> DesiredZ {
-        let msg = DesiredZ {
+        
+
+        DesiredZ {
             _header: Header::new(401),
             _value: Default::default(),
             _z_units: 0_u8,
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

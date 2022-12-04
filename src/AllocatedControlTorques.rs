@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -44,14 +44,14 @@ pub struct AllocatedControlTorques {
 
 impl Message for AllocatedControlTorques {
     fn new() -> AllocatedControlTorques {
-        let msg = AllocatedControlTorques {
+        
+
+        AllocatedControlTorques {
             _header: Header::new(411),
             _k: Default::default(),
             _m: Default::default(),
             _n: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

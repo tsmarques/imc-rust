@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -39,12 +39,12 @@ pub struct TotalMagIntensity {
 
 impl Message for TotalMagIntensity {
     fn new() -> TotalMagIntensity {
-        let msg = TotalMagIntensity {
+        
+
+        TotalMagIntensity {
             _header: Header::new(2006),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

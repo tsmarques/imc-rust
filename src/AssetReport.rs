@@ -65,7 +65,9 @@ pub struct AssetReport {
 
 impl Message for AssetReport {
     fn new() -> AssetReport {
-        let msg = AssetReport {
+        
+
+        AssetReport {
             _header: Header::new(515),
             _name: Default::default(),
             _report_time: Default::default(),
@@ -77,9 +79,7 @@ impl Message for AssetReport {
             _sog: Default::default(),
             _cog: Default::default(),
             _msgs: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -67,7 +67,9 @@ pub struct WifiStats {
 
 impl Message for WifiStats {
     fn new() -> WifiStats {
-        let msg = WifiStats {
+        
+
+        WifiStats {
             _header: Header::new(2011),
             _mac: Default::default(),
             _ip: Default::default(),
@@ -82,9 +84,7 @@ impl Message for WifiStats {
             _rx_count: Default::default(),
             _tx_count: Default::default(),
             _distance: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

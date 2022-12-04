@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -69,14 +69,14 @@ pub struct UamTxStatus {
 
 impl Message for UamTxStatus {
     fn new() -> UamTxStatus {
-        let msg = UamTxStatus {
+        
+
+        UamTxStatus {
             _header: Header::new(816),
             _seq: Default::default(),
             _value: Default::default(),
             _error: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

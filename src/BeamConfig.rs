@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -44,13 +44,13 @@ pub struct BeamConfig {
 
 impl Message for BeamConfig {
     fn new() -> BeamConfig {
-        let msg = BeamConfig {
+        
+
+        BeamConfig {
             _header: Header::new(283),
             _beam_width: Default::default(),
             _beam_height: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

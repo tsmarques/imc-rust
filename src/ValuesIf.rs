@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -44,14 +44,14 @@ pub struct ValuesIf {
 
 impl Message for ValuesIf {
     fn new() -> ValuesIf {
-        let msg = ValuesIf {
+        
+
+        ValuesIf {
             _header: Header::new(2014),
             _param: Default::default(),
             _value: Default::default(),
             _values: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

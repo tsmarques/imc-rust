@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -49,16 +49,16 @@ pub struct UsblModem {
 
 impl Message for UsblModem {
     fn new() -> UsblModem {
-        let msg = UsblModem {
+        
+
+        UsblModem {
             _header: Header::new(901),
             _name: Default::default(),
             _lat: Default::default(),
             _lon: Default::default(),
             _z: Default::default(),
             _z_units: 0_u8,
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct ColoredDissolvedOrganicMatter {
 
 impl Message for ColoredDissolvedOrganicMatter {
     fn new() -> ColoredDissolvedOrganicMatter {
-        let msg = ColoredDissolvedOrganicMatter {
+        
+
+        ColoredDissolvedOrganicMatter {
             _header: Header::new(2003),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

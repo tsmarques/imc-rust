@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -41,12 +41,12 @@ pub struct RegisterManeuver {
 
 impl Message for RegisterManeuver {
     fn new() -> RegisterManeuver {
-        let msg = RegisterManeuver {
+        
+
+        RegisterManeuver {
             _header: Header::new(469),
             _mid: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

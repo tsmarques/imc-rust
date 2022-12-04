@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -61,7 +61,9 @@ pub struct UsblPositionExtended {
 
 impl Message for UsblPositionExtended {
     fn new() -> UsblPositionExtended {
-        let msg = UsblPositionExtended {
+        
+
+        UsblPositionExtended {
             _header: Header::new(899),
             _target: Default::default(),
             _x: Default::default(),
@@ -74,9 +76,7 @@ impl Message for UsblPositionExtended {
             _theta: Default::default(),
             _psi: Default::default(),
             _accuracy: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -54,7 +54,9 @@ pub struct LblEstimate {
 
 impl Message for LblEstimate {
     fn new() -> LblEstimate {
-        let msg = LblEstimate {
+        
+
+        LblEstimate {
             _header: Header::new(360),
             _beacon: Default::default(),
             _x: Default::default(),
@@ -62,9 +64,7 @@ impl Message for LblEstimate {
             _var_x: Default::default(),
             _var_y: Default::default(),
             _distance: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

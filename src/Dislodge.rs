@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -62,15 +62,15 @@ pub struct Dislodge {
 
 impl Message for Dislodge {
     fn new() -> Dislodge {
-        let msg = Dislodge {
+        
+
+        Dislodge {
             _header: Header::new(483),
             _timeout: Default::default(),
             _rpm: Default::default(),
             _direction: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

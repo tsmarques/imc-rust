@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -49,12 +49,12 @@ pub struct DataSanity {
 
 impl Message for DataSanity {
     fn new() -> DataSanity {
-        let msg = DataSanity {
+        
+
+        DataSanity {
             _header: Header::new(284),
             _sane: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

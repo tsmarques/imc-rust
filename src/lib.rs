@@ -257,7 +257,7 @@ pub mod WifiStats;
 pub mod YoYo;
 
 /// IMC Constants
-pub const DUNE_IMC_VERSION: &'static str = "5.4.25";
+pub const DUNE_IMC_VERSION: &str = "5.4.25";
 pub const DUNE_IMC_CONST_SYNC: u16 = 0xFE54;
 pub const DUNE_IMC_CONST_SYNC_REV: u16 = 0x54FE;
 pub const IMC_CONST_HEADER_SIZE: u8 = 20;

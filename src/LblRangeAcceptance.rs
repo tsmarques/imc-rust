@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -65,14 +65,14 @@ pub struct LblRangeAcceptance {
 
 impl Message for LblRangeAcceptance {
     fn new() -> LblRangeAcceptance {
-        let msg = LblRangeAcceptance {
+        
+
+        LblRangeAcceptance {
             _header: Header::new(357),
             _id: Default::default(),
             _range: Default::default(),
             _acceptance: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

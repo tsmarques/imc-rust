@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -96,7 +96,9 @@ pub struct EstimatedState {
 
 impl Message for EstimatedState {
     fn new() -> EstimatedState {
-        let msg = EstimatedState {
+        
+
+        EstimatedState {
             _header: Header::new(350),
             _lat: Default::default(),
             _lon: Default::default(),
@@ -118,9 +120,7 @@ impl Message for EstimatedState {
             _r: Default::default(),
             _depth: Default::default(),
             _alt: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

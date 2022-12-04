@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -44,14 +44,14 @@ pub struct Sms {
 
 impl Message for Sms {
     fn new() -> Sms {
-        let msg = Sms {
+        
+
+        Sms {
             _header: Header::new(156),
             _number: Default::default(),
             _timeout: Default::default(),
             _contents: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

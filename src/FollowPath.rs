@@ -60,7 +60,9 @@ pub struct FollowPath {
 
 impl Message for FollowPath {
     fn new() -> FollowPath {
-        let msg = FollowPath {
+        
+
+        FollowPath {
             _header: Header::new(457),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -71,9 +73,7 @@ impl Message for FollowPath {
             _speed_units: 0_u8,
             _points: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

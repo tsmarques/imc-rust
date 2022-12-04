@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -46,15 +46,15 @@ pub struct SonarPulse {
 
 impl Message for SonarPulse {
     fn new() -> SonarPulse {
-        let msg = SonarPulse {
+        
+
+        SonarPulse {
             _header: Header::new(2013),
             _frequency: Default::default(),
             _pulse_length: Default::default(),
             _time_delay: Default::default(),
             _simulated_speed: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

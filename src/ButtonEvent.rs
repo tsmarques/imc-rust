@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -42,13 +42,13 @@ pub struct ButtonEvent {
 
 impl Message for ButtonEvent {
     fn new() -> ButtonEvent {
-        let msg = ButtonEvent {
+        
+
+        ButtonEvent {
             _header: Header::new(306),
             _button: Default::default(),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

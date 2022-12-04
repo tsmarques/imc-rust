@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -50,7 +50,9 @@ pub struct DeviceState {
 
 impl Message for DeviceState {
     fn new() -> DeviceState {
-        let msg = DeviceState {
+        
+
+        DeviceState {
             _header: Header::new(282),
             _x: Default::default(),
             _y: Default::default(),
@@ -58,9 +60,7 @@ impl Message for DeviceState {
             _phi: Default::default(),
             _theta: Default::default(),
             _psi: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

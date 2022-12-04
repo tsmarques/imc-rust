@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct Redox {
 
 impl Message for Redox {
     fn new() -> Redox {
-        let msg = Redox {
+        
+
+        Redox {
             _header: Header::new(299),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -56,13 +56,13 @@ pub struct LblConfig {
 
 impl Message for LblConfig {
     fn new() -> LblConfig {
-        let msg = LblConfig {
+        
+
+        LblConfig {
             _header: Header::new(203),
             _op: Default::default(),
             _beacons: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

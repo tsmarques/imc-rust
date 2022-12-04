@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -99,7 +99,9 @@ pub struct PathControlState {
 
 impl Message for PathControlState {
     fn new() -> PathControlState {
-        let msg = PathControlState {
+        
+
+        PathControlState {
             _header: Header::new(410),
             _path_ref: Default::default(),
             _start_lat: Default::default(),
@@ -120,9 +122,7 @@ impl Message for PathControlState {
             _vz: Default::default(),
             _course_error: Default::default(),
             _eta: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

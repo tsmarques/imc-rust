@@ -20,7 +20,7 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
-use bytes::BufMut;
+
 /// Base
 use std::any::Any;
 
@@ -38,11 +38,11 @@ pub struct QueryEntityActivationState {
 
 impl Message for QueryEntityActivationState {
     fn new() -> QueryEntityActivationState {
-        let msg = QueryEntityActivationState {
-            _header: Header::new(15),
-        };
+        
 
-        msg
+        QueryEntityActivationState {
+            _header: Header::new(15),
+        }
     }
 
     #[inline(always)]

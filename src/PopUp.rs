@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -77,7 +77,9 @@ pub struct PopUp {
 
 impl Message for PopUp {
     fn new() -> PopUp {
-        let msg = PopUp {
+        
+
+        PopUp {
             _header: Header::new(451),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -90,9 +92,7 @@ impl Message for PopUp {
             _radius: Default::default(),
             _flags: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

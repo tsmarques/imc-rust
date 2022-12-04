@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -57,7 +57,9 @@ pub struct UsblAnglesExtended {
 
 impl Message for UsblAnglesExtended {
     fn new() -> UsblAnglesExtended {
-        let msg = UsblAnglesExtended {
+        
+
+        UsblAnglesExtended {
             _header: Header::new(898),
             _target: Default::default(),
             _lbearing: Default::default(),
@@ -68,9 +70,7 @@ impl Message for UsblAnglesExtended {
             _theta: Default::default(),
             _psi: Default::default(),
             _accuracy: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

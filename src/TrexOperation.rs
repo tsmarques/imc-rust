@@ -60,14 +60,14 @@ pub struct TrexOperation {
 
 impl Message for TrexOperation {
     fn new() -> TrexOperation {
-        let msg = TrexOperation {
+        
+
+        TrexOperation {
             _header: Header::new(655),
             _op: Default::default(),
             _goal_id: Default::default(),
             _token: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

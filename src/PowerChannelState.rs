@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -51,13 +51,13 @@ pub struct PowerChannelState {
 
 impl Message for PowerChannelState {
     fn new() -> PowerChannelState {
-        let msg = PowerChannelState {
+        
+
+        PowerChannelState {
             _header: Header::new(311),
             _name: Default::default(),
             _state: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

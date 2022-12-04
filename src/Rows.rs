@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -80,7 +80,9 @@ pub struct Rows {
 
 impl Message for Rows {
     fn new() -> Rows {
-        let msg = Rows {
+        
+
+        Rows {
             _header: Header::new(456),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -98,9 +100,7 @@ impl Message for Rows {
             _alternation: 50_u8,
             _flags: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

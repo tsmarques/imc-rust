@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -78,7 +78,9 @@ pub struct Elevator {
 
 impl Message for Elevator {
     fn new() -> Elevator {
-        let msg = Elevator {
+        
+
+        Elevator {
             _header: Header::new(462),
             _timeout: Default::default(),
             _flags: Default::default(),
@@ -92,9 +94,7 @@ impl Message for Elevator {
             _speed: Default::default(),
             _speed_units: 0_u8,
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -60,7 +60,9 @@ pub struct Launch {
 
 impl Message for Launch {
     fn new() -> Launch {
-        let msg = Launch {
+        
+
+        Launch {
             _header: Header::new(485),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -70,9 +72,7 @@ impl Message for Launch {
             _speed: Default::default(),
             _speed_units: 0_u8,
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

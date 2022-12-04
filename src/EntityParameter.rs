@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -42,13 +42,13 @@ pub struct EntityParameter {
 
 impl Message for EntityParameter {
     fn new() -> EntityParameter {
-        let msg = EntityParameter {
+        
+
+        EntityParameter {
             _header: Header::new(801),
             _name: Default::default(),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -98,7 +98,9 @@ pub struct Loiter {
 
 impl Message for Loiter {
     fn new() -> Loiter {
-        let msg = Loiter {
+        
+
+        Loiter {
             _header: Header::new(453),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -114,9 +116,7 @@ impl Message for Loiter {
             _bearing: Default::default(),
             _direction: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -60,13 +60,13 @@ pub struct LoggingControl {
 
 impl Message for LoggingControl {
     fn new() -> LoggingControl {
-        let msg = LoggingControl {
+        
+
+        LoggingControl {
             _header: Header::new(102),
             _op: Default::default(),
             _name: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

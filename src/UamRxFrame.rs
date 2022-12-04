@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -58,15 +58,15 @@ pub struct UamRxFrame {
 
 impl Message for UamRxFrame {
     fn new() -> UamRxFrame {
-        let msg = UamRxFrame {
+        
+
+        UamRxFrame {
             _header: Header::new(815),
             _sys_src: Default::default(),
             _sys_dst: Default::default(),
             _flags: Default::default(),
             _data: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

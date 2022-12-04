@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -47,15 +47,15 @@ pub struct MagneticField {
 
 impl Message for MagneticField {
     fn new() -> MagneticField {
-        let msg = MagneticField {
+        
+
+        MagneticField {
             _header: Header::new(258),
             _time: Default::default(),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

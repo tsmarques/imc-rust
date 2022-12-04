@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -41,12 +41,12 @@ pub struct Voltage {
 
 impl Message for Voltage {
     fn new() -> Voltage {
-        let msg = Voltage {
+        
+
+        Voltage {
             _header: Header::new(251),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

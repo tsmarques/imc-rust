@@ -107,7 +107,9 @@ pub struct TypedEntityParameter {
 
 impl Message for TypedEntityParameter {
     fn new() -> TypedEntityParameter {
-        let msg = TypedEntityParameter {
+        
+
+        TypedEntityParameter {
             _header: Header::new(2008),
             _name: Default::default(),
             _type: Default::default(),
@@ -122,9 +124,7 @@ impl Message for TypedEntityParameter {
             _values_if_list: Default::default(),
             _visibility: Default::default(),
             _scope: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

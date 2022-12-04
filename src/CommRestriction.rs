@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -55,13 +55,13 @@ pub struct CommRestriction {
 
 impl Message for CommRestriction {
     fn new() -> CommRestriction {
-        let msg = CommRestriction {
+        
+
+        CommRestriction {
             _header: Header::new(2010),
             _restriction: Default::default(),
             _reason: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

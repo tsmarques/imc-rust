@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -55,13 +55,13 @@ pub struct Collision {
 
 impl Message for Collision {
     fn new() -> Collision {
-        let msg = Collision {
+        
+
+        Collision {
             _header: Header::new(509),
             _value: Default::default(),
             _type: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

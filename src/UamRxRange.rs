@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -44,14 +44,14 @@ pub struct UamRxRange {
 
 impl Message for UamRxRange {
     fn new() -> UamRxRange {
-        let msg = UamRxRange {
+        
+
+        UamRxRange {
             _header: Header::new(817),
             _seq: Default::default(),
             _sys: Default::default(),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -50,7 +50,9 @@ pub struct OperationalLimits {
 
 impl Message for OperationalLimits {
     fn new() -> OperationalLimits {
-        let msg = OperationalLimits {
+        
+
+        OperationalLimits {
             _header: Header::new(504),
             _mask: Default::default(),
             _max_depth: Default::default(),
@@ -64,9 +66,7 @@ impl Message for OperationalLimits {
             _orientation: Default::default(),
             _width: Default::default(),
             _length: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -42,12 +42,12 @@ pub struct QueryEntityInfo {
 
 impl Message for QueryEntityInfo {
     fn new() -> QueryEntityInfo {
-        let msg = QueryEntityInfo {
+        
+
+        QueryEntityInfo {
             _header: Header::new(4),
             _id: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

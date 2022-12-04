@@ -90,15 +90,15 @@ pub struct AcousticOperation {
 
 impl Message for AcousticOperation {
     fn new() -> AcousticOperation {
-        let msg = AcousticOperation {
+        
+
+        AcousticOperation {
             _header: Header::new(211),
             _op: Default::default(),
             _system: Default::default(),
             _range: Default::default(),
             _msg: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

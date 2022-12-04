@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -47,15 +47,15 @@ pub struct Acceleration {
 
 impl Message for Acceleration {
     fn new() -> Acceleration {
-        let msg = Acceleration {
+        
+
+        Acceleration {
             _header: Header::new(257),
             _time: Default::default(),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

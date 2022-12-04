@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -91,7 +91,9 @@ pub struct VehicleOperationalLimits {
 
 impl Message for VehicleOperationalLimits {
     fn new() -> VehicleOperationalLimits {
-        let msg = VehicleOperationalLimits {
+        
+
+        VehicleOperationalLimits {
             _header: Header::new(16),
             _op: Default::default(),
             _speed_min: Default::default(),
@@ -111,9 +113,7 @@ impl Message for VehicleOperationalLimits {
             _rpm_min: Default::default(),
             _rpm_max: Default::default(),
             _rpm_rate_max: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

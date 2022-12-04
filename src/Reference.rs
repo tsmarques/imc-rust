@@ -65,7 +65,9 @@ pub struct Reference {
 
 impl Message for Reference {
     fn new() -> Reference {
-        let msg = Reference {
+        
+
+        Reference {
             _header: Header::new(479),
             _flags: Default::default(),
             _speed: Default::default(),
@@ -73,9 +75,7 @@ impl Message for Reference {
             _lat: Default::default(),
             _lon: Default::default(),
             _radius: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

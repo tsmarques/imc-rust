@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -41,12 +41,12 @@ pub struct Teleoperation {
 
 impl Message for Teleoperation {
     fn new() -> Teleoperation {
-        let msg = Teleoperation {
+        
+
+        Teleoperation {
             _header: Header::new(452),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

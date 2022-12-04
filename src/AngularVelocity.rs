@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -47,15 +47,15 @@ pub struct AngularVelocity {
 
 impl Message for AngularVelocity {
     fn new() -> AngularVelocity {
-        let msg = AngularVelocity {
+        
+
+        AngularVelocity {
             _header: Header::new(256),
             _time: Default::default(),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -44,13 +44,13 @@ pub struct ExtendedRSSI {
 
 impl Message for ExtendedRSSI {
     fn new() -> ExtendedRSSI {
-        let msg = ExtendedRSSI {
+        
+
+        ExtendedRSSI {
             _header: Header::new(183),
             _value: Default::default(),
             _units: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -60,14 +60,14 @@ pub struct CacheControl {
 
 impl Message for CacheControl {
     fn new() -> CacheControl {
-        let msg = CacheControl {
+        
+
+        CacheControl {
             _header: Header::new(101),
             _op: Default::default(),
             _snapshot: Default::default(),
             _message: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

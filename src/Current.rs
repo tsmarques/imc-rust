@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -41,12 +41,12 @@ pub struct Current {
 
 impl Message for Current {
     fn new() -> Current {
-        let msg = Current {
+        
+
+        Current {
             _header: Header::new(252),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

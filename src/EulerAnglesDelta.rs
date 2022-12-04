@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -48,16 +48,16 @@ pub struct EulerAnglesDelta {
 
 impl Message for EulerAnglesDelta {
     fn new() -> EulerAnglesDelta {
-        let msg = EulerAnglesDelta {
+        
+
+        EulerAnglesDelta {
             _header: Header::new(255),
             _time: Default::default(),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
             _timestep: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

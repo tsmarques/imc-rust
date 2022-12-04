@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct Calibration {
 
 impl Message for Calibration {
     fn new() -> Calibration {
-        let msg = Calibration {
+        
+
+        Calibration {
             _header: Header::new(506),
             _duration: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

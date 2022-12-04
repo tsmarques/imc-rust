@@ -94,7 +94,9 @@ pub struct PlanControl {
 
 impl Message for PlanControl {
     fn new() -> PlanControl {
-        let msg = PlanControl {
+        
+
+        PlanControl {
             _header: Header::new(559),
             _type: Default::default(),
             _op: Default::default(),
@@ -103,9 +105,7 @@ impl Message for PlanControl {
             _flags: Default::default(),
             _arg: Default::default(),
             _info: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -59,15 +59,15 @@ pub struct GroundVelocity {
 
 impl Message for GroundVelocity {
     fn new() -> GroundVelocity {
-        let msg = GroundVelocity {
+        
+
+        GroundVelocity {
             _header: Header::new(259),
             _validity: Default::default(),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

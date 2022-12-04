@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -75,7 +75,9 @@ pub struct Goto {
 
 impl Message for Goto {
     fn new() -> Goto {
-        let msg = Goto {
+        
+
+        Goto {
             _header: Header::new(450),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -88,9 +90,7 @@ impl Message for Goto {
             _pitch: Default::default(),
             _yaw: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

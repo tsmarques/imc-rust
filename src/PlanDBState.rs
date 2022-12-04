@@ -58,7 +58,9 @@ pub struct PlanDBState {
 
 impl Message for PlanDBState {
     fn new() -> PlanDBState {
-        let msg = PlanDBState {
+        
+
+        PlanDBState {
             _header: Header::new(557),
             _plan_count: Default::default(),
             _plan_size: Default::default(),
@@ -67,9 +69,7 @@ impl Message for PlanDBState {
             _change_sname: Default::default(),
             _md5: Default::default(),
             _plans_info: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -52,7 +52,9 @@ pub struct UsblFixExtended {
 
 impl Message for UsblFixExtended {
     fn new() -> UsblFixExtended {
-        let msg = UsblFixExtended {
+        
+
+        UsblFixExtended {
             _header: Header::new(900),
             _target: Default::default(),
             _lat: Default::default(),
@@ -60,9 +62,7 @@ impl Message for UsblFixExtended {
             _z_units: 0_u8,
             _z: Default::default(),
             _accuracy: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

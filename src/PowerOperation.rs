@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -63,14 +63,14 @@ pub struct PowerOperation {
 
 impl Message for PowerOperation {
     fn new() -> PowerOperation {
-        let msg = PowerOperation {
+        
+
+        PowerOperation {
             _header: Header::new(308),
             _op: Default::default(),
             _time_remain: Default::default(),
             _sched_time: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

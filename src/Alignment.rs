@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -54,7 +54,9 @@ pub struct Alignment {
 
 impl Message for Alignment {
     fn new() -> Alignment {
-        let msg = Alignment {
+        
+
+        Alignment {
             _header: Header::new(495),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -62,9 +64,7 @@ impl Message for Alignment {
             _speed: Default::default(),
             _speed_units: 0_u8,
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

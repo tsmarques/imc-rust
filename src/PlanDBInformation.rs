@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -52,7 +52,9 @@ pub struct PlanDBInformation {
 
 impl Message for PlanDBInformation {
     fn new() -> PlanDBInformation {
-        let msg = PlanDBInformation {
+        
+
+        PlanDBInformation {
             _header: Header::new(558),
             _plan_id: Default::default(),
             _plan_size: Default::default(),
@@ -60,9 +62,7 @@ impl Message for PlanDBInformation {
             _change_sid: Default::default(),
             _change_sname: Default::default(),
             _md5: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

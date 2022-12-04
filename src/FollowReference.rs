@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -55,16 +55,16 @@ pub struct FollowReference {
 
 impl Message for FollowReference {
     fn new() -> FollowReference {
-        let msg = FollowReference {
+        
+
+        FollowReference {
             _header: Header::new(478),
             _control_src: Default::default(),
             _control_ent: Default::default(),
             _timeout: Default::default(),
             _loiter_radius: Default::default(),
             _altitude_interval: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -68,15 +68,15 @@ pub struct Command {
 
 impl Message for Command {
     fn new() -> Command {
-        let msg = Command {
+        
+
+        Command {
             _header: Header::new(497),
             _flags: Default::default(),
             _speed: Default::default(),
             _z: Default::default(),
             _heading: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

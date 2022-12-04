@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -41,12 +41,12 @@ pub struct RSSI {
 
 impl Message for RSSI {
     fn new() -> RSSI {
-        let msg = RSSI {
+        
+
+        RSSI {
             _header: Header::new(153),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

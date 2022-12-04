@@ -55,13 +55,13 @@ pub struct ValidatePlan {
 
 impl Message for ValidatePlan {
     fn new() -> ValidatePlan {
-        let msg = ValidatePlan {
+        
+
+        ValidatePlan {
             _header: Header::new(2007),
             _type: Default::default(),
             _plan: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

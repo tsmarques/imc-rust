@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -41,12 +41,12 @@ pub struct OpticalBackscatter {
 
 impl Message for OpticalBackscatter {
     fn new() -> OpticalBackscatter {
-        let msg = OpticalBackscatter {
+        
+
+        OpticalBackscatter {
             _header: Header::new(904),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

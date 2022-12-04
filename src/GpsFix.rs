@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -109,7 +109,9 @@ pub struct GpsFix {
 
 impl Message for GpsFix {
     fn new() -> GpsFix {
-        let msg = GpsFix {
+        
+
+        GpsFix {
             _header: Header::new(253),
             _validity: Default::default(),
             _type: Default::default(),
@@ -127,9 +129,7 @@ impl Message for GpsFix {
             _vdop: Default::default(),
             _hacc: Default::default(),
             _vacc: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

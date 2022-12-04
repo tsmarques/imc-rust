@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -82,7 +82,9 @@ pub struct PlanControlState {
 
 impl Message for PlanControlState {
     fn new() -> PlanControlState {
-        let msg = PlanControlState {
+        
+
+        PlanControlState {
             _header: Header::new(560),
             _state: Default::default(),
             _plan_id: Default::default(),
@@ -92,9 +94,7 @@ impl Message for PlanControlState {
             _man_type: Default::default(),
             _man_eta: Default::default(),
             _last_outcome: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

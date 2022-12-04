@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -44,13 +44,13 @@ pub struct SetLedBrightness {
 
 impl Message for SetLedBrightness {
     fn new() -> SetLedBrightness {
-        let msg = SetLedBrightness {
+        
+
+        SetLedBrightness {
             _header: Header::new(314),
             _name: Default::default(),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

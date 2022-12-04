@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -38,12 +38,12 @@ pub struct PopEntityParameters {
 
 impl Message for PopEntityParameters {
     fn new() -> PopEntityParameters {
-        let msg = PopEntityParameters {
+        
+
+        PopEntityParameters {
             _header: Header::new(812),
             _name: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

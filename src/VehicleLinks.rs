@@ -45,13 +45,13 @@ pub struct VehicleLinks {
 
 impl Message for VehicleLinks {
     fn new() -> VehicleLinks {
-        let msg = VehicleLinks {
+        
+
+        VehicleLinks {
             _header: Header::new(650),
             _localname: Default::default(),
             _links: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -61,14 +61,14 @@ pub struct ClockControl {
 
 impl Message for ClockControl {
     fn new() -> ClockControl {
-        let msg = ClockControl {
+        
+
+        ClockControl {
             _header: Header::new(106),
             _op: Default::default(),
             _clock: Default::default(),
             _tz: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

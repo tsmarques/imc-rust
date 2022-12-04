@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -55,7 +55,9 @@ pub struct Announce {
 
 impl Message for Announce {
     fn new() -> Announce {
-        let msg = Announce {
+        
+
+        Announce {
             _header: Header::new(151),
             _sys_name: Default::default(),
             _sys_type: Default::default(),
@@ -64,9 +66,7 @@ impl Message for Announce {
             _lon: Default::default(),
             _height: Default::default(),
             _services: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

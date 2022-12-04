@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -53,14 +53,14 @@ pub struct AcousticLink {
 
 impl Message for AcousticLink {
     fn new() -> AcousticLink {
-        let msg = AcousticLink {
+        
+
+        AcousticLink {
             _header: Header::new(214),
             _peer: Default::default(),
             _rssi: Default::default(),
             _integrity: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -57,13 +57,13 @@ pub struct GpsFixRejection {
 
 impl Message for GpsFixRejection {
     fn new() -> GpsFixRejection {
-        let msg = GpsFixRejection {
+        
+
+        GpsFixRejection {
             _header: Header::new(356),
             _utc_time: Default::default(),
             _reason: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

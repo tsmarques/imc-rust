@@ -69,7 +69,9 @@ pub struct PlanSpecification {
 
 impl Message for PlanSpecification {
     fn new() -> PlanSpecification {
-        let msg = PlanSpecification {
+        
+
+        PlanSpecification {
             _header: Header::new(551),
             _plan_id: Default::default(),
             _description: Default::default(),
@@ -80,9 +82,7 @@ impl Message for PlanSpecification {
             _transitions: Default::default(),
             _start_actions: Default::default(),
             _end_actions: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -20,7 +20,7 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
-use bytes::BufMut;
+
 /// Base
 use std::any::Any;
 
@@ -37,11 +37,11 @@ pub struct TeleoperationDone {
 
 impl Message for TeleoperationDone {
     fn new() -> TeleoperationDone {
-        let msg = TeleoperationDone {
-            _header: Header::new(460),
-        };
+        
 
-        msg
+        TeleoperationDone {
+            _header: Header::new(460),
+        }
     }
 
     #[inline(always)]

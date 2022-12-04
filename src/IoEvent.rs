@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -51,13 +51,13 @@ pub struct IoEvent {
 
 impl Message for IoEvent {
     fn new() -> IoEvent {
-        let msg = IoEvent {
+        
+
+        IoEvent {
             _header: Header::new(813),
             _type: Default::default(),
             _error: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

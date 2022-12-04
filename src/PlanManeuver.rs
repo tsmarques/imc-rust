@@ -50,15 +50,15 @@ pub struct PlanManeuver {
 
 impl Message for PlanManeuver {
     fn new() -> PlanManeuver {
-        let msg = PlanManeuver {
+        
+
+        PlanManeuver {
             _header: Header::new(552),
             _maneuver_id: Default::default(),
             _data: Default::default(),
             _start_actions: Default::default(),
             _end_actions: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

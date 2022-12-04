@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -42,13 +42,13 @@ pub struct TransportBindings {
 
 impl Message for TransportBindings {
     fn new() -> TransportBindings {
-        let msg = TransportBindings {
+        
+
+        TransportBindings {
             _header: Header::new(8),
             _consumer: Default::default(),
             _message_id: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

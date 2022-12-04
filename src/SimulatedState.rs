@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -76,7 +76,9 @@ pub struct SimulatedState {
 
 impl Message for SimulatedState {
     fn new() -> SimulatedState {
-        let msg = SimulatedState {
+        
+
+        SimulatedState {
             _header: Header::new(50),
             _lat: Default::default(),
             _lon: Default::default(),
@@ -96,9 +98,7 @@ impl Message for SimulatedState {
             _svx: Default::default(),
             _svy: Default::default(),
             _svz: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

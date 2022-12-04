@@ -40,12 +40,12 @@ pub struct MsgList {
 
 impl Message for MsgList {
     fn new() -> MsgList {
-        let msg = MsgList {
+        
+
+        MsgList {
             _header: Header::new(20),
             _msgs: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -56,14 +56,14 @@ pub struct ControlLoops {
 
 impl Message for ControlLoops {
     fn new() -> ControlLoops {
-        let msg = ControlLoops {
+        
+
+        ControlLoops {
             _header: Header::new(507),
             _enable: Default::default(),
             _mask: Default::default(),
             _scope_ref: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

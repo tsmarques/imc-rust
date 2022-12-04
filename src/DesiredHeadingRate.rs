@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -41,12 +41,12 @@ pub struct DesiredHeadingRate {
 
 impl Message for DesiredHeadingRate {
     fn new() -> DesiredHeadingRate {
-        let msg = DesiredHeadingRate {
+        
+
+        DesiredHeadingRate {
             _header: Header::new(408),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

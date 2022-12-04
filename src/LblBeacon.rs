@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -52,7 +52,9 @@ pub struct LblBeacon {
 
 impl Message for LblBeacon {
     fn new() -> LblBeacon {
-        let msg = LblBeacon {
+        
+
+        LblBeacon {
             _header: Header::new(202),
             _beacon: Default::default(),
             _lat: Default::default(),
@@ -61,9 +63,7 @@ impl Message for LblBeacon {
             _query_channel: Default::default(),
             _reply_channel: Default::default(),
             _transponder_delay: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

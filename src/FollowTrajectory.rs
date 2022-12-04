@@ -60,7 +60,9 @@ pub struct FollowTrajectory {
 
 impl Message for FollowTrajectory {
     fn new() -> FollowTrajectory {
-        let msg = FollowTrajectory {
+        
+
+        FollowTrajectory {
             _header: Header::new(463),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -71,9 +73,7 @@ impl Message for FollowTrajectory {
             _speed_units: 0_u8,
             _points: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

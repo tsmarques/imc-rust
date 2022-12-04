@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -50,14 +50,14 @@ pub struct CustomManeuver {
 
 impl Message for CustomManeuver {
     fn new() -> CustomManeuver {
-        let msg = CustomManeuver {
+        
+
+        CustomManeuver {
             _header: Header::new(465),
             _timeout: Default::default(),
             _name: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -56,13 +56,13 @@ pub struct RemoteActionsRequest {
 
 impl Message for RemoteActionsRequest {
     fn new() -> RemoteActionsRequest {
-        let msg = RemoteActionsRequest {
+        
+
+        RemoteActionsRequest {
             _header: Header::new(304),
             _op: Default::default(),
             _actions: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

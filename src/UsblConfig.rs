@@ -56,13 +56,13 @@ pub struct UsblConfig {
 
 impl Message for UsblConfig {
     fn new() -> UsblConfig {
-        let msg = UsblConfig {
+        
+
+        UsblConfig {
             _header: Header::new(902),
             _op: Default::default(),
             _modems: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

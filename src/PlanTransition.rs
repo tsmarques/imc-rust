@@ -59,15 +59,15 @@ pub struct PlanTransition {
 
 impl Message for PlanTransition {
     fn new() -> PlanTransition {
-        let msg = PlanTransition {
+        
+
+        PlanTransition {
             _header: Header::new(553),
             _source_man: Default::default(),
             _dest_man: Default::default(),
             _conditions: Default::default(),
             _actions: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

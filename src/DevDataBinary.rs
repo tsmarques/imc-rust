@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct DevDataBinary {
 
 impl Message for DevDataBinary {
     fn new() -> DevDataBinary {
-        let msg = DevDataBinary {
+        
+
+        DevDataBinary {
             _header: Header::new(274),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

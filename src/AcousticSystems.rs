@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -42,12 +42,12 @@ pub struct AcousticSystems {
 
 impl Message for AcousticSystems {
     fn new() -> AcousticSystems {
-        let msg = AcousticSystems {
+        
+
+        AcousticSystems {
             _header: Header::new(213),
             _list: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

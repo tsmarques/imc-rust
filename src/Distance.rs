@@ -59,15 +59,15 @@ pub struct Distance {
 
 impl Message for Distance {
     fn new() -> Distance {
-        let msg = Distance {
+        
+
+        Distance {
             _header: Header::new(262),
             _validity: Default::default(),
             _location: Default::default(),
             _beam_config: Default::default(),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

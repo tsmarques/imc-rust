@@ -56,7 +56,7 @@ pub fn build(hdr: Header) -> Option<Box<dyn Message>> {
     msg.get_header()._src_ent = hdr._src_ent;
     msg.get_header()._timestamp = hdr._timestamp;
 
-    return Option::from(msg);
+    Option::from(msg)
 }
 
 pub fn buildFromId(id: u16) -> Option<Box<dyn Message>> {

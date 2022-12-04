@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -45,15 +45,15 @@ pub struct IridiumMsgTx {
 
 impl Message for IridiumMsgTx {
     fn new() -> IridiumMsgTx {
-        let msg = IridiumMsgTx {
+        
+
+        IridiumMsgTx {
             _header: Header::new(171),
             _req_id: Default::default(),
             _ttl: Default::default(),
             _destination: Default::default(),
             _data: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -45,13 +45,13 @@ pub struct CurrentProfileCell {
 
 impl Message for CurrentProfileCell {
     fn new() -> CurrentProfileCell {
-        let msg = CurrentProfileCell {
+        
+
+        CurrentProfileCell {
             _header: Header::new(1015),
             _cell_position: Default::default(),
             _beams: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

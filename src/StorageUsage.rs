@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -42,13 +42,13 @@ pub struct StorageUsage {
 
 impl Message for StorageUsage {
     fn new() -> StorageUsage {
-        let msg = StorageUsage {
+        
+
+        StorageUsage {
             _header: Header::new(100),
             _available: Default::default(),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

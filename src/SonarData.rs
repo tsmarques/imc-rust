@@ -70,7 +70,9 @@ pub struct SonarData {
 
 impl Message for SonarData {
     fn new() -> SonarData {
-        let msg = SonarData {
+        
+
+        SonarData {
             _header: Header::new(276),
             _type: Default::default(),
             _frequency: Default::default(),
@@ -80,9 +82,7 @@ impl Message for SonarData {
             _scale_factor: Default::default(),
             _beam_config: Default::default(),
             _data: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

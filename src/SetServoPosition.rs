@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -42,13 +42,13 @@ pub struct SetServoPosition {
 
 impl Message for SetServoPosition {
     fn new() -> SetServoPosition {
-        let msg = SetServoPosition {
+        
+
+        SetServoPosition {
             _header: Header::new(302),
             _id: Default::default(),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

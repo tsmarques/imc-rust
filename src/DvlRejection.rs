@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -86,15 +86,15 @@ pub struct DvlRejection {
 
 impl Message for DvlRejection {
     fn new() -> DvlRejection {
-        let msg = DvlRejection {
+        
+
+        DvlRejection {
             _header: Header::new(358),
             _type: Default::default(),
             _reason: Default::default(),
             _value: Default::default(),
             _timestep: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

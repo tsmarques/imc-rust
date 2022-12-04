@@ -20,7 +20,7 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
-use bytes::BufMut;
+
 /// Base
 use std::any::Any;
 
@@ -37,11 +37,11 @@ pub struct Abort {
 
 impl Message for Abort {
     fn new() -> Abort {
-        let msg = Abort {
-            _header: Header::new(550),
-        };
+        
 
-        msg
+        Abort {
+            _header: Header::new(550),
+        }
     }
 
     #[inline(always)]

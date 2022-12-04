@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -77,15 +77,15 @@ pub struct ReportControl {
 
 impl Message for ReportControl {
     fn new() -> ReportControl {
-        let msg = ReportControl {
+        
+
+        ReportControl {
             _header: Header::new(513),
             _op: Default::default(),
             _comm_interface: Default::default(),
             _period: Default::default(),
             _sys_dst: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

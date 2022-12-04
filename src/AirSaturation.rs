@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct AirSaturation {
 
 impl Message for AirSaturation {
     fn new() -> AirSaturation {
-        let msg = AirSaturation {
+        
+
+        AirSaturation {
             _header: Header::new(296),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

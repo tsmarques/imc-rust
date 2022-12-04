@@ -20,7 +20,7 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
-use bytes::BufMut;
+
 /// Base
 use std::any::Any;
 
@@ -37,11 +37,11 @@ pub struct StopManeuver {
 
 impl Message for StopManeuver {
     fn new() -> StopManeuver {
-        let msg = StopManeuver {
-            _header: Header::new(468),
-        };
+        
 
-        msg
+        StopManeuver {
+            _header: Header::new(468),
+        }
     }
 
     #[inline(always)]

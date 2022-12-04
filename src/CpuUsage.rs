@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct CpuUsage {
 
 impl Message for CpuUsage {
     fn new() -> CpuUsage {
-        let msg = CpuUsage {
+        
+
+        CpuUsage {
             _header: Header::new(7),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

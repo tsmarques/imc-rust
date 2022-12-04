@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct FineOil {
 
 impl Message for FineOil {
     fn new() -> FineOil {
-        let msg = FineOil {
+        
+
+        FineOil {
             _header: Header::new(287),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

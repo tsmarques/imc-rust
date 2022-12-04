@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -59,15 +59,15 @@ pub struct TrexAttribute {
 
 impl Message for TrexAttribute {
     fn new() -> TrexAttribute {
-        let msg = TrexAttribute {
+        
+
+        TrexAttribute {
             _header: Header::new(656),
             _name: Default::default(),
             _attr_type: Default::default(),
             _min: Default::default(),
             _max: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

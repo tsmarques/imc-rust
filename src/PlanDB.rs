@@ -97,7 +97,9 @@ pub struct PlanDB {
 
 impl Message for PlanDB {
     fn new() -> PlanDB {
-        let msg = PlanDB {
+        
+
+        PlanDB {
             _header: Header::new(556),
             _type: Default::default(),
             _op: Default::default(),
@@ -105,9 +107,7 @@ impl Message for PlanDB {
             _plan_id: Default::default(),
             _arg: Default::default(),
             _info: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

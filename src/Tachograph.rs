@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -73,7 +73,9 @@ pub struct Tachograph {
 
 impl Message for Tachograph {
     fn new() -> Tachograph {
-        let msg = Tachograph {
+        
+
+        Tachograph {
             _header: Header::new(905),
             _timestamp_last_service: Default::default(),
             _time_next_service: Default::default(),
@@ -91,9 +93,7 @@ impl Message for Tachograph {
             _rpm_min: Default::default(),
             _rpm_max: Default::default(),
             _depth_max: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

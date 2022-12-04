@@ -61,15 +61,15 @@ pub struct CurrentProfile {
 
 impl Message for CurrentProfile {
     fn new() -> CurrentProfile {
-        let msg = CurrentProfile {
+        
+
+        CurrentProfile {
             _header: Header::new(1014),
             _nbeams: Default::default(),
             _ncells: Default::default(),
             _coord_sys: Default::default(),
             _profile: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

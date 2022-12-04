@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -46,14 +46,14 @@ pub struct ADCPBeam {
 
 impl Message for ADCPBeam {
     fn new() -> ADCPBeam {
-        let msg = ADCPBeam {
+        
+
+        ADCPBeam {
             _header: Header::new(1016),
             _vel: Default::default(),
             _amp: Default::default(),
             _cor: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

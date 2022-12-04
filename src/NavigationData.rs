@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -59,7 +59,9 @@ pub struct NavigationData {
 
 impl Message for NavigationData {
     fn new() -> NavigationData {
-        let msg = NavigationData {
+        
+
+        NavigationData {
             _header: Header::new(355),
             _bias_psi: Default::default(),
             _bias_r: Default::default(),
@@ -70,9 +72,7 @@ impl Message for NavigationData {
             _custom_x: Default::default(),
             _custom_y: Default::default(),
             _custom_z: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

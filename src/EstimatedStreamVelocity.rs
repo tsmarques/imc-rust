@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -45,14 +45,14 @@ pub struct EstimatedStreamVelocity {
 
 impl Message for EstimatedStreamVelocity {
     fn new() -> EstimatedStreamVelocity {
-        let msg = EstimatedStreamVelocity {
+        
+
+        EstimatedStreamVelocity {
             _header: Header::new(351),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

@@ -143,7 +143,7 @@ pub fn deserialize_message_list(
         msg_list.push(ret);
     }
 
-    return Ok(msg_list);
+    Ok(msg_list)
 }
 
 pub fn deserialize_message_list_as<T: Message>(
@@ -157,7 +157,7 @@ pub fn deserialize_message_list_as<T: Message>(
         msg_list.push(ret);
     }
 
-    return Ok(msg_list);
+    Ok(msg_list)
 }
 
 pub fn deserialize_as<T: Message>(bfr: &mut dyn bytes::Buf) -> Result<T, ImcError> {

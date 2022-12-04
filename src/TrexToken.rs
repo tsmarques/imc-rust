@@ -43,14 +43,14 @@ pub struct TrexToken {
 
 impl Message for TrexToken {
     fn new() -> TrexToken {
-        let msg = TrexToken {
+        
+
+        TrexToken {
             _header: Header::new(657),
             _timeline: Default::default(),
             _predicate: Default::default(),
             _attributes: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

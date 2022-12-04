@@ -20,7 +20,7 @@
 // IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
 //###########################################################################
 
-use bytes::BufMut;
+
 /// Base
 use std::any::Any;
 
@@ -37,11 +37,11 @@ pub struct QueryPowerChannelState {
 
 impl Message for QueryPowerChannelState {
     fn new() -> QueryPowerChannelState {
-        let msg = QueryPowerChannelState {
-            _header: Header::new(310),
-        };
+        
 
-        msg
+        QueryPowerChannelState {
+            _header: Header::new(310),
+        }
     }
 
     #[inline(always)]

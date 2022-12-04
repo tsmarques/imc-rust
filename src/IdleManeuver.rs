@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -43,13 +43,13 @@ pub struct IdleManeuver {
 
 impl Message for IdleManeuver {
     fn new() -> IdleManeuver {
-        let msg = IdleManeuver {
+        
+
+        IdleManeuver {
             _header: Header::new(454),
             _duration: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

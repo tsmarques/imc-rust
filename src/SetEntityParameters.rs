@@ -42,13 +42,13 @@ pub struct SetEntityParameters {
 
 impl Message for SetEntityParameters {
     fn new() -> SetEntityParameters {
-        let msg = SetEntityParameters {
+        
+
+        SetEntityParameters {
             _header: Header::new(804),
             _name: Default::default(),
             _params: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

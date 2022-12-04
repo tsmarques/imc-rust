@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct WaterDensity {
 
 impl Message for WaterDensity {
     fn new() -> WaterDensity {
-        let msg = WaterDensity {
+        
+
+        WaterDensity {
             _header: Header::new(268),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

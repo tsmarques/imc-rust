@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -58,14 +58,14 @@ pub struct ManeuverControlState {
 
 impl Message for ManeuverControlState {
     fn new() -> ManeuverControlState {
-        let msg = ManeuverControlState {
+        
+
+        ManeuverControlState {
             _header: Header::new(470),
             _state: Default::default(),
             _eta: Default::default(),
             _info: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

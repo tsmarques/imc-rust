@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -43,13 +43,13 @@ pub struct DesiredSpeed {
 
 impl Message for DesiredSpeed {
     fn new() -> DesiredSpeed {
-        let msg = DesiredSpeed {
+        
+
+        DesiredSpeed {
             _header: Header::new(402),
             _value: Default::default(),
             _speed_units: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

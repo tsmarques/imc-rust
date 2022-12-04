@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -47,14 +47,14 @@ pub struct PathPoint {
 
 impl Message for PathPoint {
     fn new() -> PathPoint {
-        let msg = PathPoint {
+        
+
+        PathPoint {
             _header: Header::new(458),
             _x: Default::default(),
             _y: Default::default(),
             _z: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

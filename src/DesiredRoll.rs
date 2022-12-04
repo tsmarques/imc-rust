@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct DesiredRoll {
 
 impl Message for DesiredRoll {
     fn new() -> DesiredRoll {
-        let msg = DesiredRoll {
+        
+
+        DesiredRoll {
             _header: Header::new(403),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

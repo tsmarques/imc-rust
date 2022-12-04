@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -81,7 +81,9 @@ pub struct CompassCalibration {
 
 impl Message for CompassCalibration {
     fn new() -> CompassCalibration {
-        let msg = CompassCalibration {
+        
+
+        CompassCalibration {
             _header: Header::new(475),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -96,9 +98,7 @@ impl Message for CompassCalibration {
             _radius: Default::default(),
             _direction: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

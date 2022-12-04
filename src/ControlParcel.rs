@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -46,15 +46,15 @@ pub struct ControlParcel {
 
 impl Message for ControlParcel {
     fn new() -> ControlParcel {
-        let msg = ControlParcel {
+        
+
+        ControlParcel {
             _header: Header::new(412),
             _p: Default::default(),
             _i: Default::default(),
             _d: Default::default(),
             _a: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

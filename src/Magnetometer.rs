@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -71,7 +71,9 @@ pub struct Magnetometer {
 
 impl Message for Magnetometer {
     fn new() -> Magnetometer {
-        let msg = Magnetometer {
+        
+
+        Magnetometer {
             _header: Header::new(499),
             _timeout: Default::default(),
             _lat: Default::default(),
@@ -84,9 +86,7 @@ impl Message for Magnetometer {
             _width: Default::default(),
             _direction: Default::default(),
             _custom: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

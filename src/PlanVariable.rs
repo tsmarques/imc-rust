@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -66,15 +66,15 @@ pub struct PlanVariable {
 
 impl Message for PlanVariable {
     fn new() -> PlanVariable {
-        let msg = PlanVariable {
+        
+
+        PlanVariable {
             _header: Header::new(561),
             _name: Default::default(),
             _value: Default::default(),
             _type: Default::default(),
             _access: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]

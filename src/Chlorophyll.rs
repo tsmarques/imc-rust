@@ -25,7 +25,7 @@ use bytes::BufMut;
 use std::any::Any;
 
 use crate::packet::ImcError;
-use crate::packet::*;
+
 use crate::Header::Header;
 use crate::Message::*;
 
@@ -40,12 +40,12 @@ pub struct Chlorophyll {
 
 impl Message for Chlorophyll {
     fn new() -> Chlorophyll {
-        let msg = Chlorophyll {
+        
+
+        Chlorophyll {
             _header: Header::new(289),
             _value: Default::default(),
-        };
-
-        msg
+        }
     }
 
     #[inline(always)]
