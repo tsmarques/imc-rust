@@ -1,6 +1,4 @@
 //###########################################################################
-// Copyright 2021 OceanScan - Marine Systems & Technology, Lda.             #
-//###########################################################################
 // Licensed under the Apache License, Version 2.0 (the "License");          #
 // you may not use this file except in compliance with the License.         #
 // You may obtain a copy of the License at                                  #
@@ -17,22 +15,33 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
+// IMC XML MD5: b521199aa61f91939b6b6ed9e44d149b                            *
 //###########################################################################
 
-
+use bytes::BufMut;
 /// Base
 use std::any::Any;
 
 use crate::packet::ImcError;
+
 use crate::Header::Header;
 use crate::Message::*;
+
+/// Restart Type
+#[allow(non_camel_case_types)]
+pub enum RestartTypeEnum {
+    /// Dune
+    RSTYPE_DUNE = 1,
+    /// System
+    RSTYPE_SYSTEM = 2,
+}
 
 /// Request the destination system to restart itself.
 #[derive(Default, Clone)]
 pub struct RestartSystem {
     /// Message Header
     pub _header: Header,
+    pub _type: u8,
 }
 
 impl Message for RestartSystem {
@@ -41,6 +50,7 @@ impl Message for RestartSystem {
 
         RestartSystem {
             _header: Header::new(9),
+            _type: Default::default(),
         }
     }
 
@@ -67,12 +77,13 @@ impl Message for RestartSystem {
     }
 
     fn clear(&mut self) {
-        self._header = Header::new(9)
+        self._header = Header::new(9);
+        self._type = Default::default()
     }
 
     #[inline(always)]
     fn fixed_serialization_size(&self) -> usize {
-        0
+        1
     }
 
     #[inline(always)]
@@ -80,9 +91,12 @@ impl Message for RestartSystem {
         0
     }
 
-    fn serialize_fields(&self, _bfr: &mut bytes::BytesMut) {}
+    fn serialize_fields(&self, bfr: &mut bytes::BytesMut) {
+        bfr.put_u8(self._type);
+    }
 
-    fn deserialize_fields(&mut self, _bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
+    fn deserialize_fields(&mut self, bfr: &mut dyn bytes::Buf) -> Result<(), ImcError> {
+        self._type = bfr.get_u8();
         Ok(())
     }
 }

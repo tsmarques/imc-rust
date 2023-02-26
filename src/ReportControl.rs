@@ -1,6 +1,4 @@
 //###########################################################################
-// Copyright 2021 OceanScan - Marine Systems & Technology, Lda.             #
-//###########################################################################
 // Licensed under the Apache License, Version 2.0 (the "License");          #
 // you may not use this file except in compliance with the License.         #
 // You may obtain a copy of the License at                                  #
@@ -17,7 +15,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
+// IMC XML MD5: b521199aa61f91939b6b6ed9e44d149b                            *
 //###########################################################################
 
 use bytes::BufMut;
@@ -57,6 +55,8 @@ pub mod CommunicationInterfaceBits {
     pub const CI_GSM: u32 = 0x04;
     /// Mobile
     pub const CI_MOBILE: u32 = 0x08;
+    /// Radio
+    pub const CI_RADIO: u32 = 0x10;
 }
 
 /// This message is sent to trigger reports to a destination system.

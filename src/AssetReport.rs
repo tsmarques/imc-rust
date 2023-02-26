@@ -1,6 +1,4 @@
 //###########################################################################
-// Copyright 2021 OceanScan - Marine Systems & Technology, Lda.             #
-//###########################################################################
 // Licensed under the Apache License, Version 2.0 (the "License");          #
 // you may not use this file except in compliance with the License.         #
 // You may obtain a copy of the License at                                  #
@@ -17,7 +15,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
+// IMC XML MD5: b521199aa61f91939b6b6ed9e44d149b                            *
 //###########################################################################
 
 use bytes::BufMut;
@@ -68,7 +66,7 @@ impl Message for AssetReport {
         
 
         AssetReport {
-            _header: Header::new(515),
+            _header: Header::new(525),
             _name: Default::default(),
             _report_time: Default::default(),
             _medium: Default::default(),
@@ -84,12 +82,12 @@ impl Message for AssetReport {
 
     #[inline(always)]
     fn static_id() -> u16 {
-        515
+        525
     }
 
     #[inline(always)]
     fn id(&self) -> u16 {
-        515
+        525
     }
 
     fn as_any(&self) -> &dyn Any {
@@ -140,7 +138,7 @@ impl Message for AssetReport {
     }
 
     fn clear(&mut self) {
-        self._header = Header::new(515);
+        self._header = Header::new(525);
         self._name = Default::default();
         self._report_time = Default::default();
         self._medium = Default::default();

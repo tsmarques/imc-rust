@@ -2,8 +2,6 @@
 #![allow(dead_code)]
 
 //###########################################################################
-// Copyright 2021 OceanScan - Marine Systems & Technology, Lda.             #
-//###########################################################################
 // Licensed under the Apache License, Version 2.0 (the "License");          #
 // you may not use this file except in compliance with the License.         #
 // You may obtain a copy of the License at                                  #
@@ -20,7 +18,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
+// IMC XML MD5: b521199aa61f91939b6b6ed9e44d149b                            *
 //###########################################################################
 
 /// Base
@@ -36,35 +34,50 @@ pub mod Abort;
 pub mod Aborted;
 pub mod Acceleration;
 pub mod AcousticLink;
+pub mod AcousticMessage;
 pub mod AcousticOperation;
+pub mod AcousticRelease;
+pub mod AcousticRequest;
+pub mod AcousticStatus;
 pub mod AcousticSystems;
 pub mod AcousticSystemsQuery;
 pub mod AirSaturation;
+pub mod Airflow;
 pub mod Alignment;
 pub mod AlignmentState;
 pub mod AllocatedControlTorques;
 pub mod AngularVelocity;
 pub mod Announce;
 pub mod AnnounceService;
+pub mod ApmStatus;
+pub mod ArmingState;
 pub mod AssetReport;
+pub mod AutonomousSection;
+pub mod AutopilotMode;
 pub mod BeamConfig;
 pub mod Brake;
 pub mod ButtonEvent;
 pub mod CacheControl;
 pub mod Calibration;
+pub mod CameraZoom;
 pub mod CcuEvent;
-pub mod ChargingState;
 pub mod Chlorophyll;
 pub mod ClockControl;
+pub mod CloseSession;
 pub mod Collision;
 pub mod ColoredDissolvedOrganicMatter;
 pub mod CommRestriction;
-pub mod Command;
+pub mod CommSystemsQuery;
+pub mod CommsRelay;
 pub mod CompassCalibration;
+pub mod CompressedHistory;
+pub mod CompressedImage;
 pub mod Conductivity;
 pub mod ControlLoops;
 pub mod ControlParcel;
+pub mod CoverArea;
 pub mod CpuUsage;
+pub mod CreateSession;
 pub mod CrudeOil;
 pub mod Current;
 pub mod CurrentProfile;
@@ -72,14 +85,21 @@ pub mod CurrentProfileCell;
 pub mod CustomManeuver;
 pub mod DataSanity;
 pub mod Depth;
+pub mod DepthOffset;
 pub mod DesiredControl;
 pub mod DesiredHeading;
 pub mod DesiredHeadingRate;
+pub mod DesiredLinearState;
 pub mod DesiredPath;
 pub mod DesiredPitch;
 pub mod DesiredRoll;
 pub mod DesiredSpeed;
+pub mod DesiredThrottle;
+pub mod DesiredVelocity;
+pub mod DesiredVerticalRate;
 pub mod DesiredZ;
+pub mod DevCalibrationControl;
+pub mod DevCalibrationState;
 pub mod DevDataBinary;
 pub mod DevDataText;
 pub mod DeviceState;
@@ -87,8 +107,13 @@ pub mod Dislodge;
 pub mod DissolvedOrganicMatter;
 pub mod DissolvedOxygen;
 pub mod Distance;
+pub mod DmsDetection;
+pub mod Drop;
 pub mod DvlRejection;
+pub mod DynamicsSimParam;
 pub mod Elevator;
+pub mod EmergencyControl;
+pub mod EmergencyControlState;
 pub mod EntityActivationState;
 pub mod EntityInfo;
 pub mod EntityList;
@@ -100,32 +125,64 @@ pub mod EstimatedState;
 pub mod EstimatedStreamVelocity;
 pub mod EulerAngles;
 pub mod EulerAnglesDelta;
+pub mod Event;
 pub mod ExtendedRSSI;
+pub mod ExternalNavData;
 pub mod FineOil;
+pub mod FlightEvent;
 pub mod Fluorescein;
 pub mod FluorescentDissolvedOrganicMatter;
-pub mod FollowCommand;
-pub mod FollowCommandState;
 pub mod FollowPath;
+pub mod FollowPoint;
 pub mod FollowRefState;
 pub mod FollowReference;
+pub mod FollowSystem;
 pub mod FollowTrajectory;
+pub mod Force;
+pub mod FormCtrlParam;
+pub mod FormState;
+pub mod Formation;
+pub mod FormationControlParams;
+pub mod FormationEval;
+pub mod FormationEvaluation;
+pub mod FormationMonitor;
+pub mod FormationParameters;
+pub mod FormationPlanExecution;
+pub mod FormationState;
 pub mod FuelLevel;
+pub mod GetImageCoords;
 pub mod GetOperationalLimits;
+pub mod GetParametersXml;
+pub mod GetWorldCoordinates;
 pub mod Goto;
 pub mod GpioState;
 pub mod GpioStateGet;
 pub mod GpioStateSet;
 pub mod GpsFix;
 pub mod GpsFixRejection;
+pub mod GpsFixRtk;
+pub mod GpsNavData;
 pub mod GroundVelocity;
+pub mod GroupMembershipState;
+pub mod GroupStreamVelocity;
 pub mod Heartbeat;
+pub mod HistoricCTD;
+pub mod HistoricData;
+pub mod HistoricDataQuery;
+pub mod HistoricEvent;
+pub mod HistoricSample;
+pub mod HistoricSonarData;
+pub mod HistoricTelemetry;
+pub mod HomePosition;
 pub mod IdleManeuver;
+pub mod ImageTracking;
+pub mod ImageTxSettings;
+pub mod IndicatedSpeed;
 pub mod IoEvent;
 pub mod IridiumMsgRx;
 pub mod IridiumMsgTx;
-pub mod IridiumMsgTxExtended;
 pub mod IridiumTxStatus;
+pub mod Land;
 pub mod Launch;
 pub mod LblBeacon;
 pub mod LblConfig;
@@ -133,23 +190,34 @@ pub mod LblEstimate;
 pub mod LblRange;
 pub mod LblRangeAcceptance;
 pub mod LcdControl;
+pub mod LeaderState;
+pub mod LeakSimulation;
 pub mod LedBrightness;
+pub mod LinkLatency;
+pub mod LinkLevel;
 pub mod LogBookControl;
 pub mod LogBookEntry;
 pub mod LoggingControl;
 pub mod Loiter;
+pub mod LowLevelControl;
 pub mod MagneticField;
 pub mod Magnetometer;
 pub mod ManeuverControlState;
-pub mod MemUsage;
+pub mod ManeuverDone;
+pub mod Map;
+pub mod MapFeature;
+pub mod MapPoint;
 pub mod MessagePart;
 pub mod MonitorEntityState;
 pub mod MsgList;
 pub mod NavigationData;
 pub mod NavigationUncertainty;
+pub mod NeptusBlob;
 pub mod OperationalLimits;
 pub mod OpticalBackscatter;
 pub mod PH;
+pub mod PWM;
+pub mod ParametersXml;
 pub mod PathControlState;
 pub mod PathPoint;
 pub mod Phycocyanin;
@@ -172,6 +240,7 @@ pub mod PowerChannelControl;
 pub mod PowerChannelState;
 pub mod PowerOperation;
 pub mod Pressure;
+pub mod ProfileSample;
 pub mod Pulse;
 pub mod PulseDetectionControl;
 pub mod PushEntityParameters;
@@ -186,21 +255,38 @@ pub mod Redox;
 pub mod Reference;
 pub mod RegisterManeuver;
 pub mod RelativeHumidity;
+pub mod RelativeState;
 pub mod RemoteActions;
 pub mod RemoteActionsRequest;
+pub mod RemoteCommand;
+pub mod RemoteSensorInfo;
+pub mod RemoteState;
 pub mod ReplayControl;
 pub mod ReportControl;
+pub mod ReportedState;
 pub mod RestartSystem;
 pub mod RhodamineDye;
 pub mod Rows;
+pub mod RowsCoverage;
 pub mod Rpm;
+pub mod SadcReadings;
 pub mod Salinity;
+pub mod Sample;
 pub mod SaveEntityParameters;
+pub mod Scalar;
+pub mod ScheduledGoto;
 pub mod ServoPosition;
+pub mod SessionKeepAlive;
+pub mod SessionStatus;
+pub mod SessionSubscription;
+pub mod SetControlSurfaceDeflection;
 pub mod SetEntityParameters;
+pub mod SetImageCoords;
 pub mod SetLedBrightness;
+pub mod SetPWM;
 pub mod SetServoPosition;
 pub mod SetThrusterActuation;
+pub mod SimAcousticMessage;
 pub mod SimulatedState;
 pub mod Sms;
 pub mod SmsRequest;
@@ -208,26 +294,43 @@ pub mod SmsRx;
 pub mod SmsState;
 pub mod SmsStatus;
 pub mod SmsTx;
+pub mod SoiCommand;
+pub mod SoiPlan;
+pub mod SoiState;
+pub mod SoiWaypoint;
 pub mod SonarData;
-pub mod SonarPulse;
 pub mod SoundSpeed;
+pub mod StateReport;
 pub mod StationKeeping;
+pub mod StationKeepingExtended;
 pub mod StopManeuver;
 pub mod StorageUsage;
+pub mod SystemGroup;
+pub mod TCPRequest;
+pub mod TCPStatus;
 pub mod Tachograph;
+pub mod Takeoff;
+pub mod Target;
+pub mod TelemetryMsg;
 pub mod Teleoperation;
 pub mod TeleoperationDone;
 pub mod Temperature;
 pub mod TextMessage;
+pub mod Throttle;
 pub mod TotalMagIntensity;
 pub mod TrajectoryPoint;
+pub mod TransmissionRequest;
+pub mod TransmissionStatus;
 pub mod TransportBindings;
 pub mod TrexAttribute;
+pub mod TrexCommand;
+pub mod TrexObservation;
 pub mod TrexOperation;
+pub mod TrexPlan;
 pub mod TrexToken;
+pub mod TrueSpeed;
 pub mod Turbidity;
-pub mod TypedEntityParameter;
-pub mod TypedEntityParameters;
+pub mod UASimulation;
 pub mod UamRxFrame;
 pub mod UamRxRange;
 pub mod UamTxFrame;
@@ -241,23 +344,25 @@ pub mod UsblFixExtended;
 pub mod UsblModem;
 pub mod UsblPosition;
 pub mod UsblPositionExtended;
-pub mod ValidatePlan;
-pub mod ValuesIf;
+pub mod VSWR;
 pub mod VehicleCommand;
+pub mod VehicleFormation;
+pub mod VehicleFormationParticipant;
 pub mod VehicleLinks;
 pub mod VehicleMedium;
 pub mod VehicleOperationalLimits;
 pub mod VehicleState;
 pub mod VelocityDelta;
+pub mod VerticalProfile;
 pub mod Voltage;
+pub mod VtolState;
 pub mod WaterDensity;
 pub mod WaterVelocity;
-pub mod WifiNetwork;
-pub mod WifiStats;
+pub mod WindSpeed;
 pub mod YoYo;
 
 /// IMC Constants
-pub const DUNE_IMC_VERSION: &str = "5.4.25";
+pub const DUNE_IMC_VERSION: &str = "5.4.30";
 pub const DUNE_IMC_CONST_SYNC: u16 = 0xFE54;
 pub const DUNE_IMC_CONST_SYNC_REV: u16 = 0x54FE;
 pub const IMC_CONST_HEADER_SIZE: u8 = 20;
@@ -268,6 +373,26 @@ pub const DUNE_IMC_CONST_MAX_SIZE: usize = 65535;
 pub const DUNE_IMC_CONST_SYS_EID: u8 = 0;
 
 /// Global Enumerators
+
+/// Boolean Value
+#[allow(non_camel_case_types)]
+pub enum Boolean {
+    /// False
+    BOOL_FALSE = 0,
+    /// True
+    BOOL_TRUE = 1,
+}
+
+/// Controlled Mode
+#[allow(non_camel_case_types)]
+pub enum ControlledMode {
+    /// Relinquish / Handoff Control
+    CTLMD_RELINQUISH_HANDOFF_CTL = 0,
+    /// Request Control
+    CTLMD_REQUEST_CTL = 1,
+    /// Override Control
+    CTLMD_OVERRIDE_CTL = 2,
+}
 
 /// Speed Units
 #[allow(non_camel_case_types)]
@@ -325,6 +450,17 @@ pub enum RSSIUnits {
     RSSIUNITS_PERCENTAGE = 1,
 }
 
+/// UAV Type
+#[allow(non_camel_case_types)]
+pub enum UAVType {
+    /// Fixed-Wing
+    UAVTYPE_FIXEDWING = 0,
+    /// Copter
+    UAVTYPE_COPTER = 1,
+    /// Vtol
+    UAVTYPE_VTOL = 2,
+}
+
 /// Global Bitfields
 /// Control Loops Mask
 #[allow(non_camel_case_types)]
@@ -349,10 +485,18 @@ pub mod CLoopsMask {
     pub const CL_SPEED: u32 = 0x00000080;
     /// Yaw Rate Control
     pub const CL_YAW_RATE: u32 = 0x00000100;
+    /// Vertical Rate Control
+    pub const CL_VERTICAL_RATE: u32 = 0x00000200;
     /// Torque Control
     pub const CL_TORQUE: u32 = 0x00000400;
     /// Force Control
     pub const CL_FORCE: u32 = 0x00000800;
+    /// Velocity Control
+    pub const CL_VELOCITY: u32 = 0x00001000;
+    /// Throttle Control
+    pub const CL_THROTTLE: u32 = 0x00002000;
+    /// Unspecified External Control
+    pub const CL_EXTERNAL: u32 = 0x40000000;
     /// Non-overridable control
     pub const CL_NO_OVERRIDE: u32 = 0x80000000;
     /// All

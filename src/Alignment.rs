@@ -1,6 +1,4 @@
 //###########################################################################
-// Copyright 2021 OceanScan - Marine Systems & Technology, Lda.             #
-//###########################################################################
 // Licensed under the Apache License, Version 2.0 (the "License");          #
 // you may not use this file except in compliance with the License.         #
 // You may obtain a copy of the License at                                  #
@@ -17,7 +15,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
+// IMC XML MD5: b521199aa61f91939b6b6ed9e44d149b                            *
 //###########################################################################
 
 use bytes::BufMut;
@@ -32,8 +30,6 @@ use crate::Message::*;
 /// An "Alignment" is a maneuver specifying a movement of the vehicle to a
 /// target waypoint intended to control activation of an IMU/INS in order
 /// to start aligning navigation for more precise dead reckoning operation.
-/// Mandatory parameters defined for a "Launch" are
-/// timeout, speed and speed units.
 #[derive(Default, Clone)]
 pub struct Alignment {
     /// Message Header

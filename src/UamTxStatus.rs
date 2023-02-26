@@ -1,6 +1,4 @@
 //###########################################################################
-// Copyright 2021 OceanScan - Marine Systems & Technology, Lda.             #
-//###########################################################################
 // Licensed under the Apache License, Version 2.0 (the "License");          #
 // you may not use this file except in compliance with the License.         #
 // You may obtain a copy of the License at                                  #
@@ -17,7 +15,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
+// IMC XML MD5: b521199aa61f91939b6b6ed9e44d149b                            *
 //###########################################################################
 
 use bytes::BufMut;
@@ -48,8 +46,10 @@ pub enum ValueEnum {
     UTS_UNSUPPORTED = 6,
     /// Invalid transmission size
     UTS_INV_SIZE = 7,
-    /// Not transducer
-    UTS_NOT_TRANSDUCER = 8,
+    /// Message has been sent
+    UTS_SENT = 8,
+    /// Message has been acknowledged by the destination
+    UTS_DELIVERED = 9,
 }
 
 /// This message shall be used by acoustic modem drivers to send updates

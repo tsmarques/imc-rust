@@ -1,7 +1,7 @@
 [package]
 name = "imc"
 version = "0.6.0"
-authors = ["OceanScan - MST <support@oceanscan-mst.com>", "Tiago Marques <tmarques@oceanscan-mst.com>"]
+authors = ["Tiago Marques <samarques.tiago@gmail.com>"]
 edition = "2018"
 
 [dependencies]

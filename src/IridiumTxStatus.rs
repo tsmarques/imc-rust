@@ -1,6 +1,4 @@
 //###########################################################################
-// Copyright 2021 OceanScan - Marine Systems & Technology, Lda.             #
-//###########################################################################
 // Licensed under the Apache License, Version 2.0 (the "License");          #
 // you may not use this file except in compliance with the License.         #
 // You may obtain a copy of the License at                                  #
@@ -17,7 +15,7 @@
 //###########################################################################
 // Automatically generated.                                                 *
 //###########################################################################
-// IMC XML MD5: 732df4108a86978f313ac1bb5a1f55eb                            *
+// IMC XML MD5: b521199aa61f91939b6b6ed9e44d149b                            *
 //###########################################################################
 
 use bytes::BufMut;
@@ -42,6 +40,8 @@ pub enum StatusCodeEnum {
     TXSTATUS_TRANSMIT = 4,
     /// Message's TTL has expired. Transmition cancelled.
     TXSTATUS_EXPIRED = 5,
+    /// No more messages to be transmitted or received.
+    TXSTATUS_EMPTY = 6,
 }
 
 #[derive(Default, Clone)]
