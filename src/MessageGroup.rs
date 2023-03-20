@@ -1,4 +1,4 @@
-use crate::Message::Message;
+use crate::Message;
 
 pub trait ControlCommand: Message {}
 

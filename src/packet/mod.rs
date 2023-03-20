@@ -1,8 +1,8 @@
 use crate::packet::ImcError::{
     BufferTooShort, InvalidCrc, InvalidMessageId, InvalidSync, NullMessage,
 };
-use crate::Header::Header;
-use crate::Message::Message;
+use crate::Header;
+use crate::Message;
 use crate::{
     factory, MessageList, DUNE_IMC_CONST_MAX_SIZE, DUNE_IMC_CONST_NULL_ID, DUNE_IMC_CONST_SYNC,
     IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE,

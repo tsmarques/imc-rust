@@ -1,22 +1,22 @@
 use bytes::{BufMut, IntoBuf};
 
 use imc::packet::{crc, deserializeHeader};
-use imc::Alignment::Alignment;
+use imc::Alignment;
 
-use imc::EstimatedStreamVelocity::EstimatedStreamVelocity;
-use imc::FollowReference::FollowReference;
+use imc::EstimatedStreamVelocity;
+use imc::FollowReference;
 
-use imc::Header::Header;
-use imc::Heartbeat::Heartbeat;
-use imc::LoggingControl::{ControlOperationEnum, LoggingControl};
-use imc::Loiter::Loiter;
-use imc::Message::Message;
-use imc::NavigationUncertainty::NavigationUncertainty;
-use imc::PlanManeuver::PlanManeuver;
-use imc::PlanSpecification::PlanSpecification;
-use imc::PlanTransition::PlanTransition;
-use imc::PlanVariable::PlanVariable;
-use imc::VehicleCommand::VehicleCommand;
+use imc::messages::LoggingControl::ControlOperationEnum;
+use imc::Header;
+use imc::Heartbeat;
+use imc::Loiter;
+use imc::Message;
+use imc::NavigationUncertainty;
+use imc::PlanManeuver;
+use imc::PlanSpecification;
+use imc::PlanTransition;
+use imc::PlanVariable;
+use imc::VehicleCommand;
 use imc::{IMC_CONST_FOOTER_SIZE, IMC_CONST_HEADER_SIZE};
 
 #[test]
@@ -37,7 +37,7 @@ fn buffer_write() {
 
 #[test]
 fn imc_crc() {
-    let mut lc = LoggingControl::new();
+    let mut lc = imc::LoggingControl::new();
     lc.set_timestamp_secs(0.23424);
     lc.set_source(765);
     lc.set_source_ent(230);
@@ -83,7 +83,7 @@ fn header_serialization() {
 
 #[test]
 fn deserialize_as() {
-    let mut lc = LoggingControl::new();
+    let mut lc = imc::LoggingControl::new();
     lc.set_timestamp_secs(0.23424);
     lc.set_source(765);
     lc.set_source_ent(230);
@@ -99,7 +99,7 @@ fn deserialize_as() {
     assert_eq!(ret.ok().unwrap(), lc.serialization_size());
 
     let inbfr = bytes::Bytes::from(bfr);
-    let ret = imc::packet::deserialize_as::<LoggingControl>(&mut inbfr.into_buf());
+    let ret = imc::packet::deserialize_as::<imc::LoggingControl>(&mut inbfr.into_buf());
     assert!(ret.is_ok());
 
     let mut lc2 = ret.ok().unwrap();
@@ -110,7 +110,7 @@ fn deserialize_as() {
 
 #[test]
 fn generic_deserialize() {
-    let mut lc = LoggingControl::new();
+    let mut lc = imc::LoggingControl::new();
     lc.set_timestamp_secs(0.23424);
     lc.set_source(765);
     lc.set_source_ent(230);
