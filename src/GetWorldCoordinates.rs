@@ -48,8 +48,6 @@ pub struct GetWorldCoordinates {
 
 impl Message for GetWorldCoordinates {
     fn new() -> GetWorldCoordinates {
-        
-
         GetWorldCoordinates {
             _header: Header::new(897),
             _tracking: Default::default(),
@@ -79,7 +77,11 @@ impl Message for GetWorldCoordinates {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

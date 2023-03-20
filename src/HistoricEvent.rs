@@ -48,8 +48,6 @@ pub struct HistoricEvent {
 
 impl Message for HistoricEvent {
     fn new() -> HistoricEvent {
-        
-
         HistoricEvent {
             _header: Header::new(110),
             _text: Default::default(),
@@ -75,7 +73,11 @@ impl Message for HistoricEvent {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

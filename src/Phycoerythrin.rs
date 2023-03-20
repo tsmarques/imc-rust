@@ -38,8 +38,6 @@ pub struct Phycoerythrin {
 
 impl Message for Phycoerythrin {
     fn new() -> Phycoerythrin {
-        
-
         Phycoerythrin {
             _header: Header::new(292),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for Phycoerythrin {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

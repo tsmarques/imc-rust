@@ -38,8 +38,6 @@ pub struct DesiredThrottle {
 
 impl Message for DesiredThrottle {
     fn new() -> DesiredThrottle {
-        
-
         DesiredThrottle {
             _header: Header::new(415),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for DesiredThrottle {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

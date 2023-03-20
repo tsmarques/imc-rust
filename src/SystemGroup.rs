@@ -59,8 +59,6 @@ pub struct SystemGroup {
 
 impl Message for SystemGroup {
     fn new() -> SystemGroup {
-        
-
         SystemGroup {
             _header: Header::new(181),
             _GroupName: Default::default(),
@@ -87,7 +85,11 @@ impl Message for SystemGroup {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

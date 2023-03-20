@@ -82,8 +82,6 @@ pub struct AcousticStatus {
 
 impl Message for AcousticStatus {
     fn new() -> AcousticStatus {
-        
-
         AcousticStatus {
             _header: Header::new(216),
             _req_id: Default::default(),
@@ -112,7 +110,11 @@ impl Message for AcousticStatus {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

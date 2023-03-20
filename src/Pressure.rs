@@ -38,8 +38,6 @@ pub struct Pressure {
 
 impl Message for Pressure {
     fn new() -> Pressure {
-        
-
         Pressure {
             _header: Header::new(264),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for Pressure {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

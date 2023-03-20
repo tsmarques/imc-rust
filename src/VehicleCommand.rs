@@ -74,8 +74,6 @@ pub struct VehicleCommand {
 
 impl Message for VehicleCommand {
     fn new() -> VehicleCommand {
-        
-
         VehicleCommand {
             _header: Header::new(501),
             _type: Default::default(),
@@ -105,40 +103,44 @@ impl Message for VehicleCommand {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 
     fn set_timestamp_secs(&mut self, ts: f64) {
-        self.get_header()._timestamp = ts;
+        self.get_mut_header()._timestamp = ts;
         if let Some(m) = &mut self._maneuver {
             m.set_timestamp_secs(ts);
         }
     }
 
     fn set_source(&mut self, src: u16) {
-        self.get_header()._src = src;
+        self.get_mut_header()._src = src;
         if let Some(m) = &mut self._maneuver {
             m.set_source(src);
         }
     }
 
     fn set_source_ent(&mut self, src_ent: u8) {
-        self.get_header()._src_ent = src_ent;
+        self.get_mut_header()._src_ent = src_ent;
         if let Some(m) = &mut self._maneuver {
             m.set_source_ent(src_ent);
         }
     }
 
     fn set_destination(&mut self, dst: u16) {
-        self.get_header()._dst = dst;
+        self.get_mut_header()._dst = dst;
         if let Some(m) = &mut self._maneuver {
             m.set_destination(dst);
         }
     }
 
     fn set_destination_ent(&mut self, dst_ent: u8) {
-        self.get_header()._dst_ent = dst_ent;
+        self.get_mut_header()._dst_ent = dst_ent;
         if let Some(m) = &mut self._maneuver {
             m.set_destination_ent(dst_ent);
         }

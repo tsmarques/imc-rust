@@ -50,8 +50,6 @@ pub struct SoiState {
 
 impl Message for SoiState {
     fn new() -> SoiState {
-        
-
         SoiState {
             _header: Header::new(853),
             _state: Default::default(),
@@ -79,7 +77,11 @@ impl Message for SoiState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -66,8 +66,6 @@ pub struct GpsNavData {
 
 impl Message for GpsNavData {
     fn new() -> GpsNavData {
-        
-
         GpsNavData {
             _header: Header::new(280),
             _itow: Default::default(),
@@ -106,7 +104,11 @@ impl Message for GpsNavData {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

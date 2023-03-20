@@ -38,8 +38,6 @@ pub struct RelativeHumidity {
 
 impl Message for RelativeHumidity {
     fn new() -> RelativeHumidity {
-        
-
         RelativeHumidity {
             _header: Header::new(272),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for RelativeHumidity {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

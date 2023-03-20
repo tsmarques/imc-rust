@@ -73,8 +73,6 @@ pub struct Goto {
 
 impl Message for Goto {
     fn new() -> Goto {
-        
-
         Goto {
             _header: Header::new(450),
             _timeout: Default::default(),
@@ -109,7 +107,11 @@ impl Message for Goto {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

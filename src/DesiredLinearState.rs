@@ -79,8 +79,6 @@ pub struct DesiredLinearState {
 
 impl Message for DesiredLinearState {
     fn new() -> DesiredLinearState {
-        
-
         DesiredLinearState {
             _header: Header::new(414),
             _x: Default::default(),
@@ -114,7 +112,11 @@ impl Message for DesiredLinearState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

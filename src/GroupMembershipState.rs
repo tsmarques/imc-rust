@@ -41,8 +41,6 @@ pub struct GroupMembershipState {
 
 impl Message for GroupMembershipState {
     fn new() -> GroupMembershipState {
-        
-
         GroupMembershipState {
             _header: Header::new(180),
             _group_name: Default::default(),
@@ -68,7 +66,11 @@ impl Message for GroupMembershipState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

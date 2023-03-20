@@ -46,8 +46,6 @@ pub struct EulerAnglesDelta {
 
 impl Message for EulerAnglesDelta {
     fn new() -> EulerAnglesDelta {
-        
-
         EulerAnglesDelta {
             _header: Header::new(255),
             _time: Default::default(),
@@ -76,7 +74,11 @@ impl Message for EulerAnglesDelta {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

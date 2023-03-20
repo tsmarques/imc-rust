@@ -39,8 +39,6 @@ pub struct MessagePart {
 
 impl Message for MessagePart {
     fn new() -> MessagePart {
-        
-
         MessagePart {
             _header: Header::new(877),
             _uid: Default::default(),
@@ -68,7 +66,11 @@ impl Message for MessagePart {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

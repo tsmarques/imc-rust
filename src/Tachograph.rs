@@ -71,8 +71,6 @@ pub struct Tachograph {
 
 impl Message for Tachograph {
     fn new() -> Tachograph {
-        
-
         Tachograph {
             _header: Header::new(905),
             _timestamp_last_service: Default::default(),
@@ -112,7 +110,11 @@ impl Message for Tachograph {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

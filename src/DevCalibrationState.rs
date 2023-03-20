@@ -59,8 +59,6 @@ pub struct DevCalibrationState {
 
 impl Message for DevCalibrationState {
     fn new() -> DevCalibrationState {
-        
-
         DevCalibrationState {
             _header: Header::new(13),
             _total_steps: Default::default(),
@@ -88,7 +86,11 @@ impl Message for DevCalibrationState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

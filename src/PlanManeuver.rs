@@ -48,8 +48,6 @@ pub struct PlanManeuver {
 
 impl Message for PlanManeuver {
     fn new() -> PlanManeuver {
-        
-
         PlanManeuver {
             _header: Header::new(552),
             _maneuver_id: Default::default(),
@@ -77,12 +75,16 @@ impl Message for PlanManeuver {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 
     fn set_timestamp_secs(&mut self, ts: f64) {
-        self.get_header()._timestamp = ts;
+        self.get_mut_header()._timestamp = ts;
         for m in &mut self._start_actions {
             m.set_timestamp_secs(ts);
         }
@@ -95,7 +97,7 @@ impl Message for PlanManeuver {
     }
 
     fn set_source(&mut self, src: u16) {
-        self.get_header()._src = src;
+        self.get_mut_header()._src = src;
         for m in &mut self._start_actions {
             m.set_source(src);
         }
@@ -108,7 +110,7 @@ impl Message for PlanManeuver {
     }
 
     fn set_source_ent(&mut self, src_ent: u8) {
-        self.get_header()._src_ent = src_ent;
+        self.get_mut_header()._src_ent = src_ent;
         for m in &mut self._start_actions {
             m.set_source_ent(src_ent);
         }
@@ -121,7 +123,7 @@ impl Message for PlanManeuver {
     }
 
     fn set_destination(&mut self, dst: u16) {
-        self.get_header()._dst = dst;
+        self.get_mut_header()._dst = dst;
         for m in &mut self._start_actions {
             m.set_destination(dst);
         }
@@ -134,7 +136,7 @@ impl Message for PlanManeuver {
     }
 
     fn set_destination_ent(&mut self, dst_ent: u8) {
-        self.get_header()._dst_ent = dst_ent;
+        self.get_mut_header()._dst_ent = dst_ent;
         for m in &mut self._start_actions {
             m.set_destination_ent(dst_ent);
         }

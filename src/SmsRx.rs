@@ -40,8 +40,6 @@ pub struct SmsRx {
 
 impl Message for SmsRx {
     fn new() -> SmsRx {
-        
-
         SmsRx {
             _header: Header::new(158),
             _source: Default::default(),
@@ -67,7 +65,11 @@ impl Message for SmsRx {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

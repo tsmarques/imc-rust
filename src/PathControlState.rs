@@ -97,8 +97,6 @@ pub struct PathControlState {
 
 impl Message for PathControlState {
     fn new() -> PathControlState {
-        
-
         PathControlState {
             _header: Header::new(410),
             _path_ref: Default::default(),
@@ -141,7 +139,11 @@ impl Message for PathControlState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

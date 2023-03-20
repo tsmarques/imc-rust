@@ -58,8 +58,6 @@ pub struct HomePosition {
 
 impl Message for HomePosition {
     fn new() -> HomePosition {
-        
-
         HomePosition {
             _header: Header::new(909),
             _op: Default::default(),
@@ -89,7 +87,11 @@ impl Message for HomePosition {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

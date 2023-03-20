@@ -37,8 +37,6 @@ pub struct IndicatedSpeed {
 
 impl Message for IndicatedSpeed {
     fn new() -> IndicatedSpeed {
-        
-
         IndicatedSpeed {
             _header: Header::new(352),
             _value: Default::default(),
@@ -63,7 +61,11 @@ impl Message for IndicatedSpeed {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

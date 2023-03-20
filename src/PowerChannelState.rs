@@ -49,8 +49,6 @@ pub struct PowerChannelState {
 
 impl Message for PowerChannelState {
     fn new() -> PowerChannelState {
-        
-
         PowerChannelState {
             _header: Header::new(311),
             _name: Default::default(),
@@ -76,7 +74,11 @@ impl Message for PowerChannelState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

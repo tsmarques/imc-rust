@@ -72,8 +72,6 @@ pub struct FormationControlParams {
 
 impl Message for FormationControlParams {
     fn new() -> FormationControlParams {
-        
-
         FormationControlParams {
             _header: Header::new(822),
             _Action: Default::default(),
@@ -108,7 +106,11 @@ impl Message for FormationControlParams {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

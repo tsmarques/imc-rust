@@ -48,8 +48,6 @@ pub struct DeviceState {
 
 impl Message for DeviceState {
     fn new() -> DeviceState {
-        
-
         DeviceState {
             _header: Header::new(282),
             _x: Default::default(),
@@ -79,7 +77,11 @@ impl Message for DeviceState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

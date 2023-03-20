@@ -61,8 +61,6 @@ pub struct ApmStatus {
 
 impl Message for ApmStatus {
     fn new() -> ApmStatus {
-        
-
         ApmStatus {
             _header: Header::new(906),
             _severity: Default::default(),
@@ -88,7 +86,11 @@ impl Message for ApmStatus {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

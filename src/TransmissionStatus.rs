@@ -63,8 +63,6 @@ pub struct TransmissionStatus {
 
 impl Message for TransmissionStatus {
     fn new() -> TransmissionStatus {
-        
-
         TransmissionStatus {
             _header: Header::new(516),
             _req_id: Default::default(),
@@ -92,7 +90,11 @@ impl Message for TransmissionStatus {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

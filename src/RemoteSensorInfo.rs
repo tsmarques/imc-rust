@@ -45,8 +45,6 @@ pub struct RemoteSensorInfo {
 
 impl Message for RemoteSensorInfo {
     fn new() -> RemoteSensorInfo {
-        
-
         RemoteSensorInfo {
             _header: Header::new(601),
             _id: Default::default(),
@@ -77,7 +75,11 @@ impl Message for RemoteSensorInfo {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

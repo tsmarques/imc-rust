@@ -55,8 +55,6 @@ pub struct LcdControl {
 
 impl Message for LcdControl {
     fn new() -> LcdControl {
-        
-
         LcdControl {
             _header: Header::new(307),
             _op: Default::default(),
@@ -82,7 +80,11 @@ impl Message for LcdControl {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

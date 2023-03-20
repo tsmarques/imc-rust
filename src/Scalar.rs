@@ -38,8 +38,6 @@ pub struct Scalar {
 
 impl Message for Scalar {
     fn new() -> Scalar {
-        
-
         Scalar {
             _header: Header::new(2012),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for Scalar {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

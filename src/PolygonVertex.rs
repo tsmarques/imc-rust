@@ -41,8 +41,6 @@ pub struct PolygonVertex {
 
 impl Message for PolygonVertex {
     fn new() -> PolygonVertex {
-        
-
         PolygonVertex {
             _header: Header::new(474),
             _lat: Default::default(),
@@ -68,7 +66,11 @@ impl Message for PolygonVertex {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -50,8 +50,6 @@ pub struct Alignment {
 
 impl Message for Alignment {
     fn new() -> Alignment {
-        
-
         Alignment {
             _header: Header::new(495),
             _timeout: Default::default(),
@@ -81,7 +79,11 @@ impl Message for Alignment {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

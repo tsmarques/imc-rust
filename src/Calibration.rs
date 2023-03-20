@@ -38,8 +38,6 @@ pub struct Calibration {
 
 impl Message for Calibration {
     fn new() -> Calibration {
-        
-
         Calibration {
             _header: Header::new(506),
             _duration: Default::default(),
@@ -64,7 +62,11 @@ impl Message for Calibration {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

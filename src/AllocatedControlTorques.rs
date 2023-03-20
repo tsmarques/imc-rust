@@ -42,8 +42,6 @@ pub struct AllocatedControlTorques {
 
 impl Message for AllocatedControlTorques {
     fn new() -> AllocatedControlTorques {
-        
-
         AllocatedControlTorques {
             _header: Header::new(411),
             _k: Default::default(),
@@ -70,7 +68,11 @@ impl Message for AllocatedControlTorques {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

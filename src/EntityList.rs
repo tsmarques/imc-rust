@@ -50,8 +50,6 @@ pub struct EntityList {
 
 impl Message for EntityList {
     fn new() -> EntityList {
-        
-
         EntityList {
             _header: Header::new(5),
             _op: Default::default(),
@@ -77,7 +75,11 @@ impl Message for EntityList {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

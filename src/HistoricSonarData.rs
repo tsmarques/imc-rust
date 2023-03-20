@@ -57,8 +57,6 @@ pub struct HistoricSonarData {
 
 impl Message for HistoricSonarData {
     fn new() -> HistoricSonarData {
-        
-
         HistoricSonarData {
             _header: Header::new(109),
             _altitude: Default::default(),
@@ -89,7 +87,11 @@ impl Message for HistoricSonarData {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

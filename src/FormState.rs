@@ -78,8 +78,6 @@ pub struct FormState {
 
 impl Message for FormState {
     fn new() -> FormState {
-        
-
         FormState {
             _header: Header::new(510),
             _PosSimErr: Default::default(),
@@ -109,7 +107,11 @@ impl Message for FormState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

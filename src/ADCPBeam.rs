@@ -44,8 +44,6 @@ pub struct ADCPBeam {
 
 impl Message for ADCPBeam {
     fn new() -> ADCPBeam {
-        
-
         ADCPBeam {
             _header: Header::new(1016),
             _vel: Default::default(),
@@ -72,7 +70,11 @@ impl Message for ADCPBeam {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

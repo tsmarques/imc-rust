@@ -46,8 +46,6 @@ pub struct ArmingState {
 
 impl Message for ArmingState {
     fn new() -> ArmingState {
-        
-
         ArmingState {
             _header: Header::new(520),
             _state: Default::default(),
@@ -72,7 +70,11 @@ impl Message for ArmingState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

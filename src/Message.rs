@@ -102,33 +102,62 @@ pub trait Message: MessageClone {
     fn as_any(&self) -> &dyn Any;
     fn as_any_mut(&mut self) -> &mut dyn Any;
 
+    /// Get a reference to this message
+    /// header
+    fn get_header(&self) -> &Header;
+
     /// Get a mutable reference to this message
     /// header
-    fn get_header(&mut self) -> &mut Header;
+    fn get_mut_header(&mut self) -> &mut Header;
+
+    /// Get the message's time stamp to a given value
+    fn get_timestamp_secs(&self) -> f64 {
+        self.get_header()._timestamp
+    }
+
+    /// Get message's source
+    fn get_source(&self) -> u16 {
+        self.get_header()._src
+    }
+
+    /// Get message's source entity
+    fn get_source_ent(&self) -> u8 {
+        self.get_header()._src_ent
+    }
+
+    /// Get message's destination
+    fn get_destination(&self) -> u16 {
+        self.get_header()._dst
+    }
+
+    /// Get message' destination entity
+    fn get_destination_ent(&self) -> u8 {
+        self.get_header()._dst_ent
+    }
 
     /// Set the message's time stamp to a given value
     fn set_timestamp_secs(&mut self, ts: f64) {
-        self.get_header()._timestamp = ts
+        self.get_mut_header()._timestamp = ts
     }
 
     /// Set message's source
     fn set_source(&mut self, src: u16) {
-        self.get_header()._src = src;
+        self.get_mut_header()._src = src;
     }
 
     /// Set message's source entity
     fn set_source_ent(&mut self, src_ent: u8) {
-        self.get_header()._src_ent = src_ent;
+        self.get_mut_header()._src_ent = src_ent;
     }
 
     /// Set message's destination
     fn set_destination(&mut self, dst: u16) {
-        self.get_header()._dst = dst;
+        self.get_mut_header()._dst = dst;
     }
 
     /// Set message' destination entity
     fn set_destination_ent(&mut self, dst_ent: u8) {
-        self.get_header()._dst_ent = dst_ent;
+        self.get_mut_header()._dst_ent = dst_ent;
     }
 
     // Clear message's fields

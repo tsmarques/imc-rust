@@ -38,8 +38,6 @@ pub struct DevDataBinary {
 
 impl Message for DevDataBinary {
     fn new() -> DevDataBinary {
-        
-
         DevDataBinary {
             _header: Header::new(274),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for DevDataBinary {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

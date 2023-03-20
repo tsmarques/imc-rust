@@ -48,8 +48,6 @@ pub struct CustomManeuver {
 
 impl Message for CustomManeuver {
     fn new() -> CustomManeuver {
-        
-
         CustomManeuver {
             _header: Header::new(465),
             _timeout: Default::default(),
@@ -76,7 +74,11 @@ impl Message for CustomManeuver {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -42,8 +42,6 @@ pub struct SmsRequest {
 
 impl Message for SmsRequest {
     fn new() -> SmsRequest {
-        
-
         SmsRequest {
             _header: Header::new(517),
             _req_id: Default::default(),
@@ -71,7 +69,11 @@ impl Message for SmsRequest {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

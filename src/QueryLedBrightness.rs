@@ -39,8 +39,6 @@ pub struct QueryLedBrightness {
 
 impl Message for QueryLedBrightness {
     fn new() -> QueryLedBrightness {
-        
-
         QueryLedBrightness {
             _header: Header::new(313),
             _name: Default::default(),
@@ -65,7 +63,11 @@ impl Message for QueryLedBrightness {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

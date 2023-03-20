@@ -53,8 +53,6 @@ pub struct DevCalibrationControl {
 
 impl Message for DevCalibrationControl {
     fn new() -> DevCalibrationControl {
-        
-
         DevCalibrationControl {
             _header: Header::new(12),
             _op: Default::default(),
@@ -79,7 +77,11 @@ impl Message for DevCalibrationControl {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

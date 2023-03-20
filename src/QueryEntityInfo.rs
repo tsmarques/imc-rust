@@ -40,8 +40,6 @@ pub struct QueryEntityInfo {
 
 impl Message for QueryEntityInfo {
     fn new() -> QueryEntityInfo {
-        
-
         QueryEntityInfo {
             _header: Header::new(4),
             _id: Default::default(),
@@ -66,7 +64,11 @@ impl Message for QueryEntityInfo {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

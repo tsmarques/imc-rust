@@ -39,8 +39,6 @@ pub struct SessionSubscription {
 
 impl Message for SessionSubscription {
     fn new() -> SessionSubscription {
-        
-
         SessionSubscription {
             _header: Header::new(808),
             _sessid: Default::default(),
@@ -66,7 +64,11 @@ impl Message for SessionSubscription {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -37,8 +37,6 @@ pub struct CloseSession {
 
 impl Message for CloseSession {
     fn new() -> CloseSession {
-        
-
         CloseSession {
             _header: Header::new(807),
             _sessid: Default::default(),
@@ -63,7 +61,11 @@ impl Message for CloseSession {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

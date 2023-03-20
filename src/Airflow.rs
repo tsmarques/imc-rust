@@ -42,8 +42,6 @@ pub struct Airflow {
 
 impl Message for Airflow {
     fn new() -> Airflow {
-        
-
         Airflow {
             _header: Header::new(363),
             _va: Default::default(),
@@ -70,7 +68,11 @@ impl Message for Airflow {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

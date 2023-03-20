@@ -78,8 +78,6 @@ pub struct Rows {
 
 impl Message for Rows {
     fn new() -> Rows {
-        
-
         Rows {
             _header: Header::new(456),
             _timeout: Default::default(),
@@ -119,7 +117,11 @@ impl Message for Rows {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -112,8 +112,6 @@ pub struct DesiredPath {
 
 impl Message for DesiredPath {
     fn new() -> DesiredPath {
-        
-
         DesiredPath {
             _header: Header::new(406),
             _path_ref: Default::default(),
@@ -150,7 +148,11 @@ impl Message for DesiredPath {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -69,8 +69,6 @@ pub struct UamTxStatus {
 
 impl Message for UamTxStatus {
     fn new() -> UamTxStatus {
-        
-
         UamTxStatus {
             _header: Header::new(816),
             _seq: Default::default(),
@@ -97,7 +95,11 @@ impl Message for UamTxStatus {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -49,8 +49,6 @@ pub struct IoEvent {
 
 impl Message for IoEvent {
     fn new() -> IoEvent {
-        
-
         IoEvent {
             _header: Header::new(813),
             _type: Default::default(),
@@ -76,7 +74,11 @@ impl Message for IoEvent {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -39,8 +39,6 @@ pub struct Voltage {
 
 impl Message for Voltage {
     fn new() -> Voltage {
-        
-
         Voltage {
             _header: Header::new(251),
             _value: Default::default(),
@@ -65,7 +63,11 @@ impl Message for Voltage {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

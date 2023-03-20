@@ -53,8 +53,6 @@ pub struct EulerAngles {
 
 impl Message for EulerAngles {
     fn new() -> EulerAngles {
-        
-
         EulerAngles {
             _header: Header::new(254),
             _time: Default::default(),
@@ -83,7 +81,11 @@ impl Message for EulerAngles {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

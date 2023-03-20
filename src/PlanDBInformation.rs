@@ -50,8 +50,6 @@ pub struct PlanDBInformation {
 
 impl Message for PlanDBInformation {
     fn new() -> PlanDBInformation {
-        
-
         PlanDBInformation {
             _header: Header::new(558),
             _plan_id: Default::default(),
@@ -81,7 +79,11 @@ impl Message for PlanDBInformation {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

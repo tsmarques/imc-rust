@@ -38,8 +38,6 @@ pub struct ProfileSample {
 
 impl Message for ProfileSample {
     fn new() -> ProfileSample {
-        
-
         ProfileSample {
             _header: Header::new(112),
             _depth: Default::default(),
@@ -65,7 +63,11 @@ impl Message for ProfileSample {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

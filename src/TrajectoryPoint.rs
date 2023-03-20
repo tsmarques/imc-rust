@@ -47,8 +47,6 @@ pub struct TrajectoryPoint {
 
 impl Message for TrajectoryPoint {
     fn new() -> TrajectoryPoint {
-        
-
         TrajectoryPoint {
             _header: Header::new(464),
             _x: Default::default(),
@@ -76,7 +74,11 @@ impl Message for TrajectoryPoint {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

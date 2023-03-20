@@ -42,8 +42,6 @@ pub struct Force {
 
 impl Message for Force {
     fn new() -> Force {
-        
-
         Force {
             _header: Header::new(275),
             _x: Default::default(),
@@ -70,7 +68,11 @@ impl Message for Force {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

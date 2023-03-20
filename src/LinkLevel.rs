@@ -40,8 +40,6 @@ pub struct LinkLevel {
 
 impl Message for LinkLevel {
     fn new() -> LinkLevel {
-        
-
         LinkLevel {
             _header: Header::new(155),
             _value: Default::default(),
@@ -66,7 +64,11 @@ impl Message for LinkLevel {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

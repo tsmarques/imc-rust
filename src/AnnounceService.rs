@@ -50,8 +50,6 @@ pub struct AnnounceService {
 
 impl Message for AnnounceService {
     fn new() -> AnnounceService {
-        
-
         AnnounceService {
             _header: Header::new(152),
             _service: Default::default(),
@@ -77,7 +75,11 @@ impl Message for AnnounceService {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

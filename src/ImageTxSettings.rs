@@ -39,8 +39,6 @@ pub struct ImageTxSettings {
 
 impl Message for ImageTxSettings {
     fn new() -> ImageTxSettings {
-        
-
         ImageTxSettings {
             _header: Header::new(703),
             _fps: Default::default(),
@@ -68,7 +66,11 @@ impl Message for ImageTxSettings {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

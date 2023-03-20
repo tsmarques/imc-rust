@@ -44,8 +44,6 @@ pub struct FuelLevel {
 
 impl Message for FuelLevel {
     fn new() -> FuelLevel {
-        
-
         FuelLevel {
             _header: Header::new(279),
             _value: Default::default(),
@@ -72,7 +70,11 @@ impl Message for FuelLevel {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

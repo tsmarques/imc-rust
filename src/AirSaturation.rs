@@ -38,8 +38,6 @@ pub struct AirSaturation {
 
 impl Message for AirSaturation {
     fn new() -> AirSaturation {
-        
-
         AirSaturation {
             _header: Header::new(296),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for AirSaturation {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

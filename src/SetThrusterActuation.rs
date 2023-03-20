@@ -40,8 +40,6 @@ pub struct SetThrusterActuation {
 
 impl Message for SetThrusterActuation {
     fn new() -> SetThrusterActuation {
-        
-
         SetThrusterActuation {
             _header: Header::new(301),
             _id: Default::default(),
@@ -67,7 +65,11 @@ impl Message for SetThrusterActuation {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

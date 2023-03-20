@@ -38,8 +38,6 @@ pub struct DepthOffset {
 
 impl Message for DepthOffset {
     fn new() -> DepthOffset {
-        
-
         DepthOffset {
             _header: Header::new(266),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for DepthOffset {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -38,8 +38,6 @@ pub struct CpuUsage {
 
 impl Message for CpuUsage {
     fn new() -> CpuUsage {
-        
-
         CpuUsage {
             _header: Header::new(7),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for CpuUsage {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

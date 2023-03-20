@@ -44,8 +44,6 @@ pub struct PWM {
 
 impl Message for PWM {
     fn new() -> PWM {
-        
-
         PWM {
             _header: Header::new(316),
             _id: Default::default(),
@@ -72,7 +70,11 @@ impl Message for PWM {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

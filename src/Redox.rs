@@ -38,8 +38,6 @@ pub struct Redox {
 
 impl Message for Redox {
     fn new() -> Redox {
-        
-
         Redox {
             _header: Header::new(299),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for Redox {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

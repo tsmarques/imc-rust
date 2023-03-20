@@ -39,8 +39,6 @@ pub struct AcousticMessage {
 
 impl Message for AcousticMessage {
     fn new() -> AcousticMessage {
-        
-
         AcousticMessage {
             _header: Header::new(206),
             _message: Default::default(),
@@ -65,40 +63,44 @@ impl Message for AcousticMessage {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 
     fn set_timestamp_secs(&mut self, ts: f64) {
-        self.get_header()._timestamp = ts;
+        self.get_mut_header()._timestamp = ts;
         if let Some(m) = &mut self._message {
             m.set_timestamp_secs(ts);
         }
     }
 
     fn set_source(&mut self, src: u16) {
-        self.get_header()._src = src;
+        self.get_mut_header()._src = src;
         if let Some(m) = &mut self._message {
             m.set_source(src);
         }
     }
 
     fn set_source_ent(&mut self, src_ent: u8) {
-        self.get_header()._src_ent = src_ent;
+        self.get_mut_header()._src_ent = src_ent;
         if let Some(m) = &mut self._message {
             m.set_source_ent(src_ent);
         }
     }
 
     fn set_destination(&mut self, dst: u16) {
-        self.get_header()._dst = dst;
+        self.get_mut_header()._dst = dst;
         if let Some(m) = &mut self._message {
             m.set_destination(dst);
         }
     }
 
     fn set_destination_ent(&mut self, dst_ent: u8) {
-        self.get_header()._dst_ent = dst_ent;
+        self.get_mut_header()._dst_ent = dst_ent;
         if let Some(m) = &mut self._message {
             m.set_destination_ent(dst_ent);
         }

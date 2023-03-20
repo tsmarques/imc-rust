@@ -38,8 +38,6 @@ pub struct FluorescentDissolvedOrganicMatter {
 
 impl Message for FluorescentDissolvedOrganicMatter {
     fn new() -> FluorescentDissolvedOrganicMatter {
-        
-
         FluorescentDissolvedOrganicMatter {
             _header: Header::new(2004),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for FluorescentDissolvedOrganicMatter {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

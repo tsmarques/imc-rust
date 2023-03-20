@@ -38,8 +38,6 @@ pub struct CrudeOil {
 
 impl Message for CrudeOil {
     fn new() -> CrudeOil {
-        
-
         CrudeOil {
             _header: Header::new(286),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for CrudeOil {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

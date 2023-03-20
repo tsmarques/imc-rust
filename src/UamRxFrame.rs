@@ -56,8 +56,6 @@ pub struct UamRxFrame {
 
 impl Message for UamRxFrame {
     fn new() -> UamRxFrame {
-        
-
         UamRxFrame {
             _header: Header::new(815),
             _sys_src: Default::default(),
@@ -85,7 +83,11 @@ impl Message for UamRxFrame {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

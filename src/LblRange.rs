@@ -44,8 +44,6 @@ pub struct LblRange {
 
 impl Message for LblRange {
     fn new() -> LblRange {
-        
-
         LblRange {
             _header: Header::new(200),
             _id: Default::default(),
@@ -71,7 +69,11 @@ impl Message for LblRange {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

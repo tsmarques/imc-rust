@@ -53,8 +53,6 @@ pub struct FollowReference {
 
 impl Message for FollowReference {
     fn new() -> FollowReference {
-        
-
         FollowReference {
             _header: Header::new(478),
             _control_src: Default::default(),
@@ -83,7 +81,11 @@ impl Message for FollowReference {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -43,8 +43,6 @@ pub struct EstimatedStreamVelocity {
 
 impl Message for EstimatedStreamVelocity {
     fn new() -> EstimatedStreamVelocity {
-        
-
         EstimatedStreamVelocity {
             _header: Header::new(351),
             _x: Default::default(),
@@ -71,7 +69,11 @@ impl Message for EstimatedStreamVelocity {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

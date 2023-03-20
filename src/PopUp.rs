@@ -75,8 +75,6 @@ pub struct PopUp {
 
 impl Message for PopUp {
     fn new() -> PopUp {
-        
-
         PopUp {
             _header: Header::new(451),
             _timeout: Default::default(),
@@ -111,7 +109,11 @@ impl Message for PopUp {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

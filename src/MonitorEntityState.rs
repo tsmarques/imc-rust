@@ -55,8 +55,6 @@ pub struct MonitorEntityState {
 
 impl Message for MonitorEntityState {
     fn new() -> MonitorEntityState {
-        
-
         MonitorEntityState {
             _header: Header::new(502),
             _command: Default::default(),
@@ -82,7 +80,11 @@ impl Message for MonitorEntityState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

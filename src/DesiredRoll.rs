@@ -38,8 +38,6 @@ pub struct DesiredRoll {
 
 impl Message for DesiredRoll {
     fn new() -> DesiredRoll {
-        
-
         DesiredRoll {
             _header: Header::new(403),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for DesiredRoll {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

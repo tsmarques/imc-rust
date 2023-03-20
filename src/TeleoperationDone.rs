@@ -18,7 +18,6 @@
 // IMC XML MD5: b521199aa61f91939b6b6ed9e44d149b                            *
 //###########################################################################
 
-
 /// Base
 use std::any::Any;
 
@@ -35,8 +34,6 @@ pub struct TeleoperationDone {
 
 impl Message for TeleoperationDone {
     fn new() -> TeleoperationDone {
-        
-
         TeleoperationDone {
             _header: Header::new(460),
         }
@@ -60,7 +57,11 @@ impl Message for TeleoperationDone {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

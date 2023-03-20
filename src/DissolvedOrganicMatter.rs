@@ -49,8 +49,6 @@ pub struct DissolvedOrganicMatter {
 
 impl Message for DissolvedOrganicMatter {
     fn new() -> DissolvedOrganicMatter {
-        
-
         DissolvedOrganicMatter {
             _header: Header::new(903),
             _value: Default::default(),
@@ -76,7 +74,11 @@ impl Message for DissolvedOrganicMatter {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

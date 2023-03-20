@@ -46,8 +46,6 @@ pub struct RemoteState {
 
 impl Message for RemoteState {
     fn new() -> RemoteState {
-        
-
         RemoteState {
             _header: Header::new(750),
             _lat: Default::default(),
@@ -76,7 +74,11 @@ impl Message for RemoteState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

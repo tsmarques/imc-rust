@@ -58,8 +58,6 @@ pub struct TrexCommand {
 
 impl Message for TrexCommand {
     fn new() -> TrexCommand {
-        
-
         TrexCommand {
             _header: Header::new(652),
             _command: Default::default(),
@@ -86,7 +84,11 @@ impl Message for TrexCommand {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

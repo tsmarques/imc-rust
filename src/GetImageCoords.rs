@@ -42,8 +42,6 @@ pub struct GetImageCoords {
 
 impl Message for GetImageCoords {
     fn new() -> GetImageCoords {
-        
-
         GetImageCoords {
             _header: Header::new(896),
             _camId: Default::default(),
@@ -70,7 +68,11 @@ impl Message for GetImageCoords {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

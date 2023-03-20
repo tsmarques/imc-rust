@@ -38,8 +38,6 @@ pub struct Depth {
 
 impl Message for Depth {
     fn new() -> Depth {
-        
-
         Depth {
             _header: Header::new(265),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for Depth {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

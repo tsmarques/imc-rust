@@ -38,8 +38,6 @@ pub struct FineOil {
 
 impl Message for FineOil {
     fn new() -> FineOil {
-        
-
         FineOil {
             _header: Header::new(287),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for FineOil {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

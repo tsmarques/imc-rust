@@ -45,8 +45,6 @@ pub struct CompressedHistory {
 
 impl Message for CompressedHistory {
     fn new() -> CompressedHistory {
-        
-
         CompressedHistory {
             _header: Header::new(185),
             _base_lat: Default::default(),
@@ -74,7 +72,11 @@ impl Message for CompressedHistory {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

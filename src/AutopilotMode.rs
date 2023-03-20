@@ -51,8 +51,6 @@ pub struct AutopilotMode {
 
 impl Message for AutopilotMode {
     fn new() -> AutopilotMode {
-        
-
         AutopilotMode {
             _header: Header::new(511),
             _autonomy: Default::default(),
@@ -78,7 +76,11 @@ impl Message for AutopilotMode {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

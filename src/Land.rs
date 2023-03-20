@@ -59,8 +59,6 @@ pub struct Land {
 
 impl Message for Land {
     fn new() -> Land {
-        
-
         Land {
             _header: Header::new(492),
             _lat: Default::default(),
@@ -95,7 +93,11 @@ impl Message for Land {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

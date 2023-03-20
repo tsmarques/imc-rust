@@ -61,8 +61,6 @@ pub struct FormCtrlParam {
 
 impl Message for FormCtrlParam {
     fn new() -> FormCtrlParam {
-        
-
         FormCtrlParam {
             _header: Header::new(820),
             _Action: Default::default(),
@@ -92,7 +90,11 @@ impl Message for FormCtrlParam {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

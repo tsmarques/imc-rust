@@ -68,8 +68,6 @@ pub struct DesiredControl {
 
 impl Message for DesiredControl {
     fn new() -> DesiredControl {
-        
-
         DesiredControl {
             _header: Header::new(407),
             _x: Default::default(),
@@ -100,7 +98,11 @@ impl Message for DesiredControl {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

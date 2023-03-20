@@ -56,8 +56,6 @@ pub struct ManeuverControlState {
 
 impl Message for ManeuverControlState {
     fn new() -> ManeuverControlState {
-        
-
         ManeuverControlState {
             _header: Header::new(470),
             _state: Default::default(),
@@ -84,7 +82,11 @@ impl Message for ManeuverControlState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

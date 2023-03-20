@@ -52,8 +52,6 @@ pub struct EntityMonitoringState {
 
 impl Message for EntityMonitoringState {
     fn new() -> EntityMonitoringState {
-        
-
         EntityMonitoringState {
             _header: Header::new(503),
             _mcount: Default::default(),
@@ -85,7 +83,11 @@ impl Message for EntityMonitoringState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

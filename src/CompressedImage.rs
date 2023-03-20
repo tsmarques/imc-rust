@@ -37,8 +37,6 @@ pub struct CompressedImage {
 
 impl Message for CompressedImage {
     fn new() -> CompressedImage {
-        
-
         CompressedImage {
             _header: Header::new(702),
             _frameid: Default::default(),
@@ -64,7 +62,11 @@ impl Message for CompressedImage {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

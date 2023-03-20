@@ -39,8 +39,6 @@ pub struct MapPoint {
 
 impl Message for MapPoint {
     fn new() -> MapPoint {
-        
-
         MapPoint {
             _header: Header::new(604),
             _lat: Default::default(),
@@ -67,7 +65,11 @@ impl Message for MapPoint {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

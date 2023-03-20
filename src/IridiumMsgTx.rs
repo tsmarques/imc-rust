@@ -43,8 +43,6 @@ pub struct IridiumMsgTx {
 
 impl Message for IridiumMsgTx {
     fn new() -> IridiumMsgTx {
-        
-
         IridiumMsgTx {
             _header: Header::new(171),
             _req_id: Default::default(),
@@ -72,7 +70,11 @@ impl Message for IridiumMsgTx {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

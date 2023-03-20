@@ -39,8 +39,6 @@ pub struct HistoricCTD {
 
 impl Message for HistoricCTD {
     fn new() -> HistoricCTD {
-        
-
         HistoricCTD {
             _header: Header::new(107),
             _conductivity: Default::default(),
@@ -67,7 +65,11 @@ impl Message for HistoricCTD {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

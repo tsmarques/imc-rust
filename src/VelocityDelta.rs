@@ -44,8 +44,6 @@ pub struct VelocityDelta {
 
 impl Message for VelocityDelta {
     fn new() -> VelocityDelta {
-        
-
         VelocityDelta {
             _header: Header::new(261),
             _time: Default::default(),
@@ -73,7 +71,11 @@ impl Message for VelocityDelta {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

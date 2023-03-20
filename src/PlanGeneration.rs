@@ -64,8 +64,6 @@ pub struct PlanGeneration {
 
 impl Message for PlanGeneration {
     fn new() -> PlanGeneration {
-        
-
         PlanGeneration {
             _header: Header::new(562),
             _cmd: Default::default(),
@@ -93,7 +91,11 @@ impl Message for PlanGeneration {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

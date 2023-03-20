@@ -18,7 +18,6 @@
 // IMC XML MD5: b521199aa61f91939b6b6ed9e44d149b                            *
 //###########################################################################
 
-
 /// Base
 use std::any::Any;
 
@@ -35,8 +34,6 @@ pub struct Aborted {
 
 impl Message for Aborted {
     fn new() -> Aborted {
-        
-
         Aborted {
             _header: Header::new(889),
         }
@@ -60,7 +57,11 @@ impl Message for Aborted {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

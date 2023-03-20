@@ -63,8 +63,6 @@ pub struct PowerChannelControl {
 
 impl Message for PowerChannelControl {
     fn new() -> PowerChannelControl {
-        
-
         PowerChannelControl {
             _header: Header::new(309),
             _name: Default::default(),
@@ -91,7 +89,11 @@ impl Message for PowerChannelControl {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

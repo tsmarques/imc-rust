@@ -77,8 +77,6 @@ pub struct ReportControl {
 
 impl Message for ReportControl {
     fn new() -> ReportControl {
-        
-
         ReportControl {
             _header: Header::new(513),
             _op: Default::default(),
@@ -106,7 +104,11 @@ impl Message for ReportControl {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

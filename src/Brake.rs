@@ -49,8 +49,6 @@ pub struct Brake {
 
 impl Message for Brake {
     fn new() -> Brake {
-        
-
         Brake {
             _header: Header::new(413),
             _op: Default::default(),
@@ -75,7 +73,11 @@ impl Message for Brake {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

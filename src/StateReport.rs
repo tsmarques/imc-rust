@@ -63,8 +63,6 @@ pub struct StateReport {
 
 impl Message for StateReport {
     fn new() -> StateReport {
-        
-
         StateReport {
             _header: Header::new(514),
             _stime: Default::default(),
@@ -98,7 +96,11 @@ impl Message for StateReport {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -66,8 +66,6 @@ pub struct ScheduledGoto {
 
 impl Message for ScheduledGoto {
     fn new() -> ScheduledGoto {
-        
-
         ScheduledGoto {
             _header: Header::new(487),
             _arrival_time: Default::default(),
@@ -99,7 +97,11 @@ impl Message for ScheduledGoto {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

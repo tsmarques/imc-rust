@@ -36,8 +36,6 @@ pub struct PushEntityParameters {
 
 impl Message for PushEntityParameters {
     fn new() -> PushEntityParameters {
-        
-
         PushEntityParameters {
             _header: Header::new(811),
             _name: Default::default(),
@@ -62,7 +60,11 @@ impl Message for PushEntityParameters {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

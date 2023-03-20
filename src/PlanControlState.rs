@@ -80,8 +80,6 @@ pub struct PlanControlState {
 
 impl Message for PlanControlState {
     fn new() -> PlanControlState {
-        
-
         PlanControlState {
             _header: Header::new(560),
             _state: Default::default(),
@@ -113,7 +111,11 @@ impl Message for PlanControlState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

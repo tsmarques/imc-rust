@@ -57,8 +57,6 @@ pub struct TCPStatus {
 
 impl Message for TCPStatus {
     fn new() -> TCPStatus {
-        
-
         TCPStatus {
             _header: Header::new(522),
             _req_id: Default::default(),
@@ -85,7 +83,11 @@ impl Message for TCPStatus {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

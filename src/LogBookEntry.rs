@@ -59,8 +59,6 @@ pub struct LogBookEntry {
 
 impl Message for LogBookEntry {
     fn new() -> LogBookEntry {
-        
-
         LogBookEntry {
             _header: Header::new(103),
             _type: Default::default(),
@@ -88,7 +86,11 @@ impl Message for LogBookEntry {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

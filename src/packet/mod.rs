@@ -44,8 +44,8 @@ pub fn serialize(msg: &mut dyn Message, bfr: &mut bytes::BytesMut) -> Result<usi
     }
 
     // header
-    msg.get_header()._size = msg.payload_serialization_size() as u16;
-    msg.get_header().serialize(bfr);
+    msg.get_mut_header()._size = msg.payload_serialization_size() as u16;
+    msg.get_mut_header().serialize(bfr);
     // payload
     msg.serialize_fields(bfr);
     // footer

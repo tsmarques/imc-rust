@@ -59,8 +59,6 @@ pub struct AlignmentState {
 
 impl Message for AlignmentState {
     fn new() -> AlignmentState {
-        
-
         AlignmentState {
             _header: Header::new(361),
             _state: Default::default(),
@@ -85,7 +83,11 @@ impl Message for AlignmentState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

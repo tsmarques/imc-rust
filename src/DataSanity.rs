@@ -47,8 +47,6 @@ pub struct DataSanity {
 
 impl Message for DataSanity {
     fn new() -> DataSanity {
-        
-
         DataSanity {
             _header: Header::new(284),
             _sane: Default::default(),
@@ -73,7 +71,11 @@ impl Message for DataSanity {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

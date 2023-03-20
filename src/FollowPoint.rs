@@ -52,8 +52,6 @@ pub struct FollowPoint {
 
 impl Message for FollowPoint {
     fn new() -> FollowPoint {
-        
-
         FollowPoint {
             _header: Header::new(494),
             _target: Default::default(),
@@ -85,7 +83,11 @@ impl Message for FollowPoint {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

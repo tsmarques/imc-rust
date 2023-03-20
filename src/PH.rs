@@ -38,8 +38,6 @@ pub struct PH {
 
 impl Message for PH {
     fn new() -> PH {
-        
-
         PH {
             _header: Header::new(298),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for PH {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

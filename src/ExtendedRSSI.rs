@@ -42,8 +42,6 @@ pub struct ExtendedRSSI {
 
 impl Message for ExtendedRSSI {
     fn new() -> ExtendedRSSI {
-        
-
         ExtendedRSSI {
             _header: Header::new(183),
             _value: Default::default(),
@@ -69,7 +67,11 @@ impl Message for ExtendedRSSI {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

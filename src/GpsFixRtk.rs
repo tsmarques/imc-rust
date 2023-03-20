@@ -92,8 +92,6 @@ pub struct GpsFixRtk {
 
 impl Message for GpsFixRtk {
     fn new() -> GpsFixRtk {
-        
-
         GpsFixRtk {
             _header: Header::new(293),
             _validity: Default::default(),
@@ -132,7 +130,11 @@ impl Message for GpsFixRtk {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

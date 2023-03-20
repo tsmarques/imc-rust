@@ -107,8 +107,6 @@ pub struct GpsFix {
 
 impl Message for GpsFix {
     fn new() -> GpsFix {
-        
-
         GpsFix {
             _header: Header::new(253),
             _validity: Default::default(),
@@ -148,7 +146,11 @@ impl Message for GpsFix {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

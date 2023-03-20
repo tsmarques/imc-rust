@@ -59,8 +59,6 @@ pub struct SmsState {
 
 impl Message for SmsState {
     fn new() -> SmsState {
-        
-
         SmsState {
             _header: Header::new(159),
             _seq: Default::default(),
@@ -87,7 +85,11 @@ impl Message for SmsState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

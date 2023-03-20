@@ -41,8 +41,6 @@ pub struct GpioStateSet {
 
 impl Message for GpioStateSet {
     fn new() -> GpioStateSet {
-        
-
         GpioStateSet {
             _header: Header::new(2002),
             _name: Default::default(),
@@ -68,7 +66,11 @@ impl Message for GpioStateSet {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

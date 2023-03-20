@@ -38,8 +38,6 @@ pub struct Temperature {
 
 impl Message for Temperature {
     fn new() -> Temperature {
-        
-
         Temperature {
             _header: Header::new(263),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for Temperature {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

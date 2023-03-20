@@ -44,8 +44,6 @@ pub struct ControlParcel {
 
 impl Message for ControlParcel {
     fn new() -> ControlParcel {
-        
-
         ControlParcel {
             _header: Header::new(412),
             _p: Default::default(),
@@ -73,7 +71,11 @@ impl Message for ControlParcel {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

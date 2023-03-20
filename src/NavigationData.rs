@@ -57,8 +57,6 @@ pub struct NavigationData {
 
 impl Message for NavigationData {
     fn new() -> NavigationData {
-        
-
         NavigationData {
             _header: Header::new(355),
             _bias_psi: Default::default(),
@@ -91,7 +89,11 @@ impl Message for NavigationData {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

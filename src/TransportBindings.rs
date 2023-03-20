@@ -40,8 +40,6 @@ pub struct TransportBindings {
 
 impl Message for TransportBindings {
     fn new() -> TransportBindings {
-        
-
         TransportBindings {
             _header: Header::new(8),
             _consumer: Default::default(),
@@ -67,7 +65,11 @@ impl Message for TransportBindings {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

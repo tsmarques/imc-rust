@@ -57,8 +57,6 @@ pub struct WaterVelocity {
 
 impl Message for WaterVelocity {
     fn new() -> WaterVelocity {
-        
-
         WaterVelocity {
             _header: Header::new(260),
             _validity: Default::default(),
@@ -86,7 +84,11 @@ impl Message for WaterVelocity {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -74,8 +74,6 @@ pub struct SimulatedState {
 
 impl Message for SimulatedState {
     fn new() -> SimulatedState {
-        
-
         SimulatedState {
             _header: Header::new(50),
             _lat: Default::default(),
@@ -117,7 +115,11 @@ impl Message for SimulatedState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

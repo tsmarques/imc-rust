@@ -94,8 +94,6 @@ pub struct EstimatedState {
 
 impl Message for EstimatedState {
     fn new() -> EstimatedState {
-        
-
         EstimatedState {
             _header: Header::new(350),
             _lat: Default::default(),
@@ -139,7 +137,11 @@ impl Message for EstimatedState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

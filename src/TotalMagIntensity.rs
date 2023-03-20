@@ -37,8 +37,6 @@ pub struct TotalMagIntensity {
 
 impl Message for TotalMagIntensity {
     fn new() -> TotalMagIntensity {
-        
-
         TotalMagIntensity {
             _header: Header::new(2006),
             _value: Default::default(),
@@ -63,7 +61,11 @@ impl Message for TotalMagIntensity {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

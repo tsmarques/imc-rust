@@ -45,8 +45,6 @@ pub struct UsblPosition {
 
 impl Message for UsblPosition {
     fn new() -> UsblPosition {
-        
-
         UsblPosition {
             _header: Header::new(891),
             _target: Default::default(),
@@ -74,7 +72,11 @@ impl Message for UsblPosition {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -58,8 +58,6 @@ pub struct Launch {
 
 impl Message for Launch {
     fn new() -> Launch {
-        
-
         Launch {
             _header: Header::new(485),
             _timeout: Default::default(),
@@ -91,7 +89,11 @@ impl Message for Launch {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

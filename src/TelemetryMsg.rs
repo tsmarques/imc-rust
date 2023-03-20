@@ -109,8 +109,6 @@ pub struct TelemetryMsg {
 
 impl Message for TelemetryMsg {
     fn new() -> TelemetryMsg {
-        
-
         TelemetryMsg {
             _header: Header::new(190),
             _type: Default::default(),
@@ -143,7 +141,11 @@ impl Message for TelemetryMsg {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

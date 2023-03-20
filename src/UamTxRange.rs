@@ -44,8 +44,6 @@ pub struct UamTxRange {
 
 impl Message for UamTxRange {
     fn new() -> UamTxRange {
-        
-
         UamTxRange {
             _header: Header::new(818),
             _seq: Default::default(),
@@ -72,7 +70,11 @@ impl Message for UamTxRange {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

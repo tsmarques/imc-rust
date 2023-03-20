@@ -83,8 +83,6 @@ pub struct RelativeState {
 
 impl Message for RelativeState {
     fn new() -> RelativeState {
-        
-
         RelativeState {
             _header: Header::new(482),
             _s_id: Default::default(),
@@ -130,7 +128,11 @@ impl Message for RelativeState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -55,8 +55,6 @@ pub struct UsblAnglesExtended {
 
 impl Message for UsblAnglesExtended {
     fn new() -> UsblAnglesExtended {
-        
-
         UsblAnglesExtended {
             _header: Header::new(898),
             _target: Default::default(),
@@ -89,7 +87,11 @@ impl Message for UsblAnglesExtended {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

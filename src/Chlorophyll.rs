@@ -38,8 +38,6 @@ pub struct Chlorophyll {
 
 impl Message for Chlorophyll {
     fn new() -> Chlorophyll {
-        
-
         Chlorophyll {
             _header: Header::new(289),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for Chlorophyll {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

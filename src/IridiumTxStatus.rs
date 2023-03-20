@@ -56,8 +56,6 @@ pub struct IridiumTxStatus {
 
 impl Message for IridiumTxStatus {
     fn new() -> IridiumTxStatus {
-        
-
         IridiumTxStatus {
             _header: Header::new(172),
             _req_id: Default::default(),
@@ -84,7 +82,11 @@ impl Message for IridiumTxStatus {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -40,8 +40,6 @@ pub struct SetServoPosition {
 
 impl Message for SetServoPosition {
     fn new() -> SetServoPosition {
-        
-
         SetServoPosition {
             _header: Header::new(302),
             _id: Default::default(),
@@ -67,7 +65,11 @@ impl Message for SetServoPosition {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

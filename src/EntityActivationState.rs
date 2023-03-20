@@ -61,8 +61,6 @@ pub struct EntityActivationState {
 
 impl Message for EntityActivationState {
     fn new() -> EntityActivationState {
-        
-
         EntityActivationState {
             _header: Header::new(14),
             _state: Default::default(),
@@ -88,7 +86,11 @@ impl Message for EntityActivationState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

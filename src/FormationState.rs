@@ -100,8 +100,6 @@ pub struct FormationState {
 
 impl Message for FormationState {
     fn new() -> FormationState {
-        
-
         FormationState {
             _header: Header::new(512),
             _type: Default::default(),
@@ -133,7 +131,11 @@ impl Message for FormationState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

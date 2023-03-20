@@ -40,8 +40,6 @@ pub struct SetControlSurfaceDeflection {
 
 impl Message for SetControlSurfaceDeflection {
     fn new() -> SetControlSurfaceDeflection {
-        
-
         SetControlSurfaceDeflection {
             _header: Header::new(303),
             _id: Default::default(),
@@ -67,7 +65,11 @@ impl Message for SetControlSurfaceDeflection {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

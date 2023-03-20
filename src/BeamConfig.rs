@@ -42,8 +42,6 @@ pub struct BeamConfig {
 
 impl Message for BeamConfig {
     fn new() -> BeamConfig {
-        
-
         BeamConfig {
             _header: Header::new(283),
             _beam_width: Default::default(),
@@ -69,7 +67,11 @@ impl Message for BeamConfig {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

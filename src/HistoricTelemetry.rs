@@ -44,8 +44,6 @@ pub struct HistoricTelemetry {
 
 impl Message for HistoricTelemetry {
     fn new() -> HistoricTelemetry {
-        
-
         HistoricTelemetry {
             _header: Header::new(108),
             _altitude: Default::default(),
@@ -74,7 +72,11 @@ impl Message for HistoricTelemetry {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

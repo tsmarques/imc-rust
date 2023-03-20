@@ -50,8 +50,6 @@ pub struct LblBeacon {
 
 impl Message for LblBeacon {
     fn new() -> LblBeacon {
-        
-
         LblBeacon {
             _header: Header::new(202),
             _beacon: Default::default(),
@@ -82,7 +80,11 @@ impl Message for LblBeacon {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

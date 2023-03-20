@@ -40,8 +40,6 @@ pub struct DesiredZ {
 
 impl Message for DesiredZ {
     fn new() -> DesiredZ {
-        
-
         DesiredZ {
             _header: Header::new(401),
             _value: Default::default(),
@@ -67,7 +65,11 @@ impl Message for DesiredZ {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

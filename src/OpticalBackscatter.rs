@@ -39,8 +39,6 @@ pub struct OpticalBackscatter {
 
 impl Message for OpticalBackscatter {
     fn new() -> OpticalBackscatter {
-        
-
         OpticalBackscatter {
             _header: Header::new(904),
             _value: Default::default(),
@@ -65,7 +63,11 @@ impl Message for OpticalBackscatter {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

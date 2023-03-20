@@ -45,8 +45,6 @@ pub struct AngularVelocity {
 
 impl Message for AngularVelocity {
     fn new() -> AngularVelocity {
-        
-
         AngularVelocity {
             _header: Header::new(256),
             _time: Default::default(),
@@ -74,7 +72,11 @@ impl Message for AngularVelocity {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

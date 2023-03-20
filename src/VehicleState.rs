@@ -89,8 +89,6 @@ pub struct VehicleState {
 
 impl Message for VehicleState {
     fn new() -> VehicleState {
-        
-
         VehicleState {
             _header: Header::new(500),
             _op_mode: Default::default(),
@@ -124,7 +122,11 @@ impl Message for VehicleState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

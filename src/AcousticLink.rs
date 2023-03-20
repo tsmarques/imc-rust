@@ -51,8 +51,6 @@ pub struct AcousticLink {
 
 impl Message for AcousticLink {
     fn new() -> AcousticLink {
-        
-
         AcousticLink {
             _header: Header::new(214),
             _peer: Default::default(),
@@ -79,7 +77,11 @@ impl Message for AcousticLink {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -53,8 +53,6 @@ pub struct FollowSystem {
 
 impl Message for FollowSystem {
     fn new() -> FollowSystem {
-        
-
         FollowSystem {
             _header: Header::new(471),
             _system: Default::default(),
@@ -86,7 +84,11 @@ impl Message for FollowSystem {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -41,8 +41,6 @@ pub struct IdleManeuver {
 
 impl Message for IdleManeuver {
     fn new() -> IdleManeuver {
-        
-
         IdleManeuver {
             _header: Header::new(454),
             _duration: Default::default(),
@@ -68,7 +66,11 @@ impl Message for IdleManeuver {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

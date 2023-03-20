@@ -39,8 +39,6 @@ pub struct TrexObservation {
 
 impl Message for TrexObservation {
     fn new() -> TrexObservation {
-        
-
         TrexObservation {
             _header: Header::new(651),
             _timeline: Default::default(),
@@ -67,7 +65,11 @@ impl Message for TrexObservation {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

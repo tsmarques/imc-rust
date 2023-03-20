@@ -104,8 +104,6 @@ pub struct LeaderState {
 
 impl Message for LeaderState {
     fn new() -> LeaderState {
-        
-
         LeaderState {
             _header: Header::new(563),
             _group_name: Default::default(),
@@ -149,7 +147,11 @@ impl Message for LeaderState {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

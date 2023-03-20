@@ -84,8 +84,6 @@ pub struct DvlRejection {
 
 impl Message for DvlRejection {
     fn new() -> DvlRejection {
-        
-
         DvlRejection {
             _header: Header::new(358),
             _type: Default::default(),
@@ -113,7 +111,11 @@ impl Message for DvlRejection {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -103,7 +103,7 @@ fn deserialize_as() {
     assert!(ret.is_ok());
 
     let mut lc2 = ret.ok().unwrap();
-    assert_eq!(lc.get_header(), lc2.get_header());
+    assert_eq!(lc.get_mut_header(), lc2.get_mut_header());
     assert_eq!(lc._op, lc2._op);
     assert_eq!(lc._name, lc2._name);
 }
@@ -130,7 +130,7 @@ fn generic_deserialize() {
     assert!(ret.is_ok());
 
     let mut lc2 = ret.ok().unwrap();
-    assert_eq!(lc.get_header(), lc2.get_header());
+    assert_eq!(lc.get_mut_header(), lc2.get_mut_header());
 }
 
 #[test]
@@ -318,5 +318,5 @@ fn test_VehicleCommand() {
     assert!(ret.is_ok());
 
     let mut msg2 = ret.ok().unwrap();
-    assert_eq!(msg.get_header(), msg2.get_header());
+    assert_eq!(msg.get_mut_header(), msg2.get_mut_header());
 }

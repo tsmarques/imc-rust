@@ -47,8 +47,6 @@ pub struct SessionStatus {
 
 impl Message for SessionStatus {
     fn new() -> SessionStatus {
-        
-
         SessionStatus {
             _header: Header::new(810),
             _sessid: Default::default(),
@@ -74,7 +72,11 @@ impl Message for SessionStatus {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -60,8 +60,6 @@ pub struct Dislodge {
 
 impl Message for Dislodge {
     fn new() -> Dislodge {
-        
-
         Dislodge {
             _header: Header::new(483),
             _timeout: Default::default(),
@@ -89,7 +87,11 @@ impl Message for Dislodge {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

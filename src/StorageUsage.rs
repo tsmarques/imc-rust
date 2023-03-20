@@ -40,8 +40,6 @@ pub struct StorageUsage {
 
 impl Message for StorageUsage {
     fn new() -> StorageUsage {
-        
-
         StorageUsage {
             _header: Header::new(100),
             _available: Default::default(),
@@ -67,7 +65,11 @@ impl Message for StorageUsage {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

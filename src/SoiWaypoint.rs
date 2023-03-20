@@ -39,8 +39,6 @@ pub struct SoiWaypoint {
 
 impl Message for SoiWaypoint {
     fn new() -> SoiWaypoint {
-        
-
         SoiWaypoint {
             _header: Header::new(850),
             _lat: Default::default(),
@@ -68,7 +66,11 @@ impl Message for SoiWaypoint {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

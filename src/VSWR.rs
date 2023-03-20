@@ -38,8 +38,6 @@ pub struct VSWR {
 
 impl Message for VSWR {
     fn new() -> VSWR {
-        
-
         VSWR {
             _header: Header::new(154),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for VSWR {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

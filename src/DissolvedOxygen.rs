@@ -38,8 +38,6 @@ pub struct DissolvedOxygen {
 
 impl Message for DissolvedOxygen {
     fn new() -> DissolvedOxygen {
-        
-
         DissolvedOxygen {
             _header: Header::new(295),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for DissolvedOxygen {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

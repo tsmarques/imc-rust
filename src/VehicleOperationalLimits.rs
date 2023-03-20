@@ -89,8 +89,6 @@ pub struct VehicleOperationalLimits {
 
 impl Message for VehicleOperationalLimits {
     fn new() -> VehicleOperationalLimits {
-        
-
         VehicleOperationalLimits {
             _header: Header::new(16),
             _op: Default::default(),
@@ -132,7 +130,11 @@ impl Message for VehicleOperationalLimits {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -53,8 +53,6 @@ pub struct Announce {
 
 impl Message for Announce {
     fn new() -> Announce {
-        
-
         Announce {
             _header: Header::new(151),
             _sys_name: Default::default(),
@@ -85,7 +83,11 @@ impl Message for Announce {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

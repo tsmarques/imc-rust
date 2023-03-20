@@ -44,8 +44,6 @@ pub struct VehicleFormationParticipant {
 
 impl Message for VehicleFormationParticipant {
     fn new() -> VehicleFormationParticipant {
-        
-
         VehicleFormationParticipant {
             _header: Header::new(467),
             _vid: Default::default(),
@@ -73,7 +71,11 @@ impl Message for VehicleFormationParticipant {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

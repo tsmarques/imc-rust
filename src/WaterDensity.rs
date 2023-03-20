@@ -38,8 +38,6 @@ pub struct WaterDensity {
 
 impl Message for WaterDensity {
     fn new() -> WaterDensity {
-        
-
         WaterDensity {
             _header: Header::new(268),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for WaterDensity {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

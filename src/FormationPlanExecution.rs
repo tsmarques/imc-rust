@@ -74,8 +74,6 @@ pub struct FormationPlanExecution {
 
 impl Message for FormationPlanExecution {
     fn new() -> FormationPlanExecution {
-        
-
         FormationPlanExecution {
             _header: Header::new(477),
             _group_name: Default::default(),
@@ -113,7 +111,11 @@ impl Message for FormationPlanExecution {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

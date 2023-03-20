@@ -42,8 +42,6 @@ pub struct FormationEval {
 
 impl Message for FormationEval {
     fn new() -> FormationEval {
-        
-
         FormationEval {
             _header: Header::new(821),
             _err_mean: Default::default(),
@@ -70,7 +68,11 @@ impl Message for FormationEval {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

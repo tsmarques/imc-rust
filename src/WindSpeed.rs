@@ -42,8 +42,6 @@ pub struct WindSpeed {
 
 impl Message for WindSpeed {
     fn new() -> WindSpeed {
-        
-
         WindSpeed {
             _header: Header::new(271),
             _direction: Default::default(),
@@ -70,7 +68,11 @@ impl Message for WindSpeed {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

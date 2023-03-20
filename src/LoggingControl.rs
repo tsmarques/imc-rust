@@ -58,8 +58,6 @@ pub struct LoggingControl {
 
 impl Message for LoggingControl {
     fn new() -> LoggingControl {
-        
-
         LoggingControl {
             _header: Header::new(102),
             _op: Default::default(),
@@ -85,7 +83,11 @@ impl Message for LoggingControl {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

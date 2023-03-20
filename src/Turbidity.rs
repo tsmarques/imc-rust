@@ -38,8 +38,6 @@ pub struct Turbidity {
 
 impl Message for Turbidity {
     fn new() -> Turbidity {
-        
-
         Turbidity {
             _header: Header::new(288),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for Turbidity {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

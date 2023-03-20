@@ -40,8 +40,6 @@ pub struct AcousticSystems {
 
 impl Message for AcousticSystems {
     fn new() -> AcousticSystems {
-        
-
         AcousticSystems {
             _header: Header::new(213),
             _list: Default::default(),
@@ -66,7 +64,11 @@ impl Message for AcousticSystems {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

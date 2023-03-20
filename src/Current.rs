@@ -39,8 +39,6 @@ pub struct Current {
 
 impl Message for Current {
     fn new() -> Current {
-        
-
         Current {
             _header: Header::new(252),
             _value: Default::default(),
@@ -65,7 +63,11 @@ impl Message for Current {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

@@ -38,8 +38,6 @@ pub struct RhodamineDye {
 
 impl Message for RhodamineDye {
     fn new() -> RhodamineDye {
-        
-
         RhodamineDye {
             _header: Header::new(285),
             _value: Default::default(),
@@ -64,7 +62,11 @@ impl Message for RhodamineDye {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 

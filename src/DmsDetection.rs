@@ -53,8 +53,6 @@ pub struct DmsDetection {
 
 impl Message for DmsDetection {
     fn new() -> DmsDetection {
-        
-
         DmsDetection {
             _header: Header::new(908),
             _ch01: Default::default(),
@@ -94,7 +92,11 @@ impl Message for DmsDetection {
         self
     }
 
-    fn get_header(&mut self) -> &mut Header {
+    fn get_header(&self) -> &Header {
+        &self._header
+    }
+
+    fn get_mut_header(&mut self) -> &mut Header {
         &mut self._header
     }
 
