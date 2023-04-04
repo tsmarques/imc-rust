@@ -524,8 +524,8 @@ pub mod OpLimitsMask {
     pub const OPL_AREA: u32 = 0x40;
 }
 
-pub fn is<T: Message>(id: u16) -> bool {
-    T::static_id() == id
+pub fn is<T: Message>(m :&dyn Message) -> bool {
+    T::static_id() == m.id()
 }
 
 // FIXME do we really need 'static?

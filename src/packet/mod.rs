@@ -11,7 +11,7 @@ use bytes::{Buf, BufMut};
 use crc16::{State, ARC};
 
 pub mod crc;
-
+#[derive(Debug)]
 pub enum ImcError {
     /// Message is bigger than allowed by IMC
     InvalidMessageSize,
